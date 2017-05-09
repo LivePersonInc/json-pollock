@@ -7,8 +7,12 @@
     }
 
     .lp-json-pollock-element-text {
-        padding: 8px;
+        margin: 4px 8px;
         font-size: $text-size-medium;
+
+        &:last-of-type {
+            margin-bottom: 20px;
+        }
     }
 
     .lp-json-pollock-element-button {
@@ -26,11 +30,19 @@
         }
     }
 
-    .lp-json-pollock-element-image {           
+    .lp-json-pollock-element-image {
+        
+        border: $default-border;
+        max-height: 154px;
+
+        &.loading {
+            background-image: url('/assets/loader_anim_bgwhite_20.gif');
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 154px;
+        }
+
         img {            
-            border: $default-border;
-            margin: -1px;
-            max-height: 154px;
             width: 100%;
             height: auto;
         }

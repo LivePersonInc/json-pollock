@@ -3,8 +3,10 @@
   max-width: 200px; }
 
 .lp-json-pollock .lp-json-pollock-element-text {
-  padding: 8px;
+  margin: 4px 8px;
   font-size: 13px; }
+  .lp-json-pollock .lp-json-pollock-element-text:last-of-type {
+    margin-bottom: 20px; }
 
 .lp-json-pollock .lp-json-pollock-element-button button {
   border: none;
@@ -14,11 +16,16 @@
   height: 32px;
   margin-bottom: -1px; }
   .lp-json-pollock .lp-json-pollock-element-button button:active {
-    background: #656568; }
+    background: #f0f0f0; }
 
-.lp-json-pollock .lp-json-pollock-element-image img {
+.lp-json-pollock .lp-json-pollock-element-image {
   border: solid 1px #d4d4d5;
-  margin: -1px;
-  max-height: 154px;
-  width: 100%;
-  height: auto; }
+  max-height: 154px; }
+  .lp-json-pollock .lp-json-pollock-element-image.loading {
+    background-image: url("/assets/loader_anim_bgwhite_20.gif");
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 154px; }
+  .lp-json-pollock .lp-json-pollock-element-image img {
+    width: 100%;
+    height: auto; }

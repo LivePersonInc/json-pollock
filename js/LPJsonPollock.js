@@ -4,9 +4,11 @@ import { ElementRendererProvider } from './ElementRendererProvider';
 export class LPJsonPollock {
 
     provider: ElementRendererProvider;
+    callbacks: Object;
 
     constructor() {
-        this.provider = new ElementRendererProvider();
+        this.callbacks = {};
+        this.provider = new ElementRendererProvider(this.callbacks);
     }
 
     renderElement(elJson: Object, parent: HTMLElement): ?HTMLElement {

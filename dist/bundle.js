@@ -77,7 +77,8 @@
 class LPJsonPollock {
 
     constructor() {
-        this.provider = new __WEBPACK_IMPORTED_MODULE_0__ElementRendererProvider__["a" /* ElementRendererProvider */]();
+        this.callbacks = {};
+        this.provider = new __WEBPACK_IMPORTED_MODULE_0__ElementRendererProvider__["a" /* ElementRendererProvider */](this.callbacks);
     }
 
     renderElement(elJson, parent) {
@@ -126,7 +127,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Stylesheets
 __webpack_require__(1);
 
-window.lpPollock = new __WEBPACK_IMPORTED_MODULE_0__js_LPJsonPollock__["a" /* LPJsonPollock */]();
+window.lpJsonPollock = new __WEBPACK_IMPORTED_MODULE_0__js_LPJsonPollock__["a" /* LPJsonPollock */]();
 
 /***/ }),
 /* 3 */
@@ -139,31 +140,48 @@ window.lpPollock = new __WEBPACK_IMPORTED_MODULE_0__js_LPJsonPollock__["a" /* LP
 
 class ElementRendererProvider {
 
-    constructor() {
+    constructor(callbacks) {
         this.elements = {};
 
         //predefined renderes
         this.set('text', config => {
             let divEl = document.createElement('div');
             let style = divEl.className = "lp-json-pollock-element-text";
-            divEl.innerHTML = `<span style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" title=${config.tooltip || ""}>${config.text}</span>`;
+            divEl.innerHTML = `<span style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
             return divEl;
         });
 
         this.set('button', config => {
             let divEl = document.createElement('div');
             divEl.className = "lp-json-pollock-element-button";
-            divEl.innerHTML = `<button style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" type="button" title=${config.tooltip || ""}>${config.title}</button>`;
+            divEl.innerHTML = `<button style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" type="button" title="${config.tooltip || ""}">${config.title}</button>`;
             return divEl;
         });
 
         this.set('image', config => {
             let divEl = document.createElement('div');
-            divEl.className = "lp-json-pollock-element-image";
-            divEl.innerHTML = `<img style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" src=${config.url} title=${config.tooltip || ""}>`;
+            divEl.className = "lp-json-pollock-element-image loading";
+
+            let imgEl = document.createElement('img');
+
+            imgEl.src = config.url;
+            if (config.tooltip) {
+                imgEl.title = config.tooltip;
+            }
+            if (config.style) {
+                imgEl.style.cssText = __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style);
+            }
+
             if (config.caption) {
                 divEl.innerHTML += `<div>${config.caption}</div`;
             }
+
+            imgEl.onload = () => {
+                divEl.className = "lp-json-pollock-element-image";
+            };
+
+            divEl.appendChild(imgEl);
+
             return divEl;
         });
 

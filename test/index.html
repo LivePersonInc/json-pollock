@@ -44,23 +44,13 @@
         "elements": [{
           "type": "image",
           "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
-          "tooltip": "image tooltip",
-          "style": {
-            "bold": true,
-            "italic": true,
-            "color": "red",
-            "background-color": "blue",
-            "size": 'large'
-          }
+          "tooltip": "image tooltip"
         }, {
           "type": "text",
           "text": "product name (Title)",
           "tooltip": "text tooltip",
           "style": {
-            "bold": true,
-            "italic": true,
-            "color": "red",
-            "background-color": "blue",
+            "bold": true,           
             "size": 'large'
           }
         }, {
@@ -74,13 +64,13 @@
         }, {
           "type": "button",
           "title": "Add to cart",
-          "style": {
-            "bold": true,
-            "italic": true,
-            "color": "red",
-            "background-color": "blue",
-            "size": 'large'
-          },
+          // "style": {
+          //   "bold": true,
+          //   "italic": true,
+          //   "color": "red",
+          //   "background-color": "blue",
+          //   "size": 'large'
+          // },
           "action": {
             "type": "link",
             "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
@@ -117,7 +107,7 @@
         }]
       }
 
-      const el = lpPollock.render(conf);
+      const el = lpJsonPollock.render(conf);
       document.getElementById('content').appendChild(el);
     }
   </script>
