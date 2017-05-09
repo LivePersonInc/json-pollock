@@ -1,0 +1,24 @@
+.lp-json-pollock .lp-json-pollock-layout-vertical {
+  border: solid 1px #d4d4d5;
+  max-width: 200px; }
+
+.lp-json-pollock .lp-json-pollock-element-text {
+  padding: 8px;
+  font-size: 13px; }
+
+.lp-json-pollock .lp-json-pollock-element-button button {
+  border: none;
+  border-top: solid 1px #d4d4d5;
+  background: none;
+  width: 100%;
+  height: 32px;
+  margin-bottom: -1px; }
+  .lp-json-pollock .lp-json-pollock-element-button button:active {
+    background: #656568; }
+
+.lp-json-pollock .lp-json-pollock-element-image img {
+  border: solid 1px #d4d4d5;
+  margin: -1px;
+  max-height: 154px;
+  width: 100%;
+  height: auto; }
