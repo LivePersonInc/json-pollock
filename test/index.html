@@ -121,11 +121,11 @@
         }]
       }
 
-      lpJsonPollock.register('navigate', (data) => {
+      lpJsonPollock.registerAction('navigate', (data) => {
         alert(JSON.stringify(data));
       });
 
-      lpJsonPollock.register('link', (data) => {
+      lpJsonPollock.registerAction('link', (data) => {
         alert(JSON.stringify(data));
       });
       const el = lpJsonPollock.render(conf);

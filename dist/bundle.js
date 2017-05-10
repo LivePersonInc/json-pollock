@@ -126,13 +126,17 @@ class LPJsonPollock {
         return divEl;
     }
 
-    register(actionName, callback) {
+    registerAction(actionName, callback) {
         this.events.bind({
             eventName: actionName,
             func: EventData => {
                 callback(EventData);
             }
         });
+    }
+
+    registerElement(elementType, render) {
+        this.provider.set(elementType, render);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = LPJsonPollock;
@@ -154,7 +158,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__scss_style_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_LPJsonPollock__ = __webpack_require__(1);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "register", function() { return register; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerAction", function() { return registerAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerElement", function() { return registerElement; });
 
 // Stylesheets
 
@@ -163,7 +168,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 let instance = new __WEBPACK_IMPORTED_MODULE_1__js_LPJsonPollock__["a" /* LPJsonPollock */]();
 
 const render = instance.render.bind(instance);
-const register = instance.register.bind(instance);
+const registerAction = instance.registerAction.bind(instance);
+const registerElement = instance.registerElement.bind(instance);
 
 
 

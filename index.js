@@ -6,9 +6,11 @@ import {LPJsonPollock} from './js/LPJsonPollock';
 let instance = new LPJsonPollock();
 
 const render = instance.render.bind(instance);
-const register = instance.register.bind(instance);
+const registerAction = instance.registerAction.bind(instance);
+const registerElement = instance.registerElement.bind(instance);
 
 export {
     render,
-    register
+    registerAction,
+    registerElement,
 }

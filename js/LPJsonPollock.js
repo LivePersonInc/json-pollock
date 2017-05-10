@@ -40,12 +40,16 @@ export class LPJsonPollock {
         return divEl;
     }
 
-    register(actionName: string, callback: Function) {
+    registerAction(actionName: string, callback: Function) {
         this.events.bind({
             eventName: actionName,
             func: (EventData) => {
                 callback(EventData);
             }
         });
+    }
+
+    registerElement(elementType: string, render: Function) {
+        this.provider.set(elementType, render);
     }
 }
