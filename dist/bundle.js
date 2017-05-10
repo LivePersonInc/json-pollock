@@ -191,6 +191,9 @@ class ElementRendererProvider {
 
         //predefined renderes
         this.set('text', config => {
+
+            __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'text');
+
             let divEl = document.createElement('div');
             divEl.className = "lp-json-pollock-element-text";
             divEl.innerHTML = `<span style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
@@ -198,6 +201,9 @@ class ElementRendererProvider {
         });
 
         this.set('button', config => {
+
+            __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'title', 'action');
+
             let divEl = document.createElement('div');
             divEl.className = "lp-json-pollock-element-button";
 
@@ -221,6 +227,9 @@ class ElementRendererProvider {
         });
 
         this.set('image', config => {
+
+            __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'url');
+
             let divEl = document.createElement('div');
             divEl.className = "lp-json-pollock-element-image loading";
 
@@ -252,6 +261,9 @@ class ElementRendererProvider {
         });
 
         this.set('linkPreview', config => {
+
+            __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'url');
+
             let divEl = document.createElement('div');
             divEl.className = "lp-json-pollock-element-link";
             divEl.innerHTML = `<a href="${config.url}" style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" title="${config.tooltip || ""}" target="_blank">${config.title || config.url}</a>`;
@@ -259,6 +271,9 @@ class ElementRendererProvider {
         });
 
         this.set('vertical', config => {
+
+            __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'elements');
+
             let divEl = document.createElement('div');
             divEl.className = "lp-json-pollock-layout-vertical";
             return divEl;
@@ -332,6 +347,18 @@ module.exports.Utils = {
             default:
                 return 13;
         }
+    },
+
+    validateParameters(config, ...params) {
+        if (!config.type) {
+            throw new Error(`Missing configuration: type`);
+        }
+
+        params.forEach(param => {
+            if (config[param] === undefined) {
+                throw new Error(`Missing configuration: ${param} is a mandatory for element of type ${config.type}`);
+            }
+        });
     }
 
 };

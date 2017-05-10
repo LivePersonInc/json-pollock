@@ -44,6 +44,18 @@ module.exports.Utils = {
             default:
                 return 13;
         }
+    },
+
+    validateParameters(config: Object, ...params: string[]) {
+        if(!config.type) {
+            throw new Error(`Missing configuration: type`);
+        }
+
+        params.forEach((param)=>{
+            if(config[param] === undefined) {
+                throw new Error(`Missing configuration: ${param} is a mandatory for element of type ${config.type}`);
+            }
+        });
     }
 
 }
