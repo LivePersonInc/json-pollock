@@ -44,13 +44,20 @@
         "elements": [{
           "type": "image",
           "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
-          "tooltip": "image tooltip"
+          "tooltip": "image tooltip",
+          "action": {
+            "type": "navigate",
+            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+            "name": "Navigate to store via image",
+            "lo": "23423423",
+            "la": "2423423423"
+          }
         }, {
           "type": "text",
           "text": "product name (Title)",
           "tooltip": "text tooltip",
           "style": {
-            "bold": true,           
+            "bold": true,
             "size": 'large'
           }
         }, {
@@ -86,8 +93,15 @@
             }
           }
         }, {
+          "type": "linkPreview",
+          "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all",
+          "title": "title of the website title of the website  title of the website title of the website",
+          "rtl": true,
+          "tooltip": "link tooltip"
+        }, {
           "type": "button",
           "title": "Navigate to store",
+          "tooltip": "store is the thing",
           "action": {
             "type": "navigate",
             "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
@@ -107,6 +121,13 @@
         }]
       }
 
+      lpJsonPollock.bind('navigate', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      lpJsonPollock.bind('link', (data) => {
+        alert(JSON.stringify(data));
+      });
       const el = lpJsonPollock.render(conf);
       document.getElementById('content').appendChild(el);
     }

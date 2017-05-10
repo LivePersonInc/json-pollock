@@ -5,12 +5,15 @@
 .lp-json-pollock .lp-json-pollock-element-text {
   margin: 4px 8px;
   font-size: 13px; }
-  .lp-json-pollock .lp-json-pollock-element-text:last-of-type {
-    margin-bottom: 20px; }
+
+.lp-json-pollock .lp-json-pollock-element-link {
+  margin: 4px 8px;
+  font-size: 13px; }
 
 .lp-json-pollock .lp-json-pollock-element-button button {
   border: none;
   border-top: solid 1px #d4d4d5;
+  border-bottom: solid 1px #d4d4d5;
   background: none;
   width: 100%;
   height: 32px;

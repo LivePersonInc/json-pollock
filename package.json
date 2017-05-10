@@ -18,6 +18,7 @@
     "babel-preset-env": "^1.4.0",
     "babel-preset-flow": "^6.23.0",
     "css-loader": "^0.28.1",
+    "empty": "^0.10.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "flow-bin": "^0.45.0",
     "flow-status-webpack-plugin": "^0.1.7",
@@ -26,5 +27,8 @@
     "style-loader": "^0.17.0",
     "webpack": "^2.5.0",
     "webpack-dev-server": "^2.4.5"
+  },
+  "dependencies": {
+    "chronosjs": "^0.0.23"
   }
 }

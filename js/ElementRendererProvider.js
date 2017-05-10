@@ -1,18 +1,19 @@
-import { Utils } from './Utils';
-
 // @flow
+import { Utils } from './Utils';
+const Events = require('Chronosjs/dist/min/Events');
 
 export class ElementRendererProvider {
 
     elements: Object;
+    events: Events;
 
-    constructor(callbacks: Object) {
+    constructor(events: Events) {
         this.elements = {};
+        this.events = events;
 
         //predefined renderes
         this.set('text', (config): HTMLElement => {
             let divEl = document.createElement('div');
-            let style = 
             divEl.className = "lp-json-pollock-element-text";
             divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
             return divEl;
@@ -21,25 +22,41 @@ export class ElementRendererProvider {
         this.set('button', (config): HTMLElement => {
             let divEl = document.createElement('div');
             divEl.className = "lp-json-pollock-element-button";
-            divEl.innerHTML = `<button style="${Utils.styleToCss(config.style)}" type="button" title="${config.tooltip || ""}">${config.title}</button>`;
+
+            let btnEl = document.createElement('button');
+            btnEl.textContent = config.title;
+
+            if (config.tooltip) {
+                btnEl.title = config.tooltip;
+            }
+            if (config.style) {
+                btnEl.style.cssText = Utils.styleToCss(config.style);
+            }
+
+            if (config.action) {
+                btnEl.onclick = this.wrapAction(config.action);
+            }
+
+            divEl.appendChild(btnEl);
+
             return divEl;
         });
 
         this.set('image', (config): HTMLElement => {
             let divEl = document.createElement('div');
             divEl.className = "lp-json-pollock-element-image loading";
-            
+
             let imgEl = document.createElement('img');
-            
+
             imgEl.src = config.url;
-            if(config.tooltip) {
+            if (config.tooltip) {
                 imgEl.title = config.tooltip;
             }
-            if(config.style) {
+            if (config.style) {
                 imgEl.style.cssText = Utils.styleToCss(config.style);
             }
-            
-            if(config.caption) {
+
+            if (config.caption) {
                 divEl.innerHTML += `<div>${config.caption}</div`;
             }
 
@@ -47,8 +64,19 @@ export class ElementRendererProvider {
                 divEl.className = "lp-json-pollock-element-image";
             };
 
+            if (config.action) {
+                imgEl.onclick = this.wrapAction(config.action);
+            }
+
             divEl.appendChild(imgEl);
 
+            return divEl;
+        });
+    
+        this.set('linkPreview', (config): HTMLElement => {
+            let divEl = document.createElement('div');
+            divEl.className = "lp-json-pollock-element-link";
+            divEl.innerHTML = `<a href="${config.url}" style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ""}" target="_blank">${config.title || config.url}</a>`;
             return divEl;
         });
 
@@ -65,6 +93,15 @@ export class ElementRendererProvider {
 
     set(type: string, render: Function) {
         this.elements[type] = render;
+    }
+
+    wrapAction(actionData: Object): Function {
+        return () => {
+            this.events.trigger({
+                eventName: actionData.type,
+                data: actionData
+            });
+        }
     }
 
 }

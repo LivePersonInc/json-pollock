@@ -1,14 +1,17 @@
 // @flow
 import { ElementRendererProvider } from './ElementRendererProvider';
+const Events = require('Chronosjs/dist/min/Events');
 
 export class LPJsonPollock {
 
     provider: ElementRendererProvider;
     callbacks: Object;
+    events: Events;
 
     constructor() {
         this.callbacks = {};
-        this.provider = new ElementRendererProvider(this.callbacks);
+        this.events = new Events({cloneEventData: true});
+        this.provider = new ElementRendererProvider(this.events);
     }
 
     renderElement(elJson: Object, parent: HTMLElement): ?HTMLElement {
@@ -35,5 +38,14 @@ export class LPJsonPollock {
         this.renderElement(json, divEl);
 
         return divEl;
+    }
+
+    bind(actionName: string, callback: Function) {
+        this.events.bind({
+            eventName: actionName,
+            func: (EventData) => {
+                callback(EventData);
+            }
+        });
     }
 }
