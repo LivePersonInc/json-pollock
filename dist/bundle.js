@@ -95,12 +95,27 @@ const Events = __webpack_require__(0);
 class LPJsonPollock {
 
     constructor() {
-        this.callbacks = {};
         this.events = new Events({ cloneEventData: true });
         this.provider = new __WEBPACK_IMPORTED_MODULE_0__ElementRendererProvider__["a" /* ElementRendererProvider */](this.events);
+        this.currentNumOfElements = 0;
+        this.maxAllowedElements = 50;
+    }
+
+    init(config) {
+        if (!config) {
+            return;
+        }
+        if (!isNaN(config.maxAllowedElements)) {
+            this.maxAllowedElements = config.maxAllowedElements;
+        }
     }
 
     renderElement(elJson, parent) {
+
+        if (this.currentNumOfElements >= this.maxAllowedElements) {
+            return;
+        }
+
         const elementRenderer = this.provider.get(elJson.type);
         let element;
         if (elementRenderer) {
@@ -114,10 +129,13 @@ class LPJsonPollock {
                 }
             }
         }
+        this.currentNumOfElements = this.currentNumOfElements + 1;
         return element;
     }
 
     render(json) {
+        this.currentNumOfElements = 0;
+
         let divEl = document.createElement('div');
         divEl.className = 'lp-json-pollock';
 
@@ -157,6 +175,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_style_scss__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__scss_style_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_LPJsonPollock__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerAction", function() { return registerAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerElement", function() { return registerElement; });
@@ -167,6 +186,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 let instance = new __WEBPACK_IMPORTED_MODULE_1__js_LPJsonPollock__["a" /* LPJsonPollock */]();
 
+const init = instance.init.bind(instance);
 const render = instance.render.bind(instance);
 const registerAction = instance.registerAction.bind(instance);
 const registerElement = instance.registerElement.bind(instance);

@@ -5,16 +5,32 @@ const Events = require('Chronosjs/dist/min/Events');
 export class LPJsonPollock {
 
     provider: ElementRendererProvider;
-    callbacks: Object;
     events: Events;
+    currentNumOfElements: number;
+    maxAllowedElements: number;
 
     constructor() {
-        this.callbacks = {};
         this.events = new Events({ cloneEventData: true });
         this.provider = new ElementRendererProvider(this.events);
+        this.currentNumOfElements = 0;
+        this.maxAllowedElements = 50;
+    }
+
+    init(config: Object) {
+        if(!config) {
+            return;
+        }
+        if(!isNaN(config.maxAllowedElements)) {
+            this.maxAllowedElements = config.maxAllowedElements;
+        }
     }
 
     renderElement(elJson: Object, parent: HTMLElement): ?HTMLElement {
+
+        if(this.currentNumOfElements >= this.maxAllowedElements) {
+            return;
+        }
+
         const elementRenderer = this.provider.get(elJson.type);
         let element: HTMLElement;
         if(elementRenderer) {
@@ -28,10 +44,13 @@ export class LPJsonPollock {
                 }
             }
         }
+        this.currentNumOfElements = this.currentNumOfElements + 1;
         return element;
     }
 
     render(json: Object): HTMLElement {
+        this.currentNumOfElements = 0;
+
         let divEl = document.createElement('div');
         divEl.className = 'lp-json-pollock';
 
