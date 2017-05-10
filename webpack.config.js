@@ -3,10 +3,6 @@ const webpack = require('webpack');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const extractSass = new ExtractTextPlugin({
-    filename: "[name].[contenthash].css",
-});
-
 module.exports = {
     module: {
         rules: [
