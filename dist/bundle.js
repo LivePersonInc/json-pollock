@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("lpJsonPollock", [], factory);
+	else if(typeof exports === 'object')
+		exports["lpJsonPollock"] = factory();
+	else
+		root["lpJsonPollock"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -116,7 +126,7 @@ class LPJsonPollock {
         return divEl;
     }
 
-    bind(actionName, callback) {
+    register(actionName, callback) {
         this.events.bind({
             eventName: actionName,
             func: EventData => {
@@ -140,14 +150,22 @@ class LPJsonPollock {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_LPJsonPollock__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__scss_style_scss__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__scss_style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__scss_style_scss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_style_scss__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__scss_style_scss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_LPJsonPollock__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "register", function() { return register; });
 
 // Stylesheets
 
 
-window.lpJsonPollock = new __WEBPACK_IMPORTED_MODULE_0__js_LPJsonPollock__["a" /* LPJsonPollock */]();
+
+let instance = new __WEBPACK_IMPORTED_MODULE_1__js_LPJsonPollock__["a" /* LPJsonPollock */]();
+
+const render = instance.render.bind(instance);
+const register = instance.register.bind(instance);
+
+
 
 /***/ }),
 /* 4 */
@@ -314,3 +332,4 @@ module.exports.Utils = {
 
 /***/ })
 /******/ ]);
+});

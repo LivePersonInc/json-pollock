@@ -20,13 +20,13 @@ module.exports = {
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
                     use: [{
-                            loader: "css-loader"
-                        }, {
-                            loader: "sass-loader"
-                        }],
-                        // use style-loader in development
-                        fallback: "style-loader"
-                    })
+                        loader: "css-loader"
+                    }, {
+                        loader: "sass-loader"
+                    }],
+                    // use style-loader in development
+                    fallback: "style-loader"
+                })
             }
         ]
     },
@@ -38,10 +38,13 @@ module.exports = {
         new ExtractTextPlugin('style.css'),
     ],
     entry: {
-        app: './'
+        app: './index.js'
     },
     output: {
         filename: 'bundle.js',
+        library: 'lpJsonPollock',
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
         publicPath: '/dist/',
         path: path.resolve(__dirname, 'dist')
     }

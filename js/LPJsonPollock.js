@@ -10,23 +10,23 @@ export class LPJsonPollock {
 
     constructor() {
         this.callbacks = {};
-        this.events = new Events({cloneEventData: true});
+        this.events = new Events({ cloneEventData: true });
         this.provider = new ElementRendererProvider(this.events);
     }
 
     renderElement(elJson: Object, parent: HTMLElement): ?HTMLElement {
         const elementRenderer = this.provider.get(elJson.type);
         let element: HTMLElement;
-        if (elementRenderer) {
-             element = elementRenderer(elJson);
-             if(element) {
-                 parent.appendChild(element);
-                 if(Array.isArray(elJson.elements)) {
-                     elJson.elements.forEach((elementConf)=>{
-                         this.renderElement(elementConf, element);
-                     });
-                 }
-             }
+        if(elementRenderer) {
+            element = elementRenderer(elJson);
+            if (element) {
+                parent.appendChild(element);
+                if (Array.isArray(elJson.elements)) {
+                    elJson.elements.forEach((elementConf) => {
+                        this.renderElement(elementConf, element);
+                    });
+                }
+            }
         }
         return element;
     }
@@ -40,7 +40,7 @@ export class LPJsonPollock {
         return divEl;
     }
 
-    bind(actionName: string, callback: Function) {
+    register(actionName: string, callback: Function) {
         this.events.bind({
             eventName: actionName,
             func: (EventData) => {
