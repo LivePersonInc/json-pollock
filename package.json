@@ -36,6 +36,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
-    "chronosjs": "^0.0.23"
+    "chronosjs": "^0.0.23",
+    "jsonschema": "^1.1.1"
   }
 }

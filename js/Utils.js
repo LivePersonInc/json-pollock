@@ -1,6 +1,6 @@
 // @flow
 
-module.exports.Utils = {
+export default {
 
   styleToCss(style: Object): string {
     let cssStr = '';

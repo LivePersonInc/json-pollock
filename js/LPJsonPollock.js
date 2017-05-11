@@ -1,4 +1,5 @@
 // @flow
+// import jsonschema from 'jsonschema';
 import ElementRendererProvider from './ElementRendererProvider';
 /*eslint-disable */
 const Events = require('Chronosjs/dist/min/Events');
@@ -14,7 +15,6 @@ export default class LPJsonPollock {
   constructor() {
     this.events = new Events({ cloneEventData: true });
     this.provider = new ElementRendererProvider(this.events);
-    this.currentNumOfElements = 0;
     this.maxAllowedElements = 50;
   }
 
@@ -27,11 +27,11 @@ export default class LPJsonPollock {
     }
   }
 
-  renderElement(elJson: Object, parent: HTMLElement) {
-    if (this.currentNumOfElements >= this.maxAllowedElements) {
+  renderElement(elJson: Object, parent: HTMLElement, numOfElements: number = 0) {
+    if (numOfElements >= this.maxAllowedElements) {
       return;
     }
-
+    let currentNumOfElements = numOfElements;
     const elementRenderer = this.provider.get(elJson.type);
     let element: HTMLElement;
     if (elementRenderer) {
@@ -40,23 +40,22 @@ export default class LPJsonPollock {
         parent.appendChild(element);
         if (Array.isArray(elJson.elements)) {
           elJson.elements.forEach((elementConf) => {
-            this.renderElement(elementConf, element);
+            currentNumOfElements += 1;
+            this.renderElement(elementConf, element, currentNumOfElements);
           });
         }
       }
     }
-    this.currentNumOfElements = this.currentNumOfElements + 1;
   }
 
-  render(json: Object): HTMLElement {
-    this.currentNumOfElements = 0;
-
+  render(json: Object): DocumentFragment {
+    // TODO: once jsonschems is available replace validation with jsonschema.Validator();
+    const frag = document.createDocumentFragment();
     const divEl = document.createElement('div');
     divEl.className = 'lp-json-pollock';
-
+    frag.appendChild(divEl);
     this.renderElement(json, divEl);
-
-    return divEl;
+    return frag;
   }
 
   registerAction(actionName: string, callback: Function) {

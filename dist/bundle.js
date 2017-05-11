@@ -90,6 +90,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_D
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ElementRendererProvider__ = __webpack_require__(4);
 
+// import jsonschema from 'jsonschema';
+
 /*eslint-disable */
 const Events = __webpack_require__(0);
 /*eslint-enable */
@@ -99,7 +101,6 @@ class LPJsonPollock {
   constructor() {
     this.events = new Events({ cloneEventData: true });
     this.provider = new __WEBPACK_IMPORTED_MODULE_0__ElementRendererProvider__["a" /* default */](this.events);
-    this.currentNumOfElements = 0;
     this.maxAllowedElements = 50;
   }
 
@@ -112,11 +113,11 @@ class LPJsonPollock {
     }
   }
 
-  renderElement(elJson, parent) {
-    if (this.currentNumOfElements >= this.maxAllowedElements) {
+  renderElement(elJson, parent, numOfElements = 0) {
+    if (numOfElements >= this.maxAllowedElements) {
       return;
     }
-
+    let currentNumOfElements = numOfElements;
     const elementRenderer = this.provider.get(elJson.type);
     let element;
     if (elementRenderer) {
@@ -125,23 +126,22 @@ class LPJsonPollock {
         parent.appendChild(element);
         if (Array.isArray(elJson.elements)) {
           elJson.elements.forEach(elementConf => {
-            this.renderElement(elementConf, element);
+            currentNumOfElements += 1;
+            this.renderElement(elementConf, element, currentNumOfElements);
           });
         }
       }
     }
-    this.currentNumOfElements = this.currentNumOfElements + 1;
   }
 
   render(json) {
-    this.currentNumOfElements = 0;
-
+    // TODO: once jsonschems is available replace validation with jsonschema.Validator();
+    const frag = document.createDocumentFragment();
     const divEl = document.createElement('div');
     divEl.className = 'lp-json-pollock';
-
+    frag.appendChild(divEl);
     this.renderElement(json, divEl);
-
-    return divEl;
+    return frag;
   }
 
   registerAction(actionName, callback) {
@@ -201,7 +201,6 @@ const registerElement = instance.registerElement.bind(instance);
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Utils__);
 
 /*eslint-disable */
 const Events = __webpack_require__(0);
@@ -217,16 +216,16 @@ class ElementRendererProvider {
     predefined renderes
     */
     this.set('text', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'text');
+      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'text');
 
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
-      divEl.innerHTML = `<span style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
+      divEl.innerHTML = `<span style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
       return divEl;
     });
 
     this.set('button', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'title', 'action');
+      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'title', 'action');
 
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-button';
@@ -238,7 +237,7 @@ class ElementRendererProvider {
         btnEl.title = config.tooltip;
       }
       if (config.style) {
-        btnEl.style.cssText = __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style);
+        btnEl.style.cssText = __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].styleToCss(config.style);
       }
 
       if (config.action) {
@@ -251,7 +250,7 @@ class ElementRendererProvider {
     });
 
     this.set('image', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'url');
+      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'url');
 
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-image loading';
@@ -263,7 +262,7 @@ class ElementRendererProvider {
         imgEl.title = config.tooltip;
       }
       if (config.style) {
-        imgEl.style.cssText = __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style);
+        imgEl.style.cssText = __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].styleToCss(config.style);
       }
 
       if (config.caption) {
@@ -284,16 +283,16 @@ class ElementRendererProvider {
     });
 
     this.set('linkPreview', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'url');
+      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'url');
 
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-link';
-      divEl.innerHTML = `<a href="${config.url}" style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].styleToCss(config.style)}" title="${config.tooltip || ''}" target="_blank">${config.title || config.url}</a>`;
+      divEl.innerHTML = `<a href="${config.url}" style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].styleToCss(config.style)}" title="${config.tooltip || ''}" target="_blank">${config.title || config.url}</a>`;
       return divEl;
     });
 
     this.set('vertical', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["Utils"].validateParameters(config, 'elements');
+      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'elements');
 
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout-vertical';
@@ -323,9 +322,10 @@ class ElementRendererProvider {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports.Utils = {
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
 
   styleToCss(style) {
     let cssStr = '';
@@ -379,7 +379,7 @@ module.exports.Utils = {
       }
     });
   }
-};
+});
 
 /***/ })
 /******/ ]);

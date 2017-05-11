@@ -1,6 +1,6 @@
 // @flow
 
-import { Utils } from './Utils';
+import Utils from './Utils';
 /*eslint-disable */
 const Events = require('Chronosjs/dist/min/Events');
 /*eslint-enable */
