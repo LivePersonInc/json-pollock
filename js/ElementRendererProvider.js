@@ -1,122 +1,121 @@
 // @flow
+
 import { Utils } from './Utils';
+/*eslint-disable */
 const Events = require('Chronosjs/dist/min/Events');
+/*eslint-enable */
 
-export class ElementRendererProvider {
+export default class ElementRendererProvider {
 
-    elements: Object;
-    events: Events;
+  elements: Object;
+  events: Events;
 
-    constructor(events: Events) {
-        this.elements = {};
-        this.events = events;
+  constructor(events: Events) {
+    this.elements = {};
+    this.events = events;
 
-        //predefined renderes
-        this.set('text', (config): HTMLElement => {
+    /*
+    predefined renderes
+    */
+    this.set('text', (config): HTMLElement => {
+      Utils.validateParameters(config, 'text');
 
-            Utils.validateParameters(config, 'text');
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-text';
+      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
+      return divEl;
+    });
 
-            let divEl = document.createElement('div');
-            divEl.className = "lp-json-pollock-element-text";
-            divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
-            return divEl;
-        });
+    this.set('button', (config): HTMLElement => {
+      Utils.validateParameters(config, 'title', 'action');
 
-        this.set('button', (config): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-button';
 
-            Utils.validateParameters(config, 'title', 'action');
+      const btnEl = document.createElement('button');
+      btnEl.textContent = config.title;
 
-            let divEl = document.createElement('div');
-            divEl.className = "lp-json-pollock-element-button";
+      if (config.tooltip) {
+        btnEl.title = config.tooltip;
+      }
+      if (config.style) {
+        btnEl.style.cssText = Utils.styleToCss(config.style);
+      }
 
-            let btnEl = document.createElement('button');
-            btnEl.textContent = config.title;
+      if (config.action) {
+        btnEl.onclick = this.wrapAction(config.action);
+      }
 
-            if (config.tooltip) {
-                btnEl.title = config.tooltip;
-            }
-            if (config.style) {
-                btnEl.style.cssText = Utils.styleToCss(config.style);
-            }
+      divEl.appendChild(btnEl);
 
-            if (config.action) {
-                btnEl.onclick = this.wrapAction(config.action);
-            }
+      return divEl;
+    });
 
-            divEl.appendChild(btnEl);
+    this.set('image', (config): HTMLElement => {
+      Utils.validateParameters(config, 'url');
 
-            return divEl;
-        });
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-image loading';
 
-        this.set('image', (config): HTMLElement => {
+      const imgEl = document.createElement('img');
 
-            Utils.validateParameters(config, 'url');
+      imgEl.src = config.url;
+      if (config.tooltip) {
+        imgEl.title = config.tooltip;
+      }
+      if (config.style) {
+        imgEl.style.cssText = Utils.styleToCss(config.style);
+      }
 
-            let divEl = document.createElement('div');
-            divEl.className = "lp-json-pollock-element-image loading";
+      if (config.caption) {
+        divEl.innerHTML += `<div>${config.caption}</div`;
+      }
 
-            let imgEl = document.createElement('img');
+      imgEl.onload = () => {
+        divEl.className = 'lp-json-pollock-element-image';
+      };
 
-            imgEl.src = config.url;
-            if (config.tooltip) {
-                imgEl.title = config.tooltip;
-            }
-            if (config.style) {
-                imgEl.style.cssText = Utils.styleToCss(config.style);
-            }
+      if (config.action) {
+        imgEl.onclick = this.wrapAction(config.action);
+      }
 
-            if (config.caption) {
-                divEl.innerHTML += `<div>${config.caption}</div`;
-            }
+      divEl.appendChild(imgEl);
 
-            imgEl.onload = () => {
-                divEl.className = "lp-json-pollock-element-image";
-            };
+      return divEl;
+    });
 
-            if (config.action) {
-                imgEl.onclick = this.wrapAction(config.action);
-            }
+    this.set('linkPreview', (config): HTMLElement => {
+      Utils.validateParameters(config, 'url');
 
-            divEl.appendChild(imgEl);
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-link';
+      divEl.innerHTML = `<a href="${config.url}" style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" target="_blank">${config.title || config.url}</a>`;
+      return divEl;
+    });
 
-            return divEl;
-        });
-    
-        this.set('linkPreview', (config): HTMLElement => {
+    this.set('vertical', (config): HTMLElement => {
+      Utils.validateParameters(config, 'elements');
 
-            Utils.validateParameters(config, 'url');
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout-vertical';
+      return divEl;
+    });
+  }
 
-            let divEl = document.createElement('div');
-            divEl.className = "lp-json-pollock-element-link";
-            divEl.innerHTML = `<a href="${config.url}" style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ""}" target="_blank">${config.title || config.url}</a>`;
-            return divEl;
-        });
+  get(type: string): Function {
+    return this.elements[type];
+  }
 
-        this.set('vertical', (config): HTMLElement => {
+  set(type: string, render: Function) {
+    this.elements[type] = render;
+  }
 
-            Utils.validateParameters(config, 'elements');
-
-            let divEl = document.createElement('div');
-            divEl.className = "lp-json-pollock-layout-vertical";
-            return divEl;
-        });
-    }
-
-    get(type: string): Function {
-        return this.elements[type];
-    }
-
-    set(type: string, render: Function) {
-        this.elements[type] = render;
-    }
-
-    wrapAction(actionData: Object): Function {
-        return () => {
-            this.events.trigger({
-                eventName: actionData.type,
-                data: actionData
-            });
-        }
-    }
-
+  wrapAction(actionData: Object): Function {
+    return () => {
+      this.events.trigger({
+        eventName: actionData.type,
+        data: actionData,
+      });
+    };
+  }
 }

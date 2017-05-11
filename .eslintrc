@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb-base",
+  "parser": "babel-eslint",
+  "plugins": [
+    "babel",
+    "flowtype"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true
+  }
+}
