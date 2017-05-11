@@ -123,14 +123,14 @@
 
       // lpJsonPollock.init({maxAllowedElements: 5});
 
-      lpJsonPollock.registerAction('navigate', (data) => {
+      JsonPollock.registerAction('navigate', (data) => {
         alert(JSON.stringify(data));
       });
 
-      lpJsonPollock.registerAction('link', (data) => {
+      JsonPollock.registerAction('link', (data) => {
         alert(JSON.stringify(data));
       });
-      const el = lpJsonPollock.render(conf);
+      const el = JsonPollock.render(conf);
       document.getElementById('content').appendChild(el);
     }
   </script>

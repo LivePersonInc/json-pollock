@@ -2,11 +2,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("lpJsonPollock", [], factory);
+		define("JsonPollock", [], factory);
 	else if(typeof exports === 'object')
-		exports["lpJsonPollock"] = factory();
+		exports["JsonPollock"] = factory();
 	else
-		root["lpJsonPollock"] = factory();
+		root["JsonPollock"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache

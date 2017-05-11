@@ -42,7 +42,7 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        library: 'lpJsonPollock',
+        library: 'JsonPollock',
         libraryTarget: 'umd',
         umdNamedDefine: true,
         publicPath: '/dist/',
