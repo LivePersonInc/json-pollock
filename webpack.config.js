@@ -12,12 +12,13 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['flow'],
+            presets: ['flow', 'es2015', 'stage-0'],
           },
         },
       },
       {
         test: /\.scss$/,
+        exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
           use: [{
             loader: 'css-loader',

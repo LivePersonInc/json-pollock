@@ -85,80 +85,108 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_D
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ElementRendererProvider__ = __webpack_require__(4);
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 // import jsonschema from 'jsonschema';
 
+
+var _ElementRendererProvider = __webpack_require__(4);
+
+var _ElementRendererProvider2 = _interopRequireDefault(_ElementRendererProvider);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 /*eslint-disable */
-const Events = __webpack_require__(0);
+var Events = __webpack_require__(0);
 /*eslint-enable */
 
-class LPJsonPollock {
+var LPJsonPollock = function () {
+  function LPJsonPollock() {
+    _classCallCheck(this, LPJsonPollock);
 
-  constructor() {
     this.events = new Events({ cloneEventData: true });
-    this.provider = new __WEBPACK_IMPORTED_MODULE_0__ElementRendererProvider__["a" /* default */](this.events);
+    this.provider = new _ElementRendererProvider2.default(this.events);
     this.maxAllowedElements = 50;
   }
 
-  init(config) {
-    if (!config) {
-      return;
+  _createClass(LPJsonPollock, [{
+    key: 'init',
+    value: function init(config) {
+      if (!config) {
+        return;
+      }
+      if (!isNaN(config.maxAllowedElements)) {
+        this.maxAllowedElements = config.maxAllowedElements;
+      }
     }
-    if (!isNaN(config.maxAllowedElements)) {
-      this.maxAllowedElements = config.maxAllowedElements;
-    }
-  }
+  }, {
+    key: 'renderElement',
+    value: function renderElement(elJson, parent) {
+      var _this = this;
 
-  renderElement(elJson, parent, numOfElements = 0) {
-    if (numOfElements >= this.maxAllowedElements) {
-      return;
-    }
-    let currentNumOfElements = numOfElements;
-    const elementRenderer = this.provider.get(elJson.type);
-    let element;
-    if (elementRenderer) {
-      element = elementRenderer(elJson);
-      if (element) {
-        parent.appendChild(element);
-        if (Array.isArray(elJson.elements)) {
-          elJson.elements.forEach(elementConf => {
-            currentNumOfElements += 1;
-            this.renderElement(elementConf, element, currentNumOfElements);
-          });
+      var numOfElements = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+      if (numOfElements >= this.maxAllowedElements) {
+        return;
+      }
+      var currentNumOfElements = numOfElements;
+      var elementRenderer = this.provider.get(elJson.type);
+      var element = void 0;
+      if (elementRenderer) {
+        element = elementRenderer(elJson);
+        if (element) {
+          parent.appendChild(element);
+          if (Array.isArray(elJson.elements)) {
+            elJson.elements.forEach(function (elementConf) {
+              currentNumOfElements += 1;
+              _this.renderElement(elementConf, element, currentNumOfElements);
+            });
+          }
         }
       }
     }
-  }
+  }, {
+    key: 'render',
+    value: function render(json) {
+      // TODO: once jsonschems is available replace validation with jsonschema.Validator();
+      var frag = document.createDocumentFragment();
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock';
+      frag.appendChild(divEl);
+      this.renderElement(json, divEl);
+      return frag;
+    }
+  }, {
+    key: 'registerAction',
+    value: function registerAction(actionName, callback) {
+      this.events.bind({
+        eventName: actionName,
+        func: function func(EventData) {
+          callback(EventData);
+        }
+      });
+    }
+  }, {
+    key: 'registerElement',
+    value: function registerElement(elementType, render) {
+      this.provider.set(elementType, render);
+    }
+  }]);
 
-  render(json) {
-    // TODO: once jsonschems is available replace validation with jsonschema.Validator();
-    const frag = document.createDocumentFragment();
-    const divEl = document.createElement('div');
-    divEl.className = 'lp-json-pollock';
-    frag.appendChild(divEl);
-    this.renderElement(json, divEl);
-    return frag;
-  }
+  return LPJsonPollock;
+}();
 
-  registerAction(actionName, callback) {
-    this.events.bind({
-      eventName: actionName,
-      func: EventData => {
-        callback(EventData);
-      }
-    });
-  }
-
-  registerElement(elementType, render) {
-    this.provider.set(elementType, render);
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = LPJsonPollock;
-
+exports.default = LPJsonPollock;
 
 /***/ }),
 /* 2 */
@@ -168,80 +196,106 @@ class LPJsonPollock {
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_style_scss__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__scss_style_scss__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_LPJsonPollock__ = __webpack_require__(1);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerAction", function() { return registerAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerElement", function() { return registerElement; });
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.registerElement = exports.registerAction = exports.render = exports.init = undefined;
+
+var _style = __webpack_require__(2);
+
+var _style2 = _interopRequireDefault(_style);
+
+var _LPJsonPollock = __webpack_require__(1);
+
+var _LPJsonPollock2 = _interopRequireDefault(_LPJsonPollock);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Stylesheets
 /*eslint-disable */
-
+var instance = new _LPJsonPollock2.default();
 /*eslint-enable */
 
 
-const instance = new __WEBPACK_IMPORTED_MODULE_1__js_LPJsonPollock__["a" /* default */]();
+var init = instance.init.bind(instance);
+var render = instance.render.bind(instance);
+var registerAction = instance.registerAction.bind(instance);
+var registerElement = instance.registerElement.bind(instance);
 
-const init = instance.init.bind(instance);
-const render = instance.render.bind(instance);
-const registerAction = instance.registerAction.bind(instance);
-const registerElement = instance.registerElement.bind(instance);
-
-
+exports.init = init;
+exports.render = render;
+exports.registerAction = registerAction;
+exports.registerElement = registerElement;
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(5);
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Utils = __webpack_require__(5);
+
+var _Utils2 = _interopRequireDefault(_Utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /*eslint-disable */
-const Events = __webpack_require__(0);
+var Events = __webpack_require__(0);
 /*eslint-enable */
 
-class ElementRendererProvider {
+var ElementRendererProvider = function () {
+  function ElementRendererProvider(events) {
+    var _this = this;
 
-  constructor(events) {
+    _classCallCheck(this, ElementRendererProvider);
+
     this.elements = {};
     this.events = events;
 
     /*
     predefined renderes
     */
-    this.set('text', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'text');
+    this.set('text', function (config) {
+      _Utils2.default.validateParameters(config, 'text');
 
-      const divEl = document.createElement('div');
+      var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
-      divEl.innerHTML = `<span style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
+      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || "") + '">' + config.text + '</span>';
       return divEl;
     });
 
-    this.set('button', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'title', 'action');
+    this.set('button', function (config) {
+      _Utils2.default.validateParameters(config, 'title', 'action');
 
-      const divEl = document.createElement('div');
+      var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-button';
 
-      const btnEl = document.createElement('button');
+      var btnEl = document.createElement('button');
       btnEl.textContent = config.title;
 
       if (config.tooltip) {
         btnEl.title = config.tooltip;
       }
       if (config.style) {
-        btnEl.style.cssText = __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].styleToCss(config.style);
+        btnEl.style.cssText = _Utils2.default.styleToCss(config.style);
       }
 
       if (config.action) {
-        btnEl.onclick = this.wrapAction(config.action);
+        btnEl.onclick = _this.wrapAction(config.action);
       }
 
       divEl.appendChild(btnEl);
@@ -249,32 +303,32 @@ class ElementRendererProvider {
       return divEl;
     });
 
-    this.set('image', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'url');
+    this.set('image', function (config) {
+      _Utils2.default.validateParameters(config, 'url');
 
-      const divEl = document.createElement('div');
+      var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-image loading';
 
-      const imgEl = document.createElement('img');
+      var imgEl = document.createElement('img');
 
       imgEl.src = config.url;
       if (config.tooltip) {
         imgEl.title = config.tooltip;
       }
       if (config.style) {
-        imgEl.style.cssText = __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].styleToCss(config.style);
+        imgEl.style.cssText = _Utils2.default.styleToCss(config.style);
       }
 
       if (config.caption) {
-        divEl.innerHTML += `<div>${config.caption}</div`;
+        divEl.innerHTML += '<div>' + config.caption + '</div';
       }
 
-      imgEl.onload = () => {
+      imgEl.onload = function () {
         divEl.className = 'lp-json-pollock-element-image';
       };
 
       if (config.action) {
-        imgEl.onclick = this.wrapAction(config.action);
+        imgEl.onclick = _this.wrapAction(config.action);
       }
 
       divEl.appendChild(imgEl);
@@ -282,61 +336,74 @@ class ElementRendererProvider {
       return divEl;
     });
 
-    this.set('linkPreview', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'url');
+    this.set('linkPreview', function (config) {
+      _Utils2.default.validateParameters(config, 'url');
 
-      const divEl = document.createElement('div');
+      var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-link';
-      divEl.innerHTML = `<a href="${config.url}" style="${__WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].styleToCss(config.style)}" title="${config.tooltip || ''}" target="_blank">${config.title || config.url}</a>`;
+      divEl.innerHTML = '<a href="' + config.url + '" style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" target="_blank">' + (config.title || config.url) + '</a>';
       return divEl;
     });
 
-    this.set('vertical', config => {
-      __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].validateParameters(config, 'elements');
+    this.set('vertical', function (config) {
+      _Utils2.default.validateParameters(config, 'elements');
 
-      const divEl = document.createElement('div');
+      var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout-vertical';
       return divEl;
     });
   }
 
-  get(type) {
-    return this.elements[type];
-  }
+  _createClass(ElementRendererProvider, [{
+    key: 'get',
+    value: function get(type) {
+      return this.elements[type];
+    }
+  }, {
+    key: 'set',
+    value: function set(type, render) {
+      this.elements[type] = render;
+    }
+  }, {
+    key: 'wrapAction',
+    value: function wrapAction(actionData) {
+      var _this2 = this;
 
-  set(type, render) {
-    this.elements[type] = render;
-  }
+      return function () {
+        _this2.events.trigger({
+          eventName: actionData.type,
+          data: actionData
+        });
+      };
+    }
+  }]);
 
-  wrapAction(actionData) {
-    return () => {
-      this.events.trigger({
-        eventName: actionData.type,
-        data: actionData
-      });
-    };
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = ElementRendererProvider;
+  return ElementRendererProvider;
+}();
 
+exports.default = ElementRendererProvider;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
 
-  styleToCss(style) {
-    let cssStr = '';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  styleToCss: function styleToCss(style) {
+    var cssStr = '';
 
     if (style) {
       if (style.color) {
-        cssStr += `color:${style.color};`;
+        cssStr += 'color:' + style.color + ';';
       }
 
       if (style['background-color']) {
-        cssStr += `background-color:${style['background-color']};`;
+        cssStr += 'background-color:' + style['background-color'] + ';';
       }
 
       if (style.bold) {
@@ -348,14 +415,13 @@ class ElementRendererProvider {
       }
 
       if (style.size) {
-        cssStr += `font-size:${this.sizeToPx(style.size)}px;`;
+        cssStr += 'font-size:' + this.sizeToPx(style.size) + 'px;';
       }
     }
 
     return cssStr;
   },
-
-  sizeToPx(size) {
+  sizeToPx: function sizeToPx(size) {
     switch (size) {
       case 'small':
         return 11;
@@ -367,19 +433,22 @@ class ElementRendererProvider {
         return 13;
     }
   },
-
-  validateParameters(config, ...params) {
+  validateParameters: function validateParameters(config) {
     if (!config.type) {
       throw new Error('Missing configuration: type');
     }
 
-    params.forEach(param => {
+    for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      params[_key - 1] = arguments[_key];
+    }
+
+    params.forEach(function (param) {
       if (config[param] === undefined) {
-        throw new Error(`Missing configuration: ${param} is a mandatory for element of type ${config.type}`);
+        throw new Error('Missing configuration: ' + param + ' is a mandatory for element of type ' + config.type);
       }
     });
   }
-});
+};
 
 /***/ })
 /******/ ]);
