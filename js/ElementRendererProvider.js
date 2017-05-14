@@ -22,7 +22,7 @@ export default class ElementRendererProvider {
 
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
-      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ""}">${config.text}</span>`;
+      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}">${config.text}</span>`;
       return divEl;
     });
 

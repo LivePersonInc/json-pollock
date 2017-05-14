@@ -274,7 +274,7 @@ var ElementRendererProvider = function () {
 
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
-      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || "") + '">' + config.text + '</span>';
+      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '">' + config.text + '</span>';
       return divEl;
     });
 
