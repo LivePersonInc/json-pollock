@@ -84,15 +84,6 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set('linkPreview', (config): HTMLElement => {
-      Utils.validateParameters(config, 'url');
-
-      const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-element-link';
-      divEl.innerHTML = `<a href="${config.url}" style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" target="_blank">${config.title || config.url}</a>`;
-      return divEl;
-    });
-
     this.set('vertical', (config): HTMLElement => {
       Utils.validateParameters(config, 'elements');
 

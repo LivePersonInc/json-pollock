@@ -204,7 +204,7 @@ exports.default = LPJsonPollock;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.registerElement = exports.registerAction = exports.render = exports.init = undefined;
+exports.registerAction = exports.render = exports.init = undefined;
 
 var _style = __webpack_require__(2);
 
@@ -225,12 +225,10 @@ var instance = new _LPJsonPollock2.default();
 var init = instance.init.bind(instance);
 var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
-var registerElement = instance.registerElement.bind(instance);
 
 exports.init = init;
 exports.render = render;
 exports.registerAction = registerAction;
-exports.registerElement = registerElement;
 
 /***/ }),
 /* 4 */
@@ -333,15 +331,6 @@ var ElementRendererProvider = function () {
 
       divEl.appendChild(imgEl);
 
-      return divEl;
-    });
-
-    this.set('linkPreview', function (config) {
-      _Utils2.default.validateParameters(config, 'url');
-
-      var divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-element-link';
-      divEl.innerHTML = '<a href="' + config.url + '" style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" target="_blank">' + (config.title || config.url) + '</a>';
       return divEl;
     });
 

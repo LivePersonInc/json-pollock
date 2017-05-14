@@ -54,19 +54,7 @@ describe('json-pollock tests', function () {
             "color": "red",
             "size": 'medium'
           },
-        }, {
-          "type": "linkPreview",
-          "url": "http://example.com",
-          "title": "title of the website title of the website  title of the website title of the website",
-          "rtl": true,
-          "tooltip": "link tooltip",
-          "style": {
-            "bold": true,
-            "italic": true,
-            "color": "#000000",
-            "size": 'small'
-          },
-        }]
+        },]
       }
 
       rooEl = JsonPollock.render(conf);
@@ -87,7 +75,7 @@ describe('json-pollock tests', function () {
       chai.expect(wrapdiv.childNodes.length).to.equal(1);
       chai.expect(wrapdiv.childNodes[0].localName).to.equal('div');
       chai.expect(wrapdiv.childNodes[0].className).to.equal('lp-json-pollock-layout-vertical');
-      chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(4);
+      chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(3);
     });
 
     it('An element of type image should be created', function () {
@@ -117,16 +105,6 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[2].childNodes[0].textContent).to.equal('Add to cart');
     });
 
-    it('An element of type linkpreview should be created', function () {
-      var layout = rooEl.childNodes[0].childNodes[0];
-      chai.expect(layout.childNodes[3].localName).to.equal('div');
-      chai.expect(layout.childNodes[3].className).to.equal('lp-json-pollock-element-link');
-      chai.expect(layout.childNodes[3].childNodes[0].localName).to.equal('a');
-      chai.expect(layout.childNodes[3].childNodes[0].href).to.equal('http://example.com/');
-      chai.expect(layout.childNodes[3].childNodes[0].title).to.equal('link tooltip');
-      chai.expect(layout.childNodes[3].childNodes[0].target).to.equal('_blank');
-    });
-
     it('Check for style generation of text element', function () {
       var layout = rooEl.childNodes[0].childNodes[0];
       chai.expect(layout.childNodes[1].childNodes[0].style).to.be.exist;
@@ -143,15 +121,6 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[2].childNodes[0].style.fontWeight).to.equal('');
       chai.expect(layout.childNodes[2].childNodes[0].style.fontSize).to.equal('13px');
       chai.expect(layout.childNodes[2].childNodes[0].style.fontStyle).to.equal('');
-    });
-
-    it('Check for style generation of linkpreview element', function () {
-      var layout = rooEl.childNodes[0].childNodes[0];
-      chai.expect(layout.childNodes[3].childNodes[0].style).to.be.exist;
-      chai.expect(layout.childNodes[3].childNodes[0].style.color).to.equal('rgb(0, 0, 0)');
-      chai.expect(layout.childNodes[3].childNodes[0].style.fontWeight).to.equal('bold');
-      chai.expect(layout.childNodes[3].childNodes[0].style.fontSize).to.equal('11px');
-      chai.expect(layout.childNodes[3].childNodes[0].style.fontStyle).to.equal('italic');
     });
 
   });
