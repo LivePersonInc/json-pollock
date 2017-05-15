@@ -43,12 +43,18 @@ module.exports = {
       failOnError: true,
     }),
     new ExtractTextPlugin('json-pollock.css'),
+    new webpack.optimize.UglifyJsPlugin({
+      include: /\.min\.js$/,
+      minimize: true,
+    }),
   ],
   entry: {
-    app: './index.js',
+    'json-pollock': './index.js',
+    'json-pollock.min': './index.js',
   },
+  devtool: 'source-map',
   output: {
-    filename: 'json-pollock.js',
+    filename: '[name].js',
     library: 'JsonPollock',
     libraryTarget: 'umd',
     umdNamedDefine: true,
