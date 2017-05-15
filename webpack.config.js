@@ -42,13 +42,13 @@ module.exports = {
     new FlowStatusWebpackPlugin({
       failOnError: true,
     }),
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin('json-pollock.css'),
   ],
   entry: {
     app: './index.js',
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'json-pollock.js',
     library: 'JsonPollock',
     libraryTarget: 'umd',
     umdNamedDefine: true,
