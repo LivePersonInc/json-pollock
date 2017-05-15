@@ -59,5 +59,8 @@
   "dependencies": {
     "chronosjs": "^0.0.23",
     "jsonschema": "^1.1.1"
+  },
+  "publishConfig": {
+    "registry": "http://tlvmvnrepository/artifactory/api/npm/lp-npm-local/"
   }
 }
