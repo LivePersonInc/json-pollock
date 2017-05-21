@@ -22,7 +22,7 @@ export default class ElementRendererProvider {
 
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
-      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}">${config.text}</span>`;
+      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" aria-label="${config.tooltip || ''}">${config.text}</span>`;
       return divEl;
     });
 
@@ -37,6 +37,7 @@ export default class ElementRendererProvider {
 
       if (config.tooltip) {
         btnEl.title = config.tooltip;
+        btnEl.setAttribute('aria-label', config.tooltip);
       }
       if (config.style) {
         btnEl.style.cssText = Utils.styleToCss(config.style);
@@ -62,6 +63,7 @@ export default class ElementRendererProvider {
       imgEl.src = config.url;
       if (config.tooltip) {
         imgEl.title = config.tooltip;
+        imgEl.setAttribute('aria-label', config.tooltip);
       }
       if (config.style) {
         imgEl.style.cssText = Utils.styleToCss(config.style);
