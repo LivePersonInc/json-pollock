@@ -1,5 +1,5 @@
 [ignore]
-.*/node_modules/.*\.json$
+.*/node_modules/config-chain/test/.*\.json$
 
 [include]
 

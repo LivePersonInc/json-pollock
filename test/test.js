@@ -17,8 +17,8 @@ describe('json-pollock tests', function () {
             "type": "navigate",
             "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
             "name": "Navigate to store via image",
-            "lo": "23423423",
-            "la": "2423423423"
+            "lo": 23423423,
+            "la": 2423423423
           }
         }, {
           "type": "text",
@@ -28,7 +28,7 @@ describe('json-pollock tests', function () {
             "bold": true,
             "italic": true,
             "color": "red",
-            "size": 'large'
+            "size": "large"
           },
         }, {
           "type": "button",
@@ -38,6 +38,7 @@ describe('json-pollock tests', function () {
             "type": "link",
             "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
             "name": "add to cart",
+            "uri": "http://example.jpg",
             "ios": {
               "uri": "specific uri for iOS"
             },
@@ -151,8 +152,8 @@ describe('json-pollock tests', function () {
             "type": "navigate",
             "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
             "name": "Navigate to store via image",
-            "lo": "23423423",
-            "la": "2423423423"
+            "lo": 23423423,
+            "la": 2423423423
           }
         }, {
           "type": "button",
@@ -162,6 +163,7 @@ describe('json-pollock tests', function () {
             "type": "link",
             "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
             "name": "add to cart",
+            "uri": "https://example.com",
             "ios": {
               "uri": "specific uri for iOS"
             },

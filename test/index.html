@@ -8,40 +8,15 @@
   <title>SC Test</title>
 
   <link rel="stylesheet" href="/dist/json-pollock.css">
-  <script src="/dist/json-pollock.min.js"></script>
+  <script src="/dist/json-pollock.js"></script>
   <script>
     window.onload = function () {
 
-      // let conf = {
-      //   "type": "text",
-      //   "text": "This is an example for text element",
-      //   "tooltip": "text tooltip",
-      //   "rtl": true
-      // }
-
-      // let conf = {
-      //   "type": "button",
-      //   "title": "Push Me!",
-      //   "action": {
-      //   },
-      //   "tooltip": "button tooltip",
-      //   "rtl": true
-      // }
-
-      // let conf = {
-      //   "type": "image",
-      //   "url": "https://pbs.twimg.com/profile_images/765263431318511617/HfUmI60s.jpg",
-      //   "caption": "This is an example of image caption",
-      //   "action": {
-      //   },
-      //   "tooltip": "image tooltip",
-      //   "rtl": true
-      // }
-
-      let conf = {
+       let conf = {
         "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
-        "elements": [{
+        "elements": [
+          {
           "type": "image",
           "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
           "tooltip": "image tooltip",
@@ -49,39 +24,44 @@
             "type": "navigate",
             "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
             "name": "Navigate to store via image",
-            "lo": "23423423",
-            "la": "2423423423"
+            "lo": 23423423,
+            "la": 2423423423
           }
-        }, {
+        },
+        {
           "type": "text",
           "text": "product name (Title)",
           "tooltip": "text tooltip",
           "style": {
             "bold": true,
-            "size": 'large'
+            "size": "large"
           }
-        }, {
+        }
+        , {
           "type": "text",
           "text": "product category (type)",
           "tooltip": "text tooltip"
-        }, {
+        }
+        , {
           "type": "text",
           "text": "$155.99",
           "tooltip": "text tooltip"
-        }, {
+        }
+        , {
           "type": "button",
           "title": "Add to cart",
-          // "style": {
-          //   "bold": true,
-          //   "italic": true,
-          //   "color": "red",
-          //   "background-color": "blue",
-          //   "size": 'large'
-          // },
+          "style": {
+            "bold": true,
+            "italic": true,
+            "color": "red",
+            "background-color": "blue",
+            "size": 'large'
+          },
           "action": {
             "type": "link",
             "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
             "name": "add to cart",
+            "uri": "http://www.google.com",
             "ios": {
               "uri": "specific uri for iOS"
             },
@@ -92,7 +72,8 @@
               "uri": "specific uri for Web"
             }
           }
-        },{
+        }
+        ,{
           "type": "button",
           "title": "Navigate to store",
           "tooltip": "store is the thing",
@@ -100,19 +81,21 @@
             "type": "navigate",
             "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
             "name": "Navigate to store",
-            "lo": "23423423",
-            "la": "2423423423"
+            "lo": 23423423,
+            "la": 2423423423
           }
-        }, {
+        }, 
+        {
           "type": "button",
           "title": "Open web page",
           "action": {
             "type": "link",
             "id": "15ffab70-de0e-42df-9576-290c2249aa24",
-            "uri": "www.google.com",
+            "uri": "http://www.google.com",
             "name": "open browser"
           }
-        }]
+        }
+        ]
       }
 
       // lpJsonPollock.init({maxAllowedElements: 5});

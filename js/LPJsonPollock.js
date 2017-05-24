@@ -1,6 +1,11 @@
 // @flow
-// import jsonschema from 'jsonschema';
+import Ajv from 'ajv';
 import ElementRendererProvider from './ElementRendererProvider';
+import actionSchema from './schema/action.json';
+import basicSchema from './schema/basic.json';
+import elementSchema from './schema/element.json';
+import styleSchema from './schema/style.json';
+
 /*eslint-disable */
 const Events = require('Chronosjs/dist/min/Events');
 /*eslint-enable */
@@ -11,11 +16,17 @@ export default class LPJsonPollock {
   events: Events;
   currentNumOfElements: number;
   maxAllowedElements: number;
+  jsonValidator: Ajv;
 
   constructor() {
     this.events = new Events({ cloneEventData: true });
     this.provider = new ElementRendererProvider(this.events);
     this.maxAllowedElements = 50;
+    const ajv = new Ajv({ format: 'full', unknownFormats: 'ignore', verbose: true });
+    ajv.addSchema(actionSchema, 'action.json');
+    ajv.addSchema(basicSchema, 'basic.json');
+    ajv.addSchema(styleSchema, 'style.json');
+    this.jsonValidator = ajv.compile(elementSchema);
   }
 
   init(config: Object) {
@@ -49,7 +60,13 @@ export default class LPJsonPollock {
   }
 
   render(json: Object): DocumentFragment {
-    // TODO: once jsonschems is available replace validation with jsonschema.Validator();
+    this.jsonValidator(json);
+    if (this.jsonValidator.errors) {
+      throw new Error({
+        message: 'Schema validation error',
+        errors: this.jsonValidator.errors,
+      });
+    }
     const frag = document.createDocumentFragment();
     const divEl = document.createElement('div');
     divEl.className = 'lp-json-pollock';
