@@ -195,4 +195,69 @@ describe('json-pollock tests', function () {
     });
 
   });
+
+  describe('render json string', function () {
+
+    var rooEl = null;
+
+    before(function () {
+      var conf = {
+        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
+        "type": "vertical",
+        "elements": [{
+          "type": "image",
+          "url": "http://example.jpg",
+          "tooltip": "image tooltip",
+          "action": {
+            "type": "navigate",
+            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+            "name": "Navigate to store via image",
+            "lo": 23423423,
+            "la": 2423423423
+          }
+        }, {
+          "type": "text",
+          "text": "product name (Title)",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "italic": true,
+            "color": "red",
+            "size": "large"
+          },
+        }, {
+          "type": "button",
+          "tooltip": "button tooltip",
+          "title": "Add to cart",
+          "action": {
+            "type": "link",
+            "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+            "name": "add to cart",
+            "uri": "http://example.jpg",
+            "ios": {
+              "uri": "specific uri for iOS"
+            },
+            "android": {
+              "uri": "specific uri for Android"
+            },
+            "web": {
+              "uri": "specific uri for Web"
+            }
+          },
+          "style": {
+            "bold": false,
+            "italic": false,
+            "color": "red",
+            "size": 'medium'
+          },
+        },]
+      }
+
+      rooEl = JsonPollock.render(JSON.stringify(conf));
+    });
+
+    it('DOM element exists', function () {
+      chai.expect(rooEl).to.be.instanceOf(DocumentFragment);
+    });
+  });
 });

@@ -107,7 +107,7 @@
       JsonPollock.registerAction('link', (data) => {
         alert(JSON.stringify(data));
       });
-      const el = JsonPollock.render(conf);
+      const el = JsonPollock.render(JSON.stringify(conf));
       document.getElementById('content').appendChild(el);
     }
   </script>

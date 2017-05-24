@@ -54,4 +54,8 @@ export default {
       }
     });
   },
+
+  isString(val: any): boolean {
+    return (val instanceof String || typeof val === 'string');
+  },
 };

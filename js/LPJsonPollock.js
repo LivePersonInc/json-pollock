@@ -1,6 +1,7 @@
 // @flow
 import Ajv from 'ajv';
 import ElementRendererProvider from './ElementRendererProvider';
+import Utils from './Utils';
 import actionSchema from './schema/action.json';
 import basicSchema from './schema/basic.json';
 import elementSchema from './schema/element.json';
@@ -59,8 +60,15 @@ export default class LPJsonPollock {
     }
   }
 
-  render(json: Object): DocumentFragment {
-    this.jsonValidator(json);
+  render(json: Object|string): DocumentFragment {
+    let jsonObj: Object;
+    if (Utils.isString(json)) {
+      // This will throws an error if fails
+      jsonObj = JSON.parse((json: any));
+    } else {
+      jsonObj = (json: any);
+    }
+    this.jsonValidator(jsonObj);
     if (this.jsonValidator.errors) {
       throw new Error({
         message: 'Schema validation error',
@@ -71,7 +79,7 @@ export default class LPJsonPollock {
     const divEl = document.createElement('div');
     divEl.className = 'lp-json-pollock';
     frag.appendChild(divEl);
-    this.renderElement(json, divEl);
+    this.renderElement(jsonObj, divEl);
     return frag;
   }
 
