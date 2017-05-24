@@ -77,10 +77,15 @@ export default class ElementRendererProvider {
         divEl.className = 'lp-json-pollock-element-image';
       };
 
+      imgEl.onerror = () => {
+        divEl.className = 'lp-json-pollock-element-image error';
+        divEl.title = 'fail to load image';
+        imgEl.style.display = 'none';
+      };
+
       if (config.action) {
         imgEl.onclick = this.wrapAction(config.action);
       }
-
       divEl.appendChild(imgEl);
 
       return divEl;

@@ -260,4 +260,52 @@ describe('json-pollock tests', function () {
       chai.expect(rooEl).to.be.instanceOf(DocumentFragment);
     });
   });
+
+   describe('Image element fail to load', function () {
+    
+    var rooEl = null;
+    var imgDiv = null;
+    var imgEl = null;
+
+    before(function (done) {
+      var conf = {
+        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
+        "type": "vertical",
+        "elements": [{
+          "type": "image",
+          "url": "http://does_not_exists.jpg",
+          "tooltip": "image tooltip",
+          "action": {
+            "type": "navigate",
+            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+            "name": "Navigate to store via image",
+            "lo": 23423423,
+            "la": 2423423423
+          }
+        }]
+      }
+
+      rooEl = JsonPollock.render(JSON.stringify(conf));
+      imgDiv = rooEl.children[0].children[0].children[0];
+      imgEl = imgDiv.children[0];
+      var originalOnError = imgEl.onerror;
+      imgEl.onerror = function() {
+        originalOnError.call(imgEl);
+        done();
+      }
+    });
+
+    it('Image div should have error class', function () {
+      chai.expect(imgDiv.className).to.contain('error');
+    });
+
+    it('Image div should have error message in title', function () {
+      chai.expect(imgDiv.title).to.equal('fail to load image');
+    });
+
+    it('Image element should be hidden', function () {
+      chai.expect(imgEl.style.display).to.equal('none');
+    });
+
+   });
 });
