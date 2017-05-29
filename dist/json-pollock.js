@@ -2054,9 +2054,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 /*eslint-disable */
 var Events = __webpack_require__(4);
 /*eslint-enable */
+
+var JsonPollockError = function (_Error) {
+  _inherits(JsonPollockError, _Error);
+
+  function JsonPollockError(message, errors) {
+    _classCallCheck(this, JsonPollockError);
+
+    var _this = _possibleConstructorReturn(this, (JsonPollockError.__proto__ || Object.getPrototypeOf(JsonPollockError)).call(this, message));
+
+    _this.errors = errors;
+    return _this;
+  }
+
+  return JsonPollockError;
+}(Error);
 
 var LPJsonPollock = function () {
   function LPJsonPollock() {
@@ -2085,7 +2104,7 @@ var LPJsonPollock = function () {
   }, {
     key: 'renderElement',
     value: function renderElement(elJson, parent) {
-      var _this = this;
+      var _this2 = this;
 
       var numOfElements = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
@@ -2102,7 +2121,7 @@ var LPJsonPollock = function () {
           if (Array.isArray(elJson.elements)) {
             elJson.elements.forEach(function (elementConf) {
               currentNumOfElements += 1;
-              _this.renderElement(elementConf, element, currentNumOfElements);
+              _this2.renderElement(elementConf, element, currentNumOfElements);
             });
           }
         }
@@ -2120,10 +2139,7 @@ var LPJsonPollock = function () {
       }
       this.jsonValidator(jsonObj);
       if (this.jsonValidator.errors) {
-        throw new Error({
-          message: 'Schema validation error',
-          errors: this.jsonValidator.errors
-        });
+        throw new JsonPollockError('Schema validation error, see \'errors\' for more details', this.jsonValidator.errors);
       }
       var frag = document.createDocumentFragment();
       var divEl = document.createElement('div');

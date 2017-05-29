@@ -11,6 +11,16 @@ import styleSchema from './schema/style.json';
 const Events = require('Chronosjs/dist/min/Events');
 /*eslint-enable */
 
+class JsonPollockError extends Error {
+
+  errors: Array<Object>;
+
+  constructor(message, errors) {
+    super(message);
+    this.errors = errors;
+  }
+}
+
 export default class LPJsonPollock {
 
   provider: ElementRendererProvider;
@@ -70,10 +80,7 @@ export default class LPJsonPollock {
     }
     this.jsonValidator(jsonObj);
     if (this.jsonValidator.errors) {
-      throw new Error({
-        message: 'Schema validation error',
-        errors: this.jsonValidator.errors,
-      });
+      throw new JsonPollockError('Schema validation error, see \'errors\' for more details', this.jsonValidator.errors);
     }
     const frag = document.createDocumentFragment();
     const divEl = document.createElement('div');
