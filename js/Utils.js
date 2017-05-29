@@ -1,5 +1,7 @@
 // @flow
 
+const LAYOUT_TYPES = ['vertical', 'horizontal'];
+
 export default {
 
   styleToCss(style: Object): string {
@@ -57,5 +59,9 @@ export default {
 
   isString(val: any): boolean {
     return (val instanceof String || typeof val === 'string');
+  },
+
+  isLayout(type: string) {
+    return LAYOUT_TYPES.indexOf(type) >= 0;
   },
 };

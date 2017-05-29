@@ -18,8 +18,6 @@ export default class ElementRendererProvider {
     predefined renderes
     */
     this.set('text', (config): HTMLElement => {
-      Utils.validateParameters(config, 'text');
-
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
       divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" aria-label="${config.tooltip || ''}">${config.text}</span>`;
@@ -27,8 +25,6 @@ export default class ElementRendererProvider {
     });
 
     this.set('button', (config): HTMLElement => {
-      Utils.validateParameters(config, 'title', 'action');
-
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-button';
 
@@ -53,8 +49,6 @@ export default class ElementRendererProvider {
     });
 
     this.set('image', (config): HTMLElement => {
-      Utils.validateParameters(config, 'url');
-
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-image loading';
 
@@ -91,9 +85,7 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set('vertical', (config): HTMLElement => {
-      Utils.validateParameters(config, 'elements');
-
+    this.set('vertical', (): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout-vertical';
       return divEl;

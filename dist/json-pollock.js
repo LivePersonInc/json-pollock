@@ -1616,6 +1616,8 @@ module.exports = function generate_validate(it, $keyword, $ruleType) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var LAYOUT_TYPES = ['vertical', 'horizontal'];
+
 exports.default = {
   styleToCss: function styleToCss(style) {
     var cssStr = '';
@@ -1673,6 +1675,9 @@ exports.default = {
   },
   isString: function isString(val) {
     return val instanceof String || typeof val === 'string';
+  },
+  isLayout: function isLayout(type) {
+    return LAYOUT_TYPES.indexOf(type) >= 0;
   }
 };
 
@@ -2097,8 +2102,12 @@ var LPJsonPollock = function () {
       if (!config) {
         return;
       }
-      if (!isNaN(config.maxAllowedElements)) {
-        this.maxAllowedElements = config.maxAllowedElements;
+      if (Object.prototype.hasOwnProperty.call(config, 'maxAllowedElements')) {
+        if (!isNaN(config.maxAllowedElements) && config.maxAllowedElements > 0) {
+          this.maxAllowedElements = config.maxAllowedElements;
+        } else {
+          this.maxAllowedElements = 50;
+        }
       }
     }
   }, {
@@ -2136,6 +2145,9 @@ var LPJsonPollock = function () {
         jsonObj = JSON.parse(json);
       } else {
         jsonObj = json;
+      }
+      if (!_Utils2.default.isLayout(jsonObj.type)) {
+        throw new JsonPollockError('Root element must be layout');
       }
       this.jsonValidator(jsonObj);
       if (this.jsonValidator.errors) {
@@ -6798,8 +6810,6 @@ var ElementRendererProvider = function () {
     predefined renderes
     */
     this.set('text', function (config) {
-      _Utils2.default.validateParameters(config, 'text');
-
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
       divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" aria-label="' + (config.tooltip || '') + '">' + config.text + '</span>';
@@ -6807,8 +6817,6 @@ var ElementRendererProvider = function () {
     });
 
     this.set('button', function (config) {
-      _Utils2.default.validateParameters(config, 'title', 'action');
-
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-button';
 
@@ -6833,8 +6841,6 @@ var ElementRendererProvider = function () {
     });
 
     this.set('image', function (config) {
-      _Utils2.default.validateParameters(config, 'url');
-
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-image loading';
 
@@ -6871,9 +6877,7 @@ var ElementRendererProvider = function () {
       return divEl;
     });
 
-    this.set('vertical', function (config) {
-      _Utils2.default.validateParameters(config, 'elements');
-
+    this.set('vertical', function () {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout-vertical';
       return divEl;

@@ -13,7 +13,7 @@ const Events = require('Chronosjs/dist/min/Events');
 
 class JsonPollockError extends Error {
 
-  errors: Array<Object>;
+  errors: ?Array<Object>;
 
   constructor(message, errors) {
     super(message);
@@ -44,8 +44,12 @@ export default class LPJsonPollock {
     if (!config) {
       return;
     }
-    if (!isNaN(config.maxAllowedElements)) {
-      this.maxAllowedElements = config.maxAllowedElements;
+    if (Object.prototype.hasOwnProperty.call(config, 'maxAllowedElements')) {
+      if (!isNaN(config.maxAllowedElements) && config.maxAllowedElements > 0) {
+        this.maxAllowedElements = config.maxAllowedElements;
+      } else {
+        this.maxAllowedElements = 50;
+      }
     }
   }
 
@@ -77,6 +81,9 @@ export default class LPJsonPollock {
       jsonObj = JSON.parse((json: any));
     } else {
       jsonObj = (json: any);
+    }
+    if (!Utils.isLayout(jsonObj.type)) {
+      throw new JsonPollockError('Root element must be layout');
     }
     this.jsonValidator(jsonObj);
     if (this.jsonValidator.errors) {
