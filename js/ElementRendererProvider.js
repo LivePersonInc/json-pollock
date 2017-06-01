@@ -20,6 +20,9 @@ export default class ElementRendererProvider {
     this.set('text', (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
+      if (config.rtl) {
+        divEl.className += ' direction-rtl';
+      }
       divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" aria-label="${config.tooltip || ''}">${config.text}</span>`;
       return divEl;
     });
@@ -27,6 +30,10 @@ export default class ElementRendererProvider {
     this.set('button', (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-button';
+
+      if (config.rtl) {
+        divEl.className += ' direction-rtl';
+      }
 
       const btnEl = document.createElement('button');
       btnEl.textContent = config.title;
@@ -51,6 +58,10 @@ export default class ElementRendererProvider {
     this.set('image', (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-image loading';
+
+      if (config.rtl) {
+        divEl.className += ' direction-rtl';
+      }
 
       const imgEl = document.createElement('img');
 

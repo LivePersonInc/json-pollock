@@ -19,6 +19,7 @@
     }
 
     .lp-json-pollock-element-button {
+        width: 100%;
         button {
             border: none;
             border-top: $default-border;
@@ -59,5 +60,9 @@
             width: 100%;
             height: auto;
         }
+    }
+
+    .direction-rtl {
+        float: right;
     }
 }

@@ -6812,6 +6812,9 @@ var ElementRendererProvider = function () {
     this.set('text', function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
+      if (config.rtl) {
+        divEl.className += ' direction-rtl';
+      }
       divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" aria-label="' + (config.tooltip || '') + '">' + config.text + '</span>';
       return divEl;
     });
@@ -6819,6 +6822,10 @@ var ElementRendererProvider = function () {
     this.set('button', function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-button';
+
+      if (config.rtl) {
+        divEl.className += ' direction-rtl';
+      }
 
       var btnEl = document.createElement('button');
       btnEl.textContent = config.title;
@@ -6843,6 +6850,10 @@ var ElementRendererProvider = function () {
     this.set('image', function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-image loading';
+
+      if (config.rtl) {
+        divEl.className += ' direction-rtl';
+      }
 
       var imgEl = document.createElement('img');
 
