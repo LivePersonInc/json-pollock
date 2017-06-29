@@ -46,8 +46,8 @@ export default class ElementRendererProvider {
         btnEl.style.cssText = Utils.styleToCss(config.style);
       }
 
-      if (config.action) {
-        btnEl.onclick = this.wrapAction(config.action);
+      if (config.click && config.click.actions) {
+        btnEl.onclick = this.wrapAction(config.click);
       }
 
       divEl.appendChild(btnEl);
@@ -88,8 +88,8 @@ export default class ElementRendererProvider {
         imgEl.style.display = 'none';
       };
 
-      if (config.action) {
-        imgEl.onclick = this.wrapAction(config.action);
+      if (config.click && config.click.actions) {
+        imgEl.onclick = this.wrapAction(config.click);
       }
       divEl.appendChild(imgEl);
 
@@ -111,12 +111,19 @@ export default class ElementRendererProvider {
     this.elements[type] = render;
   }
 
-  wrapAction(actionData: Object): Function {
+  wrapAction(clickData: Object): Function {
     return () => {
-      this.events.trigger({
-        eventName: actionData.type,
-        data: actionData,
-      });
+      if (clickData.actions instanceof Array) {
+        clickData.actions.forEach((actionData) => {
+          this.events.trigger({
+            eventName: actionData.type,
+            data: {
+              actionData,
+              metadata: clickData.metadata,
+            },
+          });
+        });
+      }
     };
   }
 }

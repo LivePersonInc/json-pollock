@@ -51,11 +51,13 @@ The *render* function renders json into a DOM element.
         "type": "image",
         "url": "http://assets/phone.jpg",
         "tooltip": "Great Phone!",
-        "action": {
-          "type": "navigate",
-          "name": "Navigate to store via image",
-          "lo": 23423423,
-          "la": 2423423423
+        "click": {
+          "actions": [{
+            "type": "navigate",
+            "name": "Navigate to store via image",
+            "lo": 23423423,
+            "la": 2423423423
+          }]
         }
       }]
     }
@@ -67,7 +69,8 @@ The *render* function renders json into a DOM element.
 The *registerAction* function allow to register a callback to a certain action type, as defined in the [RFC](https://lpgithub.dev.lprnd.net/lp-mobile/Structured-Messaging-Templates#actions).
 
     const linkCallback = (data) => {
-	    window.open(data.uri,"_blank")
+        //data => {actionData: <action configuration>, metadata: <metadata configuration, if given>}
+	    window.open(data.actionData.uri,"_blank")
     };
     JsonPollock.registerAction('link', linkCallback);
 

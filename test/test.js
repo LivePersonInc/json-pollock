@@ -8,12 +8,14 @@ describe('json-pollock tests', function () {
       "type": "image",
       "url": "http://example.jpg",
       "tooltip": "image tooltip",
-      "action": {
-        "type": "navigate",
-        "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
-        "name": "Navigate to store via image",
-        "lo": 23423423,
-        "la": 2423423423
+      "click": {
+        "actions": [{
+          "type": "navigate",
+          "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+          "name": "Navigate to store via image",
+          "lo": 23423423,
+          "la": 2423423423
+        }]
       }
     }, {
       "type": "text",
@@ -29,20 +31,13 @@ describe('json-pollock tests', function () {
       "type": "button",
       "tooltip": "button tooltip",
       "title": "Add to cart",
-      "action": {
-        "type": "link",
-        "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
-        "name": "add to cart",
-        "uri": "http://example.jpg",
-        "ios": {
-          "uri": "specific uri for iOS"
-        },
-        "android": {
-          "uri": "specific uri for Android"
-        },
-        "web": {
-          "uri": "specific uri for Web"
-        }
+      "click": {
+        "actions": [{
+          "type": "link",
+          "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+          "name": "add to cart",
+          "uri": "http://example.jpg"
+        }]
       },
       "style": {
         "bold": false,
@@ -148,32 +143,40 @@ describe('json-pollock tests', function () {
           "type": "image",
           "url": "http://example.jpg",
           "tooltip": "image tooltip",
-          "action": {
-            "type": "navigate",
-            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
-            "name": "Navigate to store via image",
-            "lo": 23423423,
-            "la": 2423423423
+          "click": {
+            "actions": [{
+              "type": "navigate",
+              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+              "name": "Navigate to store via image",
+              "lo": 23423423,
+              "la": 2423423423
+            }]
           }
         }, {
           "type": "button",
           "tooltip": "button tooltip",
           "title": "Add to cart",
-          "action": {
-            "type": "link",
-            "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
-            "name": "add to cart",
-            "uri": "https://example.com",
-            "ios": {
-              "uri": "specific uri for iOS"
-            },
-            "android": {
-              "uri": "specific uri for Android"
-            },
-            "web": {
-              "uri": "specific uri for Web"
-            }
-          },
+          "click": {
+            "actions": [{
+              "type": "link",
+              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+              "name": "add to cart",
+              "uri": "https://example.com"   
+            }]
+          }
+        },{
+          "type": "button",
+          "tooltip": "button tooltip",
+          "title": "Publish text",
+          "click": {
+            "metadata": [{
+              "event": "PublishTextEvent"
+            }],
+            "actions": [{
+              "type": "publishText",
+              "text": "my text",
+            }]
+          }
         },]
       }
 
@@ -184,14 +187,21 @@ describe('json-pollock tests', function () {
       var spy = sinon.spy();
       JsonPollock.registerAction('navigate', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[0].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy).to.have.been.calledWith(conf.elements[0].action);
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[0].click.actions[0]});
     });
 
     it('Click on element with link action ahould trigger its registered callbacks', function () {
       var spy = sinon.spy();
       JsonPollock.registerAction('link', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy).to.have.been.calledWith(conf.elements[1].action);
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0]});
+    });
+
+    it('Click on element with publishText action ahould trigger its registered callbacks', function () {
+      var spy = sinon.spy();
+      JsonPollock.registerAction('publishText', spy);
+      rooEl.childNodes[0].childNodes[0].childNodes[2].childNodes[0].dispatchEvent(createClickEvent());
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[2].click.actions[0], metadata: conf.elements[2].click.metadata});
     });
 
   });
@@ -208,12 +218,14 @@ describe('json-pollock tests', function () {
           "type": "image",
           "url": "http://example.jpg",
           "tooltip": "image tooltip",
-          "action": {
-            "type": "navigate",
-            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
-            "name": "Navigate to store via image",
-            "lo": 23423423,
-            "la": 2423423423
+          "click": {
+            "actions": [{
+              "type": "navigate",
+              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+              "name": "Navigate to store via image",
+              "lo": 23423423,
+              "la": 2423423423
+            }]
           }
         }, {
           "type": "text",
@@ -229,20 +241,13 @@ describe('json-pollock tests', function () {
           "type": "button",
           "tooltip": "button tooltip",
           "title": "Add to cart",
-          "action": {
-            "type": "link",
-            "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
-            "name": "add to cart",
-            "uri": "http://example.jpg",
-            "ios": {
-              "uri": "specific uri for iOS"
-            },
-            "android": {
-              "uri": "specific uri for Android"
-            },
-            "web": {
-              "uri": "specific uri for Web"
-            }
+          "click": {
+            "actions": [{
+              "type": "link",
+              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+              "name": "add to cart",
+              "uri": "http://example.jpg"
+            }]
           },
           "style": {
             "bold": false,
@@ -275,12 +280,14 @@ describe('json-pollock tests', function () {
           "type": "image",
           "url": "http://does_not_exists.jpg",
           "tooltip": "image tooltip",
-          "action": {
-            "type": "navigate",
-            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
-            "name": "Navigate to store via image",
-            "lo": 23423423,
-            "la": 2423423423
+          "click": {
+            "actions": [{
+              "type": "navigate",
+              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+              "name": "Navigate to store via image",
+              "lo": 23423423,
+              "la": 2423423423
+            }]
           }
         }]
       }
@@ -395,10 +402,12 @@ describe('json-pollock tests', function () {
           "type": "vertical",
           "elements": [{
             "type": "button",
-            "action": {
-              "type": "navigate",
-              "lo": 23423423,
-              "la": 2423423423
+            "click": {
+              "actions": [{
+                "type": "navigate",
+                "lo": 23423423,
+                "la": 2423423423
+              }]
             },
             "tooltip": "button tooltip",
             "rtl": true
@@ -440,9 +449,11 @@ describe('json-pollock tests', function () {
           "elements": [{
             "type": "button",
             "title": "mytitle",
-            "action": {
-              "type": "navigate",
-              "la": 2423423423
+            "click": {
+              "actions": [{
+                "type": "navigate",
+                "la": 2423423423
+              }]
             },
             "tooltip": "button tooltip",
             "rtl": true
@@ -454,9 +465,11 @@ describe('json-pollock tests', function () {
           "elements": [{
             "type": "button",
             "title": "mytitle",
-            "action": {
-              "type": "navigate",
-              "lo": 2423423423
+            "click": {
+              "actions": [{
+                "type": "navigate",
+                "lo": 2423423423
+              }]
             },
             "tooltip": "button tooltip",
             "rtl": true
@@ -472,8 +485,10 @@ describe('json-pollock tests', function () {
           "elements": [{
             "type": "button",
             "title": "mytitle",
-            "action": {
-              "type": "link"
+            "click": {
+              "actions": [{
+                "type": "link"
+              }]
             },
             "tooltip": "button tooltip",
             "rtl": true
@@ -496,10 +511,12 @@ describe('json-pollock tests', function () {
             "elements": [{
               "type": "button",
               "title": "mytitle",
-              "action": {
-                "type": "navigate",
-                "lo": "2423423423",
-                "la": 7897967267
+              "click": {
+                "actions": [{
+                  "type": "navigate",
+                  "lo": "2423423423",
+                  "la": 7897967267
+                }]
               },
               "tooltip": "button tooltip",
               "rtl": true
@@ -515,11 +532,13 @@ describe('json-pollock tests', function () {
             "elements": [{
               "type": "button",
               "title": "mytitle",
-              "action": {
-                "type": "navigate",
-                "lo": 2423423423,
-                "la": "7897967267"
-              },
+              "click": {
+                "actions": [{
+                  "type": "navigate",
+                  "lo": 2423423423,
+                  "la": "7897967267"
+                }]
+              },              
               "tooltip": "button tooltip",
               "rtl": true
             }]
@@ -538,10 +557,12 @@ describe('json-pollock tests', function () {
             "elements": [{
               "type": "button",
               "title": "mytitle",
-              "action": {
-                "type": "link",
-                "uri": "www.example.com"
-              },
+              "click": {
+                "actions": [{
+                  "type": "link",
+                  "uri": "www.example.com"
+                }]
+              },              
               "tooltip": "button tooltip",
               "rtl": true
             }]
