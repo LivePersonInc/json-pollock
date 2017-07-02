@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Json Pollock Playground</h1>
+    <Header></Header>
     <JSONEditor class="jsoneditor_container"></JSONEditor>
     <JSONPollock class="jsonpollock_container"></JSONPollock>
   </div>
@@ -8,12 +8,14 @@
 
 <script>
 // import _ from 'lodash';
+import Header from './Header';
 import JSONEditor from './JSONEditor';
 import JSONPollock from './JSONPollock';
 
 export default {
   name: 'app',
   components: {
+    Header,
     JSONEditor,
     JSONPollock,
   },
@@ -33,13 +35,19 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  height: calc(100% - 80px);
+  color: #2c3e50;  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background: url(assets/pollock-paint.jpg);
 }
 
 .editor_container {
   width: 48%;
-  height:calc(100% - 200px);
+  height:calc(100% - 120px);
   position: absolute;
 }
 
@@ -53,5 +61,6 @@ export default {
   left: 50%;
   border: solid rgb(56, 131, 250) 1px;
   overflow: auto;
+  background-color: #FFFFFF;
 }
 </style>
