@@ -1,0 +1,54 @@
+<template>
+  <div ref='jsonpollock' class='jsonpollock'>
+    <div class='dom_parent'>
+      <div class='dom_container' ref='dom_container'/>
+    </div>
+  </div>
+</template>
+
+<script>
+// import _ from 'lodash';
+import * as JsonPollock from 'json-pollock/dist/json-pollock';
+
+export default {
+  name: 'JSONPollock',
+  components: {
+  },
+  mounted() {
+    const updateDom = (json) => {
+      let dom = null;
+      try {
+        dom = JsonPollock.render(json);
+        this.$refs.dom_container.innerText = '';
+        this.$refs.dom_container.append(dom);
+      } catch (e) {
+        // do nothing
+      }
+    };
+    this.$store.watch(
+      state => state.json,
+      (val) => {
+        updateDom(val);
+      },
+    );
+    updateDom(this.$store.state.json);
+  },
+};
+
+
+</script>
+
+<style lang="scss" scoped>
+  @import '../node_modules/json-pollock/dist/json-pollock.css';
+
+  .dom_parent {
+    position: relative;
+
+    .dom_container{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 45px);
+    }
+  }
+</style>

@@ -13,20 +13,21 @@ export default {
   components: {
   },
   mounted() {
+    let editor = null;
+
     const options = {
       mode: 'code',
+      onChange: () => {
+        try {
+          const currentJson = editor.get();
+          this.$store.commit('setJson', currentJson);
+        } catch (e) {
+          // wrong json structure, do nothing
+        }
+      },
     };
-    const editor = new JSONEditor(this.$refs.jsoneditor, options);
-
-    const json = {
-      Array: [1, 2, 3],
-      Boolean: true,
-      Null: null,
-      Number: 123,
-      Object: { a: 'b', c: 'd' },
-      String: 'Hello World',
-    };
-    editor.set(json);
+    editor = new JSONEditor(this.$refs.jsoneditor, options);
+    editor.set(this.$store.state.json);
   },
   computed: {
     mystore() {
@@ -36,6 +37,6 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
   @import '../node_modules/jsoneditor/dist/jsoneditor.css';
 </style>

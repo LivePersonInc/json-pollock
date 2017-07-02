@@ -9,13 +9,43 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    table: {
+    json: {
+      type: 'vertical',
+      elements: [
+        {
+          type: 'text',
+          text: 'product name',
+          tooltip: 'product name (Title)',
+        },
+        {
+          type: 'image',
+          url: 'http://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all',
+          caption: 'This is an example of image caption',
+          tooltip: 'image tooltip',
+          rtl: true,
+        },
+        // {
+        //   type: 'button',
+        //   title: 'Open web page',
+        //   click: {
+        //     actions: [
+        //       {
+        //         type: 'publishText',
+        //         text: 'consumer text 2',
+        //       },
+        //     ],
+        //   },
+        // },
+      ],
     },
   },
   mutations: {
-    increment(state) {
-      state.count += 1;
+    setJson(state, json) {
+      state.json = json;
     },
+  },
+  getters: {
+    json: state => state.json,
   },
 });
 
