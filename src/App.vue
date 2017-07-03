@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <Header class="header_container"></Header>
     <JSONEditor class="jsoneditor_container"></JSONEditor>
     <JSONPollock class="jsonpollock_container"></JSONPollock>
   </div>
@@ -45,8 +45,19 @@ export default {
   background: url(assets/pollock-paint.jpg);
 }
 
+.header_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-top: 12px;
+  height: 60px;
+  background-color: #EBEBEB;
+}
+
 .editor_container {
   width: 48%;
+  top: 90px;  
   height:calc(100% - 120px);
   position: absolute;
 }
