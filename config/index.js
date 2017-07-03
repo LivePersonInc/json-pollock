@@ -7,7 +7,7 @@ module.exports = {
     index: path.resolve(__dirname, '../editor/index.html'),
     assetsRoot: path.resolve(__dirname, '../editor'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/editor/',
+    assetsPublicPath: '/pages/WebAgent/json-pollock/editor/', //TODO make generic
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
