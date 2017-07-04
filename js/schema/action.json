@@ -5,8 +5,8 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["text"],
-                    "default": "text",
+                    "enum": ["publishText"],
+                    "default": "publishText",
                     "readonly": true
                 },
                 "text": {
@@ -25,10 +25,10 @@
                     "readonly": true
                 },
                 "la": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "lo": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "name": {
                     "type": "string"

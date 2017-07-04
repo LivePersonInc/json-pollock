@@ -2211,9 +2211,9 @@ module.exports = {
 				"type": {
 					"type": "string",
 					"enum": [
-						"text"
+						"publishText"
 					],
-					"default": "text",
+					"default": "publishText",
 					"readonly": true
 				},
 				"text": {
@@ -2238,10 +2238,10 @@ module.exports = {
 					"readonly": true
 				},
 				"la": {
-					"type": "integer"
+					"type": "number"
 				},
 				"lo": {
-					"type": "integer"
+					"type": "number"
 				},
 				"name": {
 					"type": "string"
@@ -2302,8 +2302,20 @@ module.exports = {
 				"style": {
 					"$ref": "style.json"
 				},
-				"action": {
-					"$ref": "action.json"
+				"click": {
+					"type": "object",
+					"properties": {
+						"actions": {
+							"type": "array",
+							"items": {
+								"$ref": "action.json",
+								"maxLength": 4
+							}
+						},
+						"metadata": {
+							"type": "array"
+						}
+					}
 				}
 			},
 			"required": [
@@ -2392,10 +2404,10 @@ module.exports = {
 							"readonly": true
 						},
 						"lo": {
-							"type": "integer"
+							"type": "number"
 						},
 						"la": {
-							"type": "integer"
+							"type": "number"
 						}
 					},
 					"required": [

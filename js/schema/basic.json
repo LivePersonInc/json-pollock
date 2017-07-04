@@ -14,8 +14,20 @@
                 "style": {
                     "$ref": "style.json"
                 },
-                "action": {
-                    "$ref": "action.json"
+                "click": {
+                    "type": "object",
+                    "properties": {
+                        "actions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "action.json",
+                                "maxLength": 4
+                            }
+                        },
+                        "metadata": {
+                            "type": "array"
+                        }
+                    }
                 }
             },
             "required": ["type"]
@@ -84,10 +96,10 @@
                             "readonly": true
                         },
                         "lo": {
-                            "type": "integer"
+                            "type": "number"
                         },
                         "la": {
-                            "type": "integer"
+                            "type": "number"
                         }
                     },
                     "required": ["lo", "la"]

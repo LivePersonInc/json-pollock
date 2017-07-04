@@ -13,7 +13,7 @@ describe('json-pollock tests', function () {
           "type": "navigate",
           "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
           "name": "Navigate to store via image",
-          "lo": 23423423,
+          "lo": 23.423423,
           "la": 2423423423
         }]
       }
@@ -177,6 +177,24 @@ describe('json-pollock tests', function () {
               "text": "my text",
             }]
           }
+        },{
+          "type": "button",
+          "tooltip": "button tooltip",
+          "title": "Publish text and link",
+          "click": {
+            "metadata": [{
+              "event": "PublishTextEvent"
+            }],
+            "actions": [{
+              "type": "publishText",
+              "text": "my text",
+            },{
+              "type": "link",
+              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+              "name": "add to cart",
+              "uri": "https://example.com"
+            }]
+          }
         },]
       }
 
@@ -202,6 +220,16 @@ describe('json-pollock tests', function () {
       JsonPollock.registerAction('publishText', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[2].childNodes[0].dispatchEvent(createClickEvent());
       chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[2].click.actions[0], metadata: conf.elements[2].click.metadata});
+    });
+
+    it('Click on element with multiple actions should trigger its registered callbacks', function () {
+      var spy1 = sinon.spy();
+      var spy2 = sinon.spy();
+      JsonPollock.registerAction('publishText', spy1);
+      JsonPollock.registerAction('link', spy2);
+      rooEl.childNodes[0].childNodes[0].childNodes[3].childNodes[0].dispatchEvent(createClickEvent());
+      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[3].click.actions[0], metadata: conf.elements[3].click.metadata});
+      chai.expect(spy2).to.have.been.calledWith({actionData: conf.elements[3].click.actions[1], metadata: conf.elements[3].click.metadata});
     });
 
   });
@@ -502,6 +530,31 @@ describe('json-pollock tests', function () {
     });
 
     describe('Type checking', function () {
+
+      describe('Click property of basic element', function () {
+
+        it('actions must be of array type', function () {
+          var actionsWithNonArrayVal = {
+            "type": "vertical",
+            "elements": [{
+              "type": "button",
+              "title": "mytitle",
+              "click": {
+                "actions": {
+                  "type": "navigate",
+                  "lo": 2423423423,
+                  "la": 7897967267
+                }
+              },
+              "tooltip": "button tooltip",
+              "rtl": true
+            }]
+          };
+
+          chai.expect(JsonPollock.render.bind(JsonPollock, actionsWithNonArrayVal)).to.throw(SCHEMA_VALIDATION_ERR);
+        });
+
+      });
 
       describe('Action of type navigation', function () {
 
