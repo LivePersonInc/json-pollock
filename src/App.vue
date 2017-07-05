@@ -60,6 +60,7 @@ export default {
   top: 90px;  
   height:calc(100% - 120px);
   position: absolute;
+  background-color: #FFFFFF;
 }
 
 .jsoneditor_container {
@@ -72,6 +73,5 @@ export default {
   left: 50%;
   border: solid rgb(56, 131, 250) 1px;
   overflow: auto;
-  background-color: #FFFFFF;
 }
 </style>

@@ -7,6 +7,12 @@
 <script>
 // import _ from 'lodash';
 import JSONEditor from 'jsoneditor';
+import Ajv from 'ajv';
+
+import elementSchema from 'json-pollock/js/schema/element.json';
+import basicSchema from 'json-pollock/js/schema/basic.json';
+import actionSchema from 'json-pollock/js/schema/action.json';
+import styleSchema from 'json-pollock/js/schema/style.json';
 
 export default {
   name: 'JSONEditor',
@@ -17,6 +23,14 @@ export default {
 
     const options = {
       mode: 'code',
+      modes: ['code', 'form', 'tree'],
+      ajv: Ajv({ allErrors: false, format: 'full', unknownFormats: 'ignore', verbose: true }),
+      schema: elementSchema,
+      schemaRefs: {
+        'action.json': actionSchema,
+        'basic.json': basicSchema,
+        'style.json': styleSchema,
+      },
       onChange: () => {
         try {
           const currentJson = editor.get();

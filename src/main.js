@@ -13,29 +13,71 @@ const store = new Vuex.Store({
       type: 'vertical',
       elements: [
         {
-          type: 'text',
-          text: 'product name',
-          tooltip: 'product name (Title)',
-        },
-        {
           type: 'image',
           url: 'http://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all',
-          caption: 'This is an example of image caption',
           tooltip: 'image tooltip',
-          rtl: true,
+          click: {
+            actions: [
+              {
+                type: 'navigate',
+                name: 'Navigate to store via image',
+                lo: 23423423,
+                la: 2423423423,
+              },
+            ],
+          },
         },
-        // {
-        //   type: 'button',
-        //   title: 'Open web page',
-        //   click: {
-        //     actions: [
-        //       {
-        //         type: 'publishText',
-        //         text: 'consumer text 2',
-        //       },
-        //     ],
-        //   },
-        // },
+        {
+          type: 'button',
+          tooltip: 'button tooltip',
+          title: 'Add to cart',
+          click: {
+            actions: [
+              {
+                type: 'link',
+                name: 'Add to cart',
+                uri: 'https://example.com',
+              },
+            ],
+          },
+        },
+        {
+          type: 'button',
+          tooltip: 'button tooltip',
+          title: 'Publish text',
+          click: {
+            metadata: [
+              {
+                title: 'Action Reason',
+              },
+            ],
+            actions: [
+              {
+                type: 'publishText',
+                text: 'my text',
+              },
+            ],
+          },
+        },
+        {
+          type: 'button',
+          tooltip: 'button tooltip',
+          title: 'Navigate',
+          click: {
+            actions: [
+              {
+                type: 'publishText',
+                text: 'my text',
+              },
+              {
+                type: 'navigate',
+                name: 'Navigate to store via image',
+                lo: 23423423,
+                la: 2423423423,
+              },
+            ],
+          },
+        },
       ],
     },
   },
