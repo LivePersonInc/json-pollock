@@ -70,7 +70,7 @@ describe('json-pollock tests', function () {
       var wrapdiv = rooEl.childNodes[0];
       chai.expect(wrapdiv.childNodes.length).to.equal(1);
       chai.expect(wrapdiv.childNodes[0].localName).to.equal('div');
-      chai.expect(wrapdiv.childNodes[0].className).to.equal('lp-json-pollock-layout-vertical');
+      chai.expect(wrapdiv.childNodes[0].className).to.equal('lp-json-pollock-layout lp-json-pollock-layout-vertical');
       chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(3);
     });
 
@@ -117,6 +117,65 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[2].childNodes[0].style.fontWeight).to.equal('');
       chai.expect(layout.childNodes[2].childNodes[0].style.fontSize).to.equal('13px');
       chai.expect(layout.childNodes[2].childNodes[0].style.fontStyle).to.equal('');
+    });
+
+  });
+
+  describe('render layout elements', function () {
+
+    var rooEl = null;
+    var firstLayout = null;
+    var secondLayout = null;
+    var textEl = null;
+
+    it('Horizontal nested in Vertical', function () {
+
+      var conf = {       
+        "type": "vertical",
+        "elements": [{
+          "type": "horizontal",
+          "elements": [
+            {
+              "type": "text",
+              "text": "foo"
+            }
+          ]
+        }]
+      }
+
+      rooEl = JsonPollock.render(JSON.stringify(conf));
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
+      textEl = secondLayout.childNodes[0];
+      
+      chai.expect(firstLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-vertical');
+      chai.expect(secondLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-horizontal');
+      chai.expect(textEl.className).to.contain('lp-json-pollock-element-text');
+    });
+
+    it('Vertical nested in Horizontal', function () {
+
+      var conf = {       
+        "type": "horizontal",
+        "elements": [{
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "foo"
+            }
+          ]
+        }]
+      }
+
+      rooEl = JsonPollock.render(JSON.stringify(conf));
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
+      textEl = secondLayout.childNodes[0];
+      
+      chai.expect(firstLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-horizontal');
+      chai.expect(secondLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-vertical');
+      chai.expect(textEl.className).to.contain('lp-json-pollock-element-text');
     });
 
   });
@@ -373,7 +432,7 @@ describe('json-pollock tests', function () {
         var wrapdiv = rooEl.childNodes[0];
         chai.expect(wrapdiv.childNodes.length).to.equal(1);
         chai.expect(wrapdiv.childNodes[0].localName).to.equal('div');
-        chai.expect(wrapdiv.childNodes[0].className).to.equal('lp-json-pollock-layout-vertical');
+        chai.expect(wrapdiv.childNodes[0].className).to.equal('lp-json-pollock-layout lp-json-pollock-layout-vertical');
         chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(1);
       });
 

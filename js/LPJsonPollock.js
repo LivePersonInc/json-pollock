@@ -70,6 +70,9 @@ export default class LPJsonPollock {
             this.renderElement(elementConf, element, currentNumOfElements);
           });
         }
+        if (element.afterRender) {
+          element.afterRender.call(element);
+        }
       }
     }
   }

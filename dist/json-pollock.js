@@ -1688,6 +1688,13 @@ exports.default = {
   },
   isLayout: function isLayout(type) {
     return LAYOUT_TYPES.indexOf(type) >= 0;
+  },
+  normalizeHtmlText: function normalizeHtmlText(text) {
+    var normalized = text;
+    if (text) {
+      normalized = normalized.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+    }
+    return normalized;
   }
 };
 
@@ -2143,6 +2150,9 @@ var LPJsonPollock = function () {
               _this2.renderElement(elementConf, element, currentNumOfElements);
             });
           }
+          if (element.afterRender) {
+            element.afterRender.call(element);
+          }
         }
       }
     }
@@ -2496,6 +2506,7 @@ module.exports = {
 		},
 		{
 			"type": "object",
+			"id": "horizontal",
 			"title": "horizontal",
 			"properties": {
 				"type": {
@@ -2509,7 +2520,14 @@ module.exports = {
 				"elements": {
 					"type": "array",
 					"items": {
-						"$ref": "basic.json"
+						"anyOf": [
+							{
+								"$ref": "basic.json"
+							},
+							{
+								"$ref": "vertical"
+							}
+						]
 					}
 				}
 			},
@@ -2520,6 +2538,7 @@ module.exports = {
 		},
 		{
 			"type": "object",
+			"id": "vertical",
 			"title": "vertical",
 			"properties": {
 				"type": {
@@ -2533,7 +2552,14 @@ module.exports = {
 				"elements": {
 					"type": "array",
 					"items": {
-						"$ref": "basic.json"
+						"anyOf": [
+							{
+								"$ref": "basic.json"
+							},
+							{
+								"$ref": "horizontal"
+							}
+						]
 					}
 				}
 			},
@@ -6837,7 +6863,7 @@ var ElementRendererProvider = function () {
       if (config.rtl) {
         divEl.className += ' direction-rtl';
       }
-      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" aria-label="' + (config.tooltip || '') + '">' + config.text + '</span>';
+      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" aria-label="' + (config.tooltip || '') + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
       return divEl;
     });
 
@@ -6850,7 +6876,7 @@ var ElementRendererProvider = function () {
       }
 
       var btnEl = document.createElement('button');
-      btnEl.textContent = config.title;
+      btnEl.innerHTML = _Utils2.default.normalizeHtmlText(config.title);
 
       if (config.tooltip) {
         btnEl.title = config.tooltip;
@@ -6912,7 +6938,22 @@ var ElementRendererProvider = function () {
 
     this.set('vertical', function () {
       var divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout-vertical';
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      return divEl;
+    });
+
+    this.set('horizontal', function () {
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      divEl.afterRender = function () {
+        if (divEl.childNodes.length) {
+          var percentage = 100 / divEl.childNodes.length;
+          Array.prototype.forEach.call(divEl.childNodes, function (node) {
+            var n = node;
+            n.style.width = percentage + '%';
+          });
+        }
+      };
       return divEl;
     });
   }

@@ -12,6 +12,78 @@
   <script>
     window.onload = function () {
 
+       let conf2 = {
+        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
+        "type": "vertical",
+        "elements": [
+            {
+              "type": "horizontal",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "product name (Title)",
+                  "tooltip": "text tooltip",
+                  "style": {
+                    "bold": true,
+                    "size": "large"
+                  }
+                },
+                {
+                  "type": "text",
+                  "text": "product name (Title)",
+                  "tooltip": "text tooltip",
+                  "style": {
+                    "bold": true,
+                    "size": "large"
+                  }
+                }
+              ]
+            }
+        ]
+      }
+
+       let conf1 = {
+        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
+        "type": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip",
+            "style": {
+              "bold": true,
+              "size": "large"
+            }
+          },{
+          "type": "image",
+          "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
+          "tooltip": "image tooltip",
+          "click": {
+            "metadata": [{
+              "bla1": 1,
+              "bla2": 2
+            }],
+            "actions": [{
+              "type": "navigate",
+              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+              "name": "Navigate to store via image",
+              "lo": 23423423,
+              "la": 2423423423
+            }]
+          }
+        }
+          , {
+            "type": "text",
+            "text": "product category (type)",
+            "tooltip": "text tooltip"
+          }, {
+            "type": "text",
+            "text": "product category (type)",
+            "tooltip": "text tooltip"
+          }
+        ]
+      }
+
        let conf = {
         "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
@@ -87,6 +159,39 @@
               "la": 2423423423
             }]
           }
+        },
+        {
+          "type": "horizontal",
+          "elements": [
+            {
+              "type": "button",
+              "title": "Buy",
+              "tooltip": "store is the thing",
+              "click" : {
+                "actions": [{
+                  "type": "navigate",
+                  "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+                  "name": "Navigate to store",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }]
+              }
+            },
+            {
+              "type": "button",
+              "title": "Find similar",
+              "tooltip": "store is the thing",
+              "click" : {
+                "actions": [{
+                  "type": "navigate",
+                  "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+                  "name": "Navigate to store",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }]
+              }
+            }
+          ]
         } 
         ,{
           "type": "button",

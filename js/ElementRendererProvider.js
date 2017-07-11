@@ -23,7 +23,7 @@ export default class ElementRendererProvider {
       if (config.rtl) {
         divEl.className += ' direction-rtl';
       }
-      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" aria-label="${config.tooltip || ''}">${config.text}</span>`;
+      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" aria-label="${config.tooltip || ''}">${Utils.normalizeHtmlText(config.text)}</span>`;
       return divEl;
     });
 
@@ -36,7 +36,7 @@ export default class ElementRendererProvider {
       }
 
       const btnEl = document.createElement('button');
-      btnEl.textContent = config.title;
+      btnEl.innerHTML = Utils.normalizeHtmlText(config.title);
 
       if (config.tooltip) {
         btnEl.title = config.tooltip;
@@ -98,7 +98,22 @@ export default class ElementRendererProvider {
 
     this.set('vertical', (): HTMLElement => {
       const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout-vertical';
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      return divEl;
+    });
+
+    this.set('horizontal', (): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      (divEl: any).afterRender = () => {
+        if (divEl.childNodes.length) {
+          const percentage = 100 / divEl.childNodes.length;
+          Array.prototype.forEach.call(divEl.childNodes, (node) => {
+            const n = node;
+            (n: any).style.width = `${percentage}%`;
+          });
+        }
+      };
       return divEl;
     });
   }

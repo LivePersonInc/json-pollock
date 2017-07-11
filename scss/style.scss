@@ -8,9 +8,37 @@
 @import 'variables';
 
 .lp-json-pollock {
-    .lp-json-pollock-layout-vertical {
+
+    .lp-json-pollock-layout {
         border: $default-border;
+        border-collapse:collapse;
+        width: 100%;
         max-width: 200px;
+
+        .lp-json-pollock-layout {
+            border: none;
+            border-top: $default-border;
+            border-right: $default-border;
+        }
+    }
+
+    .lp-json-pollock-layout-vertical {
+    }
+
+    .lp-json-pollock-layout-horizontal {        
+        display: table;
+
+        > * {
+            display: table-cell;
+            table-layout: fixed;
+            vertical-align: middle;
+        }
+
+        .lp-json-pollock-element-button {
+            button {            
+                        
+            }
+        }
     }
 
     .lp-json-pollock-element-text {
@@ -20,10 +48,10 @@
 
     .lp-json-pollock-element-button {
         width: 100%;
+        border-top: $default-border;
+        border-right: $default-border;
         button {
-            border: none;
-            border-top: $default-border;
-            border-bottom: $default-border;
+            border: none;            
             background: none;
             width: 100%;
             height: 32px;
@@ -37,8 +65,8 @@
 
     .lp-json-pollock-element-image {
         
-        border: $default-border;
-        max-height: 154px;
+        border-top: $default-border;
+        border-right: $default-border;
 
         &.loading {
             //embed of assets/loader_anim_bgwhite_20

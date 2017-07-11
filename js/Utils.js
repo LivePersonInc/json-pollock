@@ -64,4 +64,12 @@ export default {
   isLayout(type: string) {
     return LAYOUT_TYPES.indexOf(type) >= 0;
   },
+
+  normalizeHtmlText(text: string): string {
+    let normalized = text;
+    if (text) {
+      normalized = normalized.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+    }
+    return normalized;
+  },
 };
