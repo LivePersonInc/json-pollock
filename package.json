@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "ajv": "^5.2.0",
-    "json-pollock": "^1.0.4",
-    "jsoneditor": "git://github.com/meirotstein/jsoneditor.git#b77deb969ccd779a2246176e3e8132e017fd3ead",
+    "json-pollock": "^1.0.5",
+    "jsoneditor": "^5.9.0",
     "lodash": "^4.17.4",
     "vue": "^2.3.3",
     "vuex": "^2.3.1"

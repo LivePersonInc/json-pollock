@@ -28,6 +28,20 @@ const store = new Vuex.Store({
           },
         },
         {
+          type: 'text',
+          text: 'product name (Title)',
+          tooltip: 'text tooltip',
+          style: {
+            bold: true,
+            size: 'large',
+          },
+        },
+        {
+          type: 'text',
+          text: 'product name (Title)',
+          tooltip: 'text tooltip',
+        },
+        {
           type: 'button',
           tooltip: 'button tooltip',
           title: 'Add to cart',
@@ -40,6 +54,35 @@ const store = new Vuex.Store({
               },
             ],
           },
+        },
+        {
+          type: 'horizontal',
+          elements: [
+            {
+              type: 'button',
+              title: 'Buy',
+              tooltip: 'Buy this broduct',
+              click: {
+                actions: [{
+                  type: 'link',
+                  name: 'Buy',
+                  uri: 'https://example.com',
+                }],
+              },
+            },
+            {
+              type: 'button',
+              title: 'Find similar',
+              tooltip: 'store is the thing',
+              click: {
+                actions: [{
+                  type: 'link',
+                  name: 'Buy',
+                  uri: 'https://search.com',
+                }],
+              },
+            },
+          ],
         },
         {
           type: 'button',

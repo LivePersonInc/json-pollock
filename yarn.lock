@@ -2905,9 +2905,9 @@ json-loader@^0.5.4:
   version "0.5.4"
   resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/json-loader/-/json-loader-0.5.4.tgz#8baa1365a632f58a3c46d20175fc6002c96e37de"
 
-json-pollock@^1.0.4:
-  version "1.0.4"
-  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.0.4.tgz#7845bb2e2d457ab187a4a0b55a980820fa74b0e9"
+json-pollock@^1.0.5:
+  version "1.0.5"
+  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.0.5.tgz#6b0ae29077bf2fcd219140598ab953718af7a83a"
   dependencies:
     ajv "^5.1.3"
     chronosjs "^0.0.23"
@@ -2934,9 +2934,9 @@ json5@^0.5.0, json5@^0.5.1:
   version "0.5.1"
   resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
-"jsoneditor@git://github.com/meirotstein/jsoneditor.git#b77deb969ccd779a2246176e3e8132e017fd3ead":
-  version "5.8.1"
-  resolved "git://github.com/meirotstein/jsoneditor.git#b77deb969ccd779a2246176e3e8132e017fd3ead"
+jsoneditor@^5.9.0:
+  version "5.9.0"
+  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/jsoneditor/-/jsoneditor-5.9.0.tgz#e2c86ac689d8329cd6eb6f2a54d35bd8b2fe9241"
   dependencies:
     ajv "5.2.0"
     brace "0.10.0"
