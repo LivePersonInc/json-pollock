@@ -39,8 +39,9 @@ export default {
 
       img {
         float: left;
-        width: 130px;
+        width: 82px;
         cursor: pointer;
+        margin-top: 16px;
         cursor: hand;
       }
 
