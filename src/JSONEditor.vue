@@ -30,6 +30,7 @@ export default {
         'action.json': actionSchema,
         'basic.json': basicSchema,
         'style.json': styleSchema,
+        'element.json': elementSchema,
       },
       onChange: () => {
         try {

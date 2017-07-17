@@ -2905,9 +2905,9 @@ json-loader@^0.5.4:
   version "0.5.4"
   resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/json-loader/-/json-loader-0.5.4.tgz#8baa1365a632f58a3c46d20175fc6002c96e37de"
 
-json-pollock@^1.0.5:
-  version "1.0.5"
-  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.0.5.tgz#6b0ae29077bf2fcd219140598ab953718af7a83a"
+json-pollock@^1.0.6:
+  version "1.0.6"
+  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.0.6.tgz#f4c3b4b8a5be2529baac61f780ce23484dd48b0c"
   dependencies:
     ajv "^5.1.3"
     chronosjs "^0.0.23"
