@@ -452,16 +452,10 @@ describe('json-pollock tests', function () {
   describe('Negative tests', function () {
 
     var SCHEMA_VALIDATION_ERR = 'Schema validation error, see \'errors\' for more details';
-    var ROOT_NOT_LAYOUT_ERR = 'Root element must be layout';
 
     it('Wrong json representation trigger an error', function () {
       var wrongJson = '{"type": "vertical"';
       chai.expect(JsonPollock.render.bind(JsonPollock, wrongJson)).to.throw();  //json error
-    });
-
-    it('Empty json (no type) should trigger a no root error', function () {
-      var emptyObject = {};
-      chai.expect(JsonPollock.render.bind(JsonPollock, emptyObject)).to.throw(ROOT_NOT_LAYOUT_ERR);
     });
 
     describe('Mandatory elements', function () {

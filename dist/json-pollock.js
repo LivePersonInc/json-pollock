@@ -2110,6 +2110,7 @@ var LPJsonPollock = function () {
     ajv.addSchema(_action2.default, 'action.json');
     ajv.addSchema(_basic2.default, 'basic.json');
     ajv.addSchema(_style2.default, 'style.json');
+    ajv.addSchema(_element2.default, 'element.json');
     this.jsonValidator = ajv.compile(_element2.default);
   }
 
@@ -2165,9 +2166,6 @@ var LPJsonPollock = function () {
         jsonObj = JSON.parse(json);
       } else {
         jsonObj = json;
-      }
-      if (!_Utils2.default.isLayout(jsonObj.type)) {
-        throw new JsonPollockError('Root element must be layout');
       }
       this.jsonValidator(jsonObj);
       if (this.jsonValidator.errors) {
@@ -2506,7 +2504,6 @@ module.exports = {
 		},
 		{
 			"type": "object",
-			"id": "horizontal",
 			"title": "horizontal",
 			"properties": {
 				"type": {
@@ -2520,14 +2517,7 @@ module.exports = {
 				"elements": {
 					"type": "array",
 					"items": {
-						"anyOf": [
-							{
-								"$ref": "basic.json"
-							},
-							{
-								"$ref": "vertical"
-							}
-						]
+						"$ref": "element.json"
 					}
 				}
 			},
@@ -2538,7 +2528,6 @@ module.exports = {
 		},
 		{
 			"type": "object",
-			"id": "vertical",
 			"title": "vertical",
 			"properties": {
 				"type": {
@@ -2552,14 +2541,7 @@ module.exports = {
 				"elements": {
 					"type": "array",
 					"items": {
-						"anyOf": [
-							{
-								"$ref": "basic.json"
-							},
-							{
-								"$ref": "horizontal"
-							}
-						]
+						"$ref": "element.json"
 					}
 				}
 			},

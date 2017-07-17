@@ -12,6 +12,10 @@
     border: none;
     border-top: solid 1px #d4d4d5;
     border-right: solid 1px #d4d4d5; }
+  .lp-json-pollock .lp-json-pollock-layout .lp-json-pollock-element-button {
+    border: none;
+    border-top: solid 1px #d4d4d5;
+    border-right: solid 1px #d4d4d5; }
 
 .lp-json-pollock .lp-json-pollock-layout-horizontal {
   display: table; }
@@ -26,8 +30,7 @@
 
 .lp-json-pollock .lp-json-pollock-element-button {
   width: 100%;
-  border-top: solid 1px #d4d4d5;
-  border-right: solid 1px #d4d4d5; }
+  border: solid 1px #d4d4d5; }
   .lp-json-pollock .lp-json-pollock-element-button button {
     border: none;
     background: none;

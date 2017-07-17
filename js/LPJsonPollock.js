@@ -37,6 +37,7 @@ export default class LPJsonPollock {
     ajv.addSchema(actionSchema, 'action.json');
     ajv.addSchema(basicSchema, 'basic.json');
     ajv.addSchema(styleSchema, 'style.json');
+    ajv.addSchema(elementSchema, 'element.json');
     this.jsonValidator = ajv.compile(elementSchema);
   }
 
@@ -84,9 +85,6 @@ export default class LPJsonPollock {
       jsonObj = JSON.parse((json: any));
     } else {
       jsonObj = (json: any);
-    }
-    if (!Utils.isLayout(jsonObj.type)) {
-      throw new JsonPollockError('Root element must be layout');
     }
     this.jsonValidator(jsonObj);
     if (this.jsonValidator.errors) {

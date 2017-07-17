@@ -20,6 +20,12 @@
             border-top: $default-border;
             border-right: $default-border;
         }
+
+        .lp-json-pollock-element-button {
+            border: none;
+            border-top: $default-border;
+            border-right: $default-border;
+        }
     }
 
     .lp-json-pollock-layout-vertical {
@@ -48,8 +54,7 @@
 
     .lp-json-pollock-element-button {
         width: 100%;
-        border-top: $default-border;
-        border-right: $default-border;
+        border: $default-border;
         button {
             border: none;            
             background: none;

@@ -6,7 +6,6 @@
         },
         {
             "type": "object",
-            "id": "horizontal",
             "title": "horizontal",
             "properties": {
                 "type": {
@@ -18,10 +17,7 @@
                 "elements": {
                     "type": "array",
                     "items": {
-                        "anyOf": [
-                            {"$ref": "basic.json"},
-                            {"$ref": "vertical"}
-                        ]
+                        "$ref": "element.json"
                     }
                 }
             },
@@ -29,7 +25,6 @@
         },
         {
             "type": "object",
-            "id": "vertical",
             "title": "vertical",
             "properties": {
                 "type": {
@@ -41,10 +36,7 @@
                 "elements": {
                     "type": "array",
                     "items": {
-                        "anyOf": [
-                            {"$ref": "basic.json"},
-                            {"$ref": "horizontal"}
-                        ]
+                        "$ref": "element.json"
                     }
                 }
             },
