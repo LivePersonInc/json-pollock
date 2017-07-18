@@ -1,6 +1,15 @@
 
 describe('json-pollock tests', function () {
 
+  var pollockContainer = document.createElement('div');
+  document.body.appendChild(pollockContainer);
+
+  function addToBody(element) {
+    pollockContainer.innerHTML = "";
+    pollockContainer.appendChild(element);
+    return pollockContainer;
+  }
+
   var card = {
     "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
     "type": "vertical",
@@ -50,14 +59,16 @@ describe('json-pollock tests', function () {
 
   describe('render basic elements', function () {
 
+    var fragEl = null;
     var rooEl = null;
 
     before(function () {
-      rooEl = JsonPollock.render(card);
+      fragEl = JsonPollock.render(card);
+      rooEl = addToBody(fragEl);
     });
 
     it('Root should be a DocumentFragment instance', function () {
-      chai.expect(rooEl).to.be.instanceOf(DocumentFragment);
+      chai.expect(fragEl).to.be.instanceOf(DocumentFragment);
     });
 
     it('All rendered elements should be wrapped with a div with a \'lp-json-pollock\' class', function () {
@@ -130,7 +141,7 @@ describe('json-pollock tests', function () {
 
     it('Horizontal nested in Vertical', function () {
 
-      var conf = {       
+      var conf = {
         "type": "vertical",
         "elements": [{
           "type": "horizontal",
@@ -143,7 +154,8 @@ describe('json-pollock tests', function () {
         }]
       }
 
-      rooEl = JsonPollock.render(JSON.stringify(conf));
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
       firstLayout = rooEl.childNodes[0].childNodes[0];
       secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
       textEl = secondLayout.childNodes[0];
@@ -168,7 +180,8 @@ describe('json-pollock tests', function () {
         }]
       }
 
-      rooEl = JsonPollock.render(JSON.stringify(conf));
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
       firstLayout = rooEl.childNodes[0].childNodes[0];
       secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
       textEl = secondLayout.childNodes[0];
@@ -176,6 +189,236 @@ describe('json-pollock tests', function () {
       chai.expect(firstLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-horizontal');
       chai.expect(secondLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-vertical');
       chai.expect(textEl.className).to.contain('lp-json-pollock-element-text');
+    });
+
+    describe('massive content', function () {
+
+      it('Horizontal layout with many elements - width must not exceeds parent layout', function () {
+
+        var conf = {
+          "type": "horizontal",          
+            "elements": [
+              {
+                "type": "text",
+                "text": "foo1"
+              },
+              {
+                "type": "text",
+                "text": "foo2"
+              },
+              {
+                "type": "text",
+                "text": "foo3"
+              },
+              {
+                "type": "text",
+                "text": "foo4"
+              },
+              {
+                "type": "text",
+                "text": "foo5"
+              },
+              {
+                "type": "text",
+                "text": "foo6"
+              },
+              {
+                "type": "text",
+                "text": "foo7"
+              },
+              {
+                "type": "text",
+                "text": "foo7"
+              },
+              {
+                "type": "text",
+                "text": "foo8"
+              },
+              {
+                "type": "text",
+                "text": "foo9"
+              },
+              {
+                "type": "text",
+                "text": "foo10"
+              },
+              {
+                "type": "image",
+                "url": "http://example.jpg",
+                "tooltip": "image tooltip",
+                "click": {
+                  "actions": [{
+                    "type": "navigate",
+                    "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+                    "name": "Navigate to store via image",
+                    "lo": 23423423,
+                    "la": 2423423423
+                  }]
+                }
+              },
+              {
+                "type": "image",
+                "url": "http://example.jpg",
+                "tooltip": "image tooltip",
+                "click": {
+                  "actions": [{
+                    "type": "navigate",
+                    "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+                    "name": "Navigate to store via image",
+                    "lo": 23423423,
+                    "la": 2423423423
+                  }]
+                }
+              },
+              {
+                "type": "button",
+                "tooltip": "button tooltip",
+                "title": "Add to cart",
+                "click": {
+                  "actions": [{
+                    "type": "link",
+                    "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+                    "name": "add to cart",
+                    "uri": "https://example.com"   
+                  }]
+                }
+              },
+              {
+                "type": "button",
+                "tooltip": "button tooltip",
+                "title": "Publish text",
+                "click": {
+                  "metadata": [{
+                    "event": "PublishTextEvent"
+                  }],
+                  "actions": [{
+                    "type": "publishText",
+                    "text": "my text",
+                  }]
+                }
+              }
+            ]
+        }
+
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+        layout = rooEl.childNodes[0].childNodes[0];
+        var layoutWidth = layout.offsetWidth;
+        var elementsWidth = 0;
+        layout.childNodes.forEach(function (node) {
+          elementsWidth += node.offsetWidth;
+        });
+        
+        chai.expect(layout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-horizontal');   
+        chai.expect(elementsWidth).to.be.at.least(layoutWidth - 10);
+        chai.expect(elementsWidth).to.be.at.most(layoutWidth);
+      });
+
+      it('Vertical with very long text should wrap word', function () {
+
+        var conf = {
+          "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
+          "type": "vertical",
+          "elements": [{
+            "type": "text",
+            "text": "very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very long text...",
+            "tooltip": "text tooltip"
+          }]
+        }
+
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+        layout = rooEl.childNodes[0].childNodes[0];
+        textEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
+        
+        var layoutWidth = layout.offsetWidth;
+        var layoutHeight = layout.offsetHeight;
+        var textWidth = textEl.offsetWidth;
+        var textHeight = textEl.offsetHeight;
+        
+        chai.expect(layout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-vertical');        
+        chai.expect(textWidth).to.be.at.most(layoutWidth);
+        chai.expect(textHeight).to.be.at.most(layoutHeight);
+      });
+
+    });
+
+  });
+
+  describe('render single element (no layout)', function () {
+
+    var rooEl = null;
+    var childEl = null;
+
+    it('Text element', function () {
+      var conf = {
+        "type": "text",
+        "text": "product name (Title)",
+        "tooltip": "text tooltip"
+      }
+
+      rooEl = addToBody(JsonPollock.render(conf));
+      
+      var wrapdiv = rooEl.childNodes[0];      
+      chai.expect(wrapdiv.localName).to.equal('div');
+      chai.expect(wrapdiv.className).to.equal('lp-json-pollock lp-json-pollock-single-element');
+      chai.expect(wrapdiv.childNodes.length).to.equal(1);
+
+      childEl = wrapdiv.childNodes[0];
+      chai.expect(childEl.className).to.equal('lp-json-pollock-element-text');
+    });
+
+    it('Button element', function () {
+      var conf = {
+        "type": "button",
+        "tooltip": "button tooltip",
+        "title": "Add to cart",
+        "click": {
+          "actions": [{
+            "type": "link",
+            "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+            "name": "add to cart",
+            "uri": "http://example.jpg"
+          }]
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(conf));
+      
+      var wrapdiv = rooEl.childNodes[0];      
+      chai.expect(wrapdiv.localName).to.equal('div');
+      chai.expect(wrapdiv.className).to.equal('lp-json-pollock lp-json-pollock-single-element');
+      chai.expect(wrapdiv.childNodes.length).to.equal(1);
+
+      childEl = wrapdiv.childNodes[0];
+      chai.expect(childEl.className).to.equal('lp-json-pollock-element-button');
+    });
+
+    it('Image element', function () {
+      var conf = {
+        "type": "image",
+        "url": "http://example.jpg",
+        "tooltip": "image tooltip",
+        "click": {
+          "actions": [{
+            "type": "navigate",
+            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+            "name": "Navigate to store via image",
+            "lo": 23.423423,
+            "la": 2423423423
+          }]
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(conf));
+      
+      var wrapdiv = rooEl.childNodes[0];      
+      chai.expect(wrapdiv.localName).to.equal('div');
+      chai.expect(wrapdiv.className).to.equal('lp-json-pollock lp-json-pollock-single-element');
+      chai.expect(wrapdiv.childNodes.length).to.equal(1);
+
+      childEl = wrapdiv.childNodes[0];
+      chai.expect(childEl.className).to.contain('lp-json-pollock-element-image');
     });
 
   });
@@ -257,7 +500,7 @@ describe('json-pollock tests', function () {
         },]
       }
 
-      rooEl = JsonPollock.render(conf);
+      rooEl = addToBody(JsonPollock.render(conf));
     });
 
     it('Click on element with navigate action ahould trigger its registered callbacks', function () {
@@ -379,7 +622,8 @@ describe('json-pollock tests', function () {
         }]
       }
 
-      rooEl = JsonPollock.render(JSON.stringify(conf));
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
       imgDiv = rooEl.childNodes[0].childNodes[0].childNodes[0];
       imgEl = imgDiv.childNodes[0];
       var originalOnError = imgEl.onerror;
@@ -410,16 +654,12 @@ describe('json-pollock tests', function () {
     describe('if maxAllowedElements is configured to x only first x elements should be presented (incl. layout)', function () {
       before(function () {
         JsonPollock.init({ maxAllowedElements: 2 });
-        rooEl = JsonPollock.render(card);
+        rooEl = addToBody(JsonPollock.render(card));
       });
 
       after(function () {
         //reset
         JsonPollock.init({ maxAllowedElements: -1 });
-      });
-
-      it('Root should be a DocumentFragment instance', function () {
-        chai.expect(rooEl).to.be.instanceOf(DocumentFragment);
       });
 
       it('All rendered elements should be wrapped with a div with a \'lp-json-pollock\' class', function () {

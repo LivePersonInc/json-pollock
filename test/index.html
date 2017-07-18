@@ -61,15 +61,11 @@
             }]
           }
         }
-          , {
-            "type": "text",
-            "text": "product category (type)",
-            "tooltip": "text tooltip"
-          }, {
-            "type": "text",
-            "text": "product category (type)",
-            "tooltip": "text tooltip"
-          }
+        , {
+          "type": "text",
+          "text": "product category (type)",
+          "tooltip": "text tooltip"
+        }
         ]
       }
 
@@ -106,7 +102,7 @@
         }
         , {
           "type": "text",
-          "text": "product category (type)",
+          "text": "long long  long long long long long long long long long long long long long long long product category (type)",
           "tooltip": "text tooltip"
         }
         , {
@@ -154,7 +150,34 @@
           "elements": [
             {
               "type": "button",
+              "title": "Buyyyyyyyy",
+              "tooltip": "store is the thing",
+              "click" : {
+                "actions": [{
+                  "type": "navigate",
+                  "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+                  "name": "Navigate to store",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }]
+              }
+            },{
+              "type": "button",
               "title": "Buy",
+              "tooltip": "store is the thing",
+              "click" : {
+                "actions": [{
+                  "type": "navigate",
+                  "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+                  "name": "Navigate to store",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }]
+              }
+            },
+            {
+              "type": "button",
+              "title": "Find similar",
               "tooltip": "store is the thing",
               "click" : {
                 "actions": [{
@@ -215,7 +238,9 @@
         alert(JSON.stringify(data));
       });
 
-      const el = JsonPollock.render(JSON.stringify(conf));
+      // const el = JsonPollock.render(JSON.stringify(conf));
+      const el = JsonPollock.render(JSON.stringify(conf1));
+      // const el = JsonPollock.render(JSON.stringify(conf2));
       document.getElementById('content').appendChild(el);
     }
   </script>

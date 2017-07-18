@@ -2174,6 +2174,9 @@ var LPJsonPollock = function () {
       var frag = document.createDocumentFragment();
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock';
+      if (!_Utils2.default.isLayout(jsonObj.type)) {
+        divEl.className += ' lp-json-pollock-single-element';
+      }
       frag.appendChild(divEl);
       this.renderElement(jsonObj, divEl);
       return frag;
