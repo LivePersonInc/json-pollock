@@ -51,6 +51,7 @@ export default {
       min-width: 200px;
       transform: translate(-50%, 45px);
       text-align: left;
+      margin-bottom: 20px;
     }
   }
 </style>
