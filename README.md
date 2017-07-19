@@ -1,4 +1,4 @@
-![logo](/pages/WebAgent/json-pollock/src/assets/logo.png)Json-Pollock
+![logo](https://lpgithub.dev.lprnd.net/pages/WebAgent/json-pollock/src/assets/logo.png)Json-Pollock
 ============
 
 The **Joson-Pollock** package renders live DOM elements out of JSON accrding to the [Structured Messaging Templates RFC](https://lpgithub.dev.lprnd.net/lp-mobile/Structured-Messaging-Templates) (work in progress)
