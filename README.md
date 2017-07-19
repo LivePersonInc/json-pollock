@@ -1,4 +1,6 @@
-![logo](https://lpgithub.dev.lprnd.net/pages/WebAgent/json-pollock/src/assets/logo.png)Json-Pollock
+![logo](https://lpgithub.dev.lprnd.net/pages/WebAgent/json-pollock/src/assets/logo.png)
+
+Json-Pollock
 ============
 
 The **Joson-Pollock** package renders live DOM elements out of JSON accrding to the [Structured Messaging Templates RFC](https://lpgithub.dev.lprnd.net/lp-mobile/Structured-Messaging-Templates) (work in progress)
@@ -88,3 +90,6 @@ Perior to the rendering the JSON object is validated against the JSON [schema](j
 		console.log(e.message);    // error message
 		console.log(e.errors);     // validation errors
 	}
+Playground
+-------
+[Here](https://lpgithub.dev.lprnd.net/pages/WebAgent/json-pollock/editor/)
