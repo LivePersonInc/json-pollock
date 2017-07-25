@@ -27,7 +27,11 @@ Map the JsonPollock path in the RequireJs config, and then:
     })
 Using [CommonJS](http://requirejs.org/docs/commonjs.html):
 
-    const jsonPollock = require("JsonPollock");
+    const JsonPollock = require("JsonPollock");
+
+Json-Pollock also has a set of css styles - make sure to link it on your index.html or bundle it into your site styles
+
+    <link rel="stylesheet" href="/dist/json-pollock.css">
 
 Usage
 -------
