@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "ajv": "^5.2.0",
-    "json-pollock": "^1.0.7",
+    "json-pollock": "^1.0.8",
     "jsoneditor": "^5.9.0",
     "lodash": "^4.17.4",
     "vue": "^2.3.3",
