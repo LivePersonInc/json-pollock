@@ -8,16 +8,9 @@
 </template>
 
 <script>
-// import _ from 'lodash';
 
 export default {
   name: 'Header',
-  components: {
-  },
-  mounted() {
-  },
-  computed: {
-  },
   methods: {
     onLogoClick: () => {
       window.open('https://lpgithub.dev.lprnd.net/WebAgent/json-pollock', '_blank');

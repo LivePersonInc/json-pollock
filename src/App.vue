@@ -7,7 +7,6 @@
 </template>
 
 <script>
-// import _ from 'lodash';
 import Header from './Header';
 import JSONEditor from './JSONEditor';
 import JSONPollock from './JSONPollock';
@@ -18,13 +17,6 @@ export default {
     Header,
     JSONEditor,
     JSONPollock,
-  },
-  mounted() {
-  },
-  computed: {
-    mystore() {
-      return this.$store.state.count;
-    },
   },
 };
 </script>

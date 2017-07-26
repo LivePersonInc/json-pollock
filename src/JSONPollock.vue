@@ -7,7 +7,6 @@
 </template>
 
 <script>
-// import _ from 'lodash';
 import * as JsonPollock from 'json-pollock/dist/json-pollock';
 
 export default {

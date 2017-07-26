@@ -1,7 +1,7 @@
 {
-  "name": "vuepoc",
+  "name": "json-pollock-playground",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A Playground for Json-Pollock",
   "author": "Meir Rotstein <meir@rotstein.co.il>",
   "private": true,
   "scripts": {

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// import _ from 'lodash';
 import JSONEditor from 'jsoneditor';
 import Ajv from 'ajv';
 
@@ -43,11 +42,6 @@ export default {
     };
     editor = new JSONEditor(this.$refs.jsoneditor, options);
     editor.set(this.$store.state.json);
-  },
-  computed: {
-    mystore() {
-      return this.$store.state.count;
-    },
   },
 };
 </script>
