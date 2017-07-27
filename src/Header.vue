@@ -13,7 +13,7 @@ export default {
   name: 'Header',
   methods: {
     onLogoClick: () => {
-      window.open('https://lpgithub.dev.lprnd.net/WebAgent/json-pollock', '_blank');
+      window.open('https://github.com/LivePersonInc/json-pollock', '_blank');
     },
   },
 };
