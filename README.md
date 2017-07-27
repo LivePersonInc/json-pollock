@@ -1,1 +1,1 @@
-# A [playground](https://lpgithub.dev.lprnd.net/pages/WebAgent/json-pollock/editor/) for Json-Pollock
+# A [playground](https://livepersoninc.github.io/json-pollock/editor/) for Json-Pollock
