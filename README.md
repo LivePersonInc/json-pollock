@@ -98,4 +98,4 @@ Perior to the rendering the JSON object is validated against the JSON [schema](j
 	}
 Playground
 -------
-[Here](https://lpgithub.dev.lprnd.net/pages/WebAgent/json-pollock/editor/)
+[Here](https://livepersoninc.github.io/json-pollock/editor/)
