@@ -29,11 +29,6 @@ Using [CommonJS](http://requirejs.org/docs/commonjs.html):
 
     const JsonPollock = require("JsonPollock");
 
-  
-  
-Json-Pollock also has a set of css styles - make sure to link it on your index.html or bundle it into your site styles
-
-    <link rel="stylesheet" href="path-to-node-modules/dist/json-pollock.css">
 
 Usage
 -------

@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   module: {
@@ -18,22 +17,20 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['flow', 'es2015', 'stage-0'],
+            presets: ['flow', 'es2015', 'stage-2'],
           },
         },
       },
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-          }, {
-            loader: 'sass-loader',
-          }],
-          // use style-loader in development
-          fallback: 'style-loader',
-        }),
+        use: [{
+          loader: 'style-loader',  // creates style nodes from JS strings
+        }, {
+          loader: 'css-loader',  // translates CSS into CommonJS
+        }, {
+          loader: 'sass-loader', // compiles Sass to CSS
+        }],
       },
     ],
   },
@@ -42,7 +39,6 @@ module.exports = {
     new FlowStatusWebpackPlugin({
       failOnError: true,
     }),
-    new ExtractTextPlugin('json-pollock.css'),
     new webpack.optimize.UglifyJsPlugin({
       include: /\.min\.js$/,
       minimize: true,

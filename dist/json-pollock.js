@@ -449,7 +449,7 @@ function errorSubclass(Subclass) {
 "use strict";
 
 
-var url = __webpack_require__(60)
+var url = __webpack_require__(64)
   , equal = __webpack_require__(1)
   , util = __webpack_require__(0)
   , SchemaObject = __webpack_require__(5);
@@ -1935,7 +1935,7 @@ function isObject(val) {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var json = typeof JSON !== 'undefined' ? JSON : __webpack_require__(53);
+var json = typeof JSON !== 'undefined' ? JSON : __webpack_require__(55);
 
 module.exports = function (obj, opts) {
     if (!opts) opts = {};
@@ -2195,9 +2195,34 @@ exports.default = LPJsonPollock;
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(53);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(62)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/sass-loader/lib/loader.js!./style.scss", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/sass-loader/lib/loader.js!./style.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 /* 16 */
@@ -6973,12 +6998,108 @@ exports.default = ElementRendererProvider;
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.parse = __webpack_require__(54);
-exports.stringify = __webpack_require__(55);
+exports = module.exports = __webpack_require__(54)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "/** \n*   These are styles that are given by the json pollock lib\n*   In order to override it use a different css file\n*   PLEASE DO NOT MAKE ANY CHANGE IN THIS FILE \n**/\n.lp-json-pollock.lp-json-pollock-single-element {\n  border: solid 1px #d4d4d5;\n  border-collapse: collapse;\n  max-width: 200px; }\n\n.lp-json-pollock .lp-json-pollock-layout {\n  border: solid 1px #d4d4d5;\n  border-collapse: collapse;\n  width: 100%;\n  max-width: 200px; }\n\n.lp-json-pollock .lp-json-pollock-layout-vertical .lp-json-pollock-layout {\n  border: none; }\n\n.lp-json-pollock .lp-json-pollock-layout-vertical .lp-json-pollock-layout-horizontal {\n  border-top: solid 1px #d4d4d5; }\n\n.lp-json-pollock .lp-json-pollock-layout-vertical .lp-json-pollock-element-button {\n  border-top: solid 1px #d4d4d5; }\n\n.lp-json-pollock .lp-json-pollock-layout-horizontal {\n  display: table; }\n  .lp-json-pollock .lp-json-pollock-layout-horizontal .lp-json-pollock-layout {\n    border: none; }\n  .lp-json-pollock .lp-json-pollock-layout-horizontal .lp-json-pollock-layout-vertical {\n    border-right: solid 1px #d4d4d5; }\n  .lp-json-pollock .lp-json-pollock-layout-horizontal > * {\n    display: table-cell;\n    table-layout: fixed;\n    vertical-align: middle; }\n  .lp-json-pollock .lp-json-pollock-layout-horizontal .lp-json-pollock-element-button, .lp-json-pollock .lp-json-pollock-layout-horizontal .lp-json-pollock-element-text, .lp-json-pollock .lp-json-pollock-layout-horizontal .lp-json-pollock-element-image {\n    border-right: solid 1px #d4d4d5; }\n\n.lp-json-pollock .lp-json-pollock-element-text {\n  margin: 4px 8px;\n  font-size: 13px;\n  word-wrap: break-word;\n  word-break: break-word;\n  -ms-word-break: break-all; }\n\n.lp-json-pollock .lp-json-pollock-element-button {\n  width: 100%;\n  word-break: break-word;\n  word-wrap: break-word;\n  -ms-word-break: break-all; }\n  .lp-json-pollock .lp-json-pollock-element-button button {\n    border: none;\n    background: none;\n    width: 100%;\n    min-height: 32px;\n    margin-bottom: -1px; }\n    .lp-json-pollock .lp-json-pollock-element-button button:active {\n      background: #f0f0f0; }\n\n.lp-json-pollock .lp-json-pollock-element-image.loading {\n  background-image: url(\"data:image/gif;base64,R0lGODlhFAAUAPfdAJiZmpeYmdvb29fX2Jucnby9vvT09NjY2Jmam6Chos/Q0Kmqq6KjpKytrqGio62ur7y8vb2+v/f39/X19dzc3M/P0Jydnvb29u/v76usrd7e3p2en56foK6vsKipqrW2t83OztnZ2tjZ2e7u7v39/ePj47u8vfj4+NHR0rO0tfPz89ra2tzd3c7Oz+Dg4M7Pz93d3b6/wOfn572+vqeoqc3NztjY2dDQ0dHS0rS1tp+goa2trvv7+729vtrb2+fn6K2urvDw8K+wsfr6+rOztL6/v9na2q6vr5qbnLW1tuHh4be4uczNzbGys7S0taOkpb6+v9DR0bu8vKqrq9LS0+rq6uvr6/n5+dPT087P0NDR0vLz87i5usLCw9fY2Ly9vdXW1tPT1JiZmf7+/rKztO3t7dzc3ezs7NLT06qrrNnZ2eLi4svMzNTV1cTExcvLzPz8/Nra2/P09MTFxd/g4N7f39/f36anqL/AwKurrMHBwqysraytrfLy8tTU1fb29+rq68DBwbq7vL/Awebm58XFxt/f4N3e3rKzs9XV1rm6u8zMzdvb3JWWlrm6urS1tcDAwaenqPn5+tvc3NbX17a3uKOjpJydnbu7vOrr6+7v7/f3+M/Pz7Gxsra2t7e3uPDx8fT19cDBwtHR0by+v/Hx8eTk5NTU1MHCwuXl5re4uNvc3dfX17m5usnKyra4udDQ0Kipqc/Q0aWmp8vMzeHh4srLy7Cys/r7+6usrLCxsu3t7sfIycrKy+Lj47CxscbGxufo6PX29rW2tsnJyeDh4fHy8r+/wMTExMPExJaXmOzt7bm7u7q7u8nJysTGxubm5unp6tHS08nLy83NzcjKyuPk5Kanp/v8/Ovs7OLi46WlptbW1////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjNGY0NDNmZC0yZWQwLTQzYWItYjc4Ny04M2VmMjFlZGE2MDMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NUQ5MUYzN0VDNTNBMTFFNjgzN0Y4NDM1QkFDMEVFODIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NUQ5MUYzN0RDNTNBMTFFNjgzN0Y4NDM1QkFDMEVFODIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpjNGY0NDNmZC0yZWQwLTQzYWItYjc4Ny04M2VmMjFlZGE2MDMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6YzRmNDQzZmQtMmVkMC00M2FiLWI3ODctODNlZjIxZWRhNjAzIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJ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\");\n  background-repeat: no-repeat;\n  background-position: center center;\n  height: 154px; }\n\n.lp-json-pollock .lp-json-pollock-element-image.error {\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAgCAYAAABpRpp6AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH4QUYCiwdGyEQJgAAA/BJREFUWMPNmL+LXFUUxz8zbCESdQUrC9lGxSpj/AO819qESSdJxCGNjcHNriCisBOCTTRhgpIihU4kbkRQHo7Yybm7EruQQbQJiMMKi4XimAjaafN98nJz78ybyU7wNI99c++73/M93/PjboM9NrPQAtrA2HvX2+vvL+0BwGUBdHo+BPwBrLAAW7pLFtvAfmALKIC+nh3v3XgRgBtzsjgGgsCFEpxZKAC8d20WZEtTWHRAJ2Kx570bJtaXDq3MGK0O8GGNpeeBbiNi0VWYJMXihAiMJIViBrA9EeJSJFTWrQjHsFHxsqdD+wI4nOHgmaQgB/uKRtt7N6q55/eG0P8EeO9dmCMB2+XhdRJNBwflQXuW5DQLwyWF5NKcYEumOjXBtkqZee86c+TcuEy6eUtQVw2iqJlcPWDVe9dP/N4FVlXHt7TuDlk2gWElyWa1HrBsFvpTwK5qbScDtldJ9ofLRJdcbwcsdvYrvDOZksUBbYHKmZMMikwFeLWsFN67sqUXYvwOhlEI5ir2CpsDugp7ylaBl1KMqVJsJXKgD7RygMNdyKIKupcCrUiclyxiGwHPJiLckVyTgIscYLOwkmEmBTpMiFQXcGbBZZz5T7OSVzvlYLNy2HIG2CfAd2bhdI16XLbylENjAehmnAnA0Cz8U+l+o+zwo24VqjOsWTgKvKMPrgP3Ay/GNVuODqe1ZtXh68DTs3TSyv7QrPx9myykqTPAWeAacAT4FBiYhc1Ic32gPwVsRyyenAdsaloLkWbeAH7R+9I2gYEY3zELa8C+ciaoMeS05+mo2XnYLIz04ZHmi0PAbmbvM8DbwCO5ECsKBbAcDzlm4ThwGDhRZ/hJSaJa3jaBixPAIpmMgTMZsC1gB7gZJ5DA9oBbSui1ugzHgAvgBYX4ypS968Df3rvXE2CPA9vAt/FQXwH7svLjNWDdLHxZp9umGH4SuCDvmSCH54GDCbCnBegU8CZwDtg2C60I7I1KpI4qF3biOj3xiuS9G5uFH4C/Jux5ANjQNDWK9HoZeDwCNNBzW8/qb6XdUsQOAl+YhUveuxN173QmBsOEjnXde/dBpNfLwK8CFEdnoHe7CbDxumvAu2bhe+BYnB/NxKbPgAMTpq4DwLGow20DV8VSTkphCtjSdlXzr0pKa1Ov+WqPcUl7FPgYOFTWUrNwCjgpnQ4WcKt/Qon5o+QyzF3zv5IsqoA3gI+8d0F6fR94LqPJvbIbYnsd+BnY18ws/FqASzsC3Ae8pbnhG+ApvV8U2GpCXgR+A67kGP5coSjb8Zq62Vij34PAY0rQe2E39c+WbmNCG3wPeAX4Ezjnvdvg/25mwU25q91z+xfs9+kVfxd53AAAAABJRU5ErkJggg==\");\n  background-repeat: no-repeat;\n  background-position: center center;\n  height: 154px; }\n\n.lp-json-pollock .lp-json-pollock-element-image img {\n  width: 100%;\n  height: auto; }\n\n.lp-json-pollock .direction-rtl {\n  float: right; }\n", ""]);
+
+// exports
 
 
 /***/ }),
 /* 54 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.parse = __webpack_require__(56);
+exports.stringify = __webpack_require__(57);
+
+
+/***/ }),
+/* 56 */
 /***/ (function(module, exports) {
 
 var at, // The index of the current character
@@ -7257,7 +7378,7 @@ module.exports = function (source, reviver) {
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports) {
 
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
@@ -7417,7 +7538,7 @@ module.exports = function (value, replacer, space) {
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -7953,10 +8074,10 @@ module.exports = function (value, replacer, space) {
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(63)(module), __webpack_require__(62)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(67)(module), __webpack_require__(66)))
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8047,7 +8168,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8139,18 +8260,426 @@ var objectKeys = Object.keys || function (obj) {
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(57);
-exports.encode = exports.stringify = __webpack_require__(58);
+exports.decode = exports.parse = __webpack_require__(59);
+exports.encode = exports.stringify = __webpack_require__(60);
 
 
 /***/ }),
-/* 60 */
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+var stylesInDom = {},
+	memoize = function(fn) {
+		var memo;
+		return function () {
+			if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+			return memo;
+		};
+	},
+	isOldIE = memoize(function() {
+		// Test for IE <= 9 as proposed by Browserhacks
+		// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+		// Tests for existence of standard globals is to allow style-loader 
+		// to operate correctly into non-standard environments
+		// @see https://github.com/webpack-contrib/style-loader/issues/177
+		return window && document && document.all && !window.atob;
+	}),
+	getElement = (function(fn) {
+		var memo = {};
+		return function(selector) {
+			if (typeof memo[selector] === "undefined") {
+				memo[selector] = fn.call(this, selector);
+			}
+			return memo[selector]
+		};
+	})(function (styleTarget) {
+		return document.querySelector(styleTarget)
+	}),
+	singletonElement = null,
+	singletonCounter = 0,
+	styleElementsInsertedAtTop = [],
+	fixUrls = __webpack_require__(63);
+
+module.exports = function(list, options) {
+	if(typeof DEBUG !== "undefined" && DEBUG) {
+		if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+	if (typeof options.insertInto === "undefined") options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+	addStylesToDom(styles, options);
+
+	return function update(newList) {
+		var mayRemove = [];
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+		for(var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+			if(domStyle.refs === 0) {
+				for(var j = 0; j < domStyle.parts.length; j++)
+					domStyle.parts[j]();
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom(styles, options) {
+	for(var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+		if(domStyle) {
+			domStyle.refs++;
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles(list, options) {
+	var styles = [];
+	var newStyles = {};
+	for(var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+		if(!newStyles[id])
+			styles.push(newStyles[id] = {id: id, parts: [part]});
+		else
+			newStyles[id].parts.push(part);
+	}
+	return styles;
+}
+
+function insertStyleElement(options, styleElement) {
+	var styleTarget = getElement(options.insertInto)
+	if (!styleTarget) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+	var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+	if (options.insertAt === "top") {
+		if(!lastStyleElementInsertedAtTop) {
+			styleTarget.insertBefore(styleElement, styleTarget.firstChild);
+		} else if(lastStyleElementInsertedAtTop.nextSibling) {
+			styleTarget.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			styleTarget.appendChild(styleElement);
+		}
+		styleElementsInsertedAtTop.push(styleElement);
+	} else if (options.insertAt === "bottom") {
+		styleTarget.appendChild(styleElement);
+	} else {
+		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+	}
+}
+
+function removeStyleElement(styleElement) {
+	styleElement.parentNode.removeChild(styleElement);
+	var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+	if(idx >= 0) {
+		styleElementsInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement(options) {
+	var styleElement = document.createElement("style");
+	options.attrs.type = "text/css";
+
+	attachTagAttrs(styleElement, options.attrs);
+	insertStyleElement(options, styleElement);
+	return styleElement;
+}
+
+function createLinkElement(options) {
+	var linkElement = document.createElement("link");
+	options.attrs.type = "text/css";
+	options.attrs.rel = "stylesheet";
+
+	attachTagAttrs(linkElement, options.attrs);
+	insertStyleElement(options, linkElement);
+	return linkElement;
+}
+
+function attachTagAttrs(element, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		element.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle(obj, options) {
+	var styleElement, update, remove, transformResult;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    transformResult = options.transform(obj.css);
+	    
+	    if (transformResult) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = transformResult;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css. 
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+		styleElement = singletonElement || (singletonElement = createStyleElement(options));
+		update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+	} else if(obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function") {
+		styleElement = createLinkElement(options);
+		update = updateLink.bind(null, styleElement, options);
+		remove = function() {
+			removeStyleElement(styleElement);
+			if(styleElement.href)
+				URL.revokeObjectURL(styleElement.href);
+		};
+	} else {
+		styleElement = createStyleElement(options);
+		update = applyToTag.bind(null, styleElement);
+		remove = function() {
+			removeStyleElement(styleElement);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle(newObj) {
+		if(newObj) {
+			if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+				return;
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag(styleElement, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (styleElement.styleSheet) {
+		styleElement.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = styleElement.childNodes;
+		if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+		if (childNodes.length) {
+			styleElement.insertBefore(cssNode, childNodes[index]);
+		} else {
+			styleElement.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag(styleElement, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		styleElement.setAttribute("media", media)
+	}
+
+	if(styleElement.styleSheet) {
+		styleElement.styleSheet.cssText = css;
+	} else {
+		while(styleElement.firstChild) {
+			styleElement.removeChild(styleElement.firstChild);
+		}
+		styleElement.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink(linkElement, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/* If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+	and there is no publicPath defined then lets turn convertToAbsoluteUrls
+	on by default.  Otherwise default to the convertToAbsoluteUrls option
+	directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls){
+		css = fixUrls(css);
+	}
+
+	if(sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = linkElement.href;
+
+	linkElement.href = URL.createObjectURL(blob);
+
+	if(oldSrc)
+		URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+
+/***/ }),
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8177,8 +8706,8 @@ exports.encode = exports.stringify = __webpack_require__(58);
 
 
 
-var punycode = __webpack_require__(56);
-var util = __webpack_require__(61);
+var punycode = __webpack_require__(58);
+var util = __webpack_require__(65);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -8253,7 +8782,7 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
       'gopher:': true,
       'file:': true
     },
-    querystring = __webpack_require__(59);
+    querystring = __webpack_require__(61);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
   if (url && util.isObject(url) && url instanceof Url) return url;
@@ -8889,7 +9418,7 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 61 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8912,7 +9441,7 @@ module.exports = {
 
 
 /***/ }),
-/* 62 */
+/* 66 */
 /***/ (function(module, exports) {
 
 var g;
@@ -8939,7 +9468,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 63 */
+/* 67 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
