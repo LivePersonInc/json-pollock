@@ -38,7 +38,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../node_modules/json-pollock/dist/json-pollock.css';
 
   .dom_parent {
     position: relative;
@@ -50,7 +49,7 @@ export default {
       min-width: 200px;
       transform: translate(-50%, 45px);
       text-align: left;
-      margin-bottom: 20px;
+      padding-bottom: 20px;
     }
   }
 </style>
