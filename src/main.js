@@ -101,6 +101,12 @@ const store = new Vuex.Store({
           },
         },
         {
+          type: 'map',
+          lo: 64.128597,
+          la: -21.896110,
+          tooltip: 'map tooltip',
+        },
+        {
           type: 'button',
           tooltip: 'button tooltip',
           title: 'Navigate',
