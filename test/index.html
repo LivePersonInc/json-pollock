@@ -59,8 +59,12 @@
               "la": 2423423423
             }]
           }
-        }
-        , {
+        },{
+            "type": "map",
+            "lo": 64.128597,
+            "la": -21.896110,
+            "tooltip": "map tooltip"
+        },{
           "type": "text",
           "text": "product category (type)",
           "tooltip": "text tooltip"
@@ -72,6 +76,12 @@
         "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [
+          {
+            "type": "map",
+            "lo": 64.128597,
+            "la": -21.896110,
+            "tooltip": "map tooltip"
+          },
           {
           "type": "image",
           "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
@@ -89,7 +99,7 @@
               "la": 2423423423
             }]
           }
-        },
+        },        
         {
           "type": "text",
           "text": "product name (Title)",
@@ -148,7 +158,7 @@
           "type": "horizontal",
           "elements": [
             {
-              "type": "button",
+            "type": "button",
               "title": "Buyyyyyyyy",
               "tooltip": "store is the thing",
               "click" : {
@@ -160,7 +170,7 @@
                   "la": 2423423423
                 }]
               }
-            },{
+          },{
               "type": "button",
               "title": "Buy",
               "tooltip": "store is the thing",
@@ -239,7 +249,7 @@
 
       // const el = JsonPollock.render(JSON.stringify(conf));
       const el = JsonPollock.render(JSON.stringify(card));
-      // const el = JsonPollock.render(JSON.stringify(conf2));
+      // const el = JsonPollock.render(JSON.stringify(horizontal));
       document.getElementById('content').appendChild(el);
     }
   </script>

@@ -96,6 +96,30 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
+    this.set('map', (config): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-map';
+
+      if (config.tooltip) {
+        divEl.title = config.tooltip;
+        divEl.setAttribute('aria-label', config.tooltip);
+      }
+
+      if (config.style) {
+        divEl.style.cssText = Utils.styleToCss(config.style);
+      }
+
+      if (config.click && config.click.actions) {
+        divEl.onclick = this.wrapAction(config.click);
+      } else {
+        // navigate to the location
+        divEl.onclick = () => {
+          window.open(`https://www.google.com/maps/search/?api=1&query=${config.lo},${config.la}`, '_blank');
+        };
+      }
+      return divEl;
+    });
+
     this.set('vertical', (): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';

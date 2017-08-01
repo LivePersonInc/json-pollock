@@ -54,6 +54,11 @@ describe('json-pollock tests', function () {
         "color": "red",
         "size": 'medium'
       },
+    },{
+      "type": "map",
+      "lo": 64.128597,
+      "la": -21.896110,
+      "tooltip": "map tooltip"
     },]
   }
 
@@ -82,7 +87,7 @@ describe('json-pollock tests', function () {
       chai.expect(wrapdiv.childNodes.length).to.equal(1);
       chai.expect(wrapdiv.childNodes[0].localName).to.equal('div');
       chai.expect(wrapdiv.childNodes[0].className).to.equal('lp-json-pollock-layout lp-json-pollock-layout-vertical');
-      chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(3);
+      chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(4);
     });
 
     it('An element of type image should be created', function () {
@@ -130,6 +135,12 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[2].childNodes[0].style.fontStyle).to.equal('');
     });
 
+    it('An element of type map should be created', function () {
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.childNodes[3].localName).to.equal('div');
+      chai.expect(layout.childNodes[3].className).to.equal('lp-json-pollock-element-map');
+      chai.expect(layout.childNodes[3].title).to.equal('map tooltip');
+    });
   });
 
   describe('render layout elements', function () {
@@ -427,7 +438,7 @@ describe('json-pollock tests', function () {
 
     var rooEl = null;
     var conf = null;
-
+  
     //although most browser can deal with element.click() - phantomjs doesnt for some elements (e.g. img)
     //therefore this prehistoric method is needed
     function createClickEvent() {
@@ -497,6 +508,24 @@ describe('json-pollock tests', function () {
               "uri": "https://example.com"
             }]
           }
+        },{
+          "type": "map",
+          "lo": 64.128597,
+          "la": -21.896110,
+          "tooltip": "map tooltip"
+        },{
+          "type": "map",
+          "lo": 64.128597,
+          "la": -21.896110,
+          "tooltip": "map tooltip",
+          "click": {
+            "actions": [{
+              "type": "navigate",
+              "name": "Navigate to store via map",
+              "lo": 23423423,
+              "la": 2423423423
+            }]
+          }
         },]
       }
 
@@ -532,6 +561,21 @@ describe('json-pollock tests', function () {
       rooEl.childNodes[0].childNodes[0].childNodes[3].childNodes[0].dispatchEvent(createClickEvent());
       chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[3].click.actions[0], metadata: conf.elements[3].click.metadata});
       chai.expect(spy2).to.have.been.calledWith({actionData: conf.elements[3].click.actions[1], metadata: conf.elements[3].click.metadata});
+    });
+
+    it('Click on map element which has no actions definition should trigger window.open for google maps', function () {
+      window.open = sinon.spy();
+      rooEl.childNodes[0].childNodes[0].childNodes[4].dispatchEvent(createClickEvent());
+      chai.expect(window.open).to.have.been.calledWith('https://www.google.com/maps/search/?api=1&query=64.128597,-21.89611');
+    });
+
+    it('Click on map element which has actions definition should not trigger window.open for google maps', function () {
+      window.open = sinon.spy();
+      var spy1 = sinon.spy();
+      JsonPollock.registerAction('navigate', spy1);
+      rooEl.childNodes[0].childNodes[0].childNodes[5].dispatchEvent(createClickEvent());
+      chai.expect(window.open).to.have.not.been.calledWith('https://www.google.com/maps/search/?api=1&query=64.128597,-21.89611');
+      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[5].click.actions[0]});
     });
 
   });
@@ -748,6 +792,14 @@ describe('json-pollock tests', function () {
         chai.expect(JsonPollock.render.bind(JsonPollock, buttonNoTile)).to.throw(SCHEMA_VALIDATION_ERR);
         // uncomment once added to schema
         //chai.expect(JsonPollock.render.bind(JsonPollock, buttonNoAction)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('If element of type map is lack of mandatory properties (url) an invalid schema error should be triggered', function () {
+        var mapNoLaLo = {
+          "type": "map"
+        };
+
+        chai.expect(JsonPollock.render.bind(JsonPollock, mapNoLaLo)).to.throw(SCHEMA_VALIDATION_ERR);
       });
 
       it('If element of type image is lack of mandatory properties (url) an invalid schema error should be triggered', function () {
