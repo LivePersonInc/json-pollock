@@ -87,11 +87,6 @@ const store = new Vuex.Store({
           tooltip: 'button tooltip',
           title: 'Publish text',
           click: {
-            metadata: [
-              {
-                title: 'Action Reason',
-              },
-            ],
             actions: [
               {
                 type: 'publishText',
