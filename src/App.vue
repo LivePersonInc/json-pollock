@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <link rel="icon"type="image/png" href="./assets/logo.png">
     <Header class="header_container"></Header>
     <JSONEditor class="jsoneditor_container"></JSONEditor>
     <JSONPollock class="jsonpollock_container"></JSONPollock>
