@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import * as JsonPollock from 'json-pollock/dist/json-pollock';
+import * as JsonPollock from 'json-pollock/dist/json-pollock.bundle.min';
 
 export default {
   name: 'JSONPollock',
