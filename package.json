@@ -1,12 +1,14 @@
 {
   "name": "json-pollock",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Renders live DOM elements out of JSON accrding to the Structured Messaging Templates RFC",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
+    "pack": "webpack --config webpack.pack.conf",
+    "bundle": "webpack --config webpack.bundle.conf",
+    "build": "webpack --config webpack.pack.conf; webpack --config webpack.bundle.conf;",
     "watch": "webpack --watch",
-    "server": "webpack-dev-server",
+    "server": "webpack-dev-server --config webpack.pack.conf",
     "lint": "eslint src",
     "test": "mocha-phantomjs test/test.html",
     "coverage": "phantomjs mocha-phantomjs test/test.html spec '{\"hooks\": \"mocha-phantomjs-istanbul\", \"coverageFile\": \".coverage.json\"}'"

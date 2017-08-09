@@ -10,12 +10,17 @@ Installation
 
     npm i json-pollock --save
 
+There are two ways to consume this package -
+
+**As a bundle:** You should use `dist/json-pollock.bundle.min.js`  - once you import it into your code it will inject the needed styles into your page header - no additional action is needed from your side.
+
+**As a package:**  You should use `dist/json-pollock.min.js` - you should also take care to link `dist/json-pollock.min.css` to your web page by yourself.
 
 In order to consume it do one of the following:
 
 A script tag:
 
-    <script src="path-to-node-modules/dist/json-pollock.min.js"></script>
+    <script src="path-to-node-modules/dist/json-pollock.[bundle.]min.js"></script>
 
 Using [RequireJS](http://requirejs.org/):
 

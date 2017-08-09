@@ -1,3 +1,6 @@
+/**
+ * This configuration bundle both code and style into a single js file
+ */
 const path = require('path');
 const webpack = require('webpack');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
@@ -45,8 +48,7 @@ module.exports = {
     }),
   ],
   entry: {
-    'json-pollock': './index.js',
-    'json-pollock.min': './index.js',
+    'json-pollock.bundle.min': './index.js',
   },
   devtool: 'source-map',
   output: {

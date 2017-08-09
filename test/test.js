@@ -316,7 +316,7 @@ describe('json-pollock tests', function () {
         layout = rooEl.childNodes[0].childNodes[0];
         var layoutWidth = layout.offsetWidth;
         var elementsWidth = 0;
-        layout.childNodes.forEach(function (node) {
+        Array.prototype.forEach.call(layout.childNodes, function (node) {
           elementsWidth += node.offsetWidth;
         });
         
