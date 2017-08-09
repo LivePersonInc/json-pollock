@@ -1,4 +1,4 @@
-![logo](https://livepersoninc.github.io/json-pollock/src/assets/logo.png)
+<img src="https://livepersoninc.github.io/json-pollock/src/assets/logo.png" width="120px"/>
 
 Json-Pollock
 ============
