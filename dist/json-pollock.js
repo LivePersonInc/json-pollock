@@ -2205,7 +2205,7 @@ exports.default = LPJsonPollock;
 
 module.exports = {
 	"name": "json-pollock",
-	"version": "1.0.10",
+	"version": "1.0.11",
 	"description": "Renders live DOM elements out of JSON accrding to the Structured Messaging Templates RFC",
 	"main": "index.js",
 	"scripts": {
@@ -6863,6 +6863,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /*eslint-enable */
 var instance = new _LPJsonPollock2.default();
+// Stylesheets
 /*eslint-disable */
 
 
