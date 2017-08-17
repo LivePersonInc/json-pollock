@@ -10,17 +10,21 @@ Installation
 
     npm i json-pollock --save
 
-There are two ways to consume this package -
+In the `dist` folder you'll find a several files:
 
-**As a bundle:** You should use `dist/json-pollock.bundle.min.js`  - once you import it into your code it will inject the needed styles into your page header - no additional action is needed from your side.
+`json-pollock.bundle.min.js`  - this script bundle both package and styles, once you import it into your code it will inject the needed styles into your page header - no additional action is needed from your side. it is also supports umd - meaning you can consume it using AMD, CommonJS and as simple script (see [examples](#examples))
 
-**As a package:**  You should use `dist/json-pollock.min.js` - you should also take care to link `dist/json-pollock.min.css` to your web page by yourself.
+`json-pollock.min.js` - use this script if you want to handle the import of the styles by youself, if you ue it you should also take care to link `json-pollock.min.css` to your web page. also supports umd.
 
-In order to consume it do one of the following:
+`json-pollock.global.min.js` - this script is the same as `json-pollock.min.js`, however is does not support umd - it only puts JsonPollock on the current `this` (usually the `window` object). use this in case you inject the package into sites that not managed by you and you dont know if it use AMD or not.
 
-A script tag:
+#####**examples**
 
-    <script src="path-to-node-modules/dist/json-pollock.[bundle.]min.js"></script>
+A `script` tag:
+
+    <script src="path-to-node-modules/dist/json-pollock.[(bundle|global).]min.js"></script>
+
+Following example are relevant only for `json-pollock.bundle.min.js` and `json-pollock.min.js`:
 
 Using [RequireJS](http://requirejs.org/):
 

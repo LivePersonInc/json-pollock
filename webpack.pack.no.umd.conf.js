@@ -62,15 +62,13 @@ module.exports = {
     }),
   ],
   entry: {
-    'json-pollock': './index.js',
-    'json-pollock.min': './index.js',
+    'json-pollock.global.min': './index.js',
   },
   devtool: 'source-map',
   output: {
     filename: '[name].js',
     library: 'JsonPollock',
-    libraryTarget: 'umd',
-    umdNamedDefine: true,
+    libraryTarget: 'this',
     publicPath: '/dist/',
     path: path.resolve(__dirname, 'dist'),
   },

@@ -4,6 +4,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
+const pkgjson = require('./package.json');
 
 module.exports = {
   module: {
@@ -13,6 +14,17 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
+      },
+      {
+        test: /index.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'string-replace-loader',
+          query: {
+            search: '@@VERSION',
+            replace: pkgjson.version,
+          },
+        },
       },
       {
         test: /\.js$/,

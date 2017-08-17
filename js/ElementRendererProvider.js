@@ -75,7 +75,7 @@ export default class ElementRendererProvider {
       }
 
       if (config.caption) {
-        divEl.innerHTML += `<div>${config.caption}</div`;
+        divEl.innerHTML += `<div>${config.caption}</div>`;
       }
 
       imgEl.onload = () => {
