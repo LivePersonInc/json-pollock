@@ -20,6 +20,7 @@
         border-collapse:collapse;
         width: 100%;
         max-width: 200px;
+        background: white;
     }
 
     .lp-json-pollock-layout-vertical {
@@ -61,6 +62,7 @@
 
     .lp-json-pollock-element-text {
         margin: 4px 8px;
+        color: $color-black;
         font-size: $text-size-medium;
         word-wrap: break-word;
         word-break: break-word;        
@@ -79,6 +81,7 @@
             min-height: 32px;
             margin-bottom: -1px;
             text-align: center;
+            color: $color-blue;
 
             &:active {
                 background: $gray7;
