@@ -48,7 +48,6 @@ export default {
       left: 50%;
       min-width: 200px;
       transform: translate(-50%, 45px);
-      text-align: left;
       padding-bottom: 20px;
     }
   }
