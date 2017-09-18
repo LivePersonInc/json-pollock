@@ -62,7 +62,7 @@
     }
 
     .lp-json-pollock-element-text {
-        margin: 4px 8px;
+        padding: 5px 10px;
         color: $color-black;
         font-size: $text-size-medium;
         word-wrap: break-word;
@@ -83,6 +83,7 @@
             margin-bottom: -1px;
             text-align: center;
             color: $color-blue;
+            padding: 10px;
 
             &:active {
                 background: $gray7;
