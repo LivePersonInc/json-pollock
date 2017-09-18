@@ -21,7 +21,7 @@ export default class ElementRendererProvider {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
-        divEl.className += ' direction-rtl';
+        divEl.dir = 'rtl';
       }
       divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" aria-label="${config.tooltip || ''}">${Utils.normalizeHtmlText(config.text)}</span>`;
       return divEl;
@@ -32,7 +32,7 @@ export default class ElementRendererProvider {
       divEl.className = 'lp-json-pollock-element-button';
 
       if (config.rtl) {
-        divEl.className += ' direction-rtl';
+        divEl.dir = 'rtl';
       }
 
       const btnEl = document.createElement('button');
@@ -60,7 +60,7 @@ export default class ElementRendererProvider {
       divEl.className = 'lp-json-pollock-element-image loading';
 
       if (config.rtl) {
-        divEl.className += ' direction-rtl';
+        divEl.dir = 'rtl';
       }
 
       const imgEl = document.createElement('img');
