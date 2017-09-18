@@ -6800,7 +6800,7 @@ var ElementRendererProvider = function () {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
-        divEl.className += ' direction-rtl';
+        divEl.dir = 'rtl';
       }
       divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" aria-label="' + (config.tooltip || '') + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
       return divEl;
@@ -6811,7 +6811,7 @@ var ElementRendererProvider = function () {
       divEl.className = 'lp-json-pollock-element-button';
 
       if (config.rtl) {
-        divEl.className += ' direction-rtl';
+        divEl.dir = 'rtl';
       }
 
       var btnEl = document.createElement('button');
@@ -6839,7 +6839,7 @@ var ElementRendererProvider = function () {
       divEl.className = 'lp-json-pollock-element-image loading';
 
       if (config.rtl) {
-        divEl.className += ' direction-rtl';
+        divEl.dir = 'rtl';
       }
 
       var imgEl = document.createElement('img');
@@ -8168,7 +8168,7 @@ var instance = new _LPJsonPollock2.default();
 var init = instance.init.bind(instance);
 var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
-var version = '1.0.13';
+var version = '1.0.14';
 
 exports.init = init;
 exports.render = render;
