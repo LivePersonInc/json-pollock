@@ -6801,6 +6801,7 @@ var ElementRendererProvider = function () {
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
         divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
       divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" aria-label="' + (config.tooltip || '') + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
       return divEl;
@@ -6812,6 +6813,7 @@ var ElementRendererProvider = function () {
 
       if (config.rtl) {
         divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
 
       var btnEl = document.createElement('button');
@@ -6840,6 +6842,7 @@ var ElementRendererProvider = function () {
 
       if (config.rtl) {
         divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
 
       var imgEl = document.createElement('img');
@@ -8168,7 +8171,7 @@ var instance = new _LPJsonPollock2.default();
 var init = instance.init.bind(instance);
 var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
-var version = '1.0.17';
+var version = '1.0.19';
 
 exports.init = init;
 exports.render = render;
