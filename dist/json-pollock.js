@@ -8171,7 +8171,7 @@ var instance = new _LPJsonPollock2.default();
 var init = instance.init.bind(instance);
 var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
-var version = '1.0.19';
+var version = '1.0.20';
 
 exports.init = init;
 exports.render = render;

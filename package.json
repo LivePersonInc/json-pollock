@@ -1,6 +1,6 @@
 {
   "name": "json-pollock",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Renders live DOM elements out of JSON accrding to the Structured Messaging Templates RFC",
   "main": "index.js",
   "scripts": {
