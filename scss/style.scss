@@ -30,8 +30,12 @@
             border: none;
         }
 
-        >.lp-json-pollock-layout-horizontal, >.lp-json-pollock-element-button, >.lp-json-pollock-element-image, >.lp-json-pollock-element-map {
+        >.lp-json-pollock-layout-horizontal, >.lp-json-pollock-element-button, >.lp-json-pollock-element-image, >.lp-json-pollock-element-map, >.lp-json-pollock-element-text {
             border-top: $default-border;
+        }
+
+        .lp-json-pollock-element-text + .lp-json-pollock-element-text {
+            border-top: none;
         }
 
         > *:first-child {
