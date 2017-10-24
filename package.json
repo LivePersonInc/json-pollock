@@ -1,7 +1,7 @@
 {
   "name": "json-pollock",
   "version": "1.0.21",
-  "description": "Renders live DOM elements out of JSON accrding to the Structured Messaging Templates RFC",
+  "description": "Renders live DOM elements out of JSON according to the Structured Messaging Templates spec",
   "main": "index.js",
   "scripts": {
     "pack": "webpack --config webpack.pack.conf",
@@ -68,6 +68,6 @@
     "chronosjs": "^0.0.23"
   },
   "publishConfig": {
-    "registry": "http://tlvmvnrepository/artifactory/api/npm/lp-npm-local/"
+    "registry": "https://registry.npmjs.org/"
   }
 }
