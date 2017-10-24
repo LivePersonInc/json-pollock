@@ -3,7 +3,7 @@
 Json-Pollock
 ============
 
-The **Json-Pollock** package renders live DOM elements out of JSON accrding to the [Structured Messaging Templates RFC](https://lpgithub.dev.lprnd.net/lp-mobile/Structured-Messaging-Templates) (work in progress)
+The **Json-Pollock** package renders live DOM elements out of JSON accrding to the [Structured Messaging Templates specification](https://developers.liveperson.com/structured-content-templates.html)
 
 Installation
 -------
@@ -12,11 +12,11 @@ Installation
 
 In the `dist` folder you'll find a the following files:
 
-`json-pollock.bundle.min.js`  - this script bundle both package and styles, once you import it into your code it will inject the needed styles into your page header - no additional action is needed from your side. it is also supports umd - meaning you can consume it using AMD, CommonJS and as simple script (see [examples](#examples))
+`json-pollock.bundle.min.js`  - this script bundle both package and styles, once you import it into your code it will inject the needed styles into your page header - no additional actions are needed from your side. it is also supports umd - meaning you can consume it using AMD, CommonJS and as simple script (see [examples](#examples))
 
 `json-pollock.min.js` - use this script if you want to handle the import of the styles by youself, if you use it you should also take care to link `json-pollock.min.css` to your web page. also supports umd.
 
-`json-pollock.global.min.js` - this script is the same as `json-pollock.min.js`, however is does not support umd - it only puts JsonPollock on the current `this` (usually the `window` object). use this in case you inject the package into sites that not managed by you and you dont know if it use AMD or not.
+`json-pollock.global.min.js` - this script is the same as `json-pollock.min.js`, however is does not support umd - it only puts JsonPollock on the current `this` (usually the `window` object). use this in case you inject the package into sites that are not managed by you and you dont know if it uses AMD or not.
 
 #####**examples**
 
@@ -49,7 +49,7 @@ You can call the *init* function if you want to configure JsonPollock - it is no
     JsonPollock.init({
 	     maxAllowedElements: 50    // max DOM elements that will be rendered
 			               // other elements will be ignored, default is 50.
-     });
+    });
 
 **render**
 
@@ -78,7 +78,7 @@ The *render* function renders json into a DOM element.
 
 **registerAction**
 
-The *registerAction* function allow to register a callback to a certain action type, as defined in the [RFC](https://lpgithub.dev.lprnd.net/lp-mobile/Structured-Messaging-Templates#actions).
+The *registerAction* function allow to register a callback to a certain action type, as defined in the [spec](https://developers.liveperson.com/structured-content-templates.html).
 
     const linkCallback = (data) => {
         //data => {actionData: <action configuration>, metadata: <metadata configuration, if given>}
@@ -90,7 +90,7 @@ Error Handling
 -------
 *JsonPollock.render()* will throw an Error if it fails from any reason, the error object will have a *message* property that will give the error description.
 
-Perior to the rendering the JSON object is validated against the JSON [schema](js/schema)  , if it fails to validate the error object will also include an *errors* property that will hold the validation errors.
+Perior to the rendering the JSON object is validated against the JSON [schema](js/schema), if it fails to validate the error object will also include an *errors* property that will hold the validation errors.
 
     ...
     try {
