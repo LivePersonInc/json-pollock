@@ -18,7 +18,7 @@ In the `dist` folder you'll find a the following files:
 
 `json-pollock.global.min.js` - this script is the same as `json-pollock.min.js`, however is does not support umd - it only puts JsonPollock on the current `this` (usually the `window` object). use this in case you inject the package into sites that are not managed by you and you dont know if it uses AMD or not.
 
-[**examples**](#examples)
+#### **examples**
 
 A `script` tag:
 
