@@ -2,6 +2,8 @@
 
 Json-Pollock
 ============
+[![Build Status](https://travis-ci.org/LivePersonInc/json-pollock.svg?branch=master)](https://travis-ci.org/LivePersonInc/json-pollock)
+[![GitHub license](https://img.shields.io/github/license/LivePersonInc/json-pollock.svg)](https://github.com/LivePersonInc/json-pollock/blob/master/LICENSE)
 
 The **Json-Pollock** package renders live DOM elements out of JSON according to the [Structured Messaging Templates specification](https://developers.liveperson.com/structured-content-templates.html)
 
