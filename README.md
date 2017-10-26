@@ -24,7 +24,14 @@ In the `dist` folder you'll find a the following files:
 
 A `script` tag:
 
-    <script src="path-to-node-modules/dist/json-pollock.[(bundle|global).]min.js"></script>
+```html
+<!-- for bundle this import if enough -->
+<script src="path-to-node-modules/dist/json-pollock.bundle.min.js"></script>
+
+<!-- for others you should also link the styles -->
+<script src="path-to-node-modules/dist/json-pollock.[global.]min.js"></script>
+<link rel="stylesheet" href="path-to-node-modules/dist/json-pollock.min.css">
+``` 
 
 Following examples are relevant only for `json-pollock.bundle.min.js` and `json-pollock.min.js`:
 
