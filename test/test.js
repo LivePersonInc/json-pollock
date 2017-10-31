@@ -361,77 +361,103 @@ describe('json-pollock tests', function () {
     var rooEl = null;
     var childEl = null;
 
-    it('Text element', function () {
+    function singleElementTest(title, conf, assertionClass) {
+      it(title + ' element' , function () {
+        
+        rooEl = addToBody(JsonPollock.render(conf));
+        
+        var wrapdiv = rooEl.childNodes[0];      
+        chai.expect(wrapdiv.localName).to.equal('div');
+        chai.expect(wrapdiv.className).to.equal('lp-json-pollock lp-json-pollock-single-element');
+        chai.expect(wrapdiv.childNodes.length).to.equal(1);
+  
+        childEl = wrapdiv.childNodes[0];
+        chai.expect(childEl.className).to.contain(assertionClass);
+      });
+    }
+
+    singleElementTest('Text',
+    {
+      "type": "text",
+      "text": "product name (Title)",
+      "tooltip": "text tooltip"
+    },
+    'lp-json-pollock-element-text');
+
+    singleElementTest('Button',
+    {
+      "type": "button",
+      "tooltip": "button tooltip",
+      "title": "Add to cart",
+      "click": {
+        "actions": [{
+          "type": "link",
+          "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+          "name": "add to cart",
+          "uri": "http://example.jpg"
+        }]
+      }
+    },
+    'lp-json-pollock-element-button');
+
+    singleElementTest('Image',
+    {
+      "type": "image",
+      "url": "http://example.jpg",
+      "tooltip": "image tooltip",
+      "click": {
+        "actions": [{
+          "type": "navigate",
+          "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
+          "name": "Navigate to store via image",
+          "lo": 23.423423,
+          "la": 2423423423
+        }]
+      }
+    },
+    'lp-json-pollock-element-image');
+
+    singleElementTest('Map',
+    {
+      "type": "map",
+      "lo": 64.128597,
+      "la": -21.896110,
+      "tooltip": "map tooltip"
+    },
+    'lp-json-pollock-element-map');
+
+  });
+
+  describe('special characters', function () {
+    
+    var rooEl = null;
+    var childEl = null;
+
+    it('special characters on text tooltip should be escaped', function () {
       var conf = {
         "type": "text",
         "text": "product name (Title)",
-        "tooltip": "text tooltip"
+        "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq ="
       }
 
       rooEl = addToBody(JsonPollock.render(conf));
       
-      var wrapdiv = rooEl.childNodes[0];      
-      chai.expect(wrapdiv.localName).to.equal('div');
-      chai.expect(wrapdiv.className).to.equal('lp-json-pollock lp-json-pollock-single-element');
-      chai.expect(wrapdiv.childNodes.length).to.equal(1);
-
-      childEl = wrapdiv.childNodes[0];
-      chai.expect(childEl.className).to.equal('lp-json-pollock-element-text');
+      childEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
+      chai.expect(childEl.title).to.equal("and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =");
     });
 
-    it('Button element', function () {
+    it('newline character on text content should be replaced with <br>', function () {
       var conf = {
-        "type": "button",
-        "tooltip": "button tooltip",
-        "title": "Add to cart",
-        "click": {
-          "actions": [{
-            "type": "link",
-            "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
-            "name": "add to cart",
-            "uri": "http://example.jpg"
-          }]
-        }
+        "type": "text",
+        "text": "line1\nline2"
       }
 
       rooEl = addToBody(JsonPollock.render(conf));
       
-      var wrapdiv = rooEl.childNodes[0];      
-      chai.expect(wrapdiv.localName).to.equal('div');
-      chai.expect(wrapdiv.className).to.equal('lp-json-pollock lp-json-pollock-single-element');
-      chai.expect(wrapdiv.childNodes.length).to.equal(1);
-
-      childEl = wrapdiv.childNodes[0];
-      chai.expect(childEl.className).to.equal('lp-json-pollock-element-button');
+      childEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
+      chai.expect(childEl.innerHTML).to.equal("line1<br>line2");
     });
-
-    it('Image element', function () {
-      var conf = {
-        "type": "image",
-        "url": "http://example.jpg",
-        "tooltip": "image tooltip",
-        "click": {
-          "actions": [{
-            "type": "navigate",
-            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
-            "name": "Navigate to store via image",
-            "lo": 23.423423,
-            "la": 2423423423
-          }]
-        }
-      }
-
-      rooEl = addToBody(JsonPollock.render(conf));
-      
-      var wrapdiv = rooEl.childNodes[0];      
-      chai.expect(wrapdiv.localName).to.equal('div');
-      chai.expect(wrapdiv.className).to.equal('lp-json-pollock lp-json-pollock-single-element');
-      chai.expect(wrapdiv.childNodes.length).to.equal(1);
-
-      childEl = wrapdiv.childNodes[0];
-      chai.expect(childEl.className).to.contain('lp-json-pollock-element-image');
-    });
-
+    
   });
 
   describe('trigger actions', function () {
