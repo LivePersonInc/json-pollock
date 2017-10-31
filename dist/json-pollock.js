@@ -1685,6 +1685,22 @@ exports.default = {
       normalized = normalized.replace(/(?:\r\n|\r|\n)/g, '<br/>');
     }
     return normalized;
+  },
+  escapeHtml: function escapeHtml(text) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+      '`': '&#x60;',
+      '=': '&#x3D;'
+    };
+
+    return text.replace(/[&<>"'`=/]/g, function (s) {
+      return map[s];
+    });
   }
 };
 
@@ -6798,12 +6814,13 @@ var ElementRendererProvider = function () {
     */
     this.set('text', function (config) {
       var divEl = document.createElement('div');
+      var tooltip = config.tooltip ? _Utils2.default.escapeHtml(config.tooltip) : '';
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
         divEl.dir = 'rtl';
         divEl.className += ' direction-rtl';
       }
-      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + (config.tooltip || '') + '" aria-label="' + (config.tooltip || '') + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
+      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
       return divEl;
     });
 
@@ -8171,7 +8188,7 @@ var instance = new _LPJsonPollock2.default();
 var init = instance.init.bind(instance);
 var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
-var version = '1.0.21';
+var version = '1.0.22';
 
 exports.init = init;
 exports.render = render;
