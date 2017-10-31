@@ -72,4 +72,19 @@ export default {
     }
     return normalized;
   },
+
+  escapeHtml(text: string): string {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+      '`': '&#x60;',
+      '=': '&#x3D;',
+    };
+
+    return text.replace(/[&<>"'`=/]/g, s => map[s]);
+  },
 };

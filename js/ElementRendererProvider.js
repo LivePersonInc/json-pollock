@@ -19,12 +19,13 @@ export default class ElementRendererProvider {
     */
     this.set('text', (config): HTMLElement => {
       const divEl = document.createElement('div');
+      const tooltip = config.tooltip ? Utils.escapeHtml(config.tooltip) : '';
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
         divEl.dir = 'rtl';
         divEl.className += ' direction-rtl';
       }
-      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${config.tooltip || ''}" aria-label="${config.tooltip || ''}">${Utils.normalizeHtmlText(config.text)}</span>`;
+      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
       return divEl;
     });
 
