@@ -48,14 +48,14 @@ ajv-keywords@^1.0.0, ajv-keywords@^1.1.1:
   version "1.5.1"
   resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
 
-ajv@5.2.0:
-  version "5.2.0"
-  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/ajv/-/ajv-5.2.0.tgz#c1735024c5da2ef75cc190713073d44f098bf486"
+ajv@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.3.0.tgz#4414ff74a50879c208ee5fdc826e32c303549eda"
   dependencies:
     co "^4.6.0"
-    fast-deep-equal "^0.1.0"
+    fast-deep-equal "^1.0.0"
+    fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
-    json-stable-stringify "^1.0.1"
 
 ajv@^4.7.0, ajv@^4.9.1:
   version "4.11.8"
@@ -2078,13 +2078,13 @@ extsprintf@1.0.2:
   version "1.0.2"
   resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
 
-fast-deep-equal@^0.1.0:
-  version "0.1.0"
-  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/fast-deep-equal/-/fast-deep-equal-0.1.0.tgz#5c6f4599aba6b333ee3342e2ed978672f1001f8d"
-
 fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
+
+fast-json-stable-stringify@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.0.0.tgz#d5142c0caee6b1189f87d3a76111064f86c8bbf2"
 
 fast-levenshtein@~2.0.4:
   version "2.0.6"
@@ -2944,11 +2944,11 @@ json5@^0.5.0, json5@^0.5.1:
   version "0.5.1"
   resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
-jsoneditor@^5.9.0:
-  version "5.9.3"
-  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/jsoneditor/-/jsoneditor-5.9.3.tgz#0622bd530289c69c558ebcb4fcd97bd6c8f444c4"
+jsoneditor@^5.10.1:
+  version "5.10.1"
+  resolved "https://registry.yarnpkg.com/jsoneditor/-/jsoneditor-5.10.1.tgz#066c8c6c96dcbd2c86b040416b99a4615addbfc8"
   dependencies:
-    ajv "5.2.0"
+    ajv "5.3.0"
     brace "0.10.0"
     javascript-natural-sort "0.7.1"
 

@@ -35,6 +35,7 @@ export default {
         width: 82px;
         cursor: pointer;
         margin-top: 16px;
+        margin-right: 10px;
         cursor: hand;
       }
 
