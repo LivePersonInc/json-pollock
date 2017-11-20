@@ -33,7 +33,7 @@ export default class LPJsonPollock {
     this.events = new Events({ cloneEventData: true });
     this.provider = new ElementRendererProvider(this.events);
     this.maxAllowedElements = 50;
-    const ajv = new Ajv({ format: 'full', unknownFormats: 'ignore', verbose: true });
+    const ajv = new Ajv({ format: 'full', unknownFormats: 'ignore', verbose: true, logger: false });
     ajv.addSchema(actionSchema, 'action.json');
     ajv.addSchema(basicSchema, 'basic.json');
     ajv.addSchema(styleSchema, 'style.json');

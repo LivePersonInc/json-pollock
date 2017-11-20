@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 59);
+/******/ 	return __webpack_require__(__webpack_require__.s = 57);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -92,7 +92,7 @@ module.exports = {
   toHash: toHash,
   getProperty: getProperty,
   escapeQuotes: escapeQuotes,
-  equal: __webpack_require__(1),
+  equal: __webpack_require__(3),
   ucs2length: __webpack_require__(28),
   varOccurences: varOccurences,
   varReplace: varReplace,
@@ -105,6 +105,7 @@ module.exports = {
   getPath: getPath,
   getData: getData,
   unescapeFragment: unescapeFragment,
+  unescapeJsonPointer: unescapeJsonPointer,
   escapeFragment: escapeFragment,
   escapeJsonPointer: escapeJsonPointer
 };
@@ -227,7 +228,7 @@ function cleanUpCode(out) {
 }
 
 
-var ERRORS_REGEXP = /[^v\.]errors/g
+var ERRORS_REGEXP = /[^v.]errors/g
   , REMOVE_ERRORS = /var errors = 0;|var vErrors = null;|validate.errors = vErrors;/g
   , REMOVE_ERRORS_ASYNC = /var errors = 0;|var vErrors = null;/g
   , RETURN_VALID = 'return errors === 0;'
@@ -356,59 +357,7 @@ function unescapeJsonPointer(str) {
 "use strict";
 
 
-/*eslint complexity: 0*/
-
-module.exports = function equal(a, b) {
-  if (a === b) return true;
-
-  var arrA = Array.isArray(a)
-    , arrB = Array.isArray(b)
-    , i;
-
-  if (arrA && arrB) {
-    if (a.length != b.length) return false;
-    for (i = 0; i < a.length; i++)
-      if (!equal(a[i], b[i])) return false;
-    return true;
-  }
-
-  if (arrA != arrB) return false;
-
-  if (a && b && typeof a === 'object' && typeof b === 'object') {
-    var keys = Object.keys(a);
-    if (keys.length !== Object.keys(b).length) return false;
-
-    var dateA = a instanceof Date
-      , dateB = b instanceof Date;
-    if (dateA && dateB) return a.getTime() == b.getTime();
-    if (dateA != dateB) return false;
-
-    var regexpA = a instanceof RegExp
-      , regexpB = b instanceof RegExp;
-    if (regexpA && regexpB) return a.toString() == b.toString();
-    if (regexpA != regexpB) return false;
-
-    for (i = 0; i < keys.length; i++)
-      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
-
-    for (i = 0; i < keys.length; i++)
-      if(!equal(a[keys[i]], b[keys[i]])) return false;
-
-    return true;
-  }
-
-  return false;
-};
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var resolve = __webpack_require__(3);
+var resolve = __webpack_require__(2);
 
 module.exports = {
   Validation: errorSubclass(ValidationError),
@@ -443,16 +392,17 @@ function errorSubclass(Subclass) {
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var url = __webpack_require__(60)
-  , equal = __webpack_require__(1)
+var url = __webpack_require__(58)
+  , equal = __webpack_require__(3)
   , util = __webpack_require__(0)
-  , SchemaObject = __webpack_require__(5);
+  , SchemaObject = __webpack_require__(5)
+  , traverse = __webpack_require__(52);
 
 module.exports = resolve;
 
@@ -679,44 +629,94 @@ function resolveUrl(baseId, id) {
 
 /* @this Ajv */
 function resolveIds(schema) {
-  /* eslint no-shadow: 0 */
-  /* jshint validthis: true */
-  var id = normalizeId(this._getId(schema));
+  var schemaId = normalizeId(this._getId(schema));
+  var baseIds = {'': schemaId};
+  var fullPaths = {'': getFullPath(schemaId, false)};
   var localRefs = {};
-  _resolveIds.call(this, schema, getFullPath(id, false), id);
-  return localRefs;
+  var self = this;
 
-  /* @this Ajv */
-  function _resolveIds(schema, fullPath, baseId) {
-    /* jshint validthis: true */
-    if (Array.isArray(schema)) {
-      for (var i=0; i<schema.length; i++)
-        _resolveIds.call(this, schema[i], fullPath+'/'+i, baseId);
-    } else if (schema && typeof schema == 'object') {
-      var id = this._getId(schema);
-      if (typeof id == 'string') {
-        id = baseId = normalizeId(baseId ? url.resolve(baseId, id) : id);
+  traverse(schema, {allKeys: true}, function(sch, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) {
+    if (jsonPtr === '') return;
+    var id = self._getId(sch);
+    var baseId = baseIds[parentJsonPtr];
+    var fullPath = fullPaths[parentJsonPtr] + '/' + parentKeyword;
+    if (keyIndex !== undefined)
+      fullPath += '/' + (typeof keyIndex == 'number' ? keyIndex : util.escapeFragment(keyIndex));
 
-        var refVal = this._refs[id];
-        if (typeof refVal == 'string') refVal = this._refs[refVal];
-        if (refVal && refVal.schema) {
-          if (!equal(schema, refVal.schema))
+    if (typeof id == 'string') {
+      id = baseId = normalizeId(baseId ? url.resolve(baseId, id) : id);
+
+      var refVal = self._refs[id];
+      if (typeof refVal == 'string') refVal = self._refs[refVal];
+      if (refVal && refVal.schema) {
+        if (!equal(sch, refVal.schema))
+          throw new Error('id "' + id + '" resolves to more than one schema');
+      } else if (id != normalizeId(fullPath)) {
+        if (id[0] == '#') {
+          if (localRefs[id] && !equal(sch, localRefs[id]))
             throw new Error('id "' + id + '" resolves to more than one schema');
-        } else if (id != normalizeId(fullPath)) {
-          if (id[0] == '#') {
-            if (localRefs[id] && !equal(schema, localRefs[id]))
-              throw new Error('id "' + id + '" resolves to more than one schema');
-            localRefs[id] = schema;
-          } else {
-            this._refs[id] = fullPath;
-          }
+          localRefs[id] = sch;
+        } else {
+          self._refs[id] = fullPath;
         }
       }
-      for (var key in schema)
-        _resolveIds.call(this, schema[key], fullPath+'/'+util.escapeFragment(key), baseId);
     }
-  }
+    baseIds[jsonPtr] = baseId;
+    fullPaths[jsonPtr] = fullPath;
+  });
+
+  return localRefs;
 }
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function equal(a, b) {
+  if (a === b) return true;
+
+  var arrA = Array.isArray(a)
+    , arrB = Array.isArray(b)
+    , i;
+
+  if (arrA && arrB) {
+    if (a.length != b.length) return false;
+    for (i = 0; i < a.length; i++)
+      if (!equal(a[i], b[i])) return false;
+    return true;
+  }
+
+  if (arrA != arrB) return false;
+
+  if (a && b && typeof a === 'object' && typeof b === 'object') {
+    var keys = Object.keys(a);
+    if (keys.length !== Object.keys(b).length) return false;
+
+    var dateA = a instanceof Date
+      , dateB = b instanceof Date;
+    if (dateA && dateB) return a.getTime() == b.getTime();
+    if (dateA != dateB) return false;
+
+    var regexpA = a instanceof RegExp
+      , regexpB = b instanceof RegExp;
+    if (regexpA && regexpB) return a.toString() == b.toString();
+    if (regexpA != regexpB) return false;
+
+    for (i = 0; i < keys.length; i++)
+      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+
+    for (i = 0; i < keys.length; i++)
+      if(!equal(a[keys[i]], b[keys[i]])) return false;
+
+    return true;
+  }
+
+  return false;
+};
 
 
 /***/ }),
@@ -771,7 +771,8 @@ module.exports = function generate__limit(it, $keyword, $ruleType) {
     $schemaExcl = it.schema[$exclusiveKeyword],
     $isDataExcl = it.opts.$data && $schemaExcl && $schemaExcl.$data,
     $op = $isMax ? '<' : '>',
-    $notOp = $isMax ? '>' : '<';
+    $notOp = $isMax ? '>' : '<',
+    $errorKeyword = undefined;
   if ($isDataExcl) {
     var $schemaValueExcl = it.util.getData($schemaExcl.$data, $dataLvl, it.dataPathArr),
       $exclusive = 'exclusive' + $lvl,
@@ -826,12 +827,22 @@ module.exports = function generate__limit(it, $keyword, $ruleType) {
       out += ' ( ' + ($schemaValue) + ' === undefined || ' + ($schemaExcl) + ' ' + ($op) + '= ' + ($schemaValue) + ' ? ' + ($data) + ' ' + ($notOp) + '= ' + ($schemaExcl) + ' : ' + ($data) + ' ' + ($notOp) + ' ' + ($schemaValue) + ' ) || ' + ($data) + ' !== ' + ($data) + ') { ';
     } else {
       if ($exclIsNumber && $schema === undefined) {
+        $exclusive = true;
+        $errorKeyword = $exclusiveKeyword;
+        $errSchemaPath = it.errSchemaPath + '/' + $exclusiveKeyword;
         $schemaValue = $schemaExcl;
         $notOp += '=';
       } else {
         if ($exclIsNumber) $schemaValue = Math[$isMax ? 'min' : 'max']($schemaExcl, $schema);
-        if ($schemaExcl === ($exclIsNumber ? $schemaValue : true)) $notOp += '=';
-        else $opStr += '=';
+        if ($schemaExcl === ($exclIsNumber ? $schemaValue : true)) {
+          $exclusive = true;
+          $errorKeyword = $exclusiveKeyword;
+          $errSchemaPath = it.errSchemaPath + '/' + $exclusiveKeyword;
+          $notOp += '=';
+        } else {
+          $exclusive = false;
+          $opStr += '=';
+        }
       }
       var $opExpr = '\'' + $opStr + '\'';
       out += ' if ( ';
@@ -841,7 +852,7 @@ module.exports = function generate__limit(it, $keyword, $ruleType) {
       out += ' ' + ($data) + ' ' + ($notOp) + ' ' + ($schemaValue) + ' || ' + ($data) + ' !== ' + ($data) + ') { ';
     }
   }
-  var $errorKeyword = $keyword;
+  $errorKeyword = $errorKeyword || $keyword;
   var $$outStack = $$outStack || [];
   $$outStack.push(out);
   out = ''; /* istanbul ignore else */
@@ -852,7 +863,7 @@ module.exports = function generate__limit(it, $keyword, $ruleType) {
       if ($isData) {
         out += '\' + ' + ($schemaValue);
       } else {
-        out += '' + ($schema) + '\'';
+        out += '' + ($schemaValue) + '\'';
       }
     }
     if (it.opts.verbose) {
@@ -1271,7 +1282,7 @@ module.exports = function generate_validate(it, $keyword, $ruleType) {
       throw new Error('$ref: validation keywords used in schema at path "' + it.errSchemaPath + '" (see option extendRefs)');
     } else if (it.opts.extendRefs !== true) {
       $refKeywords = false;
-      console.warn('$ref: keywords ignored in schema at path "' + it.errSchemaPath + '"');
+      it.logger.warn('$ref: keywords ignored in schema at path "' + it.errSchemaPath + '"');
     }
   }
   if ($typeSchema) {
@@ -1429,7 +1440,7 @@ module.exports = function generate_validate(it, $keyword, $ruleType) {
     }
   } else {
     if (it.opts.v5 && it.schema.patternGroups) {
-      console.warn('keyword "patternGroups" is deprecated and disabled. Use option patternGroups: true to enable.');
+      it.logger.warn('keyword "patternGroups" is deprecated and disabled. Use option patternGroups: true to enable.');
     }
     var arr2 = it.RULES;
     if (arr2) {
@@ -1594,10 +1605,10 @@ module.exports = function generate_validate(it, $keyword, $ruleType) {
   }
 
   function $shouldUseRule($rule) {
-    return it.schema[$rule.keyword] !== undefined || ($rule.implements && $ruleImlementsSomeKeyword($rule));
+    return it.schema[$rule.keyword] !== undefined || ($rule.implements && $ruleImplementsSomeKeyword($rule));
   }
 
-  function $ruleImlementsSomeKeyword($rule) {
+  function $ruleImplementsSomeKeyword($rule) {
     var impl = $rule.implements;
     for (var i = 0; i < impl.length; i++)
       if (it.schema[impl[i]] !== undefined) return true;
@@ -1951,15 +1962,13 @@ function isObject(val) {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var json = typeof JSON !== 'undefined' ? JSON : __webpack_require__(52);
+"use strict";
 
-module.exports = function (obj, opts) {
+
+module.exports = function (data, opts) {
     if (!opts) opts = {};
     if (typeof opts === 'function') opts = { cmp: opts };
-    var space = opts.space || '';
-    if (typeof space === 'number') space = Array(space+1).join(' ');
     var cycles = (typeof opts.cycles === 'boolean') ? opts.cycles : false;
-    var replacer = opts.replacer || function(key, value) { return value; };
 
     var cmp = opts.cmp && (function (f) {
         return function (node) {
@@ -1972,68 +1981,46 @@ module.exports = function (obj, opts) {
     })(opts.cmp);
 
     var seen = [];
-    return (function stringify (parent, key, node, level) {
-        var indent = space ? ('\n' + new Array(level + 1).join(space)) : '';
-        var colonSeparator = space ? ': ' : ':';
-
+    return (function stringify (node) {
         if (node && node.toJSON && typeof node.toJSON === 'function') {
             node = node.toJSON();
         }
 
-        node = replacer.call(parent, key, node);
+        if (node === undefined) return;
+        if (typeof node == 'number') return isFinite(node) ? '' + node : 'null';
+        if (typeof node !== 'object') return JSON.stringify(node);
 
-        if (node === undefined) {
-            return;
-        }
-        if (typeof node !== 'object' || node === null) {
-            return json.stringify(node);
-        }
-        if (isArray(node)) {
-            var out = [];
-            for (var i = 0; i < node.length; i++) {
-                var item = stringify(node, i, node[i], level+1) || json.stringify(null);
-                out.push(indent + space + item);
+        var i, out;
+        if (Array.isArray(node)) {
+            out = '[';
+            for (i = 0; i < node.length; i++) {
+                if (i) out += ',';
+                out += stringify(node[i]) || 'null';
             }
-            return '[' + out.join(',') + indent + ']';
+            return out + ']';
         }
-        else {
-            if (seen.indexOf(node) !== -1) {
-                if (cycles) return json.stringify('__cycle__');
-                throw new TypeError('Converting circular structure to JSON');
-            }
-            else seen.push(node);
 
-            var keys = objectKeys(node).sort(cmp && cmp(node));
-            var out = [];
-            for (var i = 0; i < keys.length; i++) {
-                var key = keys[i];
-                var value = stringify(node, key, node[key], level+1);
+        if (node === null) return 'null';
 
-                if(!value) continue;
-
-                var keyValue = json.stringify(key)
-                    + colonSeparator
-                    + value;
-                ;
-                out.push(indent + space + keyValue);
-            }
-            seen.splice(seen.indexOf(node), 1);
-            return '{' + out.join(',') + indent + '}';
+        if (seen.indexOf(node) !== -1) {
+            if (cycles) return JSON.stringify('__cycle__');
+            throw new TypeError('Converting circular structure to JSON');
         }
-    })({ '': obj }, '', obj, 0);
-};
 
-var isArray = Array.isArray || function (x) {
-    return {}.toString.call(x) === '[object Array]';
-};
+        var seenIndex = seen.push(node) - 1;
+        var keys = Object.keys(node).sort(cmp && cmp(node));
+        out = '';
+        for (i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            var value = stringify(node[key]);
 
-var objectKeys = Object.keys || function (obj) {
-    var has = Object.prototype.hasOwnProperty || function () { return true };
-    var keys = [];
-    for (var key in obj) {
-        if (has.call(obj, key)) keys.push(key);
-    }
-    return keys;
+            if (!value) continue;
+            if (out) out += ',';
+            out += JSON.stringify(key) + ':' + value;
+        }
+        seen.splice(seenIndex, 1);
+        return '{' + out + '}';
+    })(data);
 };
 
 
@@ -2112,7 +2099,7 @@ var LPJsonPollock = function () {
     this.events = new Events({ cloneEventData: true });
     this.provider = new _ElementRendererProvider2.default(this.events);
     this.maxAllowedElements = 50;
-    var ajv = new _ajv2.default({ format: 'full', unknownFormats: 'ignore', verbose: true });
+    var ajv = new _ajv2.default({ format: 'full', unknownFormats: 'ignore', verbose: true, logger: false });
     ajv.addSchema(_action2.default, 'action.json');
     ajv.addSchema(_basic2.default, 'basic.json');
     ajv.addSchema(_style2.default, 'style.json');
@@ -2654,7 +2641,7 @@ module.exports = function (metaSchema, keywordsJsonPointers) {
 
 
 var compileSchema = __webpack_require__(26)
-  , resolve = __webpack_require__(3)
+  , resolve = __webpack_require__(2)
   , Cache = __webpack_require__(22)
   , SchemaObject = __webpack_require__(5)
   , stableStringify = __webpack_require__(13)
@@ -2686,7 +2673,7 @@ Ajv.prototype.addKeyword = customKeyword.add;
 Ajv.prototype.getKeyword = customKeyword.get;
 Ajv.prototype.removeKeyword = customKeyword.remove;
 
-var errorClasses = __webpack_require__(2);
+var errorClasses = __webpack_require__(1);
 Ajv.ValidationError = errorClasses.Validation;
 Ajv.MissingRefError = errorClasses.MissingRef;
 Ajv.$dataMetaSchema = $dataMetaSchema;
@@ -2705,6 +2692,7 @@ var META_SUPPORT_DATA = ['/properties'];
 function Ajv(opts) {
   if (!(this instanceof Ajv)) return new Ajv(opts);
   opts = this._opts = util.copy(opts) || {};
+  setLogger(this);
   this._schemas = {};
   this._refs = {};
   this._fragments = {};
@@ -2734,7 +2722,7 @@ function Ajv(opts) {
 
 /**
  * Validate data using schema
- * Schema will be compiled and cached (using serialized JSON as key. [json-stable-stringify](https://github.com/substack/json-stable-stringify) is used to serialize.
+ * Schema will be compiled and cached (using serialized JSON as key. [fast-json-stable-stringify](https://github.com/epoberezkin/fast-json-stable-stringify) is used to serialize.
  * @this   Ajv
  * @param  {String|Object} schemaKeyRef key, ref or schema object
  * @param  {Any} data to be validated
@@ -2819,7 +2807,7 @@ function validateSchema(schema, throwOrLogError) {
     throw new Error('$schema must be a string');
   $schema = $schema || this._opts.defaultMeta || defaultMeta(this);
   if (!$schema) {
-    console.warn('meta-schema not available');
+    this.logger.warn('meta-schema not available');
     this.errors = null;
     return true;
   }
@@ -2832,7 +2820,7 @@ function validateSchema(schema, throwOrLogError) {
   finally { this._formats.uri = currentUriFormat; }
   if (!valid && throwOrLogError) {
     var message = 'schema is invalid: ' + this.errorsText();
-    if (this._opts.validateSchema == 'log') console.error(message);
+    if (this._opts.validateSchema == 'log') this.logger.error(message);
     else throw new Error(message);
   }
   return valid;
@@ -3031,15 +3019,15 @@ function chooseGetId(opts) {
   }
 }
 
-
+/* @this   Ajv */
 function _getId(schema) {
-  if (schema.$id) console.warn('schema $id ignored', schema.$id);
+  if (schema.$id) this.logger.warn('schema $id ignored', schema.$id);
   return schema.id;
 }
 
-
+/* @this   Ajv */
 function _get$Id(schema) {
-  if (schema.id) console.warn('schema id ignored', schema.id);
+  if (schema.id) this.logger.warn('schema id ignored', schema.id);
   return schema.$id;
 }
 
@@ -3130,6 +3118,22 @@ function getMetaSchemaOptions(self) {
 }
 
 
+function setLogger(self) {
+  var logger = self._opts.logger;
+  if (logger === false) {
+    self.logger = {log: noop, warn: noop, error: noop};
+  } else {
+    if (logger === undefined) logger = console;
+    if (!(typeof logger == 'object' && logger.log && logger.warn && logger.error))
+      throw new Error('logger must implement log, warn and error methods');
+    self.logger = logger;
+  }
+}
+
+
+function noop() {}
+
+
 /***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3208,7 +3212,7 @@ module.exports = {
 "use strict";
 
 
-var MissingRefError = __webpack_require__(2).MissingRef;
+var MissingRefError = __webpack_require__(1).MissingRef;
 
 module.exports = compileAsync;
 
@@ -3311,18 +3315,18 @@ var DATE = /^\d\d\d\d-(\d\d)-(\d\d)$/;
 var DAYS = [0,31,29,31,30,31,30,31,31,30,31,30,31];
 var TIME = /^(\d\d):(\d\d):(\d\d)(\.\d+)?(z|[+-]\d\d:\d\d)?$/i;
 var HOSTNAME = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[-0-9a-z]{0,61}[0-9a-z])?)*$/i;
-var URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@\/?]|%[0-9a-f]{2})*)?(?:\#(?:[a-z0-9\-._~!$&'()*+,;=:@\/?]|%[0-9a-f]{2})*)?$/i;
-var URIREF = /^(?:[a-z][a-z0-9+\-.]*:)?(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'"()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*)?(?:\?(?:[a-z0-9\-._~!$&'"()*+,;=:@\/?]|%[0-9a-f]{2})*)?(?:\#(?:[a-z0-9\-._~!$&'"()*+,;=:@\/?]|%[0-9a-f]{2})*)?$/i;
+var URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
+var URIREF = /^(?:[a-z][a-z0-9+\-.]*:)?(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'"()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*)?(?:\?(?:[a-z0-9\-._~!$&'"()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'"()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
 // uri-template: https://tools.ietf.org/html/rfc6570
-var URITEMPLATE = /^(?:(?:[^\x00-\x20"'<>%\\^`{|}]|%[0-9a-f]{2})|\{[+#.\/;?&=,!@|]?(?:[a-z0-9_]|%[0-9a-f]{2})+(?:\:[1-9][0-9]{0,3}|\*)?(?:,(?:[a-z0-9_]|%[0-9a-f]{2})+(?:\:[1-9][0-9]{0,3}|\*)?)*\})*$/i;
+var URITEMPLATE = /^(?:(?:[^\x00-\x20"'<>%\\^`{|}]|%[0-9a-f]{2})|\{[+#./;?&=,!@|]?(?:[a-z0-9_]|%[0-9a-f]{2})+(?::[1-9][0-9]{0,3}|\*)?(?:,(?:[a-z0-9_]|%[0-9a-f]{2})+(?::[1-9][0-9]{0,3}|\*)?)*\})*$/i;
 // For the source: https://gist.github.com/dperini/729294
 // For test cases: https://mathiasbynens.be/demo/url-regex
 // @todo Delete current URL in favour of the commented out URL rule when this issue is fixed https://github.com/eslint/eslint/issues/7983.
 // var URL = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u{00a1}-\u{ffff}0-9]+-?)*[a-z\u{00a1}-\u{ffff}0-9]+)(?:\.(?:[a-z\u{00a1}-\u{ffff}0-9]+-?)*[a-z\u{00a1}-\u{ffff}0-9]+)*(?:\.(?:[a-z\u{00a1}-\u{ffff}]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/iu;
-var URL = /^(?:(?:http[s\u017F]?|ftp):\/\/)(?:(?:[\0-\x08\x0E-\x1F!-\x9F\xA1-\u167F\u1681-\u1FFF\u200B-\u2027\u202A-\u202E\u2030-\u205E\u2060-\u2FFF\u3001-\uD7FF\uE000-\uFEFE\uFF00-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+(?::(?:[\0-\x08\x0E-\x1F!-\x9F\xA1-\u167F\u1681-\u1FFF\u200B-\u2027\u202A-\u202E\u2030-\u205E\u2060-\u2FFF\u3001-\uD7FF\uE000-\uFEFE\uFF00-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*)?@)?(?:(?!10(?:\.[0-9]{1,3}){3})(?!127(?:\.[0-9]{1,3}){3})(?!169\.254(?:\.[0-9]{1,3}){2})(?!192\.168(?:\.[0-9]{1,3}){2})(?!172\.(?:1[6-9]|2[0-9]|3[01])(?:\.[0-9]{1,3}){2})(?:[1-9][0-9]?|1[0-9][0-9]|2[01][0-9]|22[0-3])(?:\.(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])){2}(?:\.(?:[1-9][0-9]?|1[0-9][0-9]|2[0-4][0-9]|25[0-4]))|(?:(?:(?:[0-9KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+\-?)*(?:[0-9KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+)(?:\.(?:(?:[0-9KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+\-?)*(?:[0-9KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+)*(?:\.(?:(?:[KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]){2,})))(?::[0-9]{2,5})?(?:\/(?:[\0-\x08\x0E-\x1F!-\x9F\xA1-\u167F\u1681-\u1FFF\u200B-\u2027\u202A-\u202E\u2030-\u205E\u2060-\u2FFF\u3001-\uD7FF\uE000-\uFEFE\uFF00-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*)?$/i;
-var UUID = /^(?:urn\:uuid\:)?[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
-var JSON_POINTER = /^(?:\/(?:[^~\/]|~0|~1)*)*$|^\#(?:\/(?:[a-z0-9_\-\.!$&'()*+,;:=@]|%[0-9a-f]{2}|~0|~1)*)*$/i;
-var RELATIVE_JSON_POINTER = /^(?:0|[1-9][0-9]*)(?:\#|(?:\/(?:[^~\/]|~0|~1)*)*)$/;
+var URL = /^(?:(?:http[s\u017F]?|ftp):\/\/)(?:(?:[\0-\x08\x0E-\x1F!-\x9F\xA1-\u167F\u1681-\u1FFF\u200B-\u2027\u202A-\u202E\u2030-\u205E\u2060-\u2FFF\u3001-\uD7FF\uE000-\uFEFE\uFF00-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+(?::(?:[\0-\x08\x0E-\x1F!-\x9F\xA1-\u167F\u1681-\u1FFF\u200B-\u2027\u202A-\u202E\u2030-\u205E\u2060-\u2FFF\u3001-\uD7FF\uE000-\uFEFE\uFF00-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*)?@)?(?:(?!10(?:\.[0-9]{1,3}){3})(?!127(?:\.[0-9]{1,3}){3})(?!169\.254(?:\.[0-9]{1,3}){2})(?!192\.168(?:\.[0-9]{1,3}){2})(?!172\.(?:1[6-9]|2[0-9]|3[01])(?:\.[0-9]{1,3}){2})(?:[1-9][0-9]?|1[0-9][0-9]|2[01][0-9]|22[0-3])(?:\.(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])){2}(?:\.(?:[1-9][0-9]?|1[0-9][0-9]|2[0-4][0-9]|25[0-4]))|(?:(?:(?:[0-9KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+-?)*(?:[0-9KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+)(?:\.(?:(?:[0-9KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+-?)*(?:[0-9KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])+)*(?:\.(?:(?:[KSa-z\xA1-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]){2,})))(?::[0-9]{2,5})?(?:\/(?:[\0-\x08\x0E-\x1F!-\x9F\xA1-\u167F\u1681-\u1FFF\u200B-\u2027\u202A-\u202E\u2030-\u205E\u2060-\u2FFF\u3001-\uD7FF\uE000-\uFEFE\uFF00-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*)?$/i;
+var UUID = /^(?:urn:uuid:)?[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
+var JSON_POINTER = /^(?:\/(?:[^~/]|~0|~1)*)*$|^#(?:\/(?:[a-z0-9_\-.!$&'()*+,;:=@]|%[0-9a-f]{2}|~0|~1)*)*$/i;
+var RELATIVE_JSON_POINTER = /^(?:0|[1-9][0-9]*)(?:#|(?:\/(?:[^~/]|~0|~1)*)*)$/;
 
 
 module.exports = formats;
@@ -3340,14 +3344,14 @@ formats.fast = {
   time: /^[0-2]\d:[0-5]\d:[0-5]\d(?:\.\d+)?(?:z|[+-]\d\d:\d\d)?$/i,
   'date-time': /^\d\d\d\d-[0-1]\d-[0-3]\d[t\s][0-2]\d:[0-5]\d:[0-5]\d(?:\.\d+)?(?:z|[+-]\d\d:\d\d)$/i,
   // uri: https://github.com/mafintosh/is-my-json-valid/blob/master/formats.js
-  uri: /^(?:[a-z][a-z0-9+-.]*)(?:\:|\/)\/?[^\s]*$/i,
+  uri: /^(?:[a-z][a-z0-9+-.]*)(?::|\/)\/?[^\s]*$/i,
   'uri-reference': /^(?:(?:[a-z][a-z0-9+-.]*:)?\/\/)?[^\s]*$/i,
   'uri-template': URITEMPLATE,
   url: URL,
   // email (sources from jsen validator):
   // http://stackoverflow.com/questions/201323/using-a-regular-expression-to-validate-an-email-address#answer-8829363
   // http://www.w3.org/TR/html5/forms.html#valid-e-mail-address (search for 'willful violation')
-  email: /^[a-z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/i,
+  email: /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/i,
   hostname: HOSTNAME,
   // optimized https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9780596802837/ch07s16.html
   ipv4: /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/,
@@ -3372,7 +3376,7 @@ formats.full = {
   'uri-reference': URIREF,
   'uri-template': URITEMPLATE,
   url: URL,
-  email: /^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&''*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i,
+  email: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&''*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i,
   hostname: hostname,
   ipv4: /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/,
   ipv6: /^\s*(?:(?:(?:[0-9a-f]{1,4}:){7}(?:[0-9a-f]{1,4}|:))|(?:(?:[0-9a-f]{1,4}:){6}(?::[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(?:(?:[0-9a-f]{1,4}:){5}(?:(?:(?::[0-9a-f]{1,4}){1,2})|:(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(?:(?:[0-9a-f]{1,4}:){4}(?:(?:(?::[0-9a-f]{1,4}){1,3})|(?:(?::[0-9a-f]{1,4})?:(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(?:(?:[0-9a-f]{1,4}:){3}(?:(?:(?::[0-9a-f]{1,4}){1,4})|(?:(?::[0-9a-f]{1,4}){0,2}:(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(?:(?:[0-9a-f]{1,4}:){2}(?:(?:(?::[0-9a-f]{1,4}){1,5})|(?:(?::[0-9a-f]{1,4}){0,3}:(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(?:(?:[0-9a-f]{1,4}:){1}(?:(?:(?::[0-9a-f]{1,4}){1,6})|(?:(?::[0-9a-f]{1,4}){0,4}:(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(?::(?:(?:(?::[0-9a-f]{1,4}){1,7})|(?:(?::[0-9a-f]{1,4}){0,5}:(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(?:%.+)?\s*$/i,
@@ -3421,7 +3425,7 @@ function hostname(str) {
 }
 
 
-var NOT_URI_FRAGMENT = /\/|\:/;
+var NOT_URI_FRAGMENT = /\/|:/;
 function uri(str) {
   // http://jmrware.com/articles/2009/uri_regexp/URI_regex.html + optional protocol + required "."
   return NOT_URI_FRAGMENT.test(str) && URI.test(str);
@@ -3447,9 +3451,9 @@ function regex(str) {
 "use strict";
 
 
-var resolve = __webpack_require__(3)
+var resolve = __webpack_require__(2)
   , util = __webpack_require__(0)
-  , errorClasses = __webpack_require__(2)
+  , errorClasses = __webpack_require__(1)
   , stableStringify = __webpack_require__(13);
 
 var validateGenerator = __webpack_require__(10);
@@ -3460,7 +3464,7 @@ var validateGenerator = __webpack_require__(10);
 
 var co = __webpack_require__(12);
 var ucs2length = util.ucs2length;
-var equal = __webpack_require__(1);
+var equal = __webpack_require__(3);
 
 // this error is thrown by async schemas to return validation errors via exception
 var ValidationError = errorClasses.Validation;
@@ -3551,6 +3555,7 @@ function compile(schema, root, localRefs, baseId) {
       useCustomRule: useCustomRule,
       opts: opts,
       formats: formats,
+      logger: self.logger,
       self: self
     });
 
@@ -3593,7 +3598,7 @@ function compile(schema, root, localRefs, baseId) {
 
       refVal[0] = validate;
     } catch(e) {
-      console.error('Error compiling schema, function code:', sourceCode);
+      self.logger.error('Error compiling schema, function code:', sourceCode);
       throw e;
     }
 
@@ -3643,7 +3648,9 @@ function compile(schema, root, localRefs, baseId) {
       }
     }
 
-    if (v !== undefined) {
+    if (v === undefined) {
+      removeLocalRef(ref);
+    } else {
       replaceLocalRef(ref, v);
       return resolvedRef(v, refCode);
     }
@@ -3654,6 +3661,10 @@ function compile(schema, root, localRefs, baseId) {
     refVal[refId] = v;
     refs[ref] = refId;
     return 'refVal' + refId;
+  }
+
+  function removeLocalRef(ref) {
+    delete refs[ref];
   }
 
   function replaceLocalRef(ref, v) {
@@ -3701,7 +3712,7 @@ function compile(schema, root, localRefs, baseId) {
       var valid = validateSchema(schema);
       if (!valid) {
         var message = 'keyword schema is invalid: ' + self.errorsText(validateSchema.errors);
-        if (self._opts.validateSchema == 'log') console.error(message);
+        if (self._opts.validateSchema == 'log') self.logger.error(message);
         else throw new Error(message);
       }
     }
@@ -3847,7 +3858,7 @@ module.exports = function rules() {
 
   var ALL = [ 'type' ];
   var KEYWORDS = [
-    'additionalItems', '$schema', 'id', 'title',
+    'additionalItems', '$schema', '$id', 'id', 'title',
     'description', 'default', 'definitions'
   ];
   var TYPES = [ 'number', 'integer', 'string', 'array', 'object', 'boolean', 'null' ];
@@ -4137,7 +4148,7 @@ module.exports = function generate_contains(it, $keyword, $ruleType) {
     $it.schema = $schema;
     $it.schemaPath = $schemaPath;
     $it.errSchemaPath = $errSchemaPath;
-    out += ' for (var ' + ($idx) + ' = 0; ' + ($idx) + ' < ' + ($data) + '.length; ' + ($idx) + '++) { ';
+    out += ' var ' + ($nextValid) + ' = false; for (var ' + ($idx) + ' = 0; ' + ($idx) + ' < ' + ($data) + '.length; ' + ($idx) + '++) { ';
     $it.errorPath = it.util.getPathExpr(it.errorPath, $idx, it.opts.jsonPointers, true);
     var $passData = $data + '[' + $idx + ']';
     $it.dataPathArr[$dataNxt] = $idx;
@@ -4733,7 +4744,7 @@ module.exports = function generate_format(it, $keyword, $ruleType) {
     var $format = it.formats[$schema];
     if (!$format) {
       if ($unknownFormats == 'ignore') {
-        console.warn('unknown format "' + $schema + '" ignored in schema at path "' + it.errSchemaPath + '"');
+        it.logger.warn('unknown format "' + $schema + '" ignored in schema at path "' + it.errSchemaPath + '"');
         if ($breakOnError) {
           out += ' if (true) { ';
         }
@@ -5022,7 +5033,7 @@ module.exports = function generate_multipleOf(it, $keyword, $ruleType) {
       if ($isData) {
         out += '\' + ' + ($schemaValue);
       } else {
-        out += '' + ($schema) + '\'';
+        out += '' + ($schemaValue) + '\'';
       }
     }
     if (it.opts.verbose) {
@@ -5897,7 +5908,7 @@ module.exports = function generate_ref(it, $keyword, $ruleType) {
     if ($refVal === undefined) {
       var $message = it.MissingRefError.message(it.baseId, $schema);
       if (it.opts.missingRefs == 'fail') {
-        console.error($message);
+        it.logger.error($message);
         var $$outStack = $$outStack || [];
         $$outStack.push(out);
         out = ''; /* istanbul ignore else */
@@ -5928,7 +5939,7 @@ module.exports = function generate_ref(it, $keyword, $ruleType) {
           out += ' if (false) { ';
         }
       } else if (it.opts.missingRefs == 'ignore') {
-        console.warn($message);
+        it.logger.warn($message);
         if ($breakOnError) {
           out += ' if (true) { ';
         }
@@ -6358,7 +6369,7 @@ module.exports = function generate_uniqueItems(it, $keyword, $ruleType) {
 "use strict";
 
 
-var IDENTIFIER = /^[a-z_$][a-z0-9_$\-]*$/i;
+var IDENTIFIER = /^[a-z_$][a-z0-9_$-]*$/i;
 var customRuleCode = __webpack_require__(33);
 
 module.exports = {
@@ -6633,6 +6644,10 @@ module.exports = {
 			"type": "string"
 		},
 		"default": {},
+		"examples": {
+			"type": "array",
+			"items": {}
+		},
 		"multipleOf": {
 			"type": "number",
 			"exclusiveMinimum": 0
@@ -6981,451 +6996,92 @@ exports.default = ElementRendererProvider;
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.parse = __webpack_require__(53);
-exports.stringify = __webpack_require__(54);
+"use strict";
+
+
+var traverse = module.exports = function (schema, opts, cb) {
+  if (typeof opts == 'function') {
+    cb = opts;
+    opts = {};
+  }
+  _traverse(opts, cb, schema, '', schema);
+};
+
+
+traverse.keywords = {
+  additionalItems: true,
+  items: true,
+  contains: true,
+  additionalProperties: true,
+  propertyNames: true,
+  not: true
+};
+
+traverse.arrayKeywords = {
+  items: true,
+  allOf: true,
+  anyOf: true,
+  oneOf: true
+};
+
+traverse.propsKeywords = {
+  definitions: true,
+  properties: true,
+  patternProperties: true,
+  dependencies: true
+};
+
+traverse.skipKeywords = {
+  enum: true,
+  const: true,
+  required: true,
+  maximum: true,
+  minimum: true,
+  exclusiveMaximum: true,
+  exclusiveMinimum: true,
+  multipleOf: true,
+  maxLength: true,
+  minLength: true,
+  pattern: true,
+  format: true,
+  maxItems: true,
+  minItems: true,
+  uniqueItems: true,
+  maxProperties: true,
+  minProperties: true
+};
+
+
+function _traverse(opts, cb, schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) {
+  if (schema && typeof schema == 'object' && !Array.isArray(schema)) {
+    cb(schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
+    for (var key in schema) {
+      var sch = schema[key];
+      if (Array.isArray(sch)) {
+        if (key in traverse.arrayKeywords) {
+          for (var i=0; i<sch.length; i++)
+            _traverse(opts, cb, sch[i], jsonPtr + '/' + key + '/' + i, rootSchema, jsonPtr, key, schema, i);
+        }
+      } else if (key in traverse.propsKeywords) {
+        if (sch && typeof sch == 'object') {
+          for (var prop in sch)
+            _traverse(opts, cb, sch[prop], jsonPtr + '/' + key + '/' + escapeJsonPtr(prop), rootSchema, jsonPtr, key, schema, prop);
+        }
+      } else if (key in traverse.keywords || (opts.allKeys && !(key in traverse.skipKeywords))) {
+        _traverse(opts, cb, sch, jsonPtr + '/' + key, rootSchema, jsonPtr, key, schema);
+      }
+    }
+  }
+}
+
+
+function escapeJsonPtr(str) {
+  return str.replace(/~/g, '~0').replace(/\//g, '~1');
+}
 
 
 /***/ }),
 /* 53 */
-/***/ (function(module, exports) {
-
-var at, // The index of the current character
-    ch, // The current character
-    escapee = {
-        '"':  '"',
-        '\\': '\\',
-        '/':  '/',
-        b:    '\b',
-        f:    '\f',
-        n:    '\n',
-        r:    '\r',
-        t:    '\t'
-    },
-    text,
-
-    error = function (m) {
-        // Call error when something is wrong.
-        throw {
-            name:    'SyntaxError',
-            message: m,
-            at:      at,
-            text:    text
-        };
-    },
-    
-    next = function (c) {
-        // If a c parameter is provided, verify that it matches the current character.
-        if (c && c !== ch) {
-            error("Expected '" + c + "' instead of '" + ch + "'");
-        }
-        
-        // Get the next character. When there are no more characters,
-        // return the empty string.
-        
-        ch = text.charAt(at);
-        at += 1;
-        return ch;
-    },
-    
-    number = function () {
-        // Parse a number value.
-        var number,
-            string = '';
-        
-        if (ch === '-') {
-            string = '-';
-            next('-');
-        }
-        while (ch >= '0' && ch <= '9') {
-            string += ch;
-            next();
-        }
-        if (ch === '.') {
-            string += '.';
-            while (next() && ch >= '0' && ch <= '9') {
-                string += ch;
-            }
-        }
-        if (ch === 'e' || ch === 'E') {
-            string += ch;
-            next();
-            if (ch === '-' || ch === '+') {
-                string += ch;
-                next();
-            }
-            while (ch >= '0' && ch <= '9') {
-                string += ch;
-                next();
-            }
-        }
-        number = +string;
-        if (!isFinite(number)) {
-            error("Bad number");
-        } else {
-            return number;
-        }
-    },
-    
-    string = function () {
-        // Parse a string value.
-        var hex,
-            i,
-            string = '',
-            uffff;
-        
-        // When parsing for string values, we must look for " and \ characters.
-        if (ch === '"') {
-            while (next()) {
-                if (ch === '"') {
-                    next();
-                    return string;
-                } else if (ch === '\\') {
-                    next();
-                    if (ch === 'u') {
-                        uffff = 0;
-                        for (i = 0; i < 4; i += 1) {
-                            hex = parseInt(next(), 16);
-                            if (!isFinite(hex)) {
-                                break;
-                            }
-                            uffff = uffff * 16 + hex;
-                        }
-                        string += String.fromCharCode(uffff);
-                    } else if (typeof escapee[ch] === 'string') {
-                        string += escapee[ch];
-                    } else {
-                        break;
-                    }
-                } else {
-                    string += ch;
-                }
-            }
-        }
-        error("Bad string");
-    },
-
-    white = function () {
-
-// Skip whitespace.
-
-        while (ch && ch <= ' ') {
-            next();
-        }
-    },
-
-    word = function () {
-
-// true, false, or null.
-
-        switch (ch) {
-        case 't':
-            next('t');
-            next('r');
-            next('u');
-            next('e');
-            return true;
-        case 'f':
-            next('f');
-            next('a');
-            next('l');
-            next('s');
-            next('e');
-            return false;
-        case 'n':
-            next('n');
-            next('u');
-            next('l');
-            next('l');
-            return null;
-        }
-        error("Unexpected '" + ch + "'");
-    },
-
-    value,  // Place holder for the value function.
-
-    array = function () {
-
-// Parse an array value.
-
-        var array = [];
-
-        if (ch === '[') {
-            next('[');
-            white();
-            if (ch === ']') {
-                next(']');
-                return array;   // empty array
-            }
-            while (ch) {
-                array.push(value());
-                white();
-                if (ch === ']') {
-                    next(']');
-                    return array;
-                }
-                next(',');
-                white();
-            }
-        }
-        error("Bad array");
-    },
-
-    object = function () {
-
-// Parse an object value.
-
-        var key,
-            object = {};
-
-        if (ch === '{') {
-            next('{');
-            white();
-            if (ch === '}') {
-                next('}');
-                return object;   // empty object
-            }
-            while (ch) {
-                key = string();
-                white();
-                next(':');
-                if (Object.hasOwnProperty.call(object, key)) {
-                    error('Duplicate key "' + key + '"');
-                }
-                object[key] = value();
-                white();
-                if (ch === '}') {
-                    next('}');
-                    return object;
-                }
-                next(',');
-                white();
-            }
-        }
-        error("Bad object");
-    };
-
-value = function () {
-
-// Parse a JSON value. It could be an object, an array, a string, a number,
-// or a word.
-
-    white();
-    switch (ch) {
-    case '{':
-        return object();
-    case '[':
-        return array();
-    case '"':
-        return string();
-    case '-':
-        return number();
-    default:
-        return ch >= '0' && ch <= '9' ? number() : word();
-    }
-};
-
-// Return the json_parse function. It will have access to all of the above
-// functions and variables.
-
-module.exports = function (source, reviver) {
-    var result;
-    
-    text = source;
-    at = 0;
-    ch = ' ';
-    result = value();
-    white();
-    if (ch) {
-        error("Syntax error");
-    }
-
-    // If there is a reviver function, we recursively walk the new structure,
-    // passing each name/value pair to the reviver function for possible
-    // transformation, starting with a temporary root object that holds the result
-    // in an empty key. If there is not a reviver function, we simply return the
-    // result.
-
-    return typeof reviver === 'function' ? (function walk(holder, key) {
-        var k, v, value = holder[key];
-        if (value && typeof value === 'object') {
-            for (k in value) {
-                if (Object.prototype.hasOwnProperty.call(value, k)) {
-                    v = walk(value, k);
-                    if (v !== undefined) {
-                        value[k] = v;
-                    } else {
-                        delete value[k];
-                    }
-                }
-            }
-        }
-        return reviver.call(holder, key, value);
-    }({'': result}, '')) : result;
-};
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports) {
-
-var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-    escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-    gap,
-    indent,
-    meta = {    // table of character substitutions
-        '\b': '\\b',
-        '\t': '\\t',
-        '\n': '\\n',
-        '\f': '\\f',
-        '\r': '\\r',
-        '"' : '\\"',
-        '\\': '\\\\'
-    },
-    rep;
-
-function quote(string) {
-    // If the string contains no control characters, no quote characters, and no
-    // backslash characters, then we can safely slap some quotes around it.
-    // Otherwise we must also replace the offending characters with safe escape
-    // sequences.
-    
-    escapable.lastIndex = 0;
-    return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-        var c = meta[a];
-        return typeof c === 'string' ? c :
-            '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-    }) + '"' : '"' + string + '"';
-}
-
-function str(key, holder) {
-    // Produce a string from holder[key].
-    var i,          // The loop counter.
-        k,          // The member key.
-        v,          // The member value.
-        length,
-        mind = gap,
-        partial,
-        value = holder[key];
-    
-    // If the value has a toJSON method, call it to obtain a replacement value.
-    if (value && typeof value === 'object' &&
-            typeof value.toJSON === 'function') {
-        value = value.toJSON(key);
-    }
-    
-    // If we were called with a replacer function, then call the replacer to
-    // obtain a replacement value.
-    if (typeof rep === 'function') {
-        value = rep.call(holder, key, value);
-    }
-    
-    // What happens next depends on the value's type.
-    switch (typeof value) {
-        case 'string':
-            return quote(value);
-        
-        case 'number':
-            // JSON numbers must be finite. Encode non-finite numbers as null.
-            return isFinite(value) ? String(value) : 'null';
-        
-        case 'boolean':
-        case 'null':
-            // If the value is a boolean or null, convert it to a string. Note:
-            // typeof null does not produce 'null'. The case is included here in
-            // the remote chance that this gets fixed someday.
-            return String(value);
-            
-        case 'object':
-            if (!value) return 'null';
-            gap += indent;
-            partial = [];
-            
-            // Array.isArray
-            if (Object.prototype.toString.apply(value) === '[object Array]') {
-                length = value.length;
-                for (i = 0; i < length; i += 1) {
-                    partial[i] = str(i, value) || 'null';
-                }
-                
-                // Join all of the elements together, separated with commas, and
-                // wrap them in brackets.
-                v = partial.length === 0 ? '[]' : gap ?
-                    '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']' :
-                    '[' + partial.join(',') + ']';
-                gap = mind;
-                return v;
-            }
-            
-            // If the replacer is an array, use it to select the members to be
-            // stringified.
-            if (rep && typeof rep === 'object') {
-                length = rep.length;
-                for (i = 0; i < length; i += 1) {
-                    k = rep[i];
-                    if (typeof k === 'string') {
-                        v = str(k, value);
-                        if (v) {
-                            partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                        }
-                    }
-                }
-            }
-            else {
-                // Otherwise, iterate through all of the keys in the object.
-                for (k in value) {
-                    if (Object.prototype.hasOwnProperty.call(value, k)) {
-                        v = str(k, value);
-                        if (v) {
-                            partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                        }
-                    }
-                }
-            }
-            
-        // Join all of the member texts together, separated with commas,
-        // and wrap them in braces.
-
-        v = partial.length === 0 ? '{}' : gap ?
-            '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}' :
-            '{' + partial.join(',') + '}';
-        gap = mind;
-        return v;
-    }
-}
-
-module.exports = function (value, replacer, space) {
-    var i;
-    gap = '';
-    indent = '';
-    
-    // If the space parameter is a number, make an indent string containing that
-    // many spaces.
-    if (typeof space === 'number') {
-        for (i = 0; i < space; i += 1) {
-            indent += ' ';
-        }
-    }
-    // If the space parameter is a string, it will be used as the indent string.
-    else if (typeof space === 'string') {
-        indent = space;
-    }
-
-    // If there is a replacer, it must be a function or an array.
-    // Otherwise, throw an error.
-    rep = replacer;
-    if (replacer && typeof replacer !== 'function'
-    && (typeof replacer !== 'object' || typeof replacer.length !== 'number')) {
-        throw new Error('JSON.stringify');
-    }
-    
-    // Make a fake root object containing our value under the key of ''.
-    // Return the result of stringifying the value.
-    return str('', {'': value});
-};
-
-
-/***/ }),
-/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -7961,10 +7617,10 @@ module.exports = function (value, replacer, space) {
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(63)(module), __webpack_require__(62)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(61)(module), __webpack_require__(60)))
 
 /***/ }),
-/* 56 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8055,7 +7711,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 57 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8147,18 +7803,18 @@ var objectKeys = Object.keys || function (obj) {
 
 
 /***/ }),
-/* 58 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(56);
-exports.encode = exports.stringify = __webpack_require__(57);
+exports.decode = exports.parse = __webpack_require__(54);
+exports.encode = exports.stringify = __webpack_require__(55);
 
 
 /***/ }),
-/* 59 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8196,7 +7852,7 @@ exports.registerAction = registerAction;
 exports.version = version;
 
 /***/ }),
-/* 60 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8223,8 +7879,8 @@ exports.version = version;
 
 
 
-var punycode = __webpack_require__(55);
-var util = __webpack_require__(61);
+var punycode = __webpack_require__(53);
+var util = __webpack_require__(59);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -8299,7 +7955,7 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
       'gopher:': true,
       'file:': true
     },
-    querystring = __webpack_require__(58);
+    querystring = __webpack_require__(56);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
   if (url && util.isObject(url) && url instanceof Url) return url;
@@ -8935,7 +8591,7 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 61 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8958,7 +8614,7 @@ module.exports = {
 
 
 /***/ }),
-/* 62 */
+/* 60 */
 /***/ (function(module, exports) {
 
 var g;
@@ -8985,7 +8641,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 63 */
+/* 61 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
