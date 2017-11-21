@@ -23,7 +23,7 @@ export default {
     const options = {
       mode: 'code',
       modes: ['code', 'form', 'tree'],
-      ajv: Ajv({ allErrors: false, format: 'full', unknownFormats: 'ignore', verbose: true }),
+      ajv: Ajv({ allErrors: false, format: 'full', unknownFormats: 'ignore', verbose: true, logger: false }),
       schema: elementSchema,
       schemaRefs: {
         'action.json': actionSchema,
