@@ -558,21 +558,21 @@ describe('json-pollock tests', function () {
       rooEl = addToBody(JsonPollock.render(conf));
     });
 
-    it('Click on element with navigate action ahould trigger its registered callbacks', function () {
+    it('Click on element with navigate action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
       JsonPollock.registerAction('navigate', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[0].childNodes[0].dispatchEvent(createClickEvent());
       chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[0].click.actions[0]});
     });
 
-    it('Click on element with link action ahould trigger its registered callbacks', function () {
+    it('Click on element with link action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
       JsonPollock.registerAction('link', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(createClickEvent());
       chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0]});
     });
 
-    it('Click on element with publishText action ahould trigger its registered callbacks', function () {
+    it('Click on element with publishText action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
       JsonPollock.registerAction('publishText', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[2].childNodes[0].dispatchEvent(createClickEvent());
@@ -593,6 +593,22 @@ describe('json-pollock tests', function () {
       window.open = sinon.spy();
       rooEl.childNodes[0].childNodes[0].childNodes[4].dispatchEvent(createClickEvent());
       chai.expect(window.open).to.have.been.calledWith('https://www.google.com/maps/search/?api=1&query=64.128597,-21.89611');
+    });
+
+    it('Click on element with link action should not trigger its registered callbacks after unregister', function () {
+        var spy = sinon.spy();
+        JsonPollock.registerAction('link', spy);
+        JsonPollock.unregisterAction('link');
+        rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(createClickEvent());
+        chai.expect(spy).to.have.callCount(0);
+    });
+
+    it('Click on element with link action should not trigger its registered callbacks after unregister all', function () {
+        var spy = sinon.spy();
+        JsonPollock.registerAction('link', spy);
+        JsonPollock.unregisterAllActions();
+        rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(createClickEvent());
+        chai.expect(spy).to.have.callCount(0);
     });
 
     it('Click on map element which has actions definition should not trigger window.open for google maps', function () {

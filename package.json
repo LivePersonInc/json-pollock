@@ -29,7 +29,7 @@
       "email": "meirr@liveperson.com"
     }
   ],
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",

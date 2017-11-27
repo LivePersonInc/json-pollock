@@ -2096,7 +2096,7 @@ var LPJsonPollock = function () {
   function LPJsonPollock() {
     _classCallCheck(this, LPJsonPollock);
 
-    this.events = new Events({ cloneEventData: true });
+    this.events = new Events({ cloneEventData: true, appName: 'json-pollock' });
     this.provider = new _ElementRendererProvider2.default(this.events);
     this.maxAllowedElements = 50;
     var ajv = new _ajv2.default({ format: 'full', unknownFormats: 'ignore', verbose: true, logger: false });
@@ -2185,6 +2185,18 @@ var LPJsonPollock = function () {
       });
     }
   }, {
+    key: 'unregisterAction',
+    value: function unregisterAction(actionName) {
+      this.events.unbind({
+        eventName: actionName
+      });
+    }
+  }, {
+    key: 'unregisterAllActions',
+    value: function unregisterAllActions() {
+      this.events.unbind({});
+    }
+  }, {
     key: 'registerElement',
     value: function registerElement(elementType, render) {
       this.provider.set(elementType, render);
@@ -2206,376 +2218,25 @@ exports.default = LPJsonPollock;
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"title": "Publish Text",
-			"type": "object",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"publishText"
-					],
-					"default": "publishText",
-					"readonly": true
-				},
-				"text": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"type",
-				"text"
-			]
-		},
-		{
-			"title": "navigate",
-			"type": "object",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"navigate"
-					],
-					"default": "navigate",
-					"readonly": true
-				},
-				"la": {
-					"type": "number"
-				},
-				"lo": {
-					"type": "number"
-				},
-				"name": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"type",
-				"la",
-				"lo"
-			]
-		},
-		{
-			"title": "link",
-			"type": "object",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"link"
-					],
-					"default": "link",
-					"readonly": true
-				},
-				"uri": {
-					"type": "string",
-					"format": "uri"
-				},
-				"name": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"type",
-				"uri"
-			]
-		}
-	]
-};
+module.exports = {"oneOf":[{"title":"Publish Text","type":"object","properties":{"type":{"type":"string","enum":["publishText"],"default":"publishText","readonly":true},"text":{"type":"string"}},"required":["type","text"]},{"title":"navigate","type":"object","properties":{"type":{"type":"string","enum":["navigate"],"default":"navigate","readonly":true},"la":{"type":"number"},"lo":{"type":"number"},"name":{"type":"string"}},"required":["type","la","lo"]},{"title":"link","type":"object","properties":{"type":{"type":"string","enum":["link"],"default":"link","readonly":true},"uri":{"type":"string","format":"uri"},"name":{"type":"string"}},"required":["type","uri"]}]}
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"allOf": [
-		{
-			"type": "object",
-			"properties": {
-				"rtl": {
-					"type": "boolean"
-				},
-				"tooltip": {
-					"type": "string"
-				},
-				"type": {
-					"type": "string"
-				},
-				"style": {
-					"$ref": "style.json"
-				},
-				"click": {
-					"type": "object",
-					"properties": {
-						"actions": {
-							"type": "array",
-							"items": {
-								"$ref": "action.json",
-								"maxLength": 4
-							}
-						},
-						"metadata": {
-							"type": "array"
-						}
-					}
-				}
-			},
-			"required": [
-				"type"
-			]
-		},
-		{
-			"oneOf": [
-				{
-					"type": "object",
-					"title": "text",
-					"properties": {
-						"type": {
-							"type": "string",
-							"enum": [
-								"text"
-							],
-							"default": "text",
-							"readonly": true
-						},
-						"text": {
-							"type": "string",
-							"maxLength": 5000
-						}
-					},
-					"required": [
-						"text"
-					]
-				},
-				{
-					"type": "object",
-					"title": "image",
-					"properties": {
-						"type": {
-							"type": "string",
-							"enum": [
-								"image"
-							],
-							"default": "image",
-							"readonly": true
-						},
-						"caption": {
-							"type": "string",
-							"maxLength": 128
-						},
-						"url": {
-							"type": "string",
-							"maxLength": 2048
-						}
-					},
-					"required": [
-						"url"
-					]
-				},
-				{
-					"type": "object",
-					"title": "button",
-					"properties": {
-						"type": {
-							"type": "string",
-							"enum": [
-								"button"
-							],
-							"default": "button",
-							"readonly": true
-						},
-						"title": {
-							"type": "string",
-							"maxLength": 128
-						}
-					},
-					"required": [
-						"title"
-					]
-				},
-				{
-					"type": "object",
-					"title": "map",
-					"properties": {
-						"type": {
-							"type": "string",
-							"enum": [
-								"map"
-							],
-							"default": "map",
-							"readonly": true
-						},
-						"lo": {
-							"type": "number"
-						},
-						"la": {
-							"type": "number"
-						}
-					},
-					"required": [
-						"lo",
-						"la"
-					]
-				},
-				{
-					"type": "object",
-					"title": "linkPreview",
-					"properties": {
-						"type": {
-							"type": "string",
-							"enum": [
-								"linkPreview"
-							],
-							"default": "linkPreview",
-							"readonly": true
-						},
-						"url": {
-							"type": "string",
-							"maxLength": 2048
-						},
-						"title": {
-							"type": "string",
-							"maxLength": 128
-						}
-					},
-					"required": [
-						"url"
-					]
-				},
-				{
-					"type": "object",
-					"title": "template",
-					"properties": {
-						"type": {
-							"type": "string",
-							"enum": [
-								"template"
-							],
-							"default": "template",
-							"readonly": true
-						},
-						"templateType": {
-							"type": "string",
-							"enum": [
-								"quickReply"
-							],
-							"default": "quickReply",
-							"readonly": true
-						},
-						"title": {
-							"type": "string",
-							"maxLength": 5000
-						},
-						"resp": {
-							"type": "array",
-							"items": {
-								"type": "string",
-								"maxLength": 128
-							},
-							"minItems": 1
-						}
-					},
-					"required": [
-						"templateType",
-						"title",
-						"resp"
-					]
-				}
-			]
-		}
-	]
-};
+module.exports = {"allOf":[{"type":"object","properties":{"rtl":{"type":"boolean"},"tooltip":{"type":"string"},"type":{"type":"string"},"style":{"$ref":"style.json"},"click":{"type":"object","properties":{"actions":{"type":"array","items":{"$ref":"action.json","maxLength":4}},"metadata":{"type":"array"}}}},"required":["type"]},{"oneOf":[{"type":"object","title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000}},"required":["text"]},{"type":"object","title":"image","properties":{"type":{"type":"string","enum":["image"],"default":"image","readonly":true},"caption":{"type":"string","maxLength":128},"url":{"type":"string","maxLength":2048}},"required":["url"]},{"type":"object","title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"title":{"type":"string","maxLength":128}},"required":["title"]},{"type":"object","title":"map","properties":{"type":{"type":"string","enum":["map"],"default":"map","readonly":true},"lo":{"type":"number"},"la":{"type":"number"}},"required":["lo","la"]},{"type":"object","title":"linkPreview","properties":{"type":{"type":"string","enum":["linkPreview"],"default":"linkPreview","readonly":true},"url":{"type":"string","maxLength":2048},"title":{"type":"string","maxLength":128}},"required":["url"]},{"type":"object","title":"template","properties":{"type":{"type":"string","enum":["template"],"default":"template","readonly":true},"templateType":{"type":"string","enum":["quickReply"],"default":"quickReply","readonly":true},"title":{"type":"string","maxLength":5000},"resp":{"type":"array","items":{"type":"string","maxLength":128},"minItems":1}},"required":["templateType","title","resp"]}]}]}
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"title": "basic",
-			"$ref": "basic.json"
-		},
-		{
-			"type": "object",
-			"title": "horizontal",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"horizontal"
-					],
-					"default": "horizontal",
-					"readonly": true
-				},
-				"elements": {
-					"type": "array",
-					"items": {
-						"$ref": "element.json"
-					}
-				}
-			},
-			"required": [
-				"type",
-				"elements"
-			]
-		},
-		{
-			"type": "object",
-			"title": "vertical",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"vertical"
-					],
-					"default": "vertical",
-					"readonly": true
-				},
-				"elements": {
-					"type": "array",
-					"items": {
-						"$ref": "element.json"
-					}
-				}
-			},
-			"required": [
-				"type",
-				"elements"
-			]
-		}
-	]
-};
+module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"elements":{"type":"array","items":{"$ref":"element.json"}}},"required":["type","elements"]},{"type":"object","title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"elements":{"type":"array","items":{"$ref":"element.json"}}},"required":["type","elements"]}]}
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"properties": {
-		"bold": {
-			"type": "boolean"
-		},
-		"italic": {
-			"type": "boolean"
-		},
-		"color": {
-			"type": "string",
-			"format": "color"
-		},
-		"size": {
-			"type": "string",
-			"enum": [
-				"small",
-				"medium",
-				"large"
-			]
-		}
-	}
-};
+module.exports = {"type":"object","properties":{"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color"},"size":{"type":"string","enum":["small","medium","large"]}}}
 
 /***/ }),
 /* 20 */
@@ -2766,6 +2427,7 @@ function compile(schema, _meta) {
  * @param {String} key Optional schema key. Can be passed to `validate` method instead of schema object or id/ref. One schema per instance can have empty `id` and `key`.
  * @param {Boolean} _skipValidation true to skip schema validation. Used internally, option validateSchema should be used instead.
  * @param {Boolean} _meta true if schema is a meta-schema. Used internally, addMetaSchema should be used instead.
+ * @return {Ajv} this for method chaining
  */
 function addSchema(schema, key, _skipValidation, _meta) {
   if (Array.isArray(schema)){
@@ -2778,6 +2440,7 @@ function addSchema(schema, key, _skipValidation, _meta) {
   key = resolve.normalizeId(key || id);
   checkUnique(this, key);
   this._schemas[key] = this._addSchema(schema, _skipValidation, _meta, true);
+  return this;
 }
 
 
@@ -2788,9 +2451,11 @@ function addSchema(schema, key, _skipValidation, _meta) {
  * @param {Object} schema schema object
  * @param {String} key optional schema key
  * @param {Boolean} skipValidation true to skip schema validation, can be used to override validateSchema option for meta-schema
+ * @return {Ajv} this for method chaining
  */
 function addMetaSchema(schema, key, skipValidation) {
   this.addSchema(schema, key, skipValidation, true);
+  return this;
 }
 
 
@@ -2887,25 +2552,26 @@ function _getSchemaObj(self, keyRef) {
  * Even if schema is referenced by other schemas it still can be removed as other schemas have local references.
  * @this   Ajv
  * @param  {String|Object|RegExp} schemaKeyRef key, ref, pattern to match key/ref or schema object
+ * @return {Ajv} this for method chaining
  */
 function removeSchema(schemaKeyRef) {
   if (schemaKeyRef instanceof RegExp) {
     _removeAllSchemas(this, this._schemas, schemaKeyRef);
     _removeAllSchemas(this, this._refs, schemaKeyRef);
-    return;
+    return this;
   }
   switch (typeof schemaKeyRef) {
     case 'undefined':
       _removeAllSchemas(this, this._schemas);
       _removeAllSchemas(this, this._refs);
       this._cache.clear();
-      return;
+      return this;
     case 'string':
       var schemaObj = _getSchemaObj(this, schemaKeyRef);
       if (schemaObj) this._cache.del(schemaObj.cacheKey);
       delete this._schemas[schemaKeyRef];
       delete this._refs[schemaKeyRef];
-      return;
+      return this;
     case 'object':
       var serialize = this._opts.serialize;
       var cacheKey = serialize ? serialize(schemaKeyRef) : schemaKeyRef;
@@ -2917,6 +2583,7 @@ function removeSchema(schemaKeyRef) {
         delete this._refs[id];
       }
   }
+  return this;
 }
 
 
@@ -3067,10 +2734,12 @@ function errorsText(errors, options) {
  * @this   Ajv
  * @param {String} name format name
  * @param {String|RegExp|Function} format string is converted to RegExp; function should return boolean (true when valid)
+ * @return {Ajv} this for method chaining
  */
 function addFormat(name, format) {
   if (typeof format == 'string') format = new RegExp(format);
   this._formats[name] = format;
+  return this;
 }
 
 
@@ -6383,6 +6052,7 @@ module.exports = {
  * @this  Ajv
  * @param {String} keyword custom keyword, should be unique (including different from all standard, custom and macro keywords).
  * @param {Object} definition keyword definition object with properties `type` (type(s) which the keyword applies to), `validate` or `compile`.
+ * @return {Ajv} this for method chaining
  */
 function addKeyword(keyword, definition) {
   /* jshint validthis: true */
@@ -6460,6 +6130,8 @@ function addKeyword(keyword, definition) {
   function checkDataType(dataType) {
     if (!RULES.types[dataType]) throw new Error('Unknown type ' + dataType);
   }
+
+  return this;
 }
 
 
@@ -6480,6 +6152,7 @@ function getKeyword(keyword) {
  * Remove keyword
  * @this  Ajv
  * @param {String} keyword pre-defined or custom keyword.
+ * @return {Ajv} this for method chaining
  */
 function removeKeyword(keyword) {
   /* jshint validthis: true */
@@ -6496,6 +6169,7 @@ function removeKeyword(keyword) {
       }
     }
   }
+  return this;
 }
 
 
@@ -6546,249 +6220,13 @@ module.exports = function (ajv) {
 /* 49 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"$schema": "http://json-schema.org/draft-06/schema#",
-	"$id": "https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#",
-	"description": "Meta-schema for $data reference (JSON-schema extension proposal)",
-	"type": "object",
-	"required": [
-		"$data"
-	],
-	"properties": {
-		"$data": {
-			"type": "string",
-			"anyOf": [
-				{
-					"format": "relative-json-pointer"
-				},
-				{
-					"format": "json-pointer"
-				}
-			]
-		}
-	},
-	"additionalProperties": false
-};
+module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#","description":"Meta-schema for $data reference (JSON-schema extension proposal)","type":"object","required":["$data"],"properties":{"$data":{"type":"string","anyOf":[{"format":"relative-json-pointer"},{"format":"json-pointer"}]}},"additionalProperties":false}
 
 /***/ }),
 /* 50 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"$schema": "http://json-schema.org/draft-06/schema#",
-	"$id": "http://json-schema.org/draft-06/schema#",
-	"title": "Core schema meta-schema",
-	"definitions": {
-		"schemaArray": {
-			"type": "array",
-			"minItems": 1,
-			"items": {
-				"$ref": "#"
-			}
-		},
-		"nonNegativeInteger": {
-			"type": "integer",
-			"minimum": 0
-		},
-		"nonNegativeIntegerDefault0": {
-			"allOf": [
-				{
-					"$ref": "#/definitions/nonNegativeInteger"
-				},
-				{
-					"default": 0
-				}
-			]
-		},
-		"simpleTypes": {
-			"enum": [
-				"array",
-				"boolean",
-				"integer",
-				"null",
-				"number",
-				"object",
-				"string"
-			]
-		},
-		"stringArray": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"uniqueItems": true,
-			"default": []
-		}
-	},
-	"type": [
-		"object",
-		"boolean"
-	],
-	"properties": {
-		"$id": {
-			"type": "string",
-			"format": "uri-reference"
-		},
-		"$schema": {
-			"type": "string",
-			"format": "uri"
-		},
-		"$ref": {
-			"type": "string",
-			"format": "uri-reference"
-		},
-		"title": {
-			"type": "string"
-		},
-		"description": {
-			"type": "string"
-		},
-		"default": {},
-		"examples": {
-			"type": "array",
-			"items": {}
-		},
-		"multipleOf": {
-			"type": "number",
-			"exclusiveMinimum": 0
-		},
-		"maximum": {
-			"type": "number"
-		},
-		"exclusiveMaximum": {
-			"type": "number"
-		},
-		"minimum": {
-			"type": "number"
-		},
-		"exclusiveMinimum": {
-			"type": "number"
-		},
-		"maxLength": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minLength": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"pattern": {
-			"type": "string",
-			"format": "regex"
-		},
-		"additionalItems": {
-			"$ref": "#"
-		},
-		"items": {
-			"anyOf": [
-				{
-					"$ref": "#"
-				},
-				{
-					"$ref": "#/definitions/schemaArray"
-				}
-			],
-			"default": {}
-		},
-		"maxItems": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minItems": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"uniqueItems": {
-			"type": "boolean",
-			"default": false
-		},
-		"contains": {
-			"$ref": "#"
-		},
-		"maxProperties": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minProperties": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"required": {
-			"$ref": "#/definitions/stringArray"
-		},
-		"additionalProperties": {
-			"$ref": "#"
-		},
-		"definitions": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"properties": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"patternProperties": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"dependencies": {
-			"type": "object",
-			"additionalProperties": {
-				"anyOf": [
-					{
-						"$ref": "#"
-					},
-					{
-						"$ref": "#/definitions/stringArray"
-					}
-				]
-			}
-		},
-		"propertyNames": {
-			"$ref": "#"
-		},
-		"const": {},
-		"enum": {
-			"type": "array",
-			"minItems": 1,
-			"uniqueItems": true
-		},
-		"type": {
-			"anyOf": [
-				{
-					"$ref": "#/definitions/simpleTypes"
-				},
-				{
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/simpleTypes"
-					},
-					"minItems": 1,
-					"uniqueItems": true
-				}
-			]
-		},
-		"format": {
-			"type": "string"
-		},
-		"allOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"anyOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"oneOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"not": {
-			"$ref": "#"
-		}
-	},
-	"default": {}
-};
+module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"http://json-schema.org/draft-06/schema#","title":"Core schema meta-schema","definitions":{"schemaArray":{"type":"array","minItems":1,"items":{"$ref":"#"}},"nonNegativeInteger":{"type":"integer","minimum":0},"nonNegativeIntegerDefault0":{"allOf":[{"$ref":"#/definitions/nonNegativeInteger"},{"default":0}]},"simpleTypes":{"enum":["array","boolean","integer","null","number","object","string"]},"stringArray":{"type":"array","items":{"type":"string"},"uniqueItems":true,"default":[]}},"type":["object","boolean"],"properties":{"$id":{"type":"string","format":"uri-reference"},"$schema":{"type":"string","format":"uri"},"$ref":{"type":"string","format":"uri-reference"},"title":{"type":"string"},"description":{"type":"string"},"default":{},"examples":{"type":"array","items":{}},"multipleOf":{"type":"number","exclusiveMinimum":0},"maximum":{"type":"number"},"exclusiveMaximum":{"type":"number"},"minimum":{"type":"number"},"exclusiveMinimum":{"type":"number"},"maxLength":{"$ref":"#/definitions/nonNegativeInteger"},"minLength":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"pattern":{"type":"string","format":"regex"},"additionalItems":{"$ref":"#"},"items":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/schemaArray"}],"default":{}},"maxItems":{"$ref":"#/definitions/nonNegativeInteger"},"minItems":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"uniqueItems":{"type":"boolean","default":false},"contains":{"$ref":"#"},"maxProperties":{"$ref":"#/definitions/nonNegativeInteger"},"minProperties":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"required":{"$ref":"#/definitions/stringArray"},"additionalProperties":{"$ref":"#"},"definitions":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"properties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"patternProperties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"dependencies":{"type":"object","additionalProperties":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/stringArray"}]}},"propertyNames":{"$ref":"#"},"const":{},"enum":{"type":"array","minItems":1,"uniqueItems":true},"type":{"anyOf":[{"$ref":"#/definitions/simpleTypes"},{"type":"array","items":{"$ref":"#/definitions/simpleTypes"},"minItems":1,"uniqueItems":true}]},"format":{"type":"string"},"allOf":{"$ref":"#/definitions/schemaArray"},"anyOf":{"$ref":"#/definitions/schemaArray"},"oneOf":{"$ref":"#/definitions/schemaArray"},"not":{"$ref":"#"}},"default":{}}
 
 /***/ }),
 /* 51 */
@@ -7823,7 +7261,7 @@ exports.encode = exports.stringify = __webpack_require__(55);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.version = exports.registerAction = exports.render = exports.init = undefined;
+exports.version = exports.unregisterAllActions = exports.unregisterAction = exports.registerAction = exports.render = exports.init = undefined;
 
 var _style = __webpack_require__(15);
 
@@ -7844,11 +7282,15 @@ var instance = new _LPJsonPollock2.default();
 var init = instance.init.bind(instance);
 var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
+var unregisterAction = instance.unregisterAction.bind(instance);
+var unregisterAllActions = instance.unregisterAllActions.bind(instance);
 var version = '1.0.23';
 
 exports.init = init;
 exports.render = render;
 exports.registerAction = registerAction;
+exports.unregisterAction = unregisterAction;
+exports.unregisterAllActions = unregisterAllActions;
 exports.version = version;
 
 /***/ }),
