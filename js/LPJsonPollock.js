@@ -30,7 +30,7 @@ export default class LPJsonPollock {
   jsonValidator: Ajv;
 
   constructor() {
-    this.events = new Events({ cloneEventData: true });
+    this.events = new Events({ cloneEventData: true, appName: 'json-pollock' });
     this.provider = new ElementRendererProvider(this.events);
     this.maxAllowedElements = 50;
     const ajv = new Ajv({ format: 'full', unknownFormats: 'ignore', verbose: true, logger: false });
@@ -108,6 +108,16 @@ export default class LPJsonPollock {
         callback(EventData);
       },
     });
+  }
+
+  unregisterAction(actionName: string) {
+    this.events.unbind({
+      eventName: actionName,
+    });
+  }
+
+  unregisterAllActions() {
+    this.events.unbind({});
   }
 
   registerElement(elementType: string, render: Function) {
