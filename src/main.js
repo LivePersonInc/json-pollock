@@ -12,7 +12,7 @@ const store = new Vuex.Store({
       elements: [
         {
           type: 'image',
-          url: 'http://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all',
+          url: 'https://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all',
           tooltip: 'image tooltip',
           click: {
             actions: [
