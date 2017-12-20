@@ -356,6 +356,339 @@ describe('json-pollock tests', function () {
 
   });
 
+  describe('border policy', function () {
+    
+    var rooEl = null;
+    var firstLayout = null;
+    var secondLayout = null;
+    var simpleEl = null;
+
+    function getStyle(elem, style) {
+      return window.getComputedStyle(elem)[style];
+    }
+
+    it('Root vertical and horizontal layout should have a complete border', function () {
+      
+      var conf1 = {
+        "type": "vertical",
+        "elements": [{
+          "type": "text",
+          "text": "foo"
+        }]
+      }
+      var conf2 = {
+        "type": "horizontal",
+        "elements": [{
+          "type": "text",
+          "text": "foo"
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf1)));
+
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(getStyle(firstLayout, 'border')).to.contain('1px solid');
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf2)));
+      
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(getStyle(firstLayout, 'border')).to.contain('1px solid');
+    });
+
+    describe('First vertical and horizontal layout child should have no border', function () {
+
+      it('horizontal with vertical as first child', function () {
+        var conf = {
+          "type": "horizontal",
+          "elements": [
+            {
+              "type": "vertical",
+              "elements": [{
+                "type": "text",
+                "text": "foo"
+              }]
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
+        chai.expect(getStyle(secondLayout, 'border')).to.contain('none');
+        chai.expect(getStyle(secondLayout, 'borderLeft')).to.contain('none');
+        chai.expect(getStyle(secondLayout, 'borderTop')).to.contain('none');
+        chai.expect(getStyle(secondLayout, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(secondLayout, 'borderRight')).to.contain('none');
+      });
+
+      it('vertical with horizontal as first child', function () {
+        var conf = {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "horizontal",
+              "elements": [{
+                "type": "text",
+                "text": "foo"
+              }]
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
+        chai.expect(getStyle(secondLayout, 'border')).to.contain('none');
+        chai.expect(getStyle(secondLayout, 'borderLeft')).to.contain('none');
+        chai.expect(getStyle(secondLayout, 'borderTop')).to.contain('none');
+        chai.expect(getStyle(secondLayout, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(secondLayout, 'borderRight')).to.contain('none');
+      });
+
+      it('vertical with simple element (button) as first child', function () {
+        var conf = {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "button",
+              "tooltip": "button tooltip",
+              "title": "Add to cart",
+              "click": {
+                "actions": [{
+                  "type": "link",
+                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+                  "name": "add to cart",
+                  "uri": "http://example.jpg"
+                }]
+              }
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
+        chai.expect(getStyle(simpleEl, 'border')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
+      });
+
+      it('horizontal with simple element (button) as first child', function () {
+        var conf = {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "button",
+              "tooltip": "button tooltip",
+              "title": "Add to cart",
+              "click": {
+                "actions": [{
+                  "type": "link",
+                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+                  "name": "add to cart",
+                  "uri": "http://example.jpg"
+                }]
+              }
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
+        chai.expect(getStyle(simpleEl, 'border')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
+      });
+    });
+
+    describe('Vertical layout\'s child with is not the first child should have a top border only', function () {
+
+      it('Layout element as second child', function () {
+        var conf = {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "product name (Title)",
+              "tooltip": "text tooltip"
+            },
+            {
+              "type": "horizontal",
+              "elements": [
+                {
+                  "type": "button",
+                  "tooltip": "button tooltip",
+                  "title": "Add to cart",
+                  "click": {
+                    "actions": [{
+                      "type": "link",
+                      "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+                      "name": "add to cart",
+                      "uri": "http://example.jpg"
+                    }]
+                  }
+                }    
+              ]
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('1px solid');
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');        
+        chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
+      });
+
+      it('simple element (button) as second child', function () {
+        var conf = {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "product name (Title)",
+              "tooltip": "text tooltip"
+            },
+            {
+              "type": "button",
+              "tooltip": "button tooltip",
+              "title": "Add to cart",
+              "click": {
+                "actions": [{
+                  "type": "link",
+                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+                  "name": "add to cart",
+                  "uri": "http://example.jpg"
+                }]
+              }
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('1px solid');
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');        
+        chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
+      });
+
+      it('Execptional case - text element followd by a text element should have no border', function () {
+        var conf = {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "product name (Title)",
+              "tooltip": "text tooltip"
+            },
+            {
+              "type": "text",
+              "text": "product name (Title)",
+              "tooltip": "text tooltip"
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
+        chai.expect(getStyle(simpleEl, 'border')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
+      });
+
+    });
+
+    describe('Horizontal layout\'s child with is not the first child should have a left border only', function () {
+      
+      it('Layout element as second child', function () {
+        var conf = {
+          "type": "horizontal",
+          "elements": [
+            {
+              "type": "text",
+              "text": "product name (Title)",
+              "tooltip": "text tooltip"
+            },
+            {
+              "type": "horizontal",
+              "elements": [
+                {
+                  "type": "button",
+                  "tooltip": "button tooltip",
+                  "title": "Add to cart",
+                  "click": {
+                    "actions": [{
+                      "type": "link",
+                      "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+                      "name": "add to cart",
+                      "uri": "http://example.jpg"
+                    }]
+                  }
+                }    
+              ]
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('1px solid');
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');        
+        chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
+      });
+
+      it('simple element (button) as second child', function () {
+        var conf = {
+          "type": "horizontal",
+          "elements": [
+            {
+              "type": "text",
+              "text": "product name (Title)",
+              "tooltip": "text tooltip"
+            },
+            {
+              "type": "button",
+              "tooltip": "button tooltip",
+              "title": "Add to cart",
+              "click": {
+                "actions": [{
+                  "type": "link",
+                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
+                  "name": "add to cart",
+                  "uri": "http://example.jpg"
+                }]
+              }
+            }
+          ]
+        };        
+  
+        rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+  
+        simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('1px solid');
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');        
+        chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
+        chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
+      });
+
+    });
+
+  });
+
   describe('render single element (no layout)', function () {
 
     var rooEl = null;
