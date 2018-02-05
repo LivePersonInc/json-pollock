@@ -19,7 +19,7 @@ export default {
       try {
         dom = JsonPollock.render(json);
         this.$refs.dom_container.innerText = '';
-        this.$refs.dom_container.append(dom);
+        this.$refs.dom_container.appendChild(dom);
       } catch (e) {
         // do nothing
       }
