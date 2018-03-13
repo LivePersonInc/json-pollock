@@ -7284,7 +7284,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.0.25';
+var version = '1.0.26';
 
 exports.init = init;
 exports.render = render;
