@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "carousel",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "carousel"
+      ],
+      "default": "carousel",
+      "readonly": true
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "padding": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 10,
+      "items": {
+        "$ref": "card.json"
+      }
+    }
+  },
+  "required": [
+    "type",
+    "elements"
+  ]
+}

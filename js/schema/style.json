@@ -1,5 +1,6 @@
 {
     "type": "object",
+    "additionalProperties": false,
     "properties": {
         "bold": {
             "type": "boolean"
@@ -9,7 +10,8 @@
         },
         "color": {
             "type": "string",
-            "format": "color"
+            "format": "color",
+            "maxLength": 256
         },
         "size": {
             "type": "string",

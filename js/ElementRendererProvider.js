@@ -130,6 +130,84 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
+    this.set('carousel', (config): HTMLElement => {
+      const ELEMENT_DEFAULT_SIZE = 200;
+      const DEFAULT_SPACING = 10;
+      const PARSE_DECIMAL = 10;
+      const arrowRight = document.createElement('div');
+      const arrowLeft = document.createElement('div');
+
+      const divEl = document.createElement('div');
+      (divEl: any).afterRender = () => {
+        if (divEl.childNodes.length) {
+          for (let itemCounter = 0; itemCounter < divEl.childNodes.length; itemCounter += 1) {
+            const node = divEl.childNodes[itemCounter];
+            if (itemCounter === 0) {
+              (node: any).style['margin-right'] = `${config.padding / 2}px`;
+            } else if (itemCounter === (divEl.childNodes.length - 1)) {
+              (node: any).style['margin-left'] = `${config.padding / 2}px`;
+            } else {
+              (node: any).style.margin = `0 ${config.padding / 2}px`;
+            }
+          }
+          arrowRight.className = 'layout-carousel-arrow';
+          arrowLeft.className = 'layout-carousel-arrow left';
+
+          const carousel = divEl.cloneNode(true);
+          while ((divEl: any).hasChildNodes()) {
+            (divEl: any).removeChild(divEl.lastChild);
+          }
+
+          divEl.className = 'lp-json-pollock-layout-carousel-wrapper';
+
+          const singleItemWidth = ELEMENT_DEFAULT_SIZE + config.padding;
+          const totalWidth = carousel.childNodes.length * singleItemWidth;
+          carousel.style.width = `${totalWidth}px`;
+          carousel.className = 'lp-json-pollock-layout-carousel';
+
+          divEl.appendChild(carousel);
+          divEl.appendChild(arrowRight);
+          divEl.appendChild(arrowLeft);
+          setTimeout(() => {
+            if (divEl.clientWidth > carousel.clientWidth + DEFAULT_SPACING) {
+              (arrowLeft: any).style.visibility = 'hidden';
+              (arrowRight: any).style.visibility = 'hidden';
+            }
+          }, 0);
+
+          arrowRight.onclick = () => {
+            let currentPos = 0;
+            if ((carousel: any).style.left !== '') {
+              currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
+            }
+            let nextLeft = currentPos - ELEMENT_DEFAULT_SIZE - (config.padding);
+            (arrowLeft: any).style.visibility = 'visible';
+            (arrowRight: any).style.visibility = 'visible';
+            if (divEl.clientWidth > carousel.clientWidth + nextLeft) {
+              nextLeft = -(carousel.clientWidth - divEl.clientWidth) - DEFAULT_SPACING;
+              (arrowRight: any).style.visibility = 'hidden';
+            }
+            (carousel: any).style.left = `${nextLeft}px`;
+          };
+          arrowLeft.onclick = () => {
+            let currentPos = 0;
+            if ((carousel: any).style.left !== '') {
+              currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
+            }
+            let nextLeft = currentPos + ELEMENT_DEFAULT_SIZE;
+            (arrowRight: any).style.visibility = 'visible';
+            if (nextLeft >= 0) {
+              nextLeft = 0;
+              (arrowLeft: any).style.visibility = 'hidden';
+              (arrowRight: any).style.visibility = 'visible';
+            }
+            (carousel: any).style.left = `${nextLeft}px`;
+          };
+        }
+      };
+      return divEl;
+    });
+
     this.set('horizontal', (): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';

@@ -1,0 +1,66 @@
+{
+  "oneOf": [
+    {
+      "title": "basic",
+      "$ref": "basic.json"
+    },
+    {
+      "type": "object",
+      "additionalProperties" : false,
+      "title": "horizontal",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["horizontal"],
+          "default": "horizontal",
+          "readonly": true
+        },
+        "tag": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "tagVersion": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "elements": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "rich_content.json"
+          }
+        }
+      },
+      "required": ["type", "elements"]
+    },
+    {
+      "type": "object",
+      "additionalProperties" : false,
+      "title": "vertical",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["vertical"],
+          "default": "vertical",
+          "readonly": true
+        },
+        "tag": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "tagVersion": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "elements": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "rich_content.json"
+          }
+        }
+      },
+      "required": ["type", "elements"]
+    }
+  ]
+}

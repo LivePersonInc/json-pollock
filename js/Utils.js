@@ -1,6 +1,6 @@
 // @flow
 
-const LAYOUT_TYPES = ['vertical', 'horizontal'];
+const LAYOUT_TYPES = ['vertical', 'horizontal', 'carousel'];
 
 export default {
 
