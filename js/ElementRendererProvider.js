@@ -18,24 +18,24 @@ export default class ElementRendererProvider {
     predefined renderes
     */
     this.set('text', (config): HTMLElement => {
-      const divEl = document.createElement('div');
+      const divCarouselWrapper = document.createElement('div');
       const tooltip = config.tooltip ? Utils.escapeHtml(config.tooltip) : '';
-      divEl.className = 'lp-json-pollock-element-text';
+      divCarouselWrapper.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
-        divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        divCarouselWrapper.dir = 'rtl';
+        divCarouselWrapper.className += ' direction-rtl';
       }
-      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
-      return divEl;
+      divCarouselWrapper.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
+      return divCarouselWrapper;
     });
 
     this.set('button', (config): HTMLElement => {
-      const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-element-button';
+      const divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-element-button';
 
       if (config.rtl) {
-        divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        divCarouselWrapper.dir = 'rtl';
+        divCarouselWrapper.className += ' direction-rtl';
       }
 
       const btnEl = document.createElement('button');
@@ -53,18 +53,18 @@ export default class ElementRendererProvider {
         btnEl.onclick = this.wrapAction(config.click);
       }
 
-      divEl.appendChild(btnEl);
+      divCarouselWrapper.appendChild(btnEl);
 
-      return divEl;
+      return divCarouselWrapper;
     });
 
     this.set('image', (config): HTMLElement => {
-      const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-element-image loading';
+      const divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-element-image loading';
 
       if (config.rtl) {
-        divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        divCarouselWrapper.dir = 'rtl';
+        divCarouselWrapper.className += ' direction-rtl';
       }
 
       const imgEl = document.createElement('img');
@@ -79,55 +79,55 @@ export default class ElementRendererProvider {
       }
 
       if (config.caption) {
-        divEl.innerHTML += `<div>${config.caption}</div>`;
+        divCarouselWrapper.innerHTML += `<div>${config.caption}</div>`;
       }
 
       imgEl.onload = () => {
-        divEl.className = 'lp-json-pollock-element-image';
+        divCarouselWrapper.className = 'lp-json-pollock-element-image';
       };
 
       imgEl.onerror = () => {
-        divEl.className = 'lp-json-pollock-element-image error';
-        divEl.title = 'fail to load image';
+        divCarouselWrapper.className = 'lp-json-pollock-element-image error';
+        divCarouselWrapper.title = 'fail to load image';
         imgEl.style.display = 'none';
       };
 
       if (config.click && config.click.actions) {
         imgEl.onclick = this.wrapAction(config.click);
       }
-      divEl.appendChild(imgEl);
+      divCarouselWrapper.appendChild(imgEl);
 
-      return divEl;
+      return divCarouselWrapper;
     });
 
     this.set('map', (config): HTMLElement => {
-      const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-element-map';
+      const divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-element-map';
 
       if (config.tooltip) {
-        divEl.title = config.tooltip;
-        divEl.setAttribute('aria-label', config.tooltip);
+        divCarouselWrapper.title = config.tooltip;
+        divCarouselWrapper.setAttribute('aria-label', config.tooltip);
       }
 
       if (config.style) {
-        divEl.style.cssText = Utils.styleToCss(config.style);
+        divCarouselWrapper.style.cssText = Utils.styleToCss(config.style);
       }
 
       if (config.click && config.click.actions) {
-        divEl.onclick = this.wrapAction(config.click);
+        divCarouselWrapper.onclick = this.wrapAction(config.click);
       } else {
         // navigate to the location
-        divEl.onclick = () => {
+        divCarouselWrapper.onclick = () => {
           window.open(`https://www.google.com/maps/search/?api=1&query=${config.lo},${config.la}`, '_blank');
         };
       }
-      return divEl;
+      return divCarouselWrapper;
     });
 
     this.set('vertical', (): HTMLElement => {
-      const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
-      return divEl;
+      const divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      return divCarouselWrapper;
     });
 
     this.set('carousel', (config): HTMLElement => {
@@ -137,14 +137,16 @@ export default class ElementRendererProvider {
       const arrowRight = document.createElement('div');
       const arrowLeft = document.createElement('div');
 
-      const divEl = document.createElement('div');
-      (divEl: any).afterRender = () => {
-        if (divEl.childNodes.length) {
-          for (let itemCounter = 0; itemCounter < divEl.childNodes.length; itemCounter += 1) {
-            const node = divEl.childNodes[itemCounter];
+      const divCarouselWrapper = document.createElement('div');
+      (divCarouselWrapper: any).afterRender = () => {
+        if (divCarouselWrapper.childNodes.length) {
+          for (let itemCounter = 0;
+               itemCounter < divCarouselWrapper.childNodes.length;
+               itemCounter += 1) {
+            const node = divCarouselWrapper.childNodes[itemCounter];
             if (itemCounter === 0) {
               (node: any).style['margin-right'] = `${config.padding / 2}px`;
-            } else if (itemCounter === (divEl.childNodes.length - 1)) {
+            } else if (itemCounter === (divCarouselWrapper.childNodes.length - 1)) {
               (node: any).style['margin-left'] = `${config.padding / 2}px`;
             } else {
               (node: any).style.margin = `0 ${config.padding / 2}px`;
@@ -153,23 +155,25 @@ export default class ElementRendererProvider {
           arrowRight.className = 'layout-carousel-arrow';
           arrowLeft.className = 'layout-carousel-arrow left';
 
-          const carousel = divEl.cloneNode(true);
-          while ((divEl: any).hasChildNodes()) {
-            (divEl: any).removeChild(divEl.lastChild);
+          const carousel = divCarouselWrapper.cloneNode(true);
+          while ((divCarouselWrapper: any).hasChildNodes()) {
+            (divCarouselWrapper: any).removeChild(divCarouselWrapper.lastChild);
           }
 
-          divEl.className = 'lp-json-pollock-layout-carousel-wrapper';
+          divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
 
           const singleItemWidth = ELEMENT_DEFAULT_SIZE + config.padding;
           const totalWidth = carousel.childNodes.length * singleItemWidth;
           carousel.style.width = `${totalWidth}px`;
           carousel.className = 'lp-json-pollock-layout-carousel';
 
-          divEl.appendChild(carousel);
-          divEl.appendChild(arrowRight);
-          divEl.appendChild(arrowLeft);
+          divCarouselWrapper.appendChild(carousel);
+          divCarouselWrapper.appendChild(arrowRight);
+          divCarouselWrapper.appendChild(arrowLeft);
           setTimeout(() => {
-            if (divEl.clientWidth > carousel.clientWidth + DEFAULT_SPACING) {
+            /* check if the viewport width is bigger then the carousel div
+             * => remove the arrows */
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + DEFAULT_SPACING) {
               (arrowLeft: any).style.visibility = 'hidden';
               (arrowRight: any).style.visibility = 'hidden';
             }
@@ -180,11 +184,14 @@ export default class ElementRendererProvider {
             if ((carousel: any).style.left !== '') {
               currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
             }
+            /* when click on the right arrow the carousel div will shift to the left */
             let nextLeft = currentPos - ELEMENT_DEFAULT_SIZE - (config.padding);
             (arrowLeft: any).style.visibility = 'visible';
             (arrowRight: any).style.visibility = 'visible';
-            if (divEl.clientWidth > carousel.clientWidth + nextLeft) {
-              nextLeft = -(carousel.clientWidth - divEl.clientWidth) - DEFAULT_SPACING;
+            /* check if the the viewport width is bigger then the carousel width + the next "Left"
+             * value => shift the carousel div to its rightest point */
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
+              nextLeft = -(carousel.offsetWidth - divCarouselWrapper.offsetWidth) - DEFAULT_SPACING;
               (arrowRight: any).style.visibility = 'hidden';
             }
             (carousel: any).style.left = `${nextLeft}px`;
@@ -205,22 +212,22 @@ export default class ElementRendererProvider {
           };
         }
       };
-      return divEl;
+      return divCarouselWrapper;
     });
 
     this.set('horizontal', (): HTMLElement => {
-      const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
-      (divEl: any).afterRender = () => {
-        if (divEl.childNodes.length) {
-          const percentage = 100 / divEl.childNodes.length;
-          Array.prototype.forEach.call(divEl.childNodes, (node) => {
+      const divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      (divCarouselWrapper: any).afterRender = () => {
+        if (divCarouselWrapper.childNodes.length) {
+          const percentage = 100 / divCarouselWrapper.childNodes.length;
+          Array.prototype.forEach.call(divCarouselWrapper.childNodes, (node) => {
             const n = node;
             (n: any).style.width = `${percentage}%`;
           });
         }
       };
-      return divEl;
+      return divCarouselWrapper;
     });
   }
 
