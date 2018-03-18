@@ -79,7 +79,7 @@ export default class LPJsonPollock {
     const elementRenderer = this.provider.get(elJson.type);
     let element: HTMLElement;
     if (elementRenderer) {
-      element = elementRenderer(elJson, parent);
+      element = elementRenderer(elJson);
       if (element) {
         parent.appendChild(element);
         if (Array.isArray(elJson.elements)) {
