@@ -18,24 +18,24 @@ export default class ElementRendererProvider {
     predefined renderes
     */
     this.set('text', (config): HTMLElement => {
-      const divCarouselWrapper = document.createElement('div');
+      const divEl = document.createElement('div');
       const tooltip = config.tooltip ? Utils.escapeHtml(config.tooltip) : '';
-      divCarouselWrapper.className = 'lp-json-pollock-element-text';
+      divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
-      divCarouselWrapper.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
-      return divCarouselWrapper;
+      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
+      return divEl;
     });
 
     this.set('button', (config): HTMLElement => {
-      const divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-button';
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-button';
 
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
 
       const btnEl = document.createElement('button');
@@ -53,18 +53,18 @@ export default class ElementRendererProvider {
         btnEl.onclick = this.wrapAction(config.click);
       }
 
-      divCarouselWrapper.appendChild(btnEl);
+      divEl.appendChild(btnEl);
 
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('image', (config): HTMLElement => {
-      const divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-image loading';
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-image loading';
 
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
 
       const imgEl = document.createElement('img');
@@ -79,55 +79,55 @@ export default class ElementRendererProvider {
       }
 
       if (config.caption) {
-        divCarouselWrapper.innerHTML += `<div>${config.caption}</div>`;
+        divEl.innerHTML += `<div>${config.caption}</div>`;
       }
 
       imgEl.onload = () => {
-        divCarouselWrapper.className = 'lp-json-pollock-element-image';
+        divEl.className = 'lp-json-pollock-element-image';
       };
 
       imgEl.onerror = () => {
-        divCarouselWrapper.className = 'lp-json-pollock-element-image error';
-        divCarouselWrapper.title = 'fail to load image';
+        divEl.className = 'lp-json-pollock-element-image error';
+        divEl.title = 'fail to load image';
         imgEl.style.display = 'none';
       };
 
       if (config.click && config.click.actions) {
         imgEl.onclick = this.wrapAction(config.click);
       }
-      divCarouselWrapper.appendChild(imgEl);
+      divEl.appendChild(imgEl);
 
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('map', (config): HTMLElement => {
-      const divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-map';
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-map';
 
       if (config.tooltip) {
-        divCarouselWrapper.title = config.tooltip;
-        divCarouselWrapper.setAttribute('aria-label', config.tooltip);
+        divEl.title = config.tooltip;
+        divEl.setAttribute('aria-label', config.tooltip);
       }
 
       if (config.style) {
-        divCarouselWrapper.style.cssText = Utils.styleToCss(config.style);
+        divEl.style.cssText = Utils.styleToCss(config.style);
       }
 
       if (config.click && config.click.actions) {
-        divCarouselWrapper.onclick = this.wrapAction(config.click);
+        divEl.onclick = this.wrapAction(config.click);
       } else {
         // navigate to the location
-        divCarouselWrapper.onclick = () => {
+        divEl.onclick = () => {
           window.open(`https://www.google.com/maps/search/?api=1&query=${config.lo},${config.la}`, '_blank');
         };
       }
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('vertical', (): HTMLElement => {
-      const divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
-      return divCarouselWrapper;
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      return divEl;
     });
 
     this.set('carousel', (config): HTMLElement => {
@@ -219,18 +219,18 @@ export default class ElementRendererProvider {
     });
 
     this.set('horizontal', (): HTMLElement => {
-      const divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
-      (divCarouselWrapper: any).afterRender = () => {
-        if (divCarouselWrapper.childNodes.length) {
-          const percentage = 100 / divCarouselWrapper.childNodes.length;
-          Array.prototype.forEach.call(divCarouselWrapper.childNodes, (node) => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      (divEl: any).afterRender = () => {
+        if (divEl.childNodes.length) {
+          const percentage = 100 / divEl.childNodes.length;
+          Array.prototype.forEach.call(divEl.childNodes, (node) => {
             const n = node;
             (n: any).style.width = `${percentage}%`;
           });
         }
       };
-      return divCarouselWrapper;
+      return divEl;
     });
   }
 
