@@ -144,12 +144,6 @@ export default class ElementRendererProvider {
                itemCounter < divCarouselWrapper.childNodes.length;
                itemCounter += 1) {
             const node = divCarouselWrapper.childNodes[itemCounter];
-            // if (itemCounter === 0) {
-            //   (node: any).style['margin-right'] = `${config.padding / 2}px`;
-            // } else if (itemCounter === (divCarouselWrapper.childNodes.length - 1)) {
-            //   (node: any).style['margin-left'] = `${config.padding / 2}px`;
-            // } else {
-            // }
             (node: any).style.margin = `0 ${config.padding / 2}px`;
           }
 
