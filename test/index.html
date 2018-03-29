@@ -22,7 +22,6 @@
           }],
           "actions": [{
             "type": "navigate",
-            "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
             "name": "Navigate to store via image",
             "lo": 23423423,
             "la": 2423423423
@@ -31,7 +30,6 @@
       }
         
        let horizontal = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "horizontal",
         "elements": [
           {
@@ -53,7 +51,6 @@
             }],
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -73,7 +70,6 @@
       }
 
        let card = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [
           {
@@ -93,7 +89,6 @@
             }],
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -109,7 +104,8 @@
             "size": "large"
           }
         }
-        , {
+        ,
+          {
           "type": "text",
           "text": "long long  long long long long long long long long long long long long long long long product category (type)",
           "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq ="
@@ -119,15 +115,14 @@
           "text": "$155.99",
           "tooltip": "text tooltip",
           "rtl": true
-        }
-        , {
+        },
+          {
           "type": "button",
           "title": "Add to cart",
           "style": {
             "bold": true,
             "italic": true,
             "color": "red",
-            "background-color": "blue",
             "size": 'large'
           },
           "click": {
@@ -147,7 +142,6 @@
           "click" : {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store",
               "lo": 23423423,
               "la": 2423423423
@@ -164,7 +158,6 @@
               "click" : {
                 "actions": [{
                   "type": "navigate",
-                  "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                   "name": "Navigate to store",
                   "lo": 23423423,
                   "la": 2423423423
@@ -177,7 +170,6 @@
               "click" : {
                 "actions": [{
                   "type": "navigate",
-                  "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                   "name": "Navigate to store",
                   "lo": 23423423,
                   "la": 2423423423
@@ -191,7 +183,6 @@
               "click" : {
                 "actions": [{
                   "type": "navigate",
-                  "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                   "name": "Navigate to store",
                   "lo": 23423423,
                   "la": 2423423423
@@ -205,7 +196,6 @@
               "click" : {
                 "actions": [{
                   "type": "navigate",
-                  "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                   "name": "Navigate to store",
                   "lo": 23423423,
                   "la": 2423423423
@@ -213,7 +203,7 @@
               }
             }
           ]
-        } 
+        }
         ,{
           "type": "button",
           "title": "Open web page",
@@ -224,7 +214,6 @@
             }],
             "actions": [{
               "type": "link",
-              "id": "15ffab70-de0e-42df-9576-290c2249aa24",
               "uri": "http://www.google.com",
               "name": "open browser"
             }]
@@ -397,7 +386,7 @@
       });
 
       // const el = JsonPollock.render(JSON.stringify(conf));
-      const el = JsonPollock.render(JSON.stringify(carousel));
+      const el = JsonPollock.render(JSON.stringify(card));
       // const el = JsonPollock.render(JSON.stringify(horizontal));
       document.getElementById('content').appendChild(el);
     }
