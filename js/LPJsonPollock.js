@@ -26,7 +26,6 @@ class JsonPollockError extends Error {
   constructor(message, errors) {
     super(message);
     this.errors = errors;
-    // console.log(JSON.stringify(errors));
   }
 }
 
