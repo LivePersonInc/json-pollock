@@ -2,6 +2,11 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+        "background-color": {
+            "type": "string",
+            "format": "color",
+            "maxLength": 256
+        },
         "bold": {
             "type": "boolean"
         },
