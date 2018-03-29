@@ -11,7 +11,6 @@ describe('json-pollock tests', function () {
   }
 
   var card = {
-    "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
     "type": "vertical",
     "elements": [{
       "type": "image",
@@ -20,7 +19,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "navigate",
-          "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
           "name": "Navigate to store via image",
           "lo": 23.423423,
           "la": 2423423423
@@ -43,7 +41,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "link",
-          "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
           "name": "add to cart",
           "uri": "http://example.jpg"
         }]
@@ -260,7 +257,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "navigate",
-                    "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                     "name": "Navigate to store via image",
                     "lo": 23423423,
                     "la": 2423423423
@@ -274,7 +270,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "navigate",
-                    "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                     "name": "Navigate to store via image",
                     "lo": 23423423,
                     "la": 2423423423
@@ -288,7 +283,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "link",
-                    "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                     "name": "add to cart",
                     "uri": "https://example.com"   
                   }]
@@ -328,7 +322,6 @@ describe('json-pollock tests', function () {
       it('Vertical with very long text should wrap word', function () {
 
         var conf = {
-          "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
           "type": "vertical",
           "elements": [{
             "type": "text",
@@ -456,7 +449,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -486,7 +478,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -527,7 +518,6 @@ describe('json-pollock tests', function () {
                   "click": {
                     "actions": [{
                       "type": "link",
-                      "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                       "name": "add to cart",
                       "uri": "http://example.jpg"
                     }]
@@ -563,7 +553,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -631,7 +620,6 @@ describe('json-pollock tests', function () {
                   "click": {
                     "actions": [{
                       "type": "link",
-                      "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                       "name": "add to cart",
                       "uri": "http://example.jpg"
                     }]
@@ -667,7 +655,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -725,7 +712,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "link",
-          "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
           "name": "add to cart",
           "uri": "http://example.jpg"
         }]
@@ -741,7 +727,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "navigate",
-          "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
           "name": "Navigate to store via image",
           "lo": 23.423423,
           "la": 2423423423
@@ -809,7 +794,6 @@ describe('json-pollock tests', function () {
 
     before(function () {
       conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -818,7 +802,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -831,7 +814,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "https://example.com"   
             }]
@@ -862,7 +844,6 @@ describe('json-pollock tests', function () {
               "text": "my text",
             },{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "https://example.com"
             }]
@@ -961,7 +942,6 @@ describe('json-pollock tests', function () {
 
     before(function () {
       var conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -970,7 +950,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -993,7 +972,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "http://example.jpg"
             }]
@@ -1023,7 +1001,6 @@ describe('json-pollock tests', function () {
 
     before(function (done) {
       var conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -1032,7 +1009,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
