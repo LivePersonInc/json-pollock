@@ -953,6 +953,13 @@ describe('json-pollock tests', function () {
       chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[5].click.actions[0]});
     });
 
+      it('Click on element with link action should trigger its registered callbacks with DOM event', function () {
+          var spy = sinon.spy();
+          JsonPollock.registerAction('link', spy);
+          rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(createClickEvent());
+          chai.expect(spy).to.have.been.calledWith(sinon.match({ actionData: conf.elements[1].click.actions[0], uiEvent: event }));
+      });
+
   });
 
   describe('render json string', function () {
