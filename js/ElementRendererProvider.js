@@ -155,7 +155,7 @@ export default class ElementRendererProvider {
   }
 
   wrapAction(clickData: Object): Function {
-    return () => {
+    return (event) => {
       if (clickData.actions instanceof Array) {
         clickData.actions.forEach((actionData) => {
           this.events.trigger({
@@ -163,6 +163,7 @@ export default class ElementRendererProvider {
             data: {
               actionData,
               metadata: clickData.metadata,
+              uiEvent: event,
             },
           });
         });
