@@ -1,0 +1,12 @@
+{
+    "oneOf": [
+        {
+            "title": "card",
+            "$ref": "card.json"
+        },
+        {
+            "title": "carousel",
+            "$ref": "carousel.json"
+        }
+    ]
+}

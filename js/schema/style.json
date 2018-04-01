@@ -1,6 +1,12 @@
 {
     "type": "object",
+    "additionalProperties": false,
     "properties": {
+        "background-color": {
+            "type": "string",
+            "format": "color",
+            "maxLength": 256
+        },
         "bold": {
             "type": "boolean"
         },
@@ -9,7 +15,8 @@
         },
         "color": {
             "type": "string",
-            "format": "color"
+            "format": "color",
+            "maxLength": 256
         },
         "size": {
             "type": "string",

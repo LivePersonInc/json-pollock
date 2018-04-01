@@ -11,7 +11,6 @@ describe('json-pollock tests', function () {
   }
 
   var card = {
-    "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
     "type": "vertical",
     "elements": [{
       "type": "image",
@@ -20,7 +19,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "navigate",
-          "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
           "name": "Navigate to store via image",
           "lo": 23.423423,
           "la": 2423423423
@@ -43,7 +41,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "link",
-          "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
           "name": "add to cart",
           "uri": "http://example.jpg"
         }]
@@ -260,7 +257,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "navigate",
-                    "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                     "name": "Navigate to store via image",
                     "lo": 23423423,
                     "la": 2423423423
@@ -274,7 +270,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "navigate",
-                    "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                     "name": "Navigate to store via image",
                     "lo": 23423423,
                     "la": 2423423423
@@ -288,7 +283,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "link",
-                    "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                     "name": "add to cart",
                     "uri": "https://example.com"   
                   }]
@@ -328,7 +322,6 @@ describe('json-pollock tests', function () {
       it('Vertical with very long text should wrap word', function () {
 
         var conf = {
-          "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
           "type": "vertical",
           "elements": [{
             "type": "text",
@@ -354,6 +347,187 @@ describe('json-pollock tests', function () {
 
     });
 
+  });
+
+  describe('render carousel', function(){
+
+    var conf = {
+      "type": "carousel",
+      "padding": 10,
+      "elements": [
+        {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "SIM only plan",
+              "tooltip": "SIM only plan",
+              "rtl": false,
+              "style": {
+                "bold": false,
+                "italic": false,
+                "color": "#000000",
+                "size": "large"
+              }
+            },
+            {
+              "type": "text",
+              "text": "Twelve month plan BYO mobile",
+              "tooltip": "Twelve month plan BYO mobile",
+              "rtl": false,
+              "style": {
+                "bold": true,
+                "italic": false,
+                "color": "#000000"
+              }
+            },
+            {
+              "type": "button",
+              "tooltip": "Choose a plan",
+              "title": "Choose a plan",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_1"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "SIM only plan"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "Swap plan",
+              "tooltip": "Swap plan",
+              "rtl": false,
+              "style": {
+                "bold": false,
+                "italic": false,
+                "color": "#000000",
+                "size": "large"
+              }
+            },
+            {
+              "type": "text",
+              "text": "Two year plan leasing a mobile",
+              "tooltip": "Two year plan leasing a mobile",
+              "rtl": false,
+              "style": {
+                "bold": true,
+                "italic": false,
+                "color": "#000000"
+              }
+            },
+            {
+              "type": "button",
+              "tooltip": "Choose a plan",
+              "title": "Choose a plan",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_2"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "Two year plan leasing a mobile"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "Mobiles on a plan",
+              "tooltip": "Mobiles on a plan",
+              "rtl": false,
+              "style": {
+                "bold": false,
+                "italic": false,
+                "color": "#000000",
+                "size": "large"
+              }
+            },
+            {
+              "type": "text",
+              "text": "Two year plan with a mobile",
+              "tooltip": "Two year plan with a mobile",
+              "rtl": false,
+              "style": {
+                "bold": true,
+                "italic": false,
+                "color": "#000000"
+              }
+            },
+            {
+              "type": "button",
+              "tooltip": "Choose a plan",
+              "title": "Choose a plan",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_3"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "Mobiles on a plan"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    };
+    const conteiner = addToBody(JsonPollock.render(JSON.stringify(conf)));
+    const carouselRoot = conteiner.children[0];
+    const carouselRootLayoutWrapper = conteiner.children[0].children[0];
+    const carouselRootLayout = conteiner.children[0].children[0].children[0];
+    const carouselRight = conteiner.children[0].children[0].children[1];
+    const carouselLeft = conteiner.children[0].children[0].children[2];
+
+    it('carousel root exist', function () {
+      chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
+    });
+
+    it('carousel root layout wrapper exist', function () {
+      chai.expect(carouselRootLayoutWrapper.className).to.contain('lp-json-pollock-layout-carousel-wrapper');
+    });
+
+    it('carousel root layout exist', function () {
+      chai.expect(carouselRootLayout.className).to.contain('lp-json-pollock-layout-carousel');
+    });
+
+    it('carousel arrow right exist', function () {
+      chai.expect(carouselRight.className).to.contain('layout-carousel-arrow');
+    });
+
+    it('carousel arrow left  exist', function () {
+      chai.expect(carouselLeft.className).to.contain('layout-carousel-arrow left');
+    });
+
+    it('carousel elements length equal to conf element length', function () {
+      chai.expect(carouselRootLayout.children.length).to.be.equal(conf.elements.length);
+    });
   });
 
   describe('border policy', function () {
@@ -456,7 +630,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -486,7 +659,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -527,7 +699,6 @@ describe('json-pollock tests', function () {
                   "click": {
                     "actions": [{
                       "type": "link",
-                      "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                       "name": "add to cart",
                       "uri": "http://example.jpg"
                     }]
@@ -563,7 +734,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -631,7 +801,6 @@ describe('json-pollock tests', function () {
                   "click": {
                     "actions": [{
                       "type": "link",
-                      "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                       "name": "add to cart",
                       "uri": "http://example.jpg"
                     }]
@@ -667,7 +836,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -725,7 +893,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "link",
-          "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
           "name": "add to cart",
           "uri": "http://example.jpg"
         }]
@@ -741,7 +908,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "navigate",
-          "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
           "name": "Navigate to store via image",
           "lo": 23.423423,
           "la": 2423423423
@@ -809,7 +975,6 @@ describe('json-pollock tests', function () {
 
     before(function () {
       conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -818,7 +983,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -831,7 +995,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "https://example.com"   
             }]
@@ -862,7 +1025,6 @@ describe('json-pollock tests', function () {
               "text": "my text",
             },{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "https://example.com"
             }]
@@ -968,7 +1130,6 @@ describe('json-pollock tests', function () {
 
     before(function () {
       var conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -977,7 +1138,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -1000,7 +1160,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "http://example.jpg"
             }]
@@ -1030,7 +1189,6 @@ describe('json-pollock tests', function () {
 
     before(function (done) {
       var conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -1039,7 +1197,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423

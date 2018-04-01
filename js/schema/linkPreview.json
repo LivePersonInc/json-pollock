@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "title": "linkPreview",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "linkPreview"
+      ],
+      "default": "linkPreview",
+      "readonly": true
+    },
+    "url": {
+      "type": "string",
+      "maxLength": 2048
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "rtl": {
+      "type": "boolean"
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "tag": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "tagVersion": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "style": {
+      "$ref": "style.json"
+    },
+    "click": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actions": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "$ref": "action.json"
+          }
+        },
+        "metadata": {
+          "type": "array"
+        }
+      }
+    }
+  },
+  "required": [
+    "url"
+  ]
+}

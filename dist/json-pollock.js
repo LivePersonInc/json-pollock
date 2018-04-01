@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 57);
+/******/ 	return __webpack_require__(__webpack_require__.s = 65);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -93,7 +93,7 @@ module.exports = {
   getProperty: getProperty,
   escapeQuotes: escapeQuotes,
   equal: __webpack_require__(3),
-  ucs2length: __webpack_require__(28),
+  ucs2length: __webpack_require__(36),
   varOccurences: varOccurences,
   varReplace: varReplace,
   cleanUpCode: cleanUpCode,
@@ -398,11 +398,11 @@ function errorSubclass(Subclass) {
 "use strict";
 
 
-var url = __webpack_require__(58)
+var url = __webpack_require__(66)
   , equal = __webpack_require__(3)
   , util = __webpack_require__(0)
   , SchemaObject = __webpack_require__(5)
-  , traverse = __webpack_require__(52);
+  , traverse = __webpack_require__(60);
 
 module.exports = resolve;
 
@@ -1627,7 +1627,7 @@ module.exports = function generate_validate(it, $keyword, $ruleType) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var LAYOUT_TYPES = ['vertical', 'horizontal'];
+var LAYOUT_TYPES = ['vertical', 'horizontal', 'carousel'];
 
 exports.default = {
   styleToCss: function styleToCss(style) {
@@ -2037,11 +2037,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _ajv = __webpack_require__(21);
+var _ajv = __webpack_require__(29);
 
 var _ajv2 = _interopRequireDefault(_ajv);
 
-var _ElementRendererProvider = __webpack_require__(51);
+var _ElementRendererProvider = __webpack_require__(59);
 
 var _ElementRendererProvider2 = _interopRequireDefault(_ElementRendererProvider);
 
@@ -2057,13 +2057,45 @@ var _basic = __webpack_require__(17);
 
 var _basic2 = _interopRequireDefault(_basic);
 
-var _element = __webpack_require__(18);
-
-var _element2 = _interopRequireDefault(_element);
-
-var _style = __webpack_require__(19);
+var _style = __webpack_require__(25);
 
 var _style2 = _interopRequireDefault(_style);
+
+var _button = __webpack_require__(18);
+
+var _button2 = _interopRequireDefault(_button);
+
+var _card = __webpack_require__(19);
+
+var _card2 = _interopRequireDefault(_card);
+
+var _carousel = __webpack_require__(20);
+
+var _carousel2 = _interopRequireDefault(_carousel);
+
+var _image = __webpack_require__(21);
+
+var _image2 = _interopRequireDefault(_image);
+
+var _linkPreview = __webpack_require__(22);
+
+var _linkPreview2 = _interopRequireDefault(_linkPreview);
+
+var _map = __webpack_require__(23);
+
+var _map2 = _interopRequireDefault(_map);
+
+var _rich_content = __webpack_require__(24);
+
+var _rich_content2 = _interopRequireDefault(_rich_content);
+
+var _template = __webpack_require__(26);
+
+var _template2 = _interopRequireDefault(_template);
+
+var _text = __webpack_require__(27);
+
+var _text2 = _interopRequireDefault(_text);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2086,6 +2118,7 @@ var JsonPollockError = function (_Error) {
     var _this = _possibleConstructorReturn(this, (JsonPollockError.__proto__ || Object.getPrototypeOf(JsonPollockError)).call(this, message));
 
     _this.errors = errors;
+    // console.log(JSON.stringify(errors));
     return _this;
   }
 
@@ -2103,8 +2136,16 @@ var LPJsonPollock = function () {
     ajv.addSchema(_action2.default, 'action.json');
     ajv.addSchema(_basic2.default, 'basic.json');
     ajv.addSchema(_style2.default, 'style.json');
-    ajv.addSchema(_element2.default, 'element.json');
-    this.jsonValidator = ajv.compile(_element2.default);
+    ajv.addSchema(_button2.default, 'button.json');
+    ajv.addSchema(_card2.default, 'card.json');
+    ajv.addSchema(_carousel2.default, 'carousel.json');
+    ajv.addSchema(_image2.default, 'image.json');
+    ajv.addSchema(_linkPreview2.default, 'linkPreview.json');
+    ajv.addSchema(_map2.default, 'map.json');
+    ajv.addSchema(_rich_content2.default, 'rich_content.json');
+    ajv.addSchema(_template2.default, 'template.json');
+    ajv.addSchema(_text2.default, 'text.json');
+    this.jsonValidator = ajv.compile(_rich_content2.default);
   }
 
   _createClass(LPJsonPollock, [{
@@ -2135,7 +2176,7 @@ var LPJsonPollock = function () {
       var elementRenderer = this.provider.get(elJson.type);
       var element = void 0;
       if (elementRenderer) {
-        element = elementRenderer(elJson);
+        element = elementRenderer(elJson, parent);
         if (element) {
           parent.appendChild(element);
           if (Array.isArray(elJson.elements)) {
@@ -2218,28 +2259,687 @@ exports.default = LPJsonPollock;
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"Publish Text","type":"object","properties":{"type":{"type":"string","enum":["publishText"],"default":"publishText","readonly":true},"text":{"type":"string"}},"required":["type","text"]},{"title":"navigate","type":"object","properties":{"type":{"type":"string","enum":["navigate"],"default":"navigate","readonly":true},"la":{"type":"number"},"lo":{"type":"number"},"name":{"type":"string"}},"required":["type","la","lo"]},{"title":"link","type":"object","properties":{"type":{"type":"string","enum":["link"],"default":"link","readonly":true},"uri":{"type":"string","format":"uri"},"name":{"type":"string"}},"required":["type","uri"]}]}
+module.exports = {
+	"oneOf": [
+		{
+			"title": "Publish Text",
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"publishText"
+					],
+					"default": "publishText",
+					"readonly": true
+				},
+				"text": {
+					"type": "string",
+					"maxLength": 256
+				}
+			},
+			"required": [
+				"type",
+				"text"
+			]
+		},
+		{
+			"title": "navigate",
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"navigate"
+					],
+					"default": "navigate",
+					"readonly": true
+				},
+				"la": {
+					"type": "number"
+				},
+				"lo": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string",
+					"maxLength": 256
+				}
+			},
+			"required": [
+				"type",
+				"la",
+				"lo"
+			]
+		},
+		{
+			"title": "link",
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"link"
+					],
+					"default": "link",
+					"readonly": true
+				},
+				"uri": {
+					"type": "string",
+					"format": "uri",
+					"maxLength": 1024
+				},
+				"name": {
+					"type": "string",
+					"maxLength": 256
+				}
+			},
+			"required": [
+				"type",
+				"uri"
+			]
+		}
+	]
+};
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = {"allOf":[{"type":"object","properties":{"rtl":{"type":"boolean"},"tooltip":{"type":"string"},"type":{"type":"string"},"style":{"$ref":"style.json"},"click":{"type":"object","properties":{"actions":{"type":"array","items":{"$ref":"action.json","maxLength":4}},"metadata":{"type":"array"}}}},"required":["type"]},{"oneOf":[{"type":"object","title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000}},"required":["text"]},{"type":"object","title":"image","properties":{"type":{"type":"string","enum":["image"],"default":"image","readonly":true},"caption":{"type":"string","maxLength":128},"url":{"type":"string","maxLength":2048}},"required":["url"]},{"type":"object","title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"title":{"type":"string","maxLength":128}},"required":["title"]},{"type":"object","title":"map","properties":{"type":{"type":"string","enum":["map"],"default":"map","readonly":true},"lo":{"type":"number"},"la":{"type":"number"}},"required":["lo","la"]},{"type":"object","title":"linkPreview","properties":{"type":{"type":"string","enum":["linkPreview"],"default":"linkPreview","readonly":true},"url":{"type":"string","maxLength":2048},"title":{"type":"string","maxLength":128}},"required":["url"]},{"type":"object","title":"template","properties":{"type":{"type":"string","enum":["template"],"default":"template","readonly":true},"templateType":{"type":"string","enum":["quickReply"],"default":"quickReply","readonly":true},"title":{"type":"string","maxLength":5000},"resp":{"type":"array","items":{"type":"string","maxLength":128},"minItems":1}},"required":["templateType","title","resp"]}]}]}
+module.exports = {
+	"oneOf": [
+		{
+			"$ref": "text.json"
+		},
+		{
+			"$ref": "image.json"
+		},
+		{
+			"$ref": "button.json"
+		},
+		{
+			"$ref": "map.json"
+		},
+		{
+			"$ref": "linkPreview.json"
+		},
+		{
+			"$ref": "template.json"
+		}
+	]
+};
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"elements":{"type":"array","items":{"$ref":"element.json"}}},"required":["type","elements"]},{"type":"object","title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"elements":{"type":"array","items":{"$ref":"element.json"}}},"required":["type","elements"]}]}
+module.exports = {
+	"type": "object",
+	"additionalProperties": false,
+	"title": "button",
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"button"
+			],
+			"default": "button",
+			"readonly": true
+		},
+		"title": {
+			"type": "string",
+			"maxLength": 128
+		},
+		"rtl": {
+			"type": "boolean"
+		},
+		"tooltip": {
+			"type": "string",
+			"maxLength": 256
+		},
+		"tag": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"tagVersion": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"style": {
+			"$ref": "style.json"
+		},
+		"click": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"actions": {
+					"type": "array",
+					"maxItems": 4,
+					"items": {
+						"$ref": "action.json"
+					}
+				},
+				"metadata": {
+					"type": "array"
+				}
+			}
+		}
+	},
+	"required": [
+		"title"
+	]
+};
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","properties":{"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color"},"size":{"type":"string","enum":["small","medium","large"]}}}
+module.exports = {
+	"oneOf": [
+		{
+			"title": "basic",
+			"$ref": "basic.json"
+		},
+		{
+			"type": "object",
+			"additionalProperties": false,
+			"title": "horizontal",
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"horizontal"
+					],
+					"default": "horizontal",
+					"readonly": true
+				},
+				"tag": {
+					"type": "string",
+					"maxLength": 64
+				},
+				"tagVersion": {
+					"type": "string",
+					"maxLength": 64
+				},
+				"elements": {
+					"type": "array",
+					"maxItems": 256,
+					"items": {
+						"$ref": "rich_content.json"
+					}
+				}
+			},
+			"required": [
+				"type",
+				"elements"
+			]
+		},
+		{
+			"type": "object",
+			"additionalProperties": false,
+			"title": "vertical",
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"vertical"
+					],
+					"default": "vertical",
+					"readonly": true
+				},
+				"tag": {
+					"type": "string",
+					"maxLength": 64
+				},
+				"tagVersion": {
+					"type": "string",
+					"maxLength": 64
+				},
+				"elements": {
+					"type": "array",
+					"maxItems": 256,
+					"items": {
+						"$ref": "rich_content.json"
+					}
+				}
+			},
+			"required": [
+				"type",
+				"elements"
+			]
+		}
+	]
+};
 
 /***/ }),
 /* 20 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"type": "object",
+	"additionalProperties": false,
+	"title": "carousel",
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"carousel"
+			],
+			"default": "carousel",
+			"readonly": true
+		},
+		"tooltip": {
+			"type": "string",
+			"maxLength": 256
+		},
+		"padding": {
+			"type": "number",
+			"default": 0,
+			"minimum": 0,
+			"maximum": 10
+		},
+		"elements": {
+			"type": "array",
+			"minItems": 2,
+			"maxItems": 10,
+			"items": {
+				"$ref": "card.json"
+			}
+		}
+	},
+	"required": [
+		"type",
+		"elements"
+	]
+};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"type": "object",
+	"title": "image",
+	"additionalProperties": false,
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"image"
+			],
+			"default": "image",
+			"readonly": true
+		},
+		"caption": {
+			"type": "string",
+			"maxLength": 128
+		},
+		"url": {
+			"type": "string",
+			"maxLength": 2048
+		},
+		"rtl": {
+			"type": "boolean"
+		},
+		"tooltip": {
+			"type": "string",
+			"maxLength": 256
+		},
+		"tag": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"tagVersion": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"style": {
+			"$ref": "style.json"
+		},
+		"click": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"actions": {
+					"type": "array",
+					"maxItems": 4,
+					"items": {
+						"$ref": "action.json"
+					}
+				},
+				"metadata": {
+					"type": "array"
+				}
+			}
+		}
+	},
+	"required": [
+		"url"
+	]
+};
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"type": "object",
+	"title": "linkPreview",
+	"additionalProperties": false,
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"linkPreview"
+			],
+			"default": "linkPreview",
+			"readonly": true
+		},
+		"url": {
+			"type": "string",
+			"maxLength": 2048
+		},
+		"title": {
+			"type": "string",
+			"maxLength": 128
+		},
+		"rtl": {
+			"type": "boolean"
+		},
+		"tooltip": {
+			"type": "string",
+			"maxLength": 256
+		},
+		"tag": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"tagVersion": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"style": {
+			"$ref": "style.json"
+		},
+		"click": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"actions": {
+					"type": "array",
+					"maxItems": 4,
+					"items": {
+						"$ref": "action.json"
+					}
+				},
+				"metadata": {
+					"type": "array"
+				}
+			}
+		}
+	},
+	"required": [
+		"url"
+	]
+};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"type": "object",
+	"title": "map",
+	"additionalProperties": false,
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"map"
+			],
+			"default": "map",
+			"readonly": true
+		},
+		"lo": {
+			"type": "number"
+		},
+		"la": {
+			"type": "number"
+		},
+		"rtl": {
+			"type": "boolean"
+		},
+		"tooltip": {
+			"type": "string",
+			"maxLength": 256
+		},
+		"tag": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"tagVersion": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"style": {
+			"$ref": "style.json"
+		},
+		"click": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"actions": {
+					"type": "array",
+					"maxItems": 4,
+					"items": {
+						"$ref": "action.json"
+					}
+				},
+				"metadata": {
+					"type": "array"
+				}
+			}
+		}
+	},
+	"required": [
+		"lo",
+		"la"
+	]
+};
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"oneOf": [
+		{
+			"title": "card",
+			"$ref": "card.json"
+		},
+		{
+			"title": "carousel",
+			"$ref": "carousel.json"
+		}
+	]
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"bold": {
+			"type": "boolean"
+		},
+		"italic": {
+			"type": "boolean"
+		},
+		"color": {
+			"type": "string",
+			"format": "color",
+			"maxLength": 256
+		},
+		"size": {
+			"type": "string",
+			"enum": [
+				"small",
+				"medium",
+				"large"
+			]
+		}
+	}
+};
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"type": "object",
+	"title": "template",
+	"additionalProperties": false,
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"template"
+			],
+			"default": "template",
+			"readonly": true
+		},
+		"templateType": {
+			"type": "string",
+			"enum": [
+				"quickReply"
+			],
+			"default": "quickReply",
+			"readonly": true
+		},
+		"title": {
+			"type": "string",
+			"maxLength": 5000
+		},
+		"resp": {
+			"type": "array",
+			"maxItems": 32,
+			"minItems": 1,
+			"items": {
+				"type": "string",
+				"maxLength": 128
+			}
+		},
+		"rtl": {
+			"type": "boolean"
+		},
+		"tooltip": {
+			"type": "string",
+			"maxLength": 256
+		},
+		"tag": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"tagVersion": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"style": {
+			"$ref": "style.json"
+		},
+		"click": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"actions": {
+					"type": "array",
+					"maxItems": 4,
+					"items": {
+						"$ref": "action.json"
+					}
+				},
+				"metadata": {
+					"type": "array"
+				}
+			}
+		}
+	},
+	"required": [
+		"templateType",
+		"title",
+		"resp"
+	]
+};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"type": "object",
+	"additionalProperties": false,
+	"title": "text",
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"text"
+			],
+			"default": "text",
+			"readonly": true
+		},
+		"text": {
+			"type": "string",
+			"maxLength": 5000
+		},
+		"rtl": {
+			"type": "boolean"
+		},
+		"tooltip": {
+			"type": "string",
+			"maxLength": 256
+		},
+		"tag": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"tagVersion": {
+			"type": "string",
+			"maxLength": 64
+		},
+		"style": {
+			"$ref": "style.json"
+		},
+		"click": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"actions": {
+					"type": "array",
+					"maxItems": 4,
+					"items": {
+						"$ref": "action.json"
+					}
+				},
+				"metadata": {
+					"type": "array"
+				}
+			}
+		}
+	},
+	"required": [
+		"text"
+	]
+};
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2295,21 +2995,21 @@ module.exports = function (metaSchema, keywordsJsonPointers) {
 
 
 /***/ }),
-/* 21 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var compileSchema = __webpack_require__(26)
+var compileSchema = __webpack_require__(34)
   , resolve = __webpack_require__(2)
-  , Cache = __webpack_require__(22)
+  , Cache = __webpack_require__(30)
   , SchemaObject = __webpack_require__(5)
   , stableStringify = __webpack_require__(13)
-  , formats = __webpack_require__(25)
-  , rules = __webpack_require__(27)
-  , $dataMetaSchema = __webpack_require__(20)
-  , patternGroups = __webpack_require__(48)
+  , formats = __webpack_require__(33)
+  , rules = __webpack_require__(35)
+  , $dataMetaSchema = __webpack_require__(28)
+  , patternGroups = __webpack_require__(56)
   , util = __webpack_require__(0)
   , co = __webpack_require__(12);
 
@@ -2328,8 +3028,8 @@ Ajv.prototype.errorsText = errorsText;
 Ajv.prototype._addSchema = _addSchema;
 Ajv.prototype._compile = _compile;
 
-Ajv.prototype.compileAsync = __webpack_require__(24);
-var customKeyword = __webpack_require__(47);
+Ajv.prototype.compileAsync = __webpack_require__(32);
+var customKeyword = __webpack_require__(55);
 Ajv.prototype.addKeyword = customKeyword.add;
 Ajv.prototype.getKeyword = customKeyword.get;
 Ajv.prototype.removeKeyword = customKeyword.remove;
@@ -2427,12 +3127,11 @@ function compile(schema, _meta) {
  * @param {String} key Optional schema key. Can be passed to `validate` method instead of schema object or id/ref. One schema per instance can have empty `id` and `key`.
  * @param {Boolean} _skipValidation true to skip schema validation. Used internally, option validateSchema should be used instead.
  * @param {Boolean} _meta true if schema is a meta-schema. Used internally, addMetaSchema should be used instead.
- * @return {Ajv} this for method chaining
  */
 function addSchema(schema, key, _skipValidation, _meta) {
   if (Array.isArray(schema)){
     for (var i=0; i<schema.length; i++) this.addSchema(schema[i], undefined, _skipValidation, _meta);
-    return this;
+    return;
   }
   var id = this._getId(schema);
   if (id !== undefined && typeof id != 'string')
@@ -2440,7 +3139,6 @@ function addSchema(schema, key, _skipValidation, _meta) {
   key = resolve.normalizeId(key || id);
   checkUnique(this, key);
   this._schemas[key] = this._addSchema(schema, _skipValidation, _meta, true);
-  return this;
 }
 
 
@@ -2451,11 +3149,9 @@ function addSchema(schema, key, _skipValidation, _meta) {
  * @param {Object} schema schema object
  * @param {String} key optional schema key
  * @param {Boolean} skipValidation true to skip schema validation, can be used to override validateSchema option for meta-schema
- * @return {Ajv} this for method chaining
  */
 function addMetaSchema(schema, key, skipValidation) {
   this.addSchema(schema, key, skipValidation, true);
-  return this;
 }
 
 
@@ -2552,26 +3248,25 @@ function _getSchemaObj(self, keyRef) {
  * Even if schema is referenced by other schemas it still can be removed as other schemas have local references.
  * @this   Ajv
  * @param  {String|Object|RegExp} schemaKeyRef key, ref, pattern to match key/ref or schema object
- * @return {Ajv} this for method chaining
  */
 function removeSchema(schemaKeyRef) {
   if (schemaKeyRef instanceof RegExp) {
     _removeAllSchemas(this, this._schemas, schemaKeyRef);
     _removeAllSchemas(this, this._refs, schemaKeyRef);
-    return this;
+    return;
   }
   switch (typeof schemaKeyRef) {
     case 'undefined':
       _removeAllSchemas(this, this._schemas);
       _removeAllSchemas(this, this._refs);
       this._cache.clear();
-      return this;
+      return;
     case 'string':
       var schemaObj = _getSchemaObj(this, schemaKeyRef);
       if (schemaObj) this._cache.del(schemaObj.cacheKey);
       delete this._schemas[schemaKeyRef];
       delete this._refs[schemaKeyRef];
-      return this;
+      return;
     case 'object':
       var serialize = this._opts.serialize;
       var cacheKey = serialize ? serialize(schemaKeyRef) : schemaKeyRef;
@@ -2583,7 +3278,6 @@ function removeSchema(schemaKeyRef) {
         delete this._refs[id];
       }
   }
-  return this;
 }
 
 
@@ -2734,23 +3428,21 @@ function errorsText(errors, options) {
  * @this   Ajv
  * @param {String} name format name
  * @param {String|RegExp|Function} format string is converted to RegExp; function should return boolean (true when valid)
- * @return {Ajv} this for method chaining
  */
 function addFormat(name, format) {
   if (typeof format == 'string') format = new RegExp(format);
   this._formats[name] = format;
-  return this;
 }
 
 
 function addDraft6MetaSchema(self) {
   var $dataSchema;
   if (self._opts.$data) {
-    $dataSchema = __webpack_require__(49);
+    $dataSchema = __webpack_require__(57);
     self.addMetaSchema($dataSchema, $dataSchema.$id, true);
   }
   if (self._opts.meta === false) return;
-  var metaSchema = __webpack_require__(50);
+  var metaSchema = __webpack_require__(58);
   if (self._opts.$data) metaSchema = $dataMetaSchema(metaSchema, META_SUPPORT_DATA);
   self.addMetaSchema(metaSchema, META_SCHEMA_ID, true);
   self._refs['http://json-schema.org/schema'] = META_SCHEMA_ID;
@@ -2804,7 +3496,7 @@ function noop() {}
 
 
 /***/ }),
-/* 22 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2837,7 +3529,7 @@ Cache.prototype.clear = function Cache_clear() {
 
 
 /***/ }),
-/* 23 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2845,15 +3537,15 @@ Cache.prototype.clear = function Cache_clear() {
 
 //all requires must be explicit because browserify won't work with dynamic requires
 module.exports = {
-  '$ref': __webpack_require__(44),
-  allOf: __webpack_require__(29),
-  anyOf: __webpack_require__(30),
-  const: __webpack_require__(31),
-  contains: __webpack_require__(32),
-  dependencies: __webpack_require__(34),
-  'enum': __webpack_require__(35),
-  format: __webpack_require__(36),
-  items: __webpack_require__(37),
+  '$ref': __webpack_require__(52),
+  allOf: __webpack_require__(37),
+  anyOf: __webpack_require__(38),
+  const: __webpack_require__(39),
+  contains: __webpack_require__(40),
+  dependencies: __webpack_require__(42),
+  'enum': __webpack_require__(43),
+  format: __webpack_require__(44),
+  items: __webpack_require__(45),
   maximum: __webpack_require__(6),
   minimum: __webpack_require__(6),
   maxItems: __webpack_require__(7),
@@ -2862,20 +3554,20 @@ module.exports = {
   minLength: __webpack_require__(8),
   maxProperties: __webpack_require__(9),
   minProperties: __webpack_require__(9),
-  multipleOf: __webpack_require__(38),
-  not: __webpack_require__(39),
-  oneOf: __webpack_require__(40),
-  pattern: __webpack_require__(41),
-  properties: __webpack_require__(42),
-  propertyNames: __webpack_require__(43),
-  required: __webpack_require__(45),
-  uniqueItems: __webpack_require__(46),
+  multipleOf: __webpack_require__(46),
+  not: __webpack_require__(47),
+  oneOf: __webpack_require__(48),
+  pattern: __webpack_require__(49),
+  properties: __webpack_require__(50),
+  propertyNames: __webpack_require__(51),
+  required: __webpack_require__(53),
+  uniqueItems: __webpack_require__(54),
   validate: __webpack_require__(10)
 };
 
 
 /***/ }),
-/* 24 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2972,7 +3664,7 @@ function compileAsync(schema, meta, callback) {
 
 
 /***/ }),
-/* 25 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3114,7 +3806,7 @@ function regex(str) {
 
 
 /***/ }),
-/* 26 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3501,13 +4193,13 @@ function vars(arr, statement) {
 
 
 /***/ }),
-/* 27 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var ruleModules = __webpack_require__(23)
+var ruleModules = __webpack_require__(31)
   , toHash = __webpack_require__(0).toHash;
 
 module.exports = function rules() {
@@ -3566,7 +4258,7 @@ module.exports = function rules() {
 
 
 /***/ }),
-/* 28 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3593,7 +4285,7 @@ module.exports = function ucs2length(str) {
 
 
 /***/ }),
-/* 29 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3643,7 +4335,7 @@ module.exports = function generate_allOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 30 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3723,7 +4415,7 @@ module.exports = function generate_anyOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 31 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3785,7 +4477,7 @@ module.exports = function generate_const(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 32 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3873,7 +4565,7 @@ module.exports = function generate_contains(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 33 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4106,7 +4798,7 @@ module.exports = function generate_custom(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 34 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4280,7 +4972,7 @@ module.exports = function generate_dependencies(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 35 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4352,7 +5044,7 @@ module.exports = function generate_enum(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 36 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4508,7 +5200,7 @@ module.exports = function generate_format(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 37 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4655,7 +5347,7 @@ module.exports = function generate_items(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 38 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4738,7 +5430,7 @@ module.exports = function generate_multipleOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 39 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4828,7 +5520,7 @@ module.exports = function generate_not(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 40 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4905,7 +5597,7 @@ module.exports = function generate_oneOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 41 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4986,7 +5678,7 @@ module.exports = function generate_pattern(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 42 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5461,7 +6153,7 @@ module.exports = function generate_properties(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 43 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5549,7 +6241,7 @@ module.exports = function generate_propertyNames(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 44 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5679,7 +6371,7 @@ module.exports = function generate_ref(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 45 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5954,7 +6646,7 @@ module.exports = function generate_required(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 46 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6032,14 +6724,14 @@ module.exports = function generate_uniqueItems(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 47 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var IDENTIFIER = /^[a-z_$][a-z0-9_$-]*$/i;
-var customRuleCode = __webpack_require__(33);
+var customRuleCode = __webpack_require__(41);
 
 module.exports = {
   add: addKeyword,
@@ -6052,7 +6744,6 @@ module.exports = {
  * @this  Ajv
  * @param {String} keyword custom keyword, should be unique (including different from all standard, custom and macro keywords).
  * @param {Object} definition keyword definition object with properties `type` (type(s) which the keyword applies to), `validate` or `compile`.
- * @return {Ajv} this for method chaining
  */
 function addKeyword(keyword, definition) {
   /* jshint validthis: true */
@@ -6130,8 +6821,6 @@ function addKeyword(keyword, definition) {
   function checkDataType(dataType) {
     if (!RULES.types[dataType]) throw new Error('Unknown type ' + dataType);
   }
-
-  return this;
 }
 
 
@@ -6152,7 +6841,6 @@ function getKeyword(keyword) {
  * Remove keyword
  * @this  Ajv
  * @param {String} keyword pre-defined or custom keyword.
- * @return {Ajv} this for method chaining
  */
 function removeKeyword(keyword) {
   /* jshint validthis: true */
@@ -6169,12 +6857,11 @@ function removeKeyword(keyword) {
       }
     }
   }
-  return this;
 }
 
 
 /***/ }),
-/* 48 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6217,19 +6904,255 @@ module.exports = function (ajv) {
 
 
 /***/ }),
-/* 49 */
+/* 57 */
 /***/ (function(module, exports) {
 
-module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#","description":"Meta-schema for $data reference (JSON-schema extension proposal)","type":"object","required":["$data"],"properties":{"$data":{"type":"string","anyOf":[{"format":"relative-json-pointer"},{"format":"json-pointer"}]}},"additionalProperties":false}
+module.exports = {
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"$id": "https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#",
+	"description": "Meta-schema for $data reference (JSON-schema extension proposal)",
+	"type": "object",
+	"required": [
+		"$data"
+	],
+	"properties": {
+		"$data": {
+			"type": "string",
+			"anyOf": [
+				{
+					"format": "relative-json-pointer"
+				},
+				{
+					"format": "json-pointer"
+				}
+			]
+		}
+	},
+	"additionalProperties": false
+};
 
 /***/ }),
-/* 50 */
+/* 58 */
 /***/ (function(module, exports) {
 
-module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"http://json-schema.org/draft-06/schema#","title":"Core schema meta-schema","definitions":{"schemaArray":{"type":"array","minItems":1,"items":{"$ref":"#"}},"nonNegativeInteger":{"type":"integer","minimum":0},"nonNegativeIntegerDefault0":{"allOf":[{"$ref":"#/definitions/nonNegativeInteger"},{"default":0}]},"simpleTypes":{"enum":["array","boolean","integer","null","number","object","string"]},"stringArray":{"type":"array","items":{"type":"string"},"uniqueItems":true,"default":[]}},"type":["object","boolean"],"properties":{"$id":{"type":"string","format":"uri-reference"},"$schema":{"type":"string","format":"uri"},"$ref":{"type":"string","format":"uri-reference"},"title":{"type":"string"},"description":{"type":"string"},"default":{},"examples":{"type":"array","items":{}},"multipleOf":{"type":"number","exclusiveMinimum":0},"maximum":{"type":"number"},"exclusiveMaximum":{"type":"number"},"minimum":{"type":"number"},"exclusiveMinimum":{"type":"number"},"maxLength":{"$ref":"#/definitions/nonNegativeInteger"},"minLength":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"pattern":{"type":"string","format":"regex"},"additionalItems":{"$ref":"#"},"items":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/schemaArray"}],"default":{}},"maxItems":{"$ref":"#/definitions/nonNegativeInteger"},"minItems":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"uniqueItems":{"type":"boolean","default":false},"contains":{"$ref":"#"},"maxProperties":{"$ref":"#/definitions/nonNegativeInteger"},"minProperties":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"required":{"$ref":"#/definitions/stringArray"},"additionalProperties":{"$ref":"#"},"definitions":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"properties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"patternProperties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"dependencies":{"type":"object","additionalProperties":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/stringArray"}]}},"propertyNames":{"$ref":"#"},"const":{},"enum":{"type":"array","minItems":1,"uniqueItems":true},"type":{"anyOf":[{"$ref":"#/definitions/simpleTypes"},{"type":"array","items":{"$ref":"#/definitions/simpleTypes"},"minItems":1,"uniqueItems":true}]},"format":{"type":"string"},"allOf":{"$ref":"#/definitions/schemaArray"},"anyOf":{"$ref":"#/definitions/schemaArray"},"oneOf":{"$ref":"#/definitions/schemaArray"},"not":{"$ref":"#"}},"default":{}}
+module.exports = {
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"$id": "http://json-schema.org/draft-06/schema#",
+	"title": "Core schema meta-schema",
+	"definitions": {
+		"schemaArray": {
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"$ref": "#"
+			}
+		},
+		"nonNegativeInteger": {
+			"type": "integer",
+			"minimum": 0
+		},
+		"nonNegativeIntegerDefault0": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/nonNegativeInteger"
+				},
+				{
+					"default": 0
+				}
+			]
+		},
+		"simpleTypes": {
+			"enum": [
+				"array",
+				"boolean",
+				"integer",
+				"null",
+				"number",
+				"object",
+				"string"
+			]
+		},
+		"stringArray": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"uniqueItems": true,
+			"default": []
+		}
+	},
+	"type": [
+		"object",
+		"boolean"
+	],
+	"properties": {
+		"$id": {
+			"type": "string",
+			"format": "uri-reference"
+		},
+		"$schema": {
+			"type": "string",
+			"format": "uri"
+		},
+		"$ref": {
+			"type": "string",
+			"format": "uri-reference"
+		},
+		"title": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"default": {},
+		"examples": {
+			"type": "array",
+			"items": {}
+		},
+		"multipleOf": {
+			"type": "number",
+			"exclusiveMinimum": 0
+		},
+		"maximum": {
+			"type": "number"
+		},
+		"exclusiveMaximum": {
+			"type": "number"
+		},
+		"minimum": {
+			"type": "number"
+		},
+		"exclusiveMinimum": {
+			"type": "number"
+		},
+		"maxLength": {
+			"$ref": "#/definitions/nonNegativeInteger"
+		},
+		"minLength": {
+			"$ref": "#/definitions/nonNegativeIntegerDefault0"
+		},
+		"pattern": {
+			"type": "string",
+			"format": "regex"
+		},
+		"additionalItems": {
+			"$ref": "#"
+		},
+		"items": {
+			"anyOf": [
+				{
+					"$ref": "#"
+				},
+				{
+					"$ref": "#/definitions/schemaArray"
+				}
+			],
+			"default": {}
+		},
+		"maxItems": {
+			"$ref": "#/definitions/nonNegativeInteger"
+		},
+		"minItems": {
+			"$ref": "#/definitions/nonNegativeIntegerDefault0"
+		},
+		"uniqueItems": {
+			"type": "boolean",
+			"default": false
+		},
+		"contains": {
+			"$ref": "#"
+		},
+		"maxProperties": {
+			"$ref": "#/definitions/nonNegativeInteger"
+		},
+		"minProperties": {
+			"$ref": "#/definitions/nonNegativeIntegerDefault0"
+		},
+		"required": {
+			"$ref": "#/definitions/stringArray"
+		},
+		"additionalProperties": {
+			"$ref": "#"
+		},
+		"definitions": {
+			"type": "object",
+			"additionalProperties": {
+				"$ref": "#"
+			},
+			"default": {}
+		},
+		"properties": {
+			"type": "object",
+			"additionalProperties": {
+				"$ref": "#"
+			},
+			"default": {}
+		},
+		"patternProperties": {
+			"type": "object",
+			"additionalProperties": {
+				"$ref": "#"
+			},
+			"default": {}
+		},
+		"dependencies": {
+			"type": "object",
+			"additionalProperties": {
+				"anyOf": [
+					{
+						"$ref": "#"
+					},
+					{
+						"$ref": "#/definitions/stringArray"
+					}
+				]
+			}
+		},
+		"propertyNames": {
+			"$ref": "#"
+		},
+		"const": {},
+		"enum": {
+			"type": "array",
+			"minItems": 1,
+			"uniqueItems": true
+		},
+		"type": {
+			"anyOf": [
+				{
+					"$ref": "#/definitions/simpleTypes"
+				},
+				{
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/simpleTypes"
+					},
+					"minItems": 1,
+					"uniqueItems": true
+				}
+			]
+		},
+		"format": {
+			"type": "string"
+		},
+		"allOf": {
+			"$ref": "#/definitions/schemaArray"
+		},
+		"anyOf": {
+			"$ref": "#/definitions/schemaArray"
+		},
+		"oneOf": {
+			"$ref": "#/definitions/schemaArray"
+		},
+		"not": {
+			"$ref": "#"
+		}
+	},
+	"default": {}
+};
 
 /***/ }),
-/* 51 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6266,24 +7189,24 @@ var ElementRendererProvider = function () {
     predefined renderes
     */
     this.set('text', function (config) {
-      var divEl = document.createElement('div');
+      var divCarouselWrapper = document.createElement('div');
       var tooltip = config.tooltip ? _Utils2.default.escapeHtml(config.tooltip) : '';
-      divEl.className = 'lp-json-pollock-element-text';
+      divCarouselWrapper.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
-        divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        divCarouselWrapper.dir = 'rtl';
+        divCarouselWrapper.className += ' direction-rtl';
       }
-      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
-      return divEl;
+      divCarouselWrapper.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
+      return divCarouselWrapper;
     });
 
     this.set('button', function (config) {
-      var divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-element-button';
+      var divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-element-button';
 
       if (config.rtl) {
-        divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        divCarouselWrapper.dir = 'rtl';
+        divCarouselWrapper.className += ' direction-rtl';
       }
 
       var btnEl = document.createElement('button');
@@ -6301,18 +7224,18 @@ var ElementRendererProvider = function () {
         btnEl.onclick = _this.wrapAction(config.click);
       }
 
-      divEl.appendChild(btnEl);
+      divCarouselWrapper.appendChild(btnEl);
 
-      return divEl;
+      return divCarouselWrapper;
     });
 
     this.set('image', function (config) {
-      var divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-element-image loading';
+      var divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-element-image loading';
 
       if (config.rtl) {
-        divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        divCarouselWrapper.dir = 'rtl';
+        divCarouselWrapper.className += ' direction-rtl';
       }
 
       var imgEl = document.createElement('img');
@@ -6327,70 +7250,160 @@ var ElementRendererProvider = function () {
       }
 
       if (config.caption) {
-        divEl.innerHTML += '<div>' + config.caption + '</div>';
+        divCarouselWrapper.innerHTML += '<div>' + config.caption + '</div>';
       }
 
       imgEl.onload = function () {
-        divEl.className = 'lp-json-pollock-element-image';
+        divCarouselWrapper.className = 'lp-json-pollock-element-image';
       };
 
       imgEl.onerror = function () {
-        divEl.className = 'lp-json-pollock-element-image error';
-        divEl.title = 'fail to load image';
+        divCarouselWrapper.className = 'lp-json-pollock-element-image error';
+        divCarouselWrapper.title = 'fail to load image';
         imgEl.style.display = 'none';
       };
 
       if (config.click && config.click.actions) {
         imgEl.onclick = _this.wrapAction(config.click);
       }
-      divEl.appendChild(imgEl);
+      divCarouselWrapper.appendChild(imgEl);
 
-      return divEl;
+      return divCarouselWrapper;
     });
 
     this.set('map', function (config) {
-      var divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-element-map';
+      var divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-element-map';
 
       if (config.tooltip) {
-        divEl.title = config.tooltip;
-        divEl.setAttribute('aria-label', config.tooltip);
+        divCarouselWrapper.title = config.tooltip;
+        divCarouselWrapper.setAttribute('aria-label', config.tooltip);
       }
 
       if (config.style) {
-        divEl.style.cssText = _Utils2.default.styleToCss(config.style);
+        divCarouselWrapper.style.cssText = _Utils2.default.styleToCss(config.style);
       }
 
       if (config.click && config.click.actions) {
-        divEl.onclick = _this.wrapAction(config.click);
+        divCarouselWrapper.onclick = _this.wrapAction(config.click);
       } else {
         // navigate to the location
-        divEl.onclick = function () {
+        divCarouselWrapper.onclick = function () {
           window.open('https://www.google.com/maps/search/?api=1&query=' + config.lo + ',' + config.la, '_blank');
         };
       }
-      return divEl;
+      return divCarouselWrapper;
     });
 
     this.set('vertical', function () {
-      var divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
-      return divEl;
+      var divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      return divCarouselWrapper;
+    });
+
+    this.set('carousel', function (config) {
+      var CARD_DEFAULT_WIDTH = 180;
+      var PARSE_DECIMAL = 10;
+      var BORDER_WIDTH = 2;
+      var arrowRight = document.createElement('div');
+      var arrowLeft = document.createElement('div');
+
+      var divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.afterRender = function () {
+        if (divCarouselWrapper.childNodes.length) {
+          for (var itemCounter = 0; itemCounter < divCarouselWrapper.childNodes.length; itemCounter += 1) {
+            var node = divCarouselWrapper.childNodes[itemCounter];
+            // if (itemCounter === 0) {
+            //   (node: any).style['margin-right'] = `${config.padding / 2}px`;
+            // } else if (itemCounter === (divCarouselWrapper.childNodes.length - 1)) {
+            //   (node: any).style['margin-left'] = `${config.padding / 2}px`;
+            // } else {
+            // }
+            node.style.margin = '0 ' + config.padding / 2 + 'px';
+          }
+
+          arrowRight.className = 'layout-carousel-arrow';
+          arrowLeft.className = 'layout-carousel-arrow left';
+
+          /* create carousel wrapper */
+          var carousel = divCarouselWrapper.cloneNode(true);
+          while (divCarouselWrapper.hasChildNodes()) {
+            divCarouselWrapper.removeChild(divCarouselWrapper.lastChild);
+          }
+
+          /* calculate carousel static width */
+          var middleItemsWidth = 0;
+          var cornerItemsWidth = 2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH) + config.padding;
+          if (carousel.childNodes.length > 2) {
+            middleItemsWidth = (carousel.childNodes.length - 2) * (BORDER_WIDTH + CARD_DEFAULT_WIDTH + config.padding);
+          }
+          var totalWidth = cornerItemsWidth + middleItemsWidth;
+          carousel.style.width = totalWidth + 'px';
+          carousel.className = 'lp-json-pollock-layout-carousel';
+          divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
+
+          divCarouselWrapper.appendChild(carousel);
+          divCarouselWrapper.appendChild(arrowRight);
+          divCarouselWrapper.appendChild(arrowLeft);
+          /* TODO: find other trigger. */
+          setTimeout(function () {
+            /* check if the viewport width is bigger then the carousel div
+             * => remove the arrows */
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth) {
+              arrowLeft.style.visibility = 'hidden';
+              arrowRight.style.visibility = 'hidden';
+            }
+          }, 0);
+
+          arrowRight.onclick = function () {
+            var currentPos = 0;
+            if (carousel.style.left !== '') {
+              currentPos = parseInt(carousel.style.left, PARSE_DECIMAL);
+            }
+            /* when click on the right arrow the carousel div will shift to the left */
+            var nextLeft = currentPos - CARD_DEFAULT_WIDTH - config.padding - BORDER_WIDTH;
+            arrowLeft.style.visibility = 'visible';
+            arrowRight.style.visibility = 'visible';
+            /* check if the the viewport width is bigger then the carousel width + the next "Left"
+             * value => shift the carousel div to its rightest point */
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
+              nextLeft = -(carousel.offsetWidth + config.padding - divCarouselWrapper.offsetWidth);
+              arrowRight.style.visibility = 'hidden';
+            }
+            carousel.style.left = nextLeft + 'px';
+          };
+          arrowLeft.onclick = function () {
+            var currentPos = 0;
+            if (carousel.style.left !== '') {
+              currentPos = parseInt(carousel.style.left, PARSE_DECIMAL);
+            }
+            var nextLeft = currentPos + CARD_DEFAULT_WIDTH + config.padding + BORDER_WIDTH;
+            arrowRight.style.visibility = 'visible';
+            if (nextLeft >= 0) {
+              nextLeft = 0;
+              arrowLeft.style.visibility = 'hidden';
+              arrowRight.style.visibility = 'visible';
+            }
+            carousel.style.left = nextLeft + 'px';
+          };
+        }
+      };
+      return divCarouselWrapper;
     });
 
     this.set('horizontal', function () {
-      var divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
-      divEl.afterRender = function () {
-        if (divEl.childNodes.length) {
-          var percentage = 100 / divEl.childNodes.length;
-          Array.prototype.forEach.call(divEl.childNodes, function (node) {
+      var divCarouselWrapper = document.createElement('div');
+      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      divCarouselWrapper.afterRender = function () {
+        if (divCarouselWrapper.childNodes.length) {
+          var percentage = 100 / divCarouselWrapper.childNodes.length;
+          Array.prototype.forEach.call(divCarouselWrapper.childNodes, function (node) {
             var n = node;
             n.style.width = percentage + '%';
           });
         }
       };
-      return divEl;
+      return divCarouselWrapper;
     });
   }
 
@@ -6431,7 +7444,7 @@ var ElementRendererProvider = function () {
 exports.default = ElementRendererProvider;
 
 /***/ }),
-/* 52 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6519,7 +7532,7 @@ function escapeJsonPtr(str) {
 
 
 /***/ }),
-/* 53 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -7055,10 +8068,10 @@ function escapeJsonPtr(str) {
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(61)(module), __webpack_require__(60)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(69)(module), __webpack_require__(68)))
 
 /***/ }),
-/* 54 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7149,7 +8162,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 55 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7241,18 +8254,18 @@ var objectKeys = Object.keys || function (obj) {
 
 
 /***/ }),
-/* 56 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(54);
-exports.encode = exports.stringify = __webpack_require__(55);
+exports.decode = exports.parse = __webpack_require__(62);
+exports.encode = exports.stringify = __webpack_require__(63);
 
 
 /***/ }),
-/* 57 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7294,7 +8307,7 @@ exports.unregisterAllActions = unregisterAllActions;
 exports.version = version;
 
 /***/ }),
-/* 58 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7321,8 +8334,8 @@ exports.version = version;
 
 
 
-var punycode = __webpack_require__(53);
-var util = __webpack_require__(59);
+var punycode = __webpack_require__(61);
+var util = __webpack_require__(67);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -7397,7 +8410,7 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
       'gopher:': true,
       'file:': true
     },
-    querystring = __webpack_require__(56);
+    querystring = __webpack_require__(64);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
   if (url && util.isObject(url) && url instanceof Url) return url;
@@ -8033,7 +9046,7 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 59 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8056,7 +9069,7 @@ module.exports = {
 
 
 /***/ }),
-/* 60 */
+/* 68 */
 /***/ (function(module, exports) {
 
 var g;
@@ -8083,7 +9096,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 61 */
+/* 69 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
