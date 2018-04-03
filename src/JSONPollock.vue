@@ -1,26 +1,29 @@
 <template>
   <div ref='jsonpollock' class='jsonpollock'>
-    <div class='dom_parent'>
+    <div class='dom_parent' ref="domParent">
       <div class="json_pollock_v">v.{{version}}</div>
-      <div class='dom_container' ref='dom_container'/>
+      <div class='dom_container' ref='dom_container' v-bind:style="styleObject"/>
     </div>
   </div>
 </template>
 
 <script>
 import * as JsonPollock from 'json-pollock/dist/json-pollock.bundle.min';
+import { get } from 'lodash';
 
 export default {
   name: 'JSONPollock',
   data() {
     return {
-      version: 'ddd',
+      version: '',
+      styleObject: {},
     };
   },
   components: {
   },
   mounted() {
     const updateDom = (json) => {
+      this.styleObject['max-width'] = `${get(this.$refs.domParent, 'offsetWidth', 550) - 50}px`;
       this.version = JsonPollock.version;
       let dom = null;
       try {
