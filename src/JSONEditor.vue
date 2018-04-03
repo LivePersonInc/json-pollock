@@ -8,10 +8,18 @@
 import JSONEditor from 'jsoneditor';
 import Ajv from 'ajv';
 
-import elementSchema from 'json-pollock/js/schema/element.json';
 import basicSchema from 'json-pollock/js/schema/basic.json';
 import actionSchema from 'json-pollock/js/schema/action.json';
 import styleSchema from 'json-pollock/js/schema/style.json';
+import buttonSchema from 'json-pollock/js/schema/button.json';
+import cardSchema from 'json-pollock/js/schema/card.json';
+import carouselSchema from 'json-pollock/js/schema/carousel.json';
+import imageSchema from 'json-pollock/js/schema/image.json';
+import linkPreviewSchema from 'json-pollock/js/schema/linkPreview.json';
+import mapSchema from 'json-pollock/js/schema/map.json';
+import richContentSchema from 'json-pollock/js/schema/rich_content.json';
+import templateSchema from 'json-pollock/js/schema/template.json';
+import textSchema from 'json-pollock/js/schema/text.json';
 
 export default {
   name: 'JSONEditor',
@@ -24,12 +32,20 @@ export default {
       mode: 'code',
       modes: ['code', 'form', 'tree'],
       ajv: Ajv({ allErrors: false, format: 'full', unknownFormats: 'ignore', verbose: true, logger: false }),
-      schema: elementSchema,
+      schema: richContentSchema,
       schemaRefs: {
         'action.json': actionSchema,
         'basic.json': basicSchema,
         'style.json': styleSchema,
-        'element.json': elementSchema,
+        'button.json': buttonSchema,
+        'card.json': cardSchema,
+        'carousel.json': carouselSchema,
+        'image.json': imageSchema,
+        'linkPreview.json': linkPreviewSchema,
+        'map.json': mapSchema,
+        'rich_content.json': richContentSchema,
+        'template.json': templateSchema,
+        'text.json': textSchema,
       },
       onChange: () => {
         try {

@@ -26,6 +26,153 @@ const store = new Vuex.Store({
           },
         },
         {
+          type: 'carousel',
+          padding: 0,
+          elements: [
+            {
+              type: 'vertical',
+              elements: [
+                {
+                  type: 'text',
+                  text: 'SIM only plan',
+                  tooltip: 'SIM only plan',
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: '#000000',
+                    size: 'large',
+                  },
+                },
+                {
+                  type: 'text',
+                  text: 'Twelve month plan BYO mobile',
+                  tooltip: 'Twelve month plan BYO mobile',
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: '#000000',
+                  },
+                },
+                {
+                  type: 'button',
+                  tooltip: 'Choose a plan',
+                  title: 'Choose a plan',
+                  click: {
+                    metadata: [
+                      {
+                        type: 'ExternalId',
+                        id: 'ANOTHER_ONE_1',
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: 'publishText',
+                        text: 'SIM only plan',
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              type: 'vertical',
+              elements: [
+                {
+                  type: 'text',
+                  text: 'Swap plan',
+                  tooltip: 'Swap plan',
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: '#000000',
+                    size: 'large',
+                  },
+                },
+                {
+                  type: 'text',
+                  text: 'Two year plan leasing a mobile',
+                  tooltip: 'Two year plan leasing a mobile',
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: '#000000',
+                  },
+                },
+                {
+                  type: 'button',
+                  tooltip: 'Choose a plan',
+                  title: 'Choose a plan',
+                  click: {
+                    metadata: [
+                      {
+                        type: 'ExternalId',
+                        id: 'ANOTHER_ONE_2',
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: 'publishText',
+                        text: 'Two year plan leasing a mobile',
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              type: 'vertical',
+              elements: [
+                {
+                  type: 'text',
+                  text: 'Mobiles on a plan',
+                  tooltip: 'Mobiles on a plan',
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: '#000000',
+                    size: 'large',
+                  },
+                },
+                {
+                  type: 'text',
+                  text: 'Two year plan with a mobile',
+                  tooltip: 'Two year plan with a mobile',
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: '#000000',
+                  },
+                },
+                {
+                  type: 'button',
+                  tooltip: 'Choose a plan',
+                  title: 'Choose a plan',
+                  click: {
+                    metadata: [
+                      {
+                        type: 'ExternalId',
+                        id: 'ANOTHER_ONE_3',
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: 'publishText',
+                        text: 'Mobiles on a plan',
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
           type: 'text',
           text: 'product name (Title)',
           tooltip: 'text tooltip',
