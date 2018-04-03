@@ -1,6 +1,7 @@
 <template>
   <div ref='jsonpollock' class='jsonpollock'>
     <div class='dom_parent'>
+      <div class="json_pollock_v">v.{{version}}</div>
       <div class='dom_container' ref='dom_container'/>
     </div>
   </div>
@@ -11,10 +12,16 @@ import * as JsonPollock from 'json-pollock/dist/json-pollock.bundle.min';
 
 export default {
   name: 'JSONPollock',
+  data() {
+    return {
+      version: 'ddd',
+    };
+  },
   components: {
   },
   mounted() {
     const updateDom = (json) => {
+      this.version = JsonPollock.version;
       let dom = null;
       try {
         dom = JsonPollock.render(json);
@@ -41,6 +48,11 @@ export default {
 
   .dom_parent {
     position: relative;
+
+    .json_pollock_v {
+      margin-top: 10px;
+      text-align: center;
+    }
 
     .dom_container{
       position: absolute;
