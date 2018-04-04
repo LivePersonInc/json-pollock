@@ -11,218 +11,6 @@
   <script>
     window.onload = function () {
 
-       let single = {
-        "type": "image",
-        "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
-        "tooltip": "image tooltip",
-        "click": {
-          "metadata": [{
-            "bla1": 1,
-            "bla2": 2
-          }],
-          "actions": [{
-            "type": "navigate",
-            "name": "Navigate to store via image",
-            "lo": 23423423,
-            "la": 2423423423
-          }]
-        }
-      }
-        
-       let horizontal = {
-        "type": "horizontal",
-        "elements": [
-          {
-            "type": "text",
-            "text": "product name (Title)",
-            "tooltip": "text tooltip",
-            "style": {
-              "bold": true,
-              "size": "large"
-            }
-          },{
-          "type": "image",
-          "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
-          "tooltip": "image tooltip",
-          "click": {
-            "metadata": [{
-              "bla1": 1,
-              "bla2": 2
-            }],
-            "actions": [{
-              "type": "navigate",
-              "name": "Navigate to store via image",
-              "lo": 23423423,
-              "la": 2423423423
-            }]
-          }
-        },{
-            "type": "map",
-            "lo": 64.128597,
-            "la": -21.896110,
-            "tooltip": "map tooltip"
-        },{
-          "type": "text",
-          "text": "product category (type)",
-          "tooltip": "text tooltip"
-        }
-        ]
-      }
-
-       let card = {
-        "type": "vertical",
-        "elements": [
-          {
-            "type": "map",
-            "lo": 64.128597,
-            "la": -21.896110,
-            "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq ="
-          },
-          {
-          "type": "image",
-          "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
-          "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =",
-          "click": {
-            "metadata": [{
-              "bla1": 1,
-              "bla2": 2
-            }],
-            "actions": [{
-              "type": "navigate",
-              "name": "Navigate to store via image",
-              "lo": 23423423,
-              "la": 2423423423
-            }]
-          }
-        },        
-        {
-          "type": "text",
-          "text": "product name (Title)",
-          "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =",
-          "style": {
-            "bold": true,
-            "size": "large"
-          }
-        }
-        ,
-          {
-          "type": "text",
-          "text": "long long  long long long long long long long long long long long long long long long product category (type)",
-          "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq ="
-        }
-        , {
-          "type": "text",
-          "text": "$155.99",
-          "tooltip": "text tooltip",
-          "rtl": true
-        },
-          {
-          "type": "button",
-          "title": "Add to cart",
-          "style": {
-            "bold": true,
-            "italic": true,
-            "color": "red",
-            "background-color": "blue",
-            "size": 'large'
-          },
-          "click": {
-            "metadata": [{
-              "event": "publishing text"
-            }],
-            "actions" : [{
-              "type": "publishText",
-              "text": "consumer text 2"
-            }]
-          }
-        }
-        ,{
-          "type": "button",
-          "title": "Navigate to store",
-          "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =",
-          "click" : {
-            "actions": [{
-              "type": "navigate",
-              "name": "Navigate to store",
-              "lo": 23423423,
-              "la": 2423423423
-            }]
-          }
-        },
-        {
-          "type": "horizontal",
-          "elements": [
-            {
-            "type": "button",
-              "title": "Buyyyyyyyy",
-              "tooltip": "store is the thing",
-              "click" : {
-                "actions": [{
-                  "type": "navigate",
-                  "name": "Navigate to store",
-                  "lo": 23423423,
-                  "la": 2423423423
-                }]
-              }
-          },{
-              "type": "button",
-              "title": "Buy",
-              "tooltip": "store is the thing",
-              "click" : {
-                "actions": [{
-                  "type": "navigate",
-                  "name": "Navigate to store",
-                  "lo": 23423423,
-                  "la": 2423423423
-                }]
-              }
-            },
-            {
-              "type": "button",
-              "title": "Find similar",
-              "tooltip": "store is the thing",
-              "click" : {
-                "actions": [{
-                  "type": "navigate",
-                  "name": "Navigate to store",
-                  "lo": 23423423,
-                  "la": 2423423423
-                }]
-              }
-            },
-            {
-              "type": "button",
-              "title": "Find similar",
-              "tooltip": "store is the thing",
-              "click" : {
-                "actions": [{
-                  "type": "navigate",
-                  "name": "Navigate to store",
-                  "lo": 23423423,
-                  "la": 2423423423
-                }]
-              }
-            }
-          ]
-        }
-        ,{
-          "type": "button",
-          "title": "Open web page",
-          "click": {
-            "metadata": [{
-              "bla1": 1,
-              "bla2": 2
-            }],
-            "actions": [{
-              "type": "link",
-              "uri": "http://www.google.com",
-              "name": "open browser"
-            }]
-          }
-        }
-        ]
-      }
-
       var carousel = {
             "type": "carousel",
             "padding": 10,
@@ -371,9 +159,6 @@
         ]
         };
 
-
-        // lpJsonPollock.init({maxAllowedElements: 5});
-
       JsonPollock.registerAction('navigate', (data) => {
         alert(JSON.stringify(data));
       });
@@ -386,16 +171,14 @@
         alert(JSON.stringify(data));
       });
 
-      // const el = JsonPollock.render(JSON.stringify(conf));
-      const el = JsonPollock.render(JSON.stringify(card));
-      // const el = JsonPollock.render(JSON.stringify(horizontal));
+      const el = JsonPollock.render(JSON.stringify(carousel));
       document.getElementById('content').appendChild(el);
     }
   </script>
 </head>
 
 <body>
-  <div id='content'>
+  <div id='content' style="max-width:300px;">
   </div>
 </body>
 

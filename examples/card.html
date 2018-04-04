@@ -1,0 +1,191 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>SC Test</title>
+    <link rel="stylesheet" href="/dist/json-pollock.min.css">
+  <script src="/dist/json-pollock.js"></script>
+  <script>
+    window.onload = function () {
+
+      let card = {
+        "type": "vertical",
+        "elements": [
+          {
+            "type": "map",
+            "lo": 64.128597,
+            "la": -21.896110,
+            "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq ="
+          },
+          {
+          "type": "image",
+          "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
+          "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =",
+          "click": {
+            "metadata": [{
+              "bla1": 1,
+              "bla2": 2
+            }],
+            "actions": [{
+              "type": "navigate",
+              "name": "Navigate to store via image",
+              "lo": 23423423,
+              "la": 2423423423
+            }]
+          }
+        },        
+        {
+          "type": "text",
+          "text": "product name (Title)",
+          "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =",
+          "style": {
+            "bold": true,
+            "size": "large"
+          }
+        }
+        ,
+          {
+          "type": "text",
+          "text": "long long  long long long long long long long long long long long long long long long product category (type)",
+          "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq ="
+        }
+        , {
+          "type": "text",
+          "text": "$155.99",
+          "tooltip": "text tooltip",
+          "rtl": true
+        },
+          {
+          "type": "button",
+          "title": "Add to cart",
+          "style": {
+            "bold": true,
+            "italic": true,
+            "color": "red",
+            "background-color": "blue",
+            "size": 'large'
+          },
+          "click": {
+            "metadata": [{
+              "event": "publishing text"
+            }],
+            "actions" : [{
+              "type": "publishText",
+              "text": "consumer text 2"
+            }]
+          }
+        }
+        ,{
+          "type": "button",
+          "title": "Navigate to store",
+          "tooltip": "and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =",
+          "click" : {
+            "actions": [{
+              "type": "navigate",
+              "name": "Navigate to store",
+              "lo": 23423423,
+              "la": 2423423423
+            }]
+          }
+        },
+        {
+          "type": "horizontal",
+          "elements": [
+            {
+            "type": "button",
+              "title": "Buyyyyyyyy",
+              "tooltip": "store is the thing",
+              "click" : {
+                "actions": [{
+                  "type": "navigate",
+                  "name": "Navigate to store",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }]
+              }
+          },{
+              "type": "button",
+              "title": "Buy",
+              "tooltip": "store is the thing",
+              "click" : {
+                "actions": [{
+                  "type": "navigate",
+                  "name": "Navigate to store",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }]
+              }
+            },
+            {
+              "type": "button",
+              "title": "Find similar",
+              "tooltip": "store is the thing",
+              "click" : {
+                "actions": [{
+                  "type": "navigate",
+                  "name": "Navigate to store",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }]
+              }
+            },
+            {
+              "type": "button",
+              "title": "Find similar",
+              "tooltip": "store is the thing",
+              "click" : {
+                "actions": [{
+                  "type": "navigate",
+                  "name": "Navigate to store",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }]
+              }
+            }
+          ]
+        }
+        ,{
+          "type": "button",
+          "title": "Open web page",
+          "click": {
+            "metadata": [{
+              "bla1": 1,
+              "bla2": 2
+            }],
+            "actions": [{
+              "type": "link",
+              "uri": "http://www.google.com",
+              "name": "open browser"
+            }]
+          }
+        }
+        ]
+      }
+
+      JsonPollock.registerAction('navigate', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('link', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('publishText', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      const el = JsonPollock.render(JSON.stringify(card));
+      document.getElementById('content').appendChild(el);
+    }
+  </script>
+</head>
+
+<body>
+  <div id='content'>
+  </div>
+</body>
+
+</html>
