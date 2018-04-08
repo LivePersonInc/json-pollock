@@ -349,7 +349,7 @@ describe('json-pollock tests', function () {
 
   });
 
-  xdescribe('render carousel', function(){
+  describe('render carousel', function(){
 
     var conf = {
       "type": "carousel",
