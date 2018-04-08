@@ -2118,7 +2118,6 @@ var JsonPollockError = function (_Error) {
     var _this = _possibleConstructorReturn(this, (JsonPollockError.__proto__ || Object.getPrototypeOf(JsonPollockError)).call(this, message));
 
     _this.errors = errors;
-    // console.log(JSON.stringify(errors));
     return _this;
   }
 
@@ -2176,7 +2175,7 @@ var LPJsonPollock = function () {
       var elementRenderer = this.provider.get(elJson.type);
       var element = void 0;
       if (elementRenderer) {
-        element = elementRenderer(elJson, parent);
+        element = elementRenderer(elJson);
         if (element) {
           parent.appendChild(element);
           if (Array.isArray(elJson.elements)) {
@@ -2259,684 +2258,73 @@ exports.default = LPJsonPollock;
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"title": "Publish Text",
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"publishText"
-					],
-					"default": "publishText",
-					"readonly": true
-				},
-				"text": {
-					"type": "string",
-					"maxLength": 256
-				}
-			},
-			"required": [
-				"type",
-				"text"
-			]
-		},
-		{
-			"title": "navigate",
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"navigate"
-					],
-					"default": "navigate",
-					"readonly": true
-				},
-				"la": {
-					"type": "number"
-				},
-				"lo": {
-					"type": "number"
-				},
-				"name": {
-					"type": "string",
-					"maxLength": 256
-				}
-			},
-			"required": [
-				"type",
-				"la",
-				"lo"
-			]
-		},
-		{
-			"title": "link",
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"link"
-					],
-					"default": "link",
-					"readonly": true
-				},
-				"uri": {
-					"type": "string",
-					"format": "uri",
-					"maxLength": 1024
-				},
-				"name": {
-					"type": "string",
-					"maxLength": 256
-				}
-			},
-			"required": [
-				"type",
-				"uri"
-			]
-		}
-	]
-};
+module.exports = {"oneOf":[{"title":"Publish Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["publishText"],"default":"publishText","readonly":true},"text":{"type":"string","maxLength":256}},"required":["type","text"]},{"title":"navigate","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["navigate"],"default":"navigate","readonly":true},"la":{"type":"number"},"lo":{"type":"number"},"name":{"type":"string","maxLength":256}},"required":["type","la","lo"]},{"title":"link","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["link"],"default":"link","readonly":true},"uri":{"type":"string","format":"uri","maxLength":1024},"name":{"type":"string","maxLength":256}},"required":["type","uri"]}]}
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"$ref": "text.json"
-		},
-		{
-			"$ref": "image.json"
-		},
-		{
-			"$ref": "button.json"
-		},
-		{
-			"$ref": "map.json"
-		},
-		{
-			"$ref": "linkPreview.json"
-		},
-		{
-			"$ref": "template.json"
-		}
-	]
-};
+module.exports = {"oneOf":[{"$ref":"text.json"},{"$ref":"image.json"},{"$ref":"button.json"},{"$ref":"map.json"},{"$ref":"linkPreview.json"},{"$ref":"template.json"}]}
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"additionalProperties": false,
-	"title": "button",
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"button"
-			],
-			"default": "button",
-			"readonly": true
-		},
-		"title": {
-			"type": "string",
-			"maxLength": 128
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"title"
-	]
-};
+module.exports = {"type":"object","additionalProperties":false,"title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["title"]}
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"title": "basic",
-			"$ref": "basic.json"
-		},
-		{
-			"type": "object",
-			"additionalProperties": false,
-			"title": "horizontal",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"horizontal"
-					],
-					"default": "horizontal",
-					"readonly": true
-				},
-				"tag": {
-					"type": "string",
-					"maxLength": 64
-				},
-				"tagVersion": {
-					"type": "string",
-					"maxLength": 64
-				},
-				"elements": {
-					"type": "array",
-					"maxItems": 256,
-					"items": {
-						"$ref": "rich_content.json"
-					}
-				}
-			},
-			"required": [
-				"type",
-				"elements"
-			]
-		},
-		{
-			"type": "object",
-			"additionalProperties": false,
-			"title": "vertical",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"vertical"
-					],
-					"default": "vertical",
-					"readonly": true
-				},
-				"tag": {
-					"type": "string",
-					"maxLength": 64
-				},
-				"tagVersion": {
-					"type": "string",
-					"maxLength": 64
-				},
-				"elements": {
-					"type": "array",
-					"maxItems": 256,
-					"items": {
-						"$ref": "rich_content.json"
-					}
-				}
-			},
-			"required": [
-				"type",
-				"elements"
-			]
-		}
-	]
-};
+module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","additionalProperties":false,"title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}}},"required":["type","elements"]},{"type":"object","additionalProperties":false,"title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}}},"required":["type","elements"]}]}
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"additionalProperties": false,
-	"title": "carousel",
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"carousel"
-			],
-			"default": "carousel",
-			"readonly": true
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"padding": {
-			"type": "number",
-			"default": 0,
-			"minimum": 0,
-			"maximum": 10
-		},
-		"elements": {
-			"type": "array",
-			"minItems": 2,
-			"maxItems": 10,
-			"items": {
-				"$ref": "card.json"
-			}
-		}
-	},
-	"required": [
-		"type",
-		"elements"
-	]
-};
+module.exports = {"type":"object","additionalProperties":false,"title":"carousel","properties":{"type":{"type":"string","enum":["carousel"],"default":"carousel","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":10,"items":{"$ref":"card.json"}}},"required":["type","elements"]}
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"title": "image",
-	"additionalProperties": false,
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"image"
-			],
-			"default": "image",
-			"readonly": true
-		},
-		"caption": {
-			"type": "string",
-			"maxLength": 128
-		},
-		"url": {
-			"type": "string",
-			"maxLength": 2048
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"url"
-	]
-};
+module.exports = {"type":"object","title":"image","additionalProperties":false,"properties":{"type":{"type":"string","enum":["image"],"default":"image","readonly":true},"caption":{"type":"string","maxLength":128},"url":{"type":"string","maxLength":2048},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["url"]}
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"title": "linkPreview",
-	"additionalProperties": false,
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"linkPreview"
-			],
-			"default": "linkPreview",
-			"readonly": true
-		},
-		"url": {
-			"type": "string",
-			"maxLength": 2048
-		},
-		"title": {
-			"type": "string",
-			"maxLength": 128
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"url"
-	]
-};
+module.exports = {"type":"object","title":"linkPreview","additionalProperties":false,"properties":{"type":{"type":"string","enum":["linkPreview"],"default":"linkPreview","readonly":true},"url":{"type":"string","maxLength":2048},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["url"]}
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"title": "map",
-	"additionalProperties": false,
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"map"
-			],
-			"default": "map",
-			"readonly": true
-		},
-		"lo": {
-			"type": "number"
-		},
-		"la": {
-			"type": "number"
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"lo",
-		"la"
-	]
-};
+module.exports = {"type":"object","title":"map","additionalProperties":false,"properties":{"type":{"type":"string","enum":["map"],"default":"map","readonly":true},"lo":{"type":"number"},"la":{"type":"number"},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["lo","la"]}
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"title": "card",
-			"$ref": "card.json"
-		},
-		{
-			"title": "carousel",
-			"$ref": "carousel.json"
-		}
-	]
-};
+module.exports = {"oneOf":[{"title":"card","$ref":"card.json"},{"title":"carousel","$ref":"carousel.json"}]}
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"additionalProperties": false,
-	"properties": {
-		"bold": {
-			"type": "boolean"
-		},
-		"italic": {
-			"type": "boolean"
-		},
-		"color": {
-			"type": "string",
-			"format": "color",
-			"maxLength": 256
-		},
-		"size": {
-			"type": "string",
-			"enum": [
-				"small",
-				"medium",
-				"large"
-			]
-		}
-	}
-};
+module.exports = {"type":"object","additionalProperties":false,"properties":{"background-color":{"type":"string","format":"color","maxLength":256},"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]}}}
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"title": "template",
-	"additionalProperties": false,
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"template"
-			],
-			"default": "template",
-			"readonly": true
-		},
-		"templateType": {
-			"type": "string",
-			"enum": [
-				"quickReply"
-			],
-			"default": "quickReply",
-			"readonly": true
-		},
-		"title": {
-			"type": "string",
-			"maxLength": 5000
-		},
-		"resp": {
-			"type": "array",
-			"maxItems": 32,
-			"minItems": 1,
-			"items": {
-				"type": "string",
-				"maxLength": 128
-			}
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"templateType",
-		"title",
-		"resp"
-	]
-};
+module.exports = {"type":"object","title":"template","additionalProperties":false,"properties":{"type":{"type":"string","enum":["template"],"default":"template","readonly":true},"templateType":{"type":"string","enum":["quickReply"],"default":"quickReply","readonly":true},"title":{"type":"string","maxLength":5000},"resp":{"type":"array","maxItems":32,"minItems":1,"items":{"type":"string","maxLength":128}},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["templateType","title","resp"]}
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"additionalProperties": false,
-	"title": "text",
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"text"
-			],
-			"default": "text",
-			"readonly": true
-		},
-		"text": {
-			"type": "string",
-			"maxLength": 5000
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"text"
-	]
-};
+module.exports = {"type":"object","additionalProperties":false,"title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["text"]}
 
 /***/ }),
 /* 28 */
@@ -3127,11 +2515,12 @@ function compile(schema, _meta) {
  * @param {String} key Optional schema key. Can be passed to `validate` method instead of schema object or id/ref. One schema per instance can have empty `id` and `key`.
  * @param {Boolean} _skipValidation true to skip schema validation. Used internally, option validateSchema should be used instead.
  * @param {Boolean} _meta true if schema is a meta-schema. Used internally, addMetaSchema should be used instead.
+ * @return {Ajv} this for method chaining
  */
 function addSchema(schema, key, _skipValidation, _meta) {
   if (Array.isArray(schema)){
     for (var i=0; i<schema.length; i++) this.addSchema(schema[i], undefined, _skipValidation, _meta);
-    return;
+    return this;
   }
   var id = this._getId(schema);
   if (id !== undefined && typeof id != 'string')
@@ -3139,6 +2528,7 @@ function addSchema(schema, key, _skipValidation, _meta) {
   key = resolve.normalizeId(key || id);
   checkUnique(this, key);
   this._schemas[key] = this._addSchema(schema, _skipValidation, _meta, true);
+  return this;
 }
 
 
@@ -3149,9 +2539,11 @@ function addSchema(schema, key, _skipValidation, _meta) {
  * @param {Object} schema schema object
  * @param {String} key optional schema key
  * @param {Boolean} skipValidation true to skip schema validation, can be used to override validateSchema option for meta-schema
+ * @return {Ajv} this for method chaining
  */
 function addMetaSchema(schema, key, skipValidation) {
   this.addSchema(schema, key, skipValidation, true);
+  return this;
 }
 
 
@@ -3248,25 +2640,26 @@ function _getSchemaObj(self, keyRef) {
  * Even if schema is referenced by other schemas it still can be removed as other schemas have local references.
  * @this   Ajv
  * @param  {String|Object|RegExp} schemaKeyRef key, ref, pattern to match key/ref or schema object
+ * @return {Ajv} this for method chaining
  */
 function removeSchema(schemaKeyRef) {
   if (schemaKeyRef instanceof RegExp) {
     _removeAllSchemas(this, this._schemas, schemaKeyRef);
     _removeAllSchemas(this, this._refs, schemaKeyRef);
-    return;
+    return this;
   }
   switch (typeof schemaKeyRef) {
     case 'undefined':
       _removeAllSchemas(this, this._schemas);
       _removeAllSchemas(this, this._refs);
       this._cache.clear();
-      return;
+      return this;
     case 'string':
       var schemaObj = _getSchemaObj(this, schemaKeyRef);
       if (schemaObj) this._cache.del(schemaObj.cacheKey);
       delete this._schemas[schemaKeyRef];
       delete this._refs[schemaKeyRef];
-      return;
+      return this;
     case 'object':
       var serialize = this._opts.serialize;
       var cacheKey = serialize ? serialize(schemaKeyRef) : schemaKeyRef;
@@ -3278,6 +2671,7 @@ function removeSchema(schemaKeyRef) {
         delete this._refs[id];
       }
   }
+  return this;
 }
 
 
@@ -3428,10 +2822,12 @@ function errorsText(errors, options) {
  * @this   Ajv
  * @param {String} name format name
  * @param {String|RegExp|Function} format string is converted to RegExp; function should return boolean (true when valid)
+ * @return {Ajv} this for method chaining
  */
 function addFormat(name, format) {
   if (typeof format == 'string') format = new RegExp(format);
   this._formats[name] = format;
+  return this;
 }
 
 
@@ -6744,6 +6140,7 @@ module.exports = {
  * @this  Ajv
  * @param {String} keyword custom keyword, should be unique (including different from all standard, custom and macro keywords).
  * @param {Object} definition keyword definition object with properties `type` (type(s) which the keyword applies to), `validate` or `compile`.
+ * @return {Ajv} this for method chaining
  */
 function addKeyword(keyword, definition) {
   /* jshint validthis: true */
@@ -6821,6 +6218,8 @@ function addKeyword(keyword, definition) {
   function checkDataType(dataType) {
     if (!RULES.types[dataType]) throw new Error('Unknown type ' + dataType);
   }
+
+  return this;
 }
 
 
@@ -6841,6 +6240,7 @@ function getKeyword(keyword) {
  * Remove keyword
  * @this  Ajv
  * @param {String} keyword pre-defined or custom keyword.
+ * @return {Ajv} this for method chaining
  */
 function removeKeyword(keyword) {
   /* jshint validthis: true */
@@ -6857,6 +6257,7 @@ function removeKeyword(keyword) {
       }
     }
   }
+  return this;
 }
 
 
@@ -6907,249 +6308,13 @@ module.exports = function (ajv) {
 /* 57 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"$schema": "http://json-schema.org/draft-06/schema#",
-	"$id": "https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#",
-	"description": "Meta-schema for $data reference (JSON-schema extension proposal)",
-	"type": "object",
-	"required": [
-		"$data"
-	],
-	"properties": {
-		"$data": {
-			"type": "string",
-			"anyOf": [
-				{
-					"format": "relative-json-pointer"
-				},
-				{
-					"format": "json-pointer"
-				}
-			]
-		}
-	},
-	"additionalProperties": false
-};
+module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#","description":"Meta-schema for $data reference (JSON-schema extension proposal)","type":"object","required":["$data"],"properties":{"$data":{"type":"string","anyOf":[{"format":"relative-json-pointer"},{"format":"json-pointer"}]}},"additionalProperties":false}
 
 /***/ }),
 /* 58 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"$schema": "http://json-schema.org/draft-06/schema#",
-	"$id": "http://json-schema.org/draft-06/schema#",
-	"title": "Core schema meta-schema",
-	"definitions": {
-		"schemaArray": {
-			"type": "array",
-			"minItems": 1,
-			"items": {
-				"$ref": "#"
-			}
-		},
-		"nonNegativeInteger": {
-			"type": "integer",
-			"minimum": 0
-		},
-		"nonNegativeIntegerDefault0": {
-			"allOf": [
-				{
-					"$ref": "#/definitions/nonNegativeInteger"
-				},
-				{
-					"default": 0
-				}
-			]
-		},
-		"simpleTypes": {
-			"enum": [
-				"array",
-				"boolean",
-				"integer",
-				"null",
-				"number",
-				"object",
-				"string"
-			]
-		},
-		"stringArray": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"uniqueItems": true,
-			"default": []
-		}
-	},
-	"type": [
-		"object",
-		"boolean"
-	],
-	"properties": {
-		"$id": {
-			"type": "string",
-			"format": "uri-reference"
-		},
-		"$schema": {
-			"type": "string",
-			"format": "uri"
-		},
-		"$ref": {
-			"type": "string",
-			"format": "uri-reference"
-		},
-		"title": {
-			"type": "string"
-		},
-		"description": {
-			"type": "string"
-		},
-		"default": {},
-		"examples": {
-			"type": "array",
-			"items": {}
-		},
-		"multipleOf": {
-			"type": "number",
-			"exclusiveMinimum": 0
-		},
-		"maximum": {
-			"type": "number"
-		},
-		"exclusiveMaximum": {
-			"type": "number"
-		},
-		"minimum": {
-			"type": "number"
-		},
-		"exclusiveMinimum": {
-			"type": "number"
-		},
-		"maxLength": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minLength": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"pattern": {
-			"type": "string",
-			"format": "regex"
-		},
-		"additionalItems": {
-			"$ref": "#"
-		},
-		"items": {
-			"anyOf": [
-				{
-					"$ref": "#"
-				},
-				{
-					"$ref": "#/definitions/schemaArray"
-				}
-			],
-			"default": {}
-		},
-		"maxItems": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minItems": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"uniqueItems": {
-			"type": "boolean",
-			"default": false
-		},
-		"contains": {
-			"$ref": "#"
-		},
-		"maxProperties": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minProperties": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"required": {
-			"$ref": "#/definitions/stringArray"
-		},
-		"additionalProperties": {
-			"$ref": "#"
-		},
-		"definitions": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"properties": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"patternProperties": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"dependencies": {
-			"type": "object",
-			"additionalProperties": {
-				"anyOf": [
-					{
-						"$ref": "#"
-					},
-					{
-						"$ref": "#/definitions/stringArray"
-					}
-				]
-			}
-		},
-		"propertyNames": {
-			"$ref": "#"
-		},
-		"const": {},
-		"enum": {
-			"type": "array",
-			"minItems": 1,
-			"uniqueItems": true
-		},
-		"type": {
-			"anyOf": [
-				{
-					"$ref": "#/definitions/simpleTypes"
-				},
-				{
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/simpleTypes"
-					},
-					"minItems": 1,
-					"uniqueItems": true
-				}
-			]
-		},
-		"format": {
-			"type": "string"
-		},
-		"allOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"anyOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"oneOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"not": {
-			"$ref": "#"
-		}
-	},
-	"default": {}
-};
+module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"http://json-schema.org/draft-06/schema#","title":"Core schema meta-schema","definitions":{"schemaArray":{"type":"array","minItems":1,"items":{"$ref":"#"}},"nonNegativeInteger":{"type":"integer","minimum":0},"nonNegativeIntegerDefault0":{"allOf":[{"$ref":"#/definitions/nonNegativeInteger"},{"default":0}]},"simpleTypes":{"enum":["array","boolean","integer","null","number","object","string"]},"stringArray":{"type":"array","items":{"type":"string"},"uniqueItems":true,"default":[]}},"type":["object","boolean"],"properties":{"$id":{"type":"string","format":"uri-reference"},"$schema":{"type":"string","format":"uri"},"$ref":{"type":"string","format":"uri-reference"},"title":{"type":"string"},"description":{"type":"string"},"default":{},"examples":{"type":"array","items":{}},"multipleOf":{"type":"number","exclusiveMinimum":0},"maximum":{"type":"number"},"exclusiveMaximum":{"type":"number"},"minimum":{"type":"number"},"exclusiveMinimum":{"type":"number"},"maxLength":{"$ref":"#/definitions/nonNegativeInteger"},"minLength":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"pattern":{"type":"string","format":"regex"},"additionalItems":{"$ref":"#"},"items":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/schemaArray"}],"default":{}},"maxItems":{"$ref":"#/definitions/nonNegativeInteger"},"minItems":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"uniqueItems":{"type":"boolean","default":false},"contains":{"$ref":"#"},"maxProperties":{"$ref":"#/definitions/nonNegativeInteger"},"minProperties":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"required":{"$ref":"#/definitions/stringArray"},"additionalProperties":{"$ref":"#"},"definitions":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"properties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"patternProperties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"dependencies":{"type":"object","additionalProperties":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/stringArray"}]}},"propertyNames":{"$ref":"#"},"const":{},"enum":{"type":"array","minItems":1,"uniqueItems":true},"type":{"anyOf":[{"$ref":"#/definitions/simpleTypes"},{"type":"array","items":{"$ref":"#/definitions/simpleTypes"},"minItems":1,"uniqueItems":true}]},"format":{"type":"string"},"allOf":{"$ref":"#/definitions/schemaArray"},"anyOf":{"$ref":"#/definitions/schemaArray"},"oneOf":{"$ref":"#/definitions/schemaArray"},"not":{"$ref":"#"}},"default":{}}
 
 /***/ }),
 /* 59 */
@@ -7189,24 +6354,24 @@ var ElementRendererProvider = function () {
     predefined renderes
     */
     this.set('text', function (config) {
-      var divCarouselWrapper = document.createElement('div');
+      var divEl = document.createElement('div');
       var tooltip = config.tooltip ? _Utils2.default.escapeHtml(config.tooltip) : '';
-      divCarouselWrapper.className = 'lp-json-pollock-element-text';
+      divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
-      divCarouselWrapper.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
-      return divCarouselWrapper;
+      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
+      return divEl;
     });
 
     this.set('button', function (config) {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-button';
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-button';
 
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
 
       var btnEl = document.createElement('button');
@@ -7224,18 +6389,18 @@ var ElementRendererProvider = function () {
         btnEl.onclick = _this.wrapAction(config.click);
       }
 
-      divCarouselWrapper.appendChild(btnEl);
+      divEl.appendChild(btnEl);
 
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('image', function (config) {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-image loading';
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-image loading';
 
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        divEl.className += ' direction-rtl';
       }
 
       var imgEl = document.createElement('img');
@@ -7250,55 +6415,55 @@ var ElementRendererProvider = function () {
       }
 
       if (config.caption) {
-        divCarouselWrapper.innerHTML += '<div>' + config.caption + '</div>';
+        divEl.innerHTML += '<div>' + config.caption + '</div>';
       }
 
       imgEl.onload = function () {
-        divCarouselWrapper.className = 'lp-json-pollock-element-image';
+        divEl.className = 'lp-json-pollock-element-image';
       };
 
       imgEl.onerror = function () {
-        divCarouselWrapper.className = 'lp-json-pollock-element-image error';
-        divCarouselWrapper.title = 'fail to load image';
+        divEl.className = 'lp-json-pollock-element-image error';
+        divEl.title = 'fail to load image';
         imgEl.style.display = 'none';
       };
 
       if (config.click && config.click.actions) {
         imgEl.onclick = _this.wrapAction(config.click);
       }
-      divCarouselWrapper.appendChild(imgEl);
+      divEl.appendChild(imgEl);
 
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('map', function (config) {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-map';
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-map';
 
       if (config.tooltip) {
-        divCarouselWrapper.title = config.tooltip;
-        divCarouselWrapper.setAttribute('aria-label', config.tooltip);
+        divEl.title = config.tooltip;
+        divEl.setAttribute('aria-label', config.tooltip);
       }
 
       if (config.style) {
-        divCarouselWrapper.style.cssText = _Utils2.default.styleToCss(config.style);
+        divEl.style.cssText = _Utils2.default.styleToCss(config.style);
       }
 
       if (config.click && config.click.actions) {
-        divCarouselWrapper.onclick = _this.wrapAction(config.click);
+        divEl.onclick = _this.wrapAction(config.click);
       } else {
         // navigate to the location
-        divCarouselWrapper.onclick = function () {
+        divEl.onclick = function () {
           window.open('https://www.google.com/maps/search/?api=1&query=' + config.lo + ',' + config.la, '_blank');
         };
       }
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('vertical', function () {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
-      return divCarouselWrapper;
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      return divEl;
     });
 
     this.set('carousel', function (config) {
@@ -7313,12 +6478,6 @@ var ElementRendererProvider = function () {
         if (divCarouselWrapper.childNodes.length) {
           for (var itemCounter = 0; itemCounter < divCarouselWrapper.childNodes.length; itemCounter += 1) {
             var node = divCarouselWrapper.childNodes[itemCounter];
-            // if (itemCounter === 0) {
-            //   (node: any).style['margin-right'] = `${config.padding / 2}px`;
-            // } else if (itemCounter === (divCarouselWrapper.childNodes.length - 1)) {
-            //   (node: any).style['margin-left'] = `${config.padding / 2}px`;
-            // } else {
-            // }
             node.style.margin = '0 ' + config.padding / 2 + 'px';
           }
 
@@ -7392,18 +6551,18 @@ var ElementRendererProvider = function () {
     });
 
     this.set('horizontal', function () {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
-      divCarouselWrapper.afterRender = function () {
-        if (divCarouselWrapper.childNodes.length) {
-          var percentage = 100 / divCarouselWrapper.childNodes.length;
-          Array.prototype.forEach.call(divCarouselWrapper.childNodes, function (node) {
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      divEl.afterRender = function () {
+        if (divEl.childNodes.length) {
+          var percentage = 100 / divEl.childNodes.length;
+          Array.prototype.forEach.call(divEl.childNodes, function (node) {
             var n = node;
             n.style.width = percentage + '%';
           });
         }
       };
-      return divCarouselWrapper;
+      return divEl;
     });
   }
 
@@ -7422,14 +6581,15 @@ var ElementRendererProvider = function () {
     value: function wrapAction(clickData) {
       var _this2 = this;
 
-      return function () {
+      return function (event) {
         if (clickData.actions instanceof Array) {
           clickData.actions.forEach(function (actionData) {
             _this2.events.trigger({
               eventName: actionData.type,
               data: {
                 actionData: actionData,
-                metadata: clickData.metadata
+                metadata: clickData.metadata,
+                uiEvent: event
               }
             });
           });
@@ -8297,7 +7457,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.0.26';
+var version = '1.1.0';
 
 exports.init = init;
 exports.render = render;

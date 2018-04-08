@@ -1050,33 +1050,37 @@ describe('json-pollock tests', function () {
 
     it('Click on element with navigate action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('navigate', spy);
-      rooEl.childNodes[0].childNodes[0].childNodes[0].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[0].click.actions[0]});
+      rooEl.childNodes[0].childNodes[0].childNodes[0].childNodes[0].dispatchEvent(event);
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[0].click.actions[0], uiEvent: event});
     });
 
     it('Click on element with link action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('link', spy);
-      rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0]});
+      rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(event);
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0], uiEvent: event});
     });
 
     it('Click on element with publishText action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('publishText', spy);
-      rooEl.childNodes[0].childNodes[0].childNodes[2].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[2].click.actions[0], metadata: conf.elements[2].click.metadata});
+      rooEl.childNodes[0].childNodes[0].childNodes[2].childNodes[0].dispatchEvent(event);
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[2].click.actions[0], metadata: conf.elements[2].click.metadata, uiEvent: event});
     });
 
     it('Click on element with multiple actions should trigger its registered callbacks', function () {
       var spy1 = sinon.spy();
       var spy2 = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('publishText', spy1);
       JsonPollock.registerAction('link', spy2);
-      rooEl.childNodes[0].childNodes[0].childNodes[3].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[3].click.actions[0], metadata: conf.elements[3].click.metadata});
-      chai.expect(spy2).to.have.been.calledWith({actionData: conf.elements[3].click.actions[1], metadata: conf.elements[3].click.metadata});
+      rooEl.childNodes[0].childNodes[0].childNodes[3].childNodes[0].dispatchEvent(event);
+      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[3].click.actions[0], metadata: conf.elements[3].click.metadata, uiEvent: event});
+      chai.expect(spy2).to.have.been.calledWith({actionData: conf.elements[3].click.actions[1], metadata: conf.elements[3].click.metadata, uiEvent: event});
     });
 
     it('Click on map element which has no actions definition should trigger window.open for google maps', function () {
@@ -1104,18 +1108,12 @@ describe('json-pollock tests', function () {
     it('Click on map element which has actions definition should not trigger window.open for google maps', function () {
       window.open = sinon.spy();
       var spy1 = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('navigate', spy1);
-      rooEl.childNodes[0].childNodes[0].childNodes[5].dispatchEvent(createClickEvent());
+      rooEl.childNodes[0].childNodes[0].childNodes[5].dispatchEvent(event);
       chai.expect(window.open).to.have.not.been.calledWith('https://www.google.com/maps/search/?api=1&query=64.128597,-21.89611');
-      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[5].click.actions[0]});
+      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[5].click.actions[0], uiEvent: event});
     });
-
-      it('Click on element with link action should trigger its registered callbacks with DOM event', function () {
-          var spy = sinon.spy();
-          JsonPollock.registerAction('link', spy);
-          rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(createClickEvent());
-          chai.expect(spy).to.have.been.calledWith(sinon.match({ actionData: conf.elements[1].click.actions[0], uiEvent: event }));
-      });
 
   });
 
