@@ -676,41 +676,53 @@ function resolveIds(schema) {
 "use strict";
 
 
+var isArray = Array.isArray;
+var keyList = Object.keys;
+var hasProp = Object.prototype.hasOwnProperty;
+
 module.exports = function equal(a, b) {
   if (a === b) return true;
 
-  var arrA = Array.isArray(a)
-    , arrB = Array.isArray(b)
-    , i;
+  var arrA = isArray(a)
+    , arrB = isArray(b)
+    , i
+    , length
+    , key;
 
   if (arrA && arrB) {
-    if (a.length != b.length) return false;
-    for (i = 0; i < a.length; i++)
+    length = a.length;
+    if (length != b.length) return false;
+    for (i = 0; i < length; i++)
       if (!equal(a[i], b[i])) return false;
     return true;
   }
 
   if (arrA != arrB) return false;
 
-  if (a && b && typeof a === 'object' && typeof b === 'object') {
-    var keys = Object.keys(a);
-    if (keys.length !== Object.keys(b).length) return false;
+  var dateA = a instanceof Date
+    , dateB = b instanceof Date;
+  if (dateA != dateB) return false;
+  if (dateA && dateB) return a.getTime() == b.getTime();
 
-    var dateA = a instanceof Date
-      , dateB = b instanceof Date;
-    if (dateA && dateB) return a.getTime() == b.getTime();
-    if (dateA != dateB) return false;
+  var regexpA = a instanceof RegExp
+    , regexpB = b instanceof RegExp;
+  if (regexpA != regexpB) return false;
+  if (regexpA && regexpB) return a.toString() == b.toString();
 
-    var regexpA = a instanceof RegExp
-      , regexpB = b instanceof RegExp;
-    if (regexpA && regexpB) return a.toString() == b.toString();
-    if (regexpA != regexpB) return false;
+  if (a instanceof Object && b instanceof Object) {
+    var keys = keyList(a);
+    length = keys.length;
 
-    for (i = 0; i < keys.length; i++)
-      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+    if (length !== keyList(b).length)
+      return false;
 
-    for (i = 0; i < keys.length; i++)
-      if(!equal(a[keys[i]], b[keys[i]])) return false;
+    for (i = 0; i < length; i++)
+      if (!hasProp.call(b, keys[i])) return false;
+
+    for (i = 0; i < length; i++) {
+      key = keys[i];
+      if (!equal(a[key], b[key])) return false;
+    }
 
     return true;
   }
@@ -2185,7 +2197,7 @@ var LPJsonPollock = function () {
             });
           }
           if (element.afterRender) {
-            element.afterRender.call(element);
+            element.afterRender.call(element, parent);
           }
         }
       }
@@ -6467,87 +6479,103 @@ var ElementRendererProvider = function () {
     });
 
     this.set('carousel', function (config) {
+      var defaultPadding = 0;
+      var padding = config.padding || defaultPadding;
       var CARD_DEFAULT_WIDTH = 180;
       var PARSE_DECIMAL = 10;
       var BORDER_WIDTH = 2;
+      var nextLeft = 0;
+      var currentPos = 0;
       var arrowRight = document.createElement('div');
       var arrowLeft = document.createElement('div');
-
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.afterRender = function () {
-        if (divCarouselWrapper.childNodes.length) {
-          for (var itemCounter = 0; itemCounter < divCarouselWrapper.childNodes.length; itemCounter += 1) {
-            var node = divCarouselWrapper.childNodes[itemCounter];
-            node.style.margin = '0 ' + config.padding / 2 + 'px';
+      var divCarousel = document.createElement('div');
+      var carouselOffsetChangedEventName = 'carouselOffsetChange';
+      divCarousel.afterRender = function (parentContainer) {
+        var divCarouselWrapper = parentContainer;
+        if (divCarousel.childNodes.length) {
+          for (var itemCounter = 0; itemCounter < divCarousel.childNodes.length; itemCounter += 1) {
+            var node = divCarousel.childNodes[itemCounter];
+            node.style.margin = '0 ' + padding / 2 + 'px';
           }
 
           arrowRight.className = 'layout-carousel-arrow';
           arrowLeft.className = 'layout-carousel-arrow left';
 
-          /* create carousel wrapper */
-          var carousel = divCarouselWrapper.cloneNode(true);
-          while (divCarouselWrapper.hasChildNodes()) {
-            divCarouselWrapper.removeChild(divCarouselWrapper.lastChild);
-          }
-
           /* calculate carousel static width */
           var middleItemsWidth = 0;
-          var cornerItemsWidth = 2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH) + config.padding;
-          if (carousel.childNodes.length > 2) {
-            middleItemsWidth = (carousel.childNodes.length - 2) * (BORDER_WIDTH + CARD_DEFAULT_WIDTH + config.padding);
+          var cornerItemsWidth = 2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH) + padding;
+          if (divCarousel.childNodes.length > 2) {
+            middleItemsWidth = (divCarousel.childNodes.length - 2) * (BORDER_WIDTH + CARD_DEFAULT_WIDTH + padding);
           }
           var totalWidth = cornerItemsWidth + middleItemsWidth;
-          carousel.style.width = totalWidth + 'px';
-          carousel.className = 'lp-json-pollock-layout-carousel';
-          divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
-
-          divCarouselWrapper.appendChild(carousel);
+          divCarousel.style.width = totalWidth + 'px';
+          divCarousel.className = 'lp-json-pollock-layout-carousel';
+          divCarouselWrapper.className = 'lp-json-pollock lp-json-pollock-layout-carousel-wrapper';
           divCarouselWrapper.appendChild(arrowRight);
           divCarouselWrapper.appendChild(arrowLeft);
           /* TODO: find other trigger. */
           setTimeout(function () {
             /* check if the viewport width is bigger then the carousel div
              * => remove the arrows */
-            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth) {
+            if (divCarouselWrapper.offsetWidth > divCarousel.offsetWidth) {
               arrowLeft.style.visibility = 'hidden';
               arrowRight.style.visibility = 'hidden';
             }
           }, 0);
-
-          arrowRight.onclick = function () {
-            var currentPos = 0;
-            if (carousel.style.left !== '') {
-              currentPos = parseInt(carousel.style.left, PARSE_DECIMAL);
+          arrowRight.onclick = function (event) {
+            currentPos = 0;
+            if (nextLeft === 0) {
+              _this.events.trigger({
+                eventName: carouselOffsetChangedEventName,
+                data: {
+                  offset: nextLeft,
+                  prevOffset: currentPos,
+                  uiEvent: event
+                }
+              });
+            }
+            if (divCarousel.style.left !== '') {
+              currentPos = parseInt(divCarousel.style.left, PARSE_DECIMAL);
             }
             /* when click on the right arrow the carousel div will shift to the left */
-            var nextLeft = currentPos - CARD_DEFAULT_WIDTH - config.padding - BORDER_WIDTH;
+            nextLeft = currentPos - CARD_DEFAULT_WIDTH - padding - BORDER_WIDTH;
             arrowLeft.style.visibility = 'visible';
             arrowRight.style.visibility = 'visible';
             /* check if the the viewport width is bigger then the carousel width + the next "Left"
              * value => shift the carousel div to its rightest point */
-            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
-              nextLeft = -(carousel.offsetWidth + config.padding - divCarouselWrapper.offsetWidth);
+            if (divCarouselWrapper.offsetWidth > divCarousel.offsetWidth + nextLeft) {
+              nextLeft = -(divCarousel.offsetWidth + padding - divCarouselWrapper.offsetWidth);
               arrowRight.style.visibility = 'hidden';
             }
-            carousel.style.left = nextLeft + 'px';
+            divCarousel.style.left = nextLeft + 'px';
           };
-          arrowLeft.onclick = function () {
-            var currentPos = 0;
-            if (carousel.style.left !== '') {
-              currentPos = parseInt(carousel.style.left, PARSE_DECIMAL);
+          arrowLeft.onclick = function (event) {
+            currentPos = 0;
+            if (divCarousel.style.left !== '') {
+              currentPos = parseInt(divCarousel.style.left, PARSE_DECIMAL);
             }
-            var nextLeft = currentPos + CARD_DEFAULT_WIDTH + config.padding + BORDER_WIDTH;
+            nextLeft = currentPos + CARD_DEFAULT_WIDTH + padding + BORDER_WIDTH;
             arrowRight.style.visibility = 'visible';
             if (nextLeft >= 0) {
               nextLeft = 0;
               arrowLeft.style.visibility = 'hidden';
               arrowRight.style.visibility = 'visible';
             }
-            carousel.style.left = nextLeft + 'px';
+            if (nextLeft === 0) {
+              _this.events.trigger({
+                eventName: carouselOffsetChangedEventName,
+                data: {
+                  offset: nextLeft,
+                  prevOffset: currentPos,
+                  uiEvent: event
+                }
+              });
+            }
+            divCarousel.style.left = nextLeft + 'px';
           };
         }
       };
-      return divCarouselWrapper;
+      return divCarousel;
     });
 
     this.set('horizontal', function () {
