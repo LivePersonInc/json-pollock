@@ -88,7 +88,7 @@ export default class LPJsonPollock {
           });
         }
         if (element.afterRender) {
-          element.afterRender.call(element);
+          element.afterRender.call(element, parent);
         }
       }
     }

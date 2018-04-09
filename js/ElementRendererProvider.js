@@ -131,91 +131,107 @@ export default class ElementRendererProvider {
     });
 
     this.set('carousel', (config): HTMLElement => {
+      const defaultPadding = 0;
+      const padding = config.padding || defaultPadding;
       const CARD_DEFAULT_WIDTH = 180;
       const PARSE_DECIMAL = 10;
       const BORDER_WIDTH = 2;
+      let nextLeft = 0;
+      let currentPos = 0;
       const arrowRight = document.createElement('div');
       const arrowLeft = document.createElement('div');
-
-      const divCarouselWrapper = document.createElement('div');
-      (divCarouselWrapper: any).afterRender = () => {
-        if (divCarouselWrapper.childNodes.length) {
+      const divCarousel = document.createElement('div');
+      const carouselOffsetChangedEventName = 'carouselOffsetChange';
+      (divCarousel: any).afterRender = (parentContainer: any) => {
+        const divCarouselWrapper = parentContainer;
+        if (divCarousel.childNodes.length) {
           for (let itemCounter = 0;
-               itemCounter < divCarouselWrapper.childNodes.length;
+               itemCounter < divCarousel.childNodes.length;
                itemCounter += 1) {
-            const node = divCarouselWrapper.childNodes[itemCounter];
-            (node: any).style.margin = `0 ${config.padding / 2}px`;
+            const node = divCarousel.childNodes[itemCounter];
+            (node: any).style.margin = `0 ${padding / 2}px`;
           }
 
           arrowRight.className = 'layout-carousel-arrow';
           arrowLeft.className = 'layout-carousel-arrow left';
 
-          /* create carousel wrapper */
-          const carousel = divCarouselWrapper.cloneNode(true);
-          while ((divCarouselWrapper: any).hasChildNodes()) {
-            (divCarouselWrapper: any).removeChild(divCarouselWrapper.lastChild);
-          }
-
           /* calculate carousel static width */
           let middleItemsWidth = 0;
-          const cornerItemsWidth = (2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH)) + config.padding;
-          if (carousel.childNodes.length > 2) {
-            middleItemsWidth = (carousel.childNodes.length - 2) *
-                (BORDER_WIDTH + CARD_DEFAULT_WIDTH + config.padding);
+          const cornerItemsWidth = (2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH)) + padding;
+          if (divCarousel.childNodes.length > 2) {
+            middleItemsWidth = (divCarousel.childNodes.length - 2) *
+                (BORDER_WIDTH + CARD_DEFAULT_WIDTH + padding);
           }
           const totalWidth = cornerItemsWidth + middleItemsWidth;
-          carousel.style.width = `${totalWidth}px`;
-          carousel.className = 'lp-json-pollock-layout-carousel';
-          divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
-
-          divCarouselWrapper.appendChild(carousel);
+          divCarousel.style.width = `${totalWidth}px`;
+          divCarousel.className = 'lp-json-pollock-layout-carousel';
+          divCarouselWrapper.className = 'lp-json-pollock lp-json-pollock-layout-carousel-wrapper';
           divCarouselWrapper.appendChild(arrowRight);
           divCarouselWrapper.appendChild(arrowLeft);
           /* TODO: find other trigger. */
           setTimeout(() => {
             /* check if the viewport width is bigger then the carousel div
              * => remove the arrows */
-            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth) {
+            if (divCarouselWrapper.offsetWidth > divCarousel.offsetWidth) {
               (arrowLeft: any).style.visibility = 'hidden';
               (arrowRight: any).style.visibility = 'hidden';
             }
           }, 0);
-
-          arrowRight.onclick = () => {
-            let currentPos = 0;
-            if ((carousel: any).style.left !== '') {
-              currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
+          arrowRight.onclick = (event) => {
+            currentPos = 0;
+            if (nextLeft === 0) {
+              this.events.trigger({
+                eventName: carouselOffsetChangedEventName,
+                data: {
+                  offset: nextLeft,
+                  prevOffset: currentPos,
+                  uiEvent: event,
+                },
+              });
+            }
+            if ((divCarousel: any).style.left !== '') {
+              currentPos = parseInt((divCarousel: any).style.left, PARSE_DECIMAL);
             }
             /* when click on the right arrow the carousel div will shift to the left */
-            let nextLeft = currentPos - CARD_DEFAULT_WIDTH - (config.padding) - BORDER_WIDTH;
+            nextLeft = currentPos - CARD_DEFAULT_WIDTH - (padding) - BORDER_WIDTH;
             (arrowLeft: any).style.visibility = 'visible';
             (arrowRight: any).style.visibility = 'visible';
             /* check if the the viewport width is bigger then the carousel width + the next "Left"
              * value => shift the carousel div to its rightest point */
-            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
-              nextLeft = -((carousel.offsetWidth + config.padding)
+            if (divCarouselWrapper.offsetWidth > divCarousel.offsetWidth + nextLeft) {
+              nextLeft = -((divCarousel.offsetWidth + padding)
                 - divCarouselWrapper.offsetWidth);
               (arrowRight: any).style.visibility = 'hidden';
             }
-            (carousel: any).style.left = `${nextLeft}px`;
+            (divCarousel: any).style.left = `${nextLeft}px`;
           };
-          arrowLeft.onclick = () => {
-            let currentPos = 0;
-            if ((carousel: any).style.left !== '') {
-              currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
+          arrowLeft.onclick = (event) => {
+            currentPos = 0;
+            if ((divCarousel: any).style.left !== '') {
+              currentPos = parseInt((divCarousel: any).style.left, PARSE_DECIMAL);
             }
-            let nextLeft = currentPos + CARD_DEFAULT_WIDTH + config.padding + BORDER_WIDTH;
+            nextLeft = currentPos + CARD_DEFAULT_WIDTH + padding + BORDER_WIDTH;
             (arrowRight: any).style.visibility = 'visible';
             if (nextLeft >= 0) {
               nextLeft = 0;
               (arrowLeft: any).style.visibility = 'hidden';
               (arrowRight: any).style.visibility = 'visible';
             }
-            (carousel: any).style.left = `${nextLeft}px`;
+            if (nextLeft === 0) {
+              this.events.trigger({
+                eventName: carouselOffsetChangedEventName,
+                data: {
+                  offset: nextLeft,
+                  prevOffset: currentPos,
+                  uiEvent: event,
+                },
+              });
+            }
+            (divCarousel: any).style.left = `${nextLeft}px`;
           };
         }
       };
-      return divCarouselWrapper;
+      return divCarousel;
     });
 
     this.set('horizontal', (): HTMLElement => {
