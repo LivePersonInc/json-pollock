@@ -662,7 +662,7 @@ describe('json-pollock tests', function () {
     const carouselRight = conteiner.children[0].children[0].children[1];
     const carouselLeft = conteiner.children[0].children[0].children[2];
 
-    it('carousel wrapper root exist', function () {
+    it('carousel root exist', function () {
       chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
     });
 
@@ -675,11 +675,11 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel arrow right exist', function () {
-      chai.expect(carouselRight.className).to.contain('p-json-pollock-layout-carousel-arrow');
+      chai.expect(carouselRight.className).to.contain('lp-json-pollock-layout-carousel-arrow');
     });
 
     it('carousel arrow left  exist', function () {
-      chai.expect(carouselLeft.className).to.contain('p-json-pollock-layout-carousel-arrow left');
+      chai.expect(carouselLeft.className).to.contain('lp-json-pollock-layout-carousel-arrow left');
     });
 
     it('carousel elements length equal to conf element length', function () {
