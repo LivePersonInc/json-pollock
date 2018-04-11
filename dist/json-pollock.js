@@ -1724,6 +1724,27 @@ exports.default = {
     return text.replace(/[&<>"'`=/]/g, function (s) {
       return map[s];
     });
+  },
+  hasClass: function hasClass(el, className) {
+    if (el.classList && el.classList.contains) {
+      return el.classList.contains(className);
+    }
+    return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+  },
+  addClass: function addClass(el, className) {
+    if (el.classList) {
+      el.classList.add(className);
+    } else if (!this.hasClass(el, className)) {
+      el.className += ' ' + className; // eslint-disable-line no-param-reassign
+    }
+  },
+  removeClass: function removeClass(el, className) {
+    if (el.classList) {
+      el.classList.remove(className);
+    } else if (this.hasClass(el, className)) {
+      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+      el.className = el.className.replace(reg, ' '); // eslint-disable-line no-param-reassign
+    }
   }
 };
 
@@ -6371,7 +6392,7 @@ var ElementRendererProvider = function () {
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
         divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        _Utils2.default.addClass(divEl, 'direction-rtl');
       }
       divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
       return divEl;
@@ -6383,7 +6404,7 @@ var ElementRendererProvider = function () {
 
       if (config.rtl) {
         divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        _Utils2.default.addClass(divEl, 'direction-rtl');
       }
 
       var btnEl = document.createElement('button');
@@ -6412,7 +6433,7 @@ var ElementRendererProvider = function () {
 
       if (config.rtl) {
         divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        _Utils2.default.addClass(divEl, 'direction-rtl');
       }
 
       var imgEl = document.createElement('img');
@@ -6427,15 +6448,16 @@ var ElementRendererProvider = function () {
       }
 
       if (config.caption) {
-        divEl.innerHTML += '<div>' + config.caption + '</div>';
+        divEl.innerHTML += '<span>' + config.caption + '</span>';
       }
 
       imgEl.onload = function () {
-        divEl.className = 'lp-json-pollock-element-image';
+        _Utils2.default.removeClass(divEl, 'loading');
       };
 
       imgEl.onerror = function () {
-        divEl.className = 'lp-json-pollock-element-image error';
+        _Utils2.default.removeClass(divEl, 'loading');
+        _Utils2.default.addClass(divEl, 'error');
         divEl.title = 'fail to load image';
         imgEl.style.display = 'none';
       };
@@ -6495,7 +6517,7 @@ var ElementRendererProvider = function () {
         if (divCarouselWrapper.childNodes.length) {
           for (var itemCounter = 0; itemCounter < divCarouselWrapper.childNodes.length; itemCounter += 1) {
             var node = divCarouselWrapper.childNodes[itemCounter];
-            node.style.margin = '0 ' + padding / 2 + 'px';
+            node.style.margin = '0 ' + padding / 2 + 'px'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           }
 
           arrowRight.className = 'lp-json-pollock-layout-carousel-arrow';
@@ -6580,7 +6602,7 @@ var ElementRendererProvider = function () {
                 }
               });
             }
-            carousel.style.left = nextLeft + 'px';
+            carousel.style.left = nextLeft + 'px'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           };
         }
       };
@@ -6595,7 +6617,7 @@ var ElementRendererProvider = function () {
           var percentage = 100 / divEl.childNodes.length;
           Array.prototype.forEach.call(divEl.childNodes, function (node) {
             var n = node;
-            n.style.width = percentage + '%';
+            n.style.width = percentage + '%'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           });
         }
       };
@@ -7494,7 +7516,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.1.0';
+var version = '1.1.2';
 
 exports.init = init;
 exports.render = render;

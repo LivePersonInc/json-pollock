@@ -14,8 +14,9 @@ describe('json-pollock tests', function () {
     "type": "vertical",
     "elements": [{
       "type": "image",
-      "url": "http://example.jpg",
+      "url": "assets/iphone-8-concept.jpg",
       "tooltip": "image tooltip",
+      "caption": "this is a caption",
       "click": {
         "actions": [{
           "type": "navigate",
@@ -87,24 +88,6 @@ describe('json-pollock tests', function () {
       chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(4);
     });
 
-    it('An element of type image should be created', function () {
-      var layout = rooEl.childNodes[0].childNodes[0];
-      chai.expect(layout.childNodes[0].localName).to.equal('div');
-      chai.expect(layout.childNodes[0].className).to.contain('lp-json-pollock-element-image');  //it can also includes loading
-      chai.expect(layout.childNodes[0].childNodes[0].localName).to.equal('img');
-      chai.expect(layout.childNodes[0].childNodes[0].src).to.equal('http://example.jpg/');
-      chai.expect(layout.childNodes[0].childNodes[0].title).to.equal('image tooltip');
-    });
-
-    it('An element of type text should be created', function () {
-      var layout = rooEl.childNodes[0].childNodes[0];
-      chai.expect(layout.childNodes[1].localName).to.equal('div');
-      chai.expect(layout.childNodes[1].className).to.equal('lp-json-pollock-element-text');
-      chai.expect(layout.childNodes[1].childNodes[0].localName).to.equal('span');
-      chai.expect(layout.childNodes[1].childNodes[0].title).to.equal('text tooltip');
-      chai.expect(layout.childNodes[1].childNodes[0].textContent).to.equal('product name (Title)');
-    });
-
     it('An element of type button should be created', function () {
       var layout = rooEl.childNodes[0].childNodes[0];
       chai.expect(layout.childNodes[2].localName).to.equal('div');
@@ -138,6 +121,179 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[3].className).to.equal('lp-json-pollock-element-map');
       chai.expect(layout.childNodes[3].title).to.equal('map tooltip');
     });
+
+    it('An element of type text should be created', function () {
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.childNodes[1].localName).to.equal('div');
+      chai.expect(layout.childNodes[1].className).to.equal('lp-json-pollock-element-text');
+      chai.expect(layout.childNodes[1].childNodes[0].localName).to.equal('span');
+      chai.expect(layout.childNodes[1].childNodes[0].title).to.equal('text tooltip');
+      chai.expect(layout.childNodes[1].childNodes[0].textContent).to.equal('product name (Title)');
+    });
+
+    // special cases - we would like the onload and onerror callbacks to be called right after the load
+    // therefore the test is async and we add the fargment to the DOM is the test itself 
+    it('An element of type image should be created', function (done) {
+      fragEl = JsonPollock.render(card);
+      var layout = fragEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[0].childNodes[1];          
+      chai.expect(layout.childNodes[0].localName).to.equal('div');
+      chai.expect(layout.childNodes[0].className).to.equal('lp-json-pollock-element-image loading');
+      chai.expect(layout.childNodes[0].childNodes[0].localName).to.equal('span');
+      chai.expect(layout.childNodes[0].childNodes[0].textContent).to.equal('this is a caption');
+      chai.expect(layout.childNodes[0].childNodes[1].localName).to.equal('img');
+      chai.expect(layout.childNodes[0].childNodes[1].src).to.contain('assets/iphone-8-concept.jpg');
+      chai.expect(layout.childNodes[0].childNodes[1].title).to.equal('image tooltip');
+      var origOnload = image.onload;
+      image.onload = function() {
+        origOnload.apply(this);
+        chai.expect(layout.childNodes[0].className).to.equal('lp-json-pollock-element-image');
+        done();
+      };
+      addToBody(fragEl);      
+    });
+
+    it('Image with wrong url should be created with error class', function (done) {
+      var errImg = {
+        "type": "image",
+        "url": "http://example.jpg",
+        "tooltip": "image tooltip",
+        "click": {
+          "actions": [{
+            "type": "navigate",
+            "name": "Navigate to store via image",
+            "lo": 23.423423,
+            "la": 2423423423
+          }]
+        }
+      };
+
+      fragEl = JsonPollock.render(errImg);
+      var layout = fragEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[0];
+      chai.expect(layout.localName).to.equal('div');
+      chai.expect(layout.className).to.equal('lp-json-pollock-element-image loading');
+      chai.expect(layout.childNodes[0].localName).to.equal('img');
+      chai.expect(layout.childNodes[0].src).to.contain('http://example.jpg/');
+      chai.expect(layout.childNodes[0].title).to.equal('image tooltip');
+      var origOnError = image.onerror;
+      image.onerror = function() {
+        origOnError.apply(this);
+        chai.expect(layout.className).to.equal('lp-json-pollock-element-image error');
+        done();
+      };
+      addToBody(fragEl);      
+    });
+  });
+
+  describe('render rtl elements', function () {
+    var rtlCard = {
+      "type": "vertical",
+      "elements": [{
+        "type": "image",
+        "url": "assets/iphone-8-concept.jpg",
+        "tooltip": "image tooltip",
+        "caption": "איזה יופי של תמונה",
+        "rtl": true,
+        "click": {
+          "actions": [{
+            "type": "navigate",
+            "name": "Navigate to store via image",
+            "lo": 23.423423,
+            "la": 2423423423
+          }]
+        }
+      }, {
+        "type": "image",
+        "url": "/wrong_url",
+        "tooltip": "image tooltip",
+        "caption": "איזה חרא של תמונה",
+        "rtl": true,
+        "click": {
+          "actions": [{
+            "type": "navigate",
+            "name": "Navigate to store via image",
+            "lo": 23.423423,
+            "la": 2423423423
+          }]
+        }
+      }, {
+        "type": "text",
+        "text": "אייפון 8",
+        "tooltip": "text tooltip",
+        "rtl": true,
+        "style": {
+          "bold": true,
+          "italic": true,
+          "color": "red",
+          "size": "large"
+        },
+      }, {
+        "type": "button",
+        "tooltip": "button tooltip",
+        "title": "קנה",
+        "rtl": true,
+        "click": {
+          "actions": [{
+            "type": "link",
+            "name": "add to cart",
+            "uri": "http://example.jpg"
+          }]
+        },
+      },]
+    }
+  
+    var fragEl = null;
+    var rooEl = null;
+
+    before(function () {
+      fragEl = JsonPollock.render(rtlCard);
+      rooEl = addToBody(fragEl);
+    });
+
+    function verifyRTL(el) {
+      chai.expect(el.className).to.contain('direction-rtl');
+      chai.expect(el.dir).to.equal('rtl');
+    }
+
+    it('image element should have dir=rtl and \'direction-rtl\' class', function (done) {
+      // special case - we would like the onload callback to be called right after the load
+      // therefore the test is async and we add the fargment to the DOM is the test itself 
+      fragEl = JsonPollock.render(rtlCard);
+      var image = fragEl.childNodes[0].childNodes[0].childNodes[0];
+      var origOnload = image.childNodes[1].onload;
+      image.childNodes[1].onload = function() {        
+        origOnload.apply(this);
+        verifyRTL(image);
+        done();
+      };
+      addToBody(fragEl);      
+    });
+
+    it('broken image element should still have dir=rtl and \'direction-rtl\' class', function (done) {
+      // special case - we would like the onerror callback to be called right after the load
+      // therefore the test is async and we add the fargment to the DOM is the test itself 
+      fragEl = JsonPollock.render(rtlCard);
+      var image = fragEl.childNodes[0].childNodes[0].childNodes[1];
+      var origOnError = image.childNodes[1].onerror;
+      image.childNodes[1].onerror = function() {  
+        origOnError.apply(this);
+        verifyRTL(image);
+        done();
+      };
+      addToBody(fragEl);
+    });
+
+    it('text element should have dir=rtl and \'direction-rtl\' class', function () {
+      var text = rooEl.childNodes[0].childNodes[0].childNodes[2];
+      verifyRTL(text);
+    });
+
+    it('button element should have dir=rtl and \'direction-rtl\' class', function () {
+      var btn = rooEl.childNodes[0].childNodes[0].childNodes[3];
+      verifyRTL(btn);
+    });
+
   });
 
   describe('render layout elements', function () {
@@ -1262,9 +1418,9 @@ describe('json-pollock tests', function () {
         var layout = rooEl.childNodes[0].childNodes[0];
         chai.expect(layout.childNodes[0].localName).to.equal('div');
         chai.expect(layout.childNodes[0].className).to.contain('lp-json-pollock-element-image');  //it can also includes loading
-        chai.expect(layout.childNodes[0].childNodes[0].localName).to.equal('img');
-        chai.expect(layout.childNodes[0].childNodes[0].src).to.equal('http://example.jpg/');
-        chai.expect(layout.childNodes[0].childNodes[0].title).to.equal('image tooltip');
+        chai.expect(layout.childNodes[0].childNodes[1].localName).to.equal('img');
+        chai.expect(layout.childNodes[0].childNodes[1].src).to.contain('assets/iphone-8-concept.jpg');
+        chai.expect(layout.childNodes[0].childNodes[1].title).to.equal('image tooltip');
       });
 
     });
