@@ -23,7 +23,7 @@ export default class ElementRendererProvider {
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
         divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        Utils.addClass(divEl, 'direction-rtl');
       }
       divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
       return divEl;
@@ -35,7 +35,7 @@ export default class ElementRendererProvider {
 
       if (config.rtl) {
         divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        Utils.addClass(divEl, 'direction-rtl');
       }
 
       const btnEl = document.createElement('button');
@@ -64,7 +64,7 @@ export default class ElementRendererProvider {
 
       if (config.rtl) {
         divEl.dir = 'rtl';
-        divEl.className += ' direction-rtl';
+        Utils.addClass(divEl, 'direction-rtl');
       }
 
       const imgEl = document.createElement('img');
@@ -79,15 +79,16 @@ export default class ElementRendererProvider {
       }
 
       if (config.caption) {
-        divEl.innerHTML += `<div>${config.caption}</div>`;
+        divEl.innerHTML += `<span>${config.caption}</span>`;
       }
 
       imgEl.onload = () => {
-        divEl.className = 'lp-json-pollock-element-image';
+        Utils.removeClass(divEl, 'loading');
       };
 
       imgEl.onerror = () => {
-        divEl.className = 'lp-json-pollock-element-image error';
+        Utils.removeClass(divEl, 'loading');
+        Utils.addClass(divEl, 'error');
         divEl.title = 'fail to load image';
         imgEl.style.display = 'none';
       };
@@ -149,7 +150,7 @@ export default class ElementRendererProvider {
                itemCounter < divCarousel.childNodes.length;
                itemCounter += 1) {
             const node = divCarousel.childNodes[itemCounter];
-            (node: any).style.margin = `0 ${padding / 2}px`;
+            (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           }
 
           arrowRight.className = 'layout-carousel-arrow';
@@ -203,7 +204,7 @@ export default class ElementRendererProvider {
                 - divCarouselWrapper.offsetWidth);
               (arrowRight: any).style.visibility = 'hidden';
             }
-            (divCarousel: any).style.left = `${nextLeft}px`;
+            (divCarousel: any).style.left = `${nextLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           };
           arrowLeft.onclick = (event) => {
             currentPos = 0;
@@ -227,7 +228,7 @@ export default class ElementRendererProvider {
                 },
               });
             }
-            (divCarousel: any).style.left = `${nextLeft}px`;
+            (divCarousel: any).style.left = `${nextLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           };
         }
       };
@@ -242,7 +243,7 @@ export default class ElementRendererProvider {
           const percentage = 100 / divEl.childNodes.length;
           Array.prototype.forEach.call(divEl.childNodes, (node) => {
             const n = node;
-            (n: any).style.width = `${percentage}%`;
+            (n: any).style.width = `${percentage}%`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           });
         }
       };
