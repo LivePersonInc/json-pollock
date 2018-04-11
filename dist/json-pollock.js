@@ -2197,7 +2197,7 @@ var LPJsonPollock = function () {
             });
           }
           if (element.afterRender) {
-            element.afterRender.call(element, parent);
+            element.afterRender.call(element);
           }
         }
       }
@@ -6488,36 +6488,45 @@ var ElementRendererProvider = function () {
       var currentPos = 0;
       var arrowRight = document.createElement('div');
       var arrowLeft = document.createElement('div');
-      var divCarousel = document.createElement('div');
+      var divCarouselWrapper = document.createElement('div');
+      var carousel = document.createElement('div');
       var carouselOffsetChangedEventName = 'carouselOffsetChange';
-      divCarousel.afterRender = function (parentContainer) {
-        var divCarouselWrapper = parentContainer;
-        if (divCarousel.childNodes.length) {
-          for (var itemCounter = 0; itemCounter < divCarousel.childNodes.length; itemCounter += 1) {
-            var node = divCarousel.childNodes[itemCounter];
+      divCarouselWrapper.afterRender = function () {
+        if (divCarouselWrapper.childNodes.length) {
+          for (var itemCounter = 0; itemCounter < divCarouselWrapper.childNodes.length; itemCounter += 1) {
+            var node = divCarouselWrapper.childNodes[itemCounter];
             node.style.margin = '0 ' + padding / 2 + 'px';
           }
 
-          arrowRight.className = 'layout-carousel-arrow';
-          arrowLeft.className = 'layout-carousel-arrow left';
+          arrowRight.className = 'lp-json-pollock-layout-carousel-arrow';
+          arrowLeft.className = 'lp-json-pollock-layout-carousel-arrow left';
+
+          /* create carousel wrapper */
+          while (divCarouselWrapper.hasChildNodes()) {
+            carousel.appendChild(divCarouselWrapper.lastChild);
+          }
+
+          divCarouselWrapper.appendChild(carousel);
 
           /* calculate carousel static width */
           var middleItemsWidth = 0;
           var cornerItemsWidth = 2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH) + padding;
-          if (divCarousel.childNodes.length > 2) {
-            middleItemsWidth = (divCarousel.childNodes.length - 2) * (BORDER_WIDTH + CARD_DEFAULT_WIDTH + padding);
+          if (carousel.childNodes.length > 2) {
+            middleItemsWidth = (carousel.childNodes.length - 2) * (BORDER_WIDTH + CARD_DEFAULT_WIDTH + padding);
           }
           var totalWidth = cornerItemsWidth + middleItemsWidth;
-          divCarousel.style.width = totalWidth + 'px';
-          divCarousel.className = 'lp-json-pollock-layout-carousel';
-          divCarouselWrapper.className = 'lp-json-pollock lp-json-pollock-layout-carousel-wrapper';
+          carousel.style.width = totalWidth + 'px';
+          carousel.className = 'lp-json-pollock-layout-carousel';
+          divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
+
+          divCarouselWrapper.appendChild(carousel);
           divCarouselWrapper.appendChild(arrowRight);
           divCarouselWrapper.appendChild(arrowLeft);
           /* TODO: find other trigger. */
           setTimeout(function () {
             /* check if the viewport width is bigger then the carousel div
              * => remove the arrows */
-            if (divCarouselWrapper.offsetWidth > divCarousel.offsetWidth) {
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth) {
               arrowLeft.style.visibility = 'hidden';
               arrowRight.style.visibility = 'hidden';
             }
@@ -6534,8 +6543,8 @@ var ElementRendererProvider = function () {
                 }
               });
             }
-            if (divCarousel.style.left !== '') {
-              currentPos = parseInt(divCarousel.style.left, PARSE_DECIMAL);
+            if (carousel.style.left !== '') {
+              currentPos = parseInt(carousel.style.left, PARSE_DECIMAL);
             }
             /* when click on the right arrow the carousel div will shift to the left */
             nextLeft = currentPos - CARD_DEFAULT_WIDTH - padding - BORDER_WIDTH;
@@ -6543,16 +6552,16 @@ var ElementRendererProvider = function () {
             arrowRight.style.visibility = 'visible';
             /* check if the the viewport width is bigger then the carousel width + the next "Left"
              * value => shift the carousel div to its rightest point */
-            if (divCarouselWrapper.offsetWidth > divCarousel.offsetWidth + nextLeft) {
-              nextLeft = -(divCarousel.offsetWidth + padding - divCarouselWrapper.offsetWidth);
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
+              nextLeft = -(carousel.offsetWidth + padding - divCarouselWrapper.offsetWidth);
               arrowRight.style.visibility = 'hidden';
             }
-            divCarousel.style.left = nextLeft + 'px';
+            carousel.style.left = nextLeft + 'px';
           };
           arrowLeft.onclick = function (event) {
             currentPos = 0;
-            if (divCarousel.style.left !== '') {
-              currentPos = parseInt(divCarousel.style.left, PARSE_DECIMAL);
+            if (carousel.style.left !== '') {
+              currentPos = parseInt(carousel.style.left, PARSE_DECIMAL);
             }
             nextLeft = currentPos + CARD_DEFAULT_WIDTH + padding + BORDER_WIDTH;
             arrowRight.style.visibility = 'visible';
@@ -6571,11 +6580,11 @@ var ElementRendererProvider = function () {
                 }
               });
             }
-            divCarousel.style.left = nextLeft + 'px';
+            carousel.style.left = nextLeft + 'px';
           };
         }
       };
-      return divCarousel;
+      return divCarouselWrapper;
     });
 
     this.set('horizontal', function () {
