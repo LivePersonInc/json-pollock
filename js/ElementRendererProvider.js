@@ -141,39 +141,48 @@ export default class ElementRendererProvider {
       let currentPos = 0;
       const arrowRight = document.createElement('div');
       const arrowLeft = document.createElement('div');
-      const divCarousel = document.createElement('div');
+      const divCarouselWrapper = document.createElement('div');
+      const carousel = document.createElement('div');
       const carouselOffsetChangedEventName = 'carouselOffsetChange';
-      (divCarousel: any).afterRender = (parentContainer: any) => {
-        const divCarouselWrapper = parentContainer;
-        if (divCarousel.childNodes.length) {
+      (divCarouselWrapper: any).afterRender = () => {
+        if (divCarouselWrapper.childNodes.length) {
           for (let itemCounter = 0;
-               itemCounter < divCarousel.childNodes.length;
+               itemCounter < divCarouselWrapper.childNodes.length;
                itemCounter += 1) {
-            const node = divCarousel.childNodes[itemCounter];
+            const node = divCarouselWrapper.childNodes[itemCounter];
             (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           }
 
-          arrowRight.className = 'layout-carousel-arrow';
-          arrowLeft.className = 'layout-carousel-arrow left';
+          arrowRight.className = 'lp-json-pollock-layout-carousel-arrow';
+          arrowLeft.className = 'lp-json-pollock-layout-carousel-arrow left';
+
+          /* create carousel wrapper */
+          while ((divCarouselWrapper: any).hasChildNodes()) {
+            (carousel: any).appendChild(divCarouselWrapper.lastChild);
+          }
+
+          divCarouselWrapper.appendChild(carousel);
 
           /* calculate carousel static width */
           let middleItemsWidth = 0;
           const cornerItemsWidth = (2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH)) + padding;
-          if (divCarousel.childNodes.length > 2) {
-            middleItemsWidth = (divCarousel.childNodes.length - 2) *
-                (BORDER_WIDTH + CARD_DEFAULT_WIDTH + padding);
+          if (carousel.childNodes.length > 2) {
+            middleItemsWidth = (carousel.childNodes.length - 2) *
+              (BORDER_WIDTH + CARD_DEFAULT_WIDTH + padding);
           }
           const totalWidth = cornerItemsWidth + middleItemsWidth;
-          divCarousel.style.width = `${totalWidth}px`;
-          divCarousel.className = 'lp-json-pollock-layout-carousel';
-          divCarouselWrapper.className = 'lp-json-pollock lp-json-pollock-layout-carousel-wrapper';
+          carousel.style.width = `${totalWidth}px`;
+          carousel.className = 'lp-json-pollock-layout-carousel';
+          divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
+
+          divCarouselWrapper.appendChild(carousel);
           divCarouselWrapper.appendChild(arrowRight);
           divCarouselWrapper.appendChild(arrowLeft);
           /* TODO: find other trigger. */
           setTimeout(() => {
             /* check if the viewport width is bigger then the carousel div
              * => remove the arrows */
-            if (divCarouselWrapper.offsetWidth > divCarousel.offsetWidth) {
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth) {
               (arrowLeft: any).style.visibility = 'hidden';
               (arrowRight: any).style.visibility = 'hidden';
             }
@@ -190,8 +199,8 @@ export default class ElementRendererProvider {
                 },
               });
             }
-            if ((divCarousel: any).style.left !== '') {
-              currentPos = parseInt((divCarousel: any).style.left, PARSE_DECIMAL);
+            if ((carousel: any).style.left !== '') {
+              currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
             }
             /* when click on the right arrow the carousel div will shift to the left */
             nextLeft = currentPos - CARD_DEFAULT_WIDTH - (padding) - BORDER_WIDTH;
@@ -199,17 +208,17 @@ export default class ElementRendererProvider {
             (arrowRight: any).style.visibility = 'visible';
             /* check if the the viewport width is bigger then the carousel width + the next "Left"
              * value => shift the carousel div to its rightest point */
-            if (divCarouselWrapper.offsetWidth > divCarousel.offsetWidth + nextLeft) {
-              nextLeft = -((divCarousel.offsetWidth + padding)
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
+              nextLeft = -((carousel.offsetWidth + padding)
                 - divCarouselWrapper.offsetWidth);
               (arrowRight: any).style.visibility = 'hidden';
             }
-            (divCarousel: any).style.left = `${nextLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            (carousel: any).style.left = `${nextLeft}px`;
           };
           arrowLeft.onclick = (event) => {
             currentPos = 0;
-            if ((divCarousel: any).style.left !== '') {
-              currentPos = parseInt((divCarousel: any).style.left, PARSE_DECIMAL);
+            if ((carousel: any).style.left !== '') {
+              currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
             }
             nextLeft = currentPos + CARD_DEFAULT_WIDTH + padding + BORDER_WIDTH;
             (arrowRight: any).style.visibility = 'visible';
@@ -228,11 +237,11 @@ export default class ElementRendererProvider {
                 },
               });
             }
-            (divCarousel: any).style.left = `${nextLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            (carousel: any).style.left = `${nextLeft}px`;// this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           };
         }
       };
-      return divCarousel;
+      return divCarouselWrapper;
     });
 
     this.set('horizontal', (): HTMLElement => {

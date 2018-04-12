@@ -654,14 +654,20 @@ describe('json-pollock tests', function () {
         }
       ]
     };
+
     const conteiner = addToBody(JsonPollock.render(JSON.stringify(conf)));
     const carouselRoot = conteiner.children[0];
+    const carouselRootWrapper = conteiner.children[0].children[0];
     const carouselRootLayout = conteiner.children[0].children[0];
-    const carouselRight = conteiner.children[0].children[1];
-    const carouselLeft = conteiner.children[0].children[2];
+    const carouselRight = conteiner.children[0].children[0].children[1];
+    const carouselLeft = conteiner.children[0].children[0].children[2];
 
     it('carousel root exist', function () {
-      chai.expect(carouselRoot.className).to.contain('lp-json-pollock lp-json-pollock-layout-carousel-wrapper');
+      chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
+    });
+
+    it('carousel wrapper root exist', function () {
+      chai.expect(carouselRootWrapper.className).to.contain('lp-json-pollock-layout-carousel-wrapper');
     });
 
     it('carousel root layout exist', function () {
@@ -669,11 +675,11 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel arrow right exist', function () {
-      chai.expect(carouselRight.className).to.contain('layout-carousel-arrow');
+      chai.expect(carouselRight.className).to.contain('lp-json-pollock-layout-carousel-arrow');
     });
 
     it('carousel arrow left  exist', function () {
-      chai.expect(carouselLeft.className).to.contain('layout-carousel-arrow left');
+      chai.expect(carouselLeft.className).to.contain('lp-json-pollock-layout-carousel-arrow left');
     });
 
     it('carousel elements length equal to conf element length', function () {
