@@ -676,41 +676,53 @@ function resolveIds(schema) {
 "use strict";
 
 
+var isArray = Array.isArray;
+var keyList = Object.keys;
+var hasProp = Object.prototype.hasOwnProperty;
+
 module.exports = function equal(a, b) {
   if (a === b) return true;
 
-  var arrA = Array.isArray(a)
-    , arrB = Array.isArray(b)
-    , i;
+  var arrA = isArray(a)
+    , arrB = isArray(b)
+    , i
+    , length
+    , key;
 
   if (arrA && arrB) {
-    if (a.length != b.length) return false;
-    for (i = 0; i < a.length; i++)
+    length = a.length;
+    if (length != b.length) return false;
+    for (i = 0; i < length; i++)
       if (!equal(a[i], b[i])) return false;
     return true;
   }
 
   if (arrA != arrB) return false;
 
-  if (a && b && typeof a === 'object' && typeof b === 'object') {
-    var keys = Object.keys(a);
-    if (keys.length !== Object.keys(b).length) return false;
+  var dateA = a instanceof Date
+    , dateB = b instanceof Date;
+  if (dateA != dateB) return false;
+  if (dateA && dateB) return a.getTime() == b.getTime();
 
-    var dateA = a instanceof Date
-      , dateB = b instanceof Date;
-    if (dateA && dateB) return a.getTime() == b.getTime();
-    if (dateA != dateB) return false;
+  var regexpA = a instanceof RegExp
+    , regexpB = b instanceof RegExp;
+  if (regexpA != regexpB) return false;
+  if (regexpA && regexpB) return a.toString() == b.toString();
 
-    var regexpA = a instanceof RegExp
-      , regexpB = b instanceof RegExp;
-    if (regexpA && regexpB) return a.toString() == b.toString();
-    if (regexpA != regexpB) return false;
+  if (a instanceof Object && b instanceof Object) {
+    var keys = keyList(a);
+    length = keys.length;
 
-    for (i = 0; i < keys.length; i++)
-      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+    if (length !== keyList(b).length)
+      return false;
 
-    for (i = 0; i < keys.length; i++)
-      if(!equal(a[keys[i]], b[keys[i]])) return false;
+    for (i = 0; i < length; i++)
+      if (!hasProp.call(b, keys[i])) return false;
+
+    for (i = 0; i < length; i++) {
+      key = keys[i];
+      if (!equal(a[key], b[key])) return false;
+    }
 
     return true;
   }
@@ -2279,689 +2291,73 @@ exports.default = LPJsonPollock;
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"title": "Publish Text",
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"publishText"
-					],
-					"default": "publishText",
-					"readonly": true
-				},
-				"text": {
-					"type": "string",
-					"maxLength": 256
-				}
-			},
-			"required": [
-				"type",
-				"text"
-			]
-		},
-		{
-			"title": "navigate",
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"navigate"
-					],
-					"default": "navigate",
-					"readonly": true
-				},
-				"la": {
-					"type": "number"
-				},
-				"lo": {
-					"type": "number"
-				},
-				"name": {
-					"type": "string",
-					"maxLength": 256
-				}
-			},
-			"required": [
-				"type",
-				"la",
-				"lo"
-			]
-		},
-		{
-			"title": "link",
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"link"
-					],
-					"default": "link",
-					"readonly": true
-				},
-				"uri": {
-					"type": "string",
-					"format": "uri",
-					"maxLength": 1024
-				},
-				"name": {
-					"type": "string",
-					"maxLength": 256
-				}
-			},
-			"required": [
-				"type",
-				"uri"
-			]
-		}
-	]
-};
+module.exports = {"oneOf":[{"title":"Publish Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["publishText"],"default":"publishText","readonly":true},"text":{"type":"string","maxLength":256}},"required":["type","text"]},{"title":"navigate","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["navigate"],"default":"navigate","readonly":true},"la":{"type":"number"},"lo":{"type":"number"},"name":{"type":"string","maxLength":256}},"required":["type","la","lo"]},{"title":"link","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["link"],"default":"link","readonly":true},"uri":{"type":"string","format":"uri","maxLength":1024},"name":{"type":"string","maxLength":256}},"required":["type","uri"]}]}
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"$ref": "text.json"
-		},
-		{
-			"$ref": "image.json"
-		},
-		{
-			"$ref": "button.json"
-		},
-		{
-			"$ref": "map.json"
-		},
-		{
-			"$ref": "linkPreview.json"
-		},
-		{
-			"$ref": "template.json"
-		}
-	]
-};
+module.exports = {"oneOf":[{"$ref":"text.json"},{"$ref":"image.json"},{"$ref":"button.json"},{"$ref":"map.json"},{"$ref":"linkPreview.json"},{"$ref":"template.json"}]}
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"additionalProperties": false,
-	"title": "button",
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"button"
-			],
-			"default": "button",
-			"readonly": true
-		},
-		"title": {
-			"type": "string",
-			"maxLength": 128
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"title"
-	]
-};
+module.exports = {"type":"object","additionalProperties":false,"title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["title"]}
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"title": "basic",
-			"$ref": "basic.json"
-		},
-		{
-			"type": "object",
-			"additionalProperties": false,
-			"title": "horizontal",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"horizontal"
-					],
-					"default": "horizontal",
-					"readonly": true
-				},
-				"tag": {
-					"type": "string",
-					"maxLength": 64
-				},
-				"tagVersion": {
-					"type": "string",
-					"maxLength": 64
-				},
-				"elements": {
-					"type": "array",
-					"maxItems": 256,
-					"items": {
-						"$ref": "rich_content.json"
-					}
-				}
-			},
-			"required": [
-				"type",
-				"elements"
-			]
-		},
-		{
-			"type": "object",
-			"additionalProperties": false,
-			"title": "vertical",
-			"properties": {
-				"type": {
-					"type": "string",
-					"enum": [
-						"vertical"
-					],
-					"default": "vertical",
-					"readonly": true
-				},
-				"tag": {
-					"type": "string",
-					"maxLength": 64
-				},
-				"tagVersion": {
-					"type": "string",
-					"maxLength": 64
-				},
-				"elements": {
-					"type": "array",
-					"maxItems": 256,
-					"items": {
-						"$ref": "rich_content.json"
-					}
-				}
-			},
-			"required": [
-				"type",
-				"elements"
-			]
-		}
-	]
-};
+module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","additionalProperties":false,"title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}}},"required":["type","elements"]},{"type":"object","additionalProperties":false,"title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}}},"required":["type","elements"]}]}
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"additionalProperties": false,
-	"title": "carousel",
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"carousel"
-			],
-			"default": "carousel",
-			"readonly": true
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"padding": {
-			"type": "number",
-			"default": 0,
-			"minimum": 0,
-			"maximum": 10
-		},
-		"elements": {
-			"type": "array",
-			"minItems": 2,
-			"maxItems": 10,
-			"items": {
-				"$ref": "card.json"
-			}
-		}
-	},
-	"required": [
-		"type",
-		"elements"
-	]
-};
+module.exports = {"type":"object","additionalProperties":false,"title":"carousel","properties":{"type":{"type":"string","enum":["carousel"],"default":"carousel","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":10,"items":{"$ref":"card.json"}}},"required":["type","elements"]}
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"title": "image",
-	"additionalProperties": false,
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"image"
-			],
-			"default": "image",
-			"readonly": true
-		},
-		"caption": {
-			"type": "string",
-			"maxLength": 128
-		},
-		"url": {
-			"type": "string",
-			"maxLength": 2048
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"url"
-	]
-};
+module.exports = {"type":"object","title":"image","additionalProperties":false,"properties":{"type":{"type":"string","enum":["image"],"default":"image","readonly":true},"caption":{"type":"string","maxLength":128},"url":{"type":"string","maxLength":2048},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["url"]}
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"title": "linkPreview",
-	"additionalProperties": false,
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"linkPreview"
-			],
-			"default": "linkPreview",
-			"readonly": true
-		},
-		"url": {
-			"type": "string",
-			"maxLength": 2048
-		},
-		"title": {
-			"type": "string",
-			"maxLength": 128
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"url"
-	]
-};
+module.exports = {"type":"object","title":"linkPreview","additionalProperties":false,"properties":{"type":{"type":"string","enum":["linkPreview"],"default":"linkPreview","readonly":true},"url":{"type":"string","maxLength":2048},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["url"]}
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"title": "map",
-	"additionalProperties": false,
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"map"
-			],
-			"default": "map",
-			"readonly": true
-		},
-		"lo": {
-			"type": "number"
-		},
-		"la": {
-			"type": "number"
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"lo",
-		"la"
-	]
-};
+module.exports = {"type":"object","title":"map","additionalProperties":false,"properties":{"type":{"type":"string","enum":["map"],"default":"map","readonly":true},"lo":{"type":"number"},"la":{"type":"number"},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["lo","la"]}
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"oneOf": [
-		{
-			"title": "card",
-			"$ref": "card.json"
-		},
-		{
-			"title": "carousel",
-			"$ref": "carousel.json"
-		}
-	]
-};
+module.exports = {"oneOf":[{"title":"card","$ref":"card.json"},{"title":"carousel","$ref":"carousel.json"}]}
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"additionalProperties": false,
-	"properties": {
-		"background-color": {
-			"type": "string",
-			"format": "color",
-			"maxLength": 256
-		},
-		"bold": {
-			"type": "boolean"
-		},
-		"italic": {
-			"type": "boolean"
-		},
-		"color": {
-			"type": "string",
-			"format": "color",
-			"maxLength": 256
-		},
-		"size": {
-			"type": "string",
-			"enum": [
-				"small",
-				"medium",
-				"large"
-			]
-		}
-	}
-};
+module.exports = {"type":"object","additionalProperties":false,"properties":{"background-color":{"type":"string","format":"color","maxLength":256},"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]}}}
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"title": "template",
-	"additionalProperties": false,
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"template"
-			],
-			"default": "template",
-			"readonly": true
-		},
-		"templateType": {
-			"type": "string",
-			"enum": [
-				"quickReply"
-			],
-			"default": "quickReply",
-			"readonly": true
-		},
-		"title": {
-			"type": "string",
-			"maxLength": 5000
-		},
-		"resp": {
-			"type": "array",
-			"maxItems": 32,
-			"minItems": 1,
-			"items": {
-				"type": "string",
-				"maxLength": 128
-			}
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"templateType",
-		"title",
-		"resp"
-	]
-};
+module.exports = {"type":"object","title":"template","additionalProperties":false,"properties":{"type":{"type":"string","enum":["template"],"default":"template","readonly":true},"templateType":{"type":"string","enum":["quickReply"],"default":"quickReply","readonly":true},"title":{"type":"string","maxLength":5000},"resp":{"type":"array","maxItems":32,"minItems":1,"items":{"type":"string","maxLength":128}},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["templateType","title","resp"]}
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"type": "object",
-	"additionalProperties": false,
-	"title": "text",
-	"properties": {
-		"type": {
-			"type": "string",
-			"enum": [
-				"text"
-			],
-			"default": "text",
-			"readonly": true
-		},
-		"text": {
-			"type": "string",
-			"maxLength": 5000
-		},
-		"rtl": {
-			"type": "boolean"
-		},
-		"tooltip": {
-			"type": "string",
-			"maxLength": 256
-		},
-		"tag": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"tagVersion": {
-			"type": "string",
-			"maxLength": 64
-		},
-		"style": {
-			"$ref": "style.json"
-		},
-		"click": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"actions": {
-					"type": "array",
-					"maxItems": 4,
-					"items": {
-						"$ref": "action.json"
-					}
-				},
-				"metadata": {
-					"type": "array"
-				}
-			}
-		}
-	},
-	"required": [
-		"text"
-	]
-};
+module.exports = {"type":"object","additionalProperties":false,"title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["text"]}
 
 /***/ }),
 /* 28 */
@@ -3152,11 +2548,12 @@ function compile(schema, _meta) {
  * @param {String} key Optional schema key. Can be passed to `validate` method instead of schema object or id/ref. One schema per instance can have empty `id` and `key`.
  * @param {Boolean} _skipValidation true to skip schema validation. Used internally, option validateSchema should be used instead.
  * @param {Boolean} _meta true if schema is a meta-schema. Used internally, addMetaSchema should be used instead.
+ * @return {Ajv} this for method chaining
  */
 function addSchema(schema, key, _skipValidation, _meta) {
   if (Array.isArray(schema)){
     for (var i=0; i<schema.length; i++) this.addSchema(schema[i], undefined, _skipValidation, _meta);
-    return;
+    return this;
   }
   var id = this._getId(schema);
   if (id !== undefined && typeof id != 'string')
@@ -3164,6 +2561,7 @@ function addSchema(schema, key, _skipValidation, _meta) {
   key = resolve.normalizeId(key || id);
   checkUnique(this, key);
   this._schemas[key] = this._addSchema(schema, _skipValidation, _meta, true);
+  return this;
 }
 
 
@@ -3174,9 +2572,11 @@ function addSchema(schema, key, _skipValidation, _meta) {
  * @param {Object} schema schema object
  * @param {String} key optional schema key
  * @param {Boolean} skipValidation true to skip schema validation, can be used to override validateSchema option for meta-schema
+ * @return {Ajv} this for method chaining
  */
 function addMetaSchema(schema, key, skipValidation) {
   this.addSchema(schema, key, skipValidation, true);
+  return this;
 }
 
 
@@ -3273,25 +2673,26 @@ function _getSchemaObj(self, keyRef) {
  * Even if schema is referenced by other schemas it still can be removed as other schemas have local references.
  * @this   Ajv
  * @param  {String|Object|RegExp} schemaKeyRef key, ref, pattern to match key/ref or schema object
+ * @return {Ajv} this for method chaining
  */
 function removeSchema(schemaKeyRef) {
   if (schemaKeyRef instanceof RegExp) {
     _removeAllSchemas(this, this._schemas, schemaKeyRef);
     _removeAllSchemas(this, this._refs, schemaKeyRef);
-    return;
+    return this;
   }
   switch (typeof schemaKeyRef) {
     case 'undefined':
       _removeAllSchemas(this, this._schemas);
       _removeAllSchemas(this, this._refs);
       this._cache.clear();
-      return;
+      return this;
     case 'string':
       var schemaObj = _getSchemaObj(this, schemaKeyRef);
       if (schemaObj) this._cache.del(schemaObj.cacheKey);
       delete this._schemas[schemaKeyRef];
       delete this._refs[schemaKeyRef];
-      return;
+      return this;
     case 'object':
       var serialize = this._opts.serialize;
       var cacheKey = serialize ? serialize(schemaKeyRef) : schemaKeyRef;
@@ -3303,6 +2704,7 @@ function removeSchema(schemaKeyRef) {
         delete this._refs[id];
       }
   }
+  return this;
 }
 
 
@@ -3453,10 +2855,12 @@ function errorsText(errors, options) {
  * @this   Ajv
  * @param {String} name format name
  * @param {String|RegExp|Function} format string is converted to RegExp; function should return boolean (true when valid)
+ * @return {Ajv} this for method chaining
  */
 function addFormat(name, format) {
   if (typeof format == 'string') format = new RegExp(format);
   this._formats[name] = format;
+  return this;
 }
 
 
@@ -6769,6 +6173,7 @@ module.exports = {
  * @this  Ajv
  * @param {String} keyword custom keyword, should be unique (including different from all standard, custom and macro keywords).
  * @param {Object} definition keyword definition object with properties `type` (type(s) which the keyword applies to), `validate` or `compile`.
+ * @return {Ajv} this for method chaining
  */
 function addKeyword(keyword, definition) {
   /* jshint validthis: true */
@@ -6846,6 +6251,8 @@ function addKeyword(keyword, definition) {
   function checkDataType(dataType) {
     if (!RULES.types[dataType]) throw new Error('Unknown type ' + dataType);
   }
+
+  return this;
 }
 
 
@@ -6866,6 +6273,7 @@ function getKeyword(keyword) {
  * Remove keyword
  * @this  Ajv
  * @param {String} keyword pre-defined or custom keyword.
+ * @return {Ajv} this for method chaining
  */
 function removeKeyword(keyword) {
   /* jshint validthis: true */
@@ -6882,6 +6290,7 @@ function removeKeyword(keyword) {
       }
     }
   }
+  return this;
 }
 
 
@@ -6932,249 +6341,13 @@ module.exports = function (ajv) {
 /* 57 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"$schema": "http://json-schema.org/draft-06/schema#",
-	"$id": "https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#",
-	"description": "Meta-schema for $data reference (JSON-schema extension proposal)",
-	"type": "object",
-	"required": [
-		"$data"
-	],
-	"properties": {
-		"$data": {
-			"type": "string",
-			"anyOf": [
-				{
-					"format": "relative-json-pointer"
-				},
-				{
-					"format": "json-pointer"
-				}
-			]
-		}
-	},
-	"additionalProperties": false
-};
+module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#","description":"Meta-schema for $data reference (JSON-schema extension proposal)","type":"object","required":["$data"],"properties":{"$data":{"type":"string","anyOf":[{"format":"relative-json-pointer"},{"format":"json-pointer"}]}},"additionalProperties":false}
 
 /***/ }),
 /* 58 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"$schema": "http://json-schema.org/draft-06/schema#",
-	"$id": "http://json-schema.org/draft-06/schema#",
-	"title": "Core schema meta-schema",
-	"definitions": {
-		"schemaArray": {
-			"type": "array",
-			"minItems": 1,
-			"items": {
-				"$ref": "#"
-			}
-		},
-		"nonNegativeInteger": {
-			"type": "integer",
-			"minimum": 0
-		},
-		"nonNegativeIntegerDefault0": {
-			"allOf": [
-				{
-					"$ref": "#/definitions/nonNegativeInteger"
-				},
-				{
-					"default": 0
-				}
-			]
-		},
-		"simpleTypes": {
-			"enum": [
-				"array",
-				"boolean",
-				"integer",
-				"null",
-				"number",
-				"object",
-				"string"
-			]
-		},
-		"stringArray": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"uniqueItems": true,
-			"default": []
-		}
-	},
-	"type": [
-		"object",
-		"boolean"
-	],
-	"properties": {
-		"$id": {
-			"type": "string",
-			"format": "uri-reference"
-		},
-		"$schema": {
-			"type": "string",
-			"format": "uri"
-		},
-		"$ref": {
-			"type": "string",
-			"format": "uri-reference"
-		},
-		"title": {
-			"type": "string"
-		},
-		"description": {
-			"type": "string"
-		},
-		"default": {},
-		"examples": {
-			"type": "array",
-			"items": {}
-		},
-		"multipleOf": {
-			"type": "number",
-			"exclusiveMinimum": 0
-		},
-		"maximum": {
-			"type": "number"
-		},
-		"exclusiveMaximum": {
-			"type": "number"
-		},
-		"minimum": {
-			"type": "number"
-		},
-		"exclusiveMinimum": {
-			"type": "number"
-		},
-		"maxLength": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minLength": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"pattern": {
-			"type": "string",
-			"format": "regex"
-		},
-		"additionalItems": {
-			"$ref": "#"
-		},
-		"items": {
-			"anyOf": [
-				{
-					"$ref": "#"
-				},
-				{
-					"$ref": "#/definitions/schemaArray"
-				}
-			],
-			"default": {}
-		},
-		"maxItems": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minItems": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"uniqueItems": {
-			"type": "boolean",
-			"default": false
-		},
-		"contains": {
-			"$ref": "#"
-		},
-		"maxProperties": {
-			"$ref": "#/definitions/nonNegativeInteger"
-		},
-		"minProperties": {
-			"$ref": "#/definitions/nonNegativeIntegerDefault0"
-		},
-		"required": {
-			"$ref": "#/definitions/stringArray"
-		},
-		"additionalProperties": {
-			"$ref": "#"
-		},
-		"definitions": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"properties": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"patternProperties": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#"
-			},
-			"default": {}
-		},
-		"dependencies": {
-			"type": "object",
-			"additionalProperties": {
-				"anyOf": [
-					{
-						"$ref": "#"
-					},
-					{
-						"$ref": "#/definitions/stringArray"
-					}
-				]
-			}
-		},
-		"propertyNames": {
-			"$ref": "#"
-		},
-		"const": {},
-		"enum": {
-			"type": "array",
-			"minItems": 1,
-			"uniqueItems": true
-		},
-		"type": {
-			"anyOf": [
-				{
-					"$ref": "#/definitions/simpleTypes"
-				},
-				{
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/simpleTypes"
-					},
-					"minItems": 1,
-					"uniqueItems": true
-				}
-			]
-		},
-		"format": {
-			"type": "string"
-		},
-		"allOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"anyOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"oneOf": {
-			"$ref": "#/definitions/schemaArray"
-		},
-		"not": {
-			"$ref": "#"
-		}
-	},
-	"default": {}
-};
+module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"http://json-schema.org/draft-06/schema#","title":"Core schema meta-schema","definitions":{"schemaArray":{"type":"array","minItems":1,"items":{"$ref":"#"}},"nonNegativeInteger":{"type":"integer","minimum":0},"nonNegativeIntegerDefault0":{"allOf":[{"$ref":"#/definitions/nonNegativeInteger"},{"default":0}]},"simpleTypes":{"enum":["array","boolean","integer","null","number","object","string"]},"stringArray":{"type":"array","items":{"type":"string"},"uniqueItems":true,"default":[]}},"type":["object","boolean"],"properties":{"$id":{"type":"string","format":"uri-reference"},"$schema":{"type":"string","format":"uri"},"$ref":{"type":"string","format":"uri-reference"},"title":{"type":"string"},"description":{"type":"string"},"default":{},"examples":{"type":"array","items":{}},"multipleOf":{"type":"number","exclusiveMinimum":0},"maximum":{"type":"number"},"exclusiveMaximum":{"type":"number"},"minimum":{"type":"number"},"exclusiveMinimum":{"type":"number"},"maxLength":{"$ref":"#/definitions/nonNegativeInteger"},"minLength":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"pattern":{"type":"string","format":"regex"},"additionalItems":{"$ref":"#"},"items":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/schemaArray"}],"default":{}},"maxItems":{"$ref":"#/definitions/nonNegativeInteger"},"minItems":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"uniqueItems":{"type":"boolean","default":false},"contains":{"$ref":"#"},"maxProperties":{"$ref":"#/definitions/nonNegativeInteger"},"minProperties":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"required":{"$ref":"#/definitions/stringArray"},"additionalProperties":{"$ref":"#"},"definitions":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"properties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"patternProperties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"dependencies":{"type":"object","additionalProperties":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/stringArray"}]}},"propertyNames":{"$ref":"#"},"const":{},"enum":{"type":"array","minItems":1,"uniqueItems":true},"type":{"anyOf":[{"$ref":"#/definitions/simpleTypes"},{"type":"array","items":{"$ref":"#/definitions/simpleTypes"},"minItems":1,"uniqueItems":true}]},"format":{"type":"string"},"allOf":{"$ref":"#/definitions/schemaArray"},"anyOf":{"$ref":"#/definitions/schemaArray"},"oneOf":{"$ref":"#/definitions/schemaArray"},"not":{"$ref":"#"}},"default":{}}
 
 /***/ }),
 /* 59 */
@@ -7352,7 +6525,7 @@ var ElementRendererProvider = function () {
 
           /* create carousel wrapper */
           while (divCarouselWrapper.hasChildNodes()) {
-            carousel.appendChild(divCarouselWrapper.lastChild);
+            carousel.insertBefore(divCarouselWrapper.lastChild, carousel.firstChild);
           }
 
           divCarouselWrapper.appendChild(carousel);
