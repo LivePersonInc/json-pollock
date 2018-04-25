@@ -158,7 +158,7 @@ export default class ElementRendererProvider {
 
           /* create carousel wrapper */
           while ((divCarouselWrapper: any).hasChildNodes()) {
-            (carousel: any).appendChild(divCarouselWrapper.lastChild);
+            (carousel: any).insertBefore(divCarouselWrapper.lastChild, carousel.firstChild);
           }
 
           divCarouselWrapper.appendChild(carousel);
