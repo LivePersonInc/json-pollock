@@ -516,8 +516,8 @@ describe('json-pollock tests', function () {
           "elements": [
             {
               "type": "text",
-              "text": "SIM only plan",
-              "tooltip": "SIM only plan",
+              "text": "1",
+              "tooltip": "1",
               "rtl": false,
               "style": {
                 "bold": false,
@@ -563,8 +563,8 @@ describe('json-pollock tests', function () {
           "elements": [
             {
               "type": "text",
-              "text": "Swap plan",
-              "tooltip": "Swap plan",
+              "text": "2",
+              "tooltip": "2",
               "rtl": false,
               "style": {
                 "bold": false,
@@ -610,8 +610,8 @@ describe('json-pollock tests', function () {
           "elements": [
             {
               "type": "text",
-              "text": "Mobiles on a plan",
-              "tooltip": "Mobiles on a plan",
+              "text": "3",
+              "tooltip": "3",
               "rtl": false,
               "style": {
                 "bold": false,
@@ -661,6 +661,9 @@ describe('json-pollock tests', function () {
     const carouselRootLayout = conteiner.children[0].children[0];
     const carouselRight = conteiner.children[0].children[0].children[1];
     const carouselLeft = conteiner.children[0].children[0].children[2];
+    const card1 = carouselRootLayout.children[0].children[0];
+    const card2 = carouselRootLayout.children[0].children[1];
+    const card3 = carouselRootLayout.children[0].children[2];
 
     it('carousel root exist', function () {
       chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
@@ -684,6 +687,12 @@ describe('json-pollock tests', function () {
 
     it('carousel elements length equal to conf element length', function () {
       chai.expect(carouselRootLayout.children.length).to.be.equal(conf.elements.length);
+    });
+
+    it('carousel elements are in the right order', function () {
+      chai.expect(card1.children[0].innerText).to.be.equal('1');
+      chai.expect(card2.children[0].innerText).to.be.equal('2');
+      chai.expect(card3.children[0].innerText).to.be.equal('3');
     });
   });
 
