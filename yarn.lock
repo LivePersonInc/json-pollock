@@ -3420,8 +3420,8 @@ json-loader@^0.5.4:
   resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
 
 json-pollock@^1.0.22:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/json-pollock/-/json-pollock-1.1.4.tgz#2f27f29a8ecc8e3a8cb6b3448b36332ba3bf9cb2"
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/json-pollock/-/json-pollock-1.1.5.tgz#9056d181b33043c2a240cc0e8f9de70ed8a26a15"
   dependencies:
     ajv "^5.4.0"
     chronosjs "^0.0.23"
@@ -3449,8 +3449,8 @@ json5@^0.5.0, json5@^0.5.1:
   resolved "https://registry.yarnpkg.com/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
 jsoneditor@^5.10.1:
-  version "5.14.1"
-  resolved "https://registry.yarnpkg.com/jsoneditor/-/jsoneditor-5.14.1.tgz#30fbb4b78ae431d46ab31b2d79401339a7367ad9"
+  version "5.15.0"
+  resolved "https://registry.yarnpkg.com/jsoneditor/-/jsoneditor-5.15.0.tgz#dd8909f15ef14fb2b96f26505505cb6cba6cf4e7"
   dependencies:
     ajv "5.5.2"
     brace "0.11.0"
