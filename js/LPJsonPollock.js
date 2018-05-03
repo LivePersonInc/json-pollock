@@ -95,18 +95,11 @@ export default class LPJsonPollock {
     }
   }
 
-  render(json: Object|string): DocumentFragment {
+  render(json: Object|string, options: Object = {}): DocumentFragment {
     let jsonObj: Object;
-    if (Utils.isString(json)) {
-      // This will throws an error if fails
-      jsonObj = JSON.parse((json: any));
-    } else {
-      jsonObj = (json: any);
-    }
-    this.jsonValidator(jsonObj);
-    if (this.jsonValidator.errors) {
-      throw new JsonPollockError('Schema validation error, see \'errors\' for more details', this.jsonValidator.errors);
-    }
+	  if (!options.skipValidation) {
+		  jsonObj = validate(json);
+	  }
     const frag = document.createDocumentFragment();
     const divEl = document.createElement('div');
     divEl.className = 'lp-json-pollock';
@@ -117,6 +110,21 @@ export default class LPJsonPollock {
     this.renderElement(jsonObj, divEl);
     return frag;
   }
+
+	validate() {
+		let jsonObj: Object;
+		if (Utils.isString(json)) {
+			// This will throw an error on fail
+			jsonObj = JSON.parse((json: any));
+		} else {
+			jsonObj = (json: any);
+		}
+		this.jsonValidator(jsonObj);
+		if (this.jsonValidator.errors) {
+			throw new JsonPollockError('Schema validation error, see \'errors\' for more details', this.jsonValidator.errors);
+		}
+		return jsonObj;
+	}
 
   registerAction(actionName: string, callback: Function) {
     this.events.bind({
