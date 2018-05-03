@@ -1,22 +1,22 @@
 {
-    "oneOf": [
-        {
-            "$ref": "text.json"
-        },
-        {
-            "$ref": "image.json"
-        },
-        {
-            "$ref": "button.json"
-        },
-        {
-            "$ref": "map.json"
-        },
-        {
-            "$ref": "linkPreview.json"
-        },
-        {
-            "$ref": "template.json"
-        }
-    ]
+  "oneOf": [
+    {
+      "$ref": "text.json"
+    },
+    {
+      "$ref": "image.json"
+    },
+    {
+      "$ref": "button.json"
+    },
+    {
+      "$ref": "map.json"
+    },
+    {
+      "$ref": "linkPreview.json"
+    },
+    {
+      "$ref": "template.json"
+    }
+  ]
 }

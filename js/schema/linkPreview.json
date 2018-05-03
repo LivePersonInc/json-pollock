@@ -5,9 +5,7 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": [
-        "linkPreview"
-      ],
+      "enum": ["linkPreview"],
       "default": "linkPreview",
       "readonly": true
     },
@@ -54,7 +52,5 @@
       }
     }
   },
-  "required": [
-    "url"
-  ]
+  "required": ["url"]
 }

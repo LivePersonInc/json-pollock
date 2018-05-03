@@ -6,7 +6,7 @@
     },
     {
       "type": "object",
-      "additionalProperties" : false,
+      "additionalProperties": false,
       "title": "horizontal",
       "properties": {
         "type": {
@@ -35,7 +35,7 @@
     },
     {
       "type": "object",
-      "additionalProperties" : false,
+      "additionalProperties": false,
       "title": "vertical",
       "properties": {
         "type": {

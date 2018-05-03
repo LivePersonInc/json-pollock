@@ -5,9 +5,7 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": [
-        "map"
-      ],
+      "enum": ["map"],
       "default": "map",
       "readonly": true
     },
@@ -52,8 +50,5 @@
       }
     }
   },
-  "required": [
-    "lo",
-    "la"
-  ]
+  "required": ["lo", "la"]
 }
