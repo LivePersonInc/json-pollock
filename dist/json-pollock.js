@@ -2355,6 +2355,39 @@ module.exports = {
 				"name": {
 					"type": "string",
 					"maxLength": 256
+				},
+				"ios": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"uri": {
+							"type": "string",
+							"format": "uri",
+							"maxLength": 1024
+						}
+					}
+				},
+				"android": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"uri": {
+							"type": "string",
+							"format": "uri",
+							"maxLength": 1024
+						}
+					}
+				},
+				"web": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"uri": {
+							"type": "string",
+							"format": "uri",
+							"maxLength": 1024
+						}
+					}
 				}
 			},
 			"required": [
@@ -2799,6 +2832,14 @@ module.exports = {
 			"type": "string",
 			"format": "color",
 			"maxLength": 256
+		},
+		"border-color": {
+			"type": "string",
+			"format": "color",
+			"maxLength": 256
+		},
+		"border-radius": {
+			"type": "number"
 		},
 		"bold": {
 			"type": "boolean"
@@ -8343,7 +8384,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.1.4';
+var version = '1.1.5';
 
 exports.init = init;
 exports.render = render;
