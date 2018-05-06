@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "additionalProperties" : false,
+  "additionalProperties": false,
 
   "title": "button",
   "properties": {
@@ -34,7 +34,7 @@
     },
     "click": {
       "type": "object",
-      "additionalProperties" : false,
+      "additionalProperties": false,
       "properties": {
         "actions": {
           "type": "array",

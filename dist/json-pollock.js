@@ -1712,6 +1712,27 @@ exports.default = {
     return text.replace(/[&<>"'`=/]/g, function (s) {
       return map[s];
     });
+  },
+  hasClass: function hasClass(el, className) {
+    if (el.classList && el.classList.contains) {
+      return el.classList.contains(className);
+    }
+    return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+  },
+  addClass: function addClass(el, className) {
+    if (el.classList) {
+      el.classList.add(className);
+    } else if (!this.hasClass(el, className)) {
+      el.className += ' ' + className; // eslint-disable-line no-param-reassign
+    }
+  },
+  removeClass: function removeClass(el, className) {
+    if (el.classList) {
+      el.classList.remove(className);
+    } else if (this.hasClass(el, className)) {
+      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+      el.className = el.className.replace(reg, ' '); // eslint-disable-line no-param-reassign
+    }
   }
 };
 
@@ -2118,7 +2139,6 @@ var JsonPollockError = function (_Error) {
     var _this = _possibleConstructorReturn(this, (JsonPollockError.__proto__ || Object.getPrototypeOf(JsonPollockError)).call(this, message));
 
     _this.errors = errors;
-    // console.log(JSON.stringify(errors));
     return _this;
   }
 
@@ -2176,7 +2196,7 @@ var LPJsonPollock = function () {
       var elementRenderer = this.provider.get(elJson.type);
       var element = void 0;
       if (elementRenderer) {
-        element = elementRenderer(elJson, parent);
+        element = elementRenderer(elJson);
         if (element) {
           parent.appendChild(element);
           if (Array.isArray(elJson.elements)) {
@@ -2335,6 +2355,39 @@ module.exports = {
 				"name": {
 					"type": "string",
 					"maxLength": 256
+				},
+				"ios": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"uri": {
+							"type": "string",
+							"format": "uri",
+							"maxLength": 1024
+						}
+					}
+				},
+				"android": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"uri": {
+							"type": "string",
+							"format": "uri",
+							"maxLength": 1024
+						}
+					}
+				},
+				"web": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"uri": {
+							"type": "string",
+							"format": "uri",
+							"maxLength": 1024
+						}
+					}
 				}
 			},
 			"required": [
@@ -2775,6 +2828,19 @@ module.exports = {
 	"type": "object",
 	"additionalProperties": false,
 	"properties": {
+		"background-color": {
+			"type": "string",
+			"format": "color",
+			"maxLength": 256
+		},
+		"border-color": {
+			"type": "string",
+			"format": "color",
+			"maxLength": 256
+		},
+		"border-radius": {
+			"type": "number"
+		},
 		"bold": {
 			"type": "boolean"
 		},
@@ -7189,24 +7255,24 @@ var ElementRendererProvider = function () {
     predefined renderes
     */
     this.set('text', function (config) {
-      var divCarouselWrapper = document.createElement('div');
+      var divEl = document.createElement('div');
       var tooltip = config.tooltip ? _Utils2.default.escapeHtml(config.tooltip) : '';
-      divCarouselWrapper.className = 'lp-json-pollock-element-text';
+      divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        _Utils2.default.addClass(divEl, 'direction-rtl');
       }
-      divCarouselWrapper.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
-      return divCarouselWrapper;
+      divEl.innerHTML = '<span style="' + _Utils2.default.styleToCss(config.style) + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
+      return divEl;
     });
 
     this.set('button', function (config) {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-button';
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-button';
 
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        _Utils2.default.addClass(divEl, 'direction-rtl');
       }
 
       var btnEl = document.createElement('button');
@@ -7224,18 +7290,18 @@ var ElementRendererProvider = function () {
         btnEl.onclick = _this.wrapAction(config.click);
       }
 
-      divCarouselWrapper.appendChild(btnEl);
+      divEl.appendChild(btnEl);
 
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('image', function (config) {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-image loading';
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-image loading';
 
       if (config.rtl) {
-        divCarouselWrapper.dir = 'rtl';
-        divCarouselWrapper.className += ' direction-rtl';
+        divEl.dir = 'rtl';
+        _Utils2.default.addClass(divEl, 'direction-rtl');
       }
 
       var imgEl = document.createElement('img');
@@ -7250,92 +7316,93 @@ var ElementRendererProvider = function () {
       }
 
       if (config.caption) {
-        divCarouselWrapper.innerHTML += '<div>' + config.caption + '</div>';
+        divEl.innerHTML += '<span>' + config.caption + '</span>';
       }
 
       imgEl.onload = function () {
-        divCarouselWrapper.className = 'lp-json-pollock-element-image';
+        _Utils2.default.removeClass(divEl, 'loading');
       };
 
       imgEl.onerror = function () {
-        divCarouselWrapper.className = 'lp-json-pollock-element-image error';
-        divCarouselWrapper.title = 'fail to load image';
+        _Utils2.default.removeClass(divEl, 'loading');
+        _Utils2.default.addClass(divEl, 'error');
+        divEl.title = 'fail to load image';
         imgEl.style.display = 'none';
       };
 
       if (config.click && config.click.actions) {
         imgEl.onclick = _this.wrapAction(config.click);
       }
-      divCarouselWrapper.appendChild(imgEl);
+      divEl.appendChild(imgEl);
 
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('map', function (config) {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-element-map';
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-map';
 
       if (config.tooltip) {
-        divCarouselWrapper.title = config.tooltip;
-        divCarouselWrapper.setAttribute('aria-label', config.tooltip);
+        divEl.title = config.tooltip;
+        divEl.setAttribute('aria-label', config.tooltip);
       }
 
       if (config.style) {
-        divCarouselWrapper.style.cssText = _Utils2.default.styleToCss(config.style);
+        divEl.style.cssText = _Utils2.default.styleToCss(config.style);
       }
 
       if (config.click && config.click.actions) {
-        divCarouselWrapper.onclick = _this.wrapAction(config.click);
+        divEl.onclick = _this.wrapAction(config.click);
       } else {
         // navigate to the location
-        divCarouselWrapper.onclick = function () {
+        divEl.onclick = function () {
           window.open('https://www.google.com/maps/search/?api=1&query=' + config.lo + ',' + config.la, '_blank');
         };
       }
-      return divCarouselWrapper;
+      return divEl;
     });
 
     this.set('vertical', function () {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
-      return divCarouselWrapper;
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      return divEl;
     });
 
     this.set('carousel', function (config) {
+      var defaultPadding = 0;
+      var padding = config.padding || defaultPadding;
       var CARD_DEFAULT_WIDTH = 180;
       var PARSE_DECIMAL = 10;
       var BORDER_WIDTH = 2;
+      var nextLeft = 0;
+      var currentPos = 0;
       var arrowRight = document.createElement('div');
       var arrowLeft = document.createElement('div');
-
       var divCarouselWrapper = document.createElement('div');
+      var carousel = document.createElement('div');
+      var carouselOffsetChangedEventName = 'carouselOffsetChange';
       divCarouselWrapper.afterRender = function () {
         if (divCarouselWrapper.childNodes.length) {
           for (var itemCounter = 0; itemCounter < divCarouselWrapper.childNodes.length; itemCounter += 1) {
             var node = divCarouselWrapper.childNodes[itemCounter];
-            // if (itemCounter === 0) {
-            //   (node: any).style['margin-right'] = `${config.padding / 2}px`;
-            // } else if (itemCounter === (divCarouselWrapper.childNodes.length - 1)) {
-            //   (node: any).style['margin-left'] = `${config.padding / 2}px`;
-            // } else {
-            // }
-            node.style.margin = '0 ' + config.padding / 2 + 'px';
+            node.style.margin = '0 ' + padding / 2 + 'px'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           }
 
-          arrowRight.className = 'layout-carousel-arrow';
-          arrowLeft.className = 'layout-carousel-arrow left';
+          arrowRight.className = 'lp-json-pollock-layout-carousel-arrow';
+          arrowLeft.className = 'lp-json-pollock-layout-carousel-arrow left';
 
           /* create carousel wrapper */
-          var carousel = divCarouselWrapper.cloneNode(true);
           while (divCarouselWrapper.hasChildNodes()) {
-            divCarouselWrapper.removeChild(divCarouselWrapper.lastChild);
+            carousel.insertBefore(divCarouselWrapper.lastChild, carousel.firstChild);
           }
+
+          divCarouselWrapper.appendChild(carousel);
 
           /* calculate carousel static width */
           var middleItemsWidth = 0;
-          var cornerItemsWidth = 2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH) + config.padding;
+          var cornerItemsWidth = 2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH) + padding;
           if (carousel.childNodes.length > 2) {
-            middleItemsWidth = (carousel.childNodes.length - 2) * (BORDER_WIDTH + CARD_DEFAULT_WIDTH + config.padding);
+            middleItemsWidth = (carousel.childNodes.length - 2) * (BORDER_WIDTH + CARD_DEFAULT_WIDTH + padding);
           }
           var totalWidth = cornerItemsWidth + middleItemsWidth;
           carousel.style.width = totalWidth + 'px';
@@ -7354,37 +7421,56 @@ var ElementRendererProvider = function () {
               arrowRight.style.visibility = 'hidden';
             }
           }, 0);
-
-          arrowRight.onclick = function () {
-            var currentPos = 0;
+          arrowRight.onclick = function (event) {
+            currentPos = 0;
+            if (nextLeft === 0) {
+              _this.events.trigger({
+                eventName: carouselOffsetChangedEventName,
+                data: {
+                  offset: nextLeft,
+                  prevOffset: currentPos,
+                  uiEvent: event
+                }
+              });
+            }
             if (carousel.style.left !== '') {
               currentPos = parseInt(carousel.style.left, PARSE_DECIMAL);
             }
             /* when click on the right arrow the carousel div will shift to the left */
-            var nextLeft = currentPos - CARD_DEFAULT_WIDTH - config.padding - BORDER_WIDTH;
+            nextLeft = currentPos - CARD_DEFAULT_WIDTH - padding - BORDER_WIDTH;
             arrowLeft.style.visibility = 'visible';
             arrowRight.style.visibility = 'visible';
             /* check if the the viewport width is bigger then the carousel width + the next "Left"
              * value => shift the carousel div to its rightest point */
             if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
-              nextLeft = -(carousel.offsetWidth + config.padding - divCarouselWrapper.offsetWidth);
+              nextLeft = -(carousel.offsetWidth + padding - divCarouselWrapper.offsetWidth);
               arrowRight.style.visibility = 'hidden';
             }
             carousel.style.left = nextLeft + 'px';
           };
-          arrowLeft.onclick = function () {
-            var currentPos = 0;
+          arrowLeft.onclick = function (event) {
+            currentPos = 0;
             if (carousel.style.left !== '') {
               currentPos = parseInt(carousel.style.left, PARSE_DECIMAL);
             }
-            var nextLeft = currentPos + CARD_DEFAULT_WIDTH + config.padding + BORDER_WIDTH;
+            nextLeft = currentPos + CARD_DEFAULT_WIDTH + padding + BORDER_WIDTH;
             arrowRight.style.visibility = 'visible';
             if (nextLeft >= 0) {
               nextLeft = 0;
               arrowLeft.style.visibility = 'hidden';
               arrowRight.style.visibility = 'visible';
             }
-            carousel.style.left = nextLeft + 'px';
+            if (nextLeft === 0) {
+              _this.events.trigger({
+                eventName: carouselOffsetChangedEventName,
+                data: {
+                  offset: nextLeft,
+                  prevOffset: currentPos,
+                  uiEvent: event
+                }
+              });
+            }
+            carousel.style.left = nextLeft + 'px'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           };
         }
       };
@@ -7392,18 +7478,18 @@ var ElementRendererProvider = function () {
     });
 
     this.set('horizontal', function () {
-      var divCarouselWrapper = document.createElement('div');
-      divCarouselWrapper.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
-      divCarouselWrapper.afterRender = function () {
-        if (divCarouselWrapper.childNodes.length) {
-          var percentage = 100 / divCarouselWrapper.childNodes.length;
-          Array.prototype.forEach.call(divCarouselWrapper.childNodes, function (node) {
+      var divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      divEl.afterRender = function () {
+        if (divEl.childNodes.length) {
+          var percentage = 100 / divEl.childNodes.length;
+          Array.prototype.forEach.call(divEl.childNodes, function (node) {
             var n = node;
-            n.style.width = percentage + '%';
+            n.style.width = percentage + '%'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           });
         }
       };
-      return divCarouselWrapper;
+      return divEl;
     });
   }
 
@@ -7422,14 +7508,15 @@ var ElementRendererProvider = function () {
     value: function wrapAction(clickData) {
       var _this2 = this;
 
-      return function () {
+      return function (event) {
         if (clickData.actions instanceof Array) {
           clickData.actions.forEach(function (actionData) {
             _this2.events.trigger({
               eventName: actionData.type,
               data: {
                 actionData: actionData,
-                metadata: clickData.metadata
+                metadata: clickData.metadata,
+                uiEvent: event
               }
             });
           });
@@ -8297,7 +8384,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.0.25';
+var version = '1.1.5';
 
 exports.init = init;
 exports.render = render;

@@ -5,6 +5,7 @@ Json-Pollock
 [![Build Status](https://travis-ci.org/LivePersonInc/json-pollock.svg?branch=master)](https://travis-ci.org/LivePersonInc/json-pollock)
 [![GitHub license](https://img.shields.io/github/license/LivePersonInc/json-pollock.svg)](https://github.com/LivePersonInc/json-pollock/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/npm/dt/json-pollock.svg)](https://www.npmjs.com/package/json-pollock)
+[![Version](https://img.shields.io/github/package-json/v/LivePersonInc/json-pollock.svg)](https://github.com/LivePersonInc/json-pollock/blob/master/package.json)
 
 The **Json-Pollock** package renders live DOM elements out of JSON according to the [Structured Messaging Templates specification](https://developers.liveperson.com/structured-content-templates.html)
 
@@ -88,7 +89,7 @@ document.getElementById('container').appendChild(rooEl);
 The *registerAction* function allow to register a callback to a certain action type, as defined in the [spec](https://developers.liveperson.com/structured-content-templates.html).
 ```js
 const linkCallback = (data) => {
-	//data => {actionData: <action configuration>, metadata: <metadata configuration, if given>}
+	//data => {actionData: <action configuration>, metadata: <metadata configuration, if given>, uiEvent: <ui dom event object>}
     	window.open(data.actionData.uri,"_blank")
 };
 JsonPollock.registerAction('link', linkCallback);

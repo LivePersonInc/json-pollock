@@ -11,16 +11,15 @@ describe('json-pollock tests', function () {
   }
 
   var card = {
-    "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
     "type": "vertical",
     "elements": [{
       "type": "image",
-      "url": "http://example.jpg",
+      "url": "assets/iphone-8-concept.jpg",
       "tooltip": "image tooltip",
+      "caption": "this is a caption",
       "click": {
         "actions": [{
           "type": "navigate",
-          "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
           "name": "Navigate to store via image",
           "lo": 23.423423,
           "la": 2423423423
@@ -43,7 +42,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "link",
-          "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
           "name": "add to cart",
           "uri": "http://example.jpg"
         }]
@@ -90,24 +88,6 @@ describe('json-pollock tests', function () {
       chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(4);
     });
 
-    it('An element of type image should be created', function () {
-      var layout = rooEl.childNodes[0].childNodes[0];
-      chai.expect(layout.childNodes[0].localName).to.equal('div');
-      chai.expect(layout.childNodes[0].className).to.contain('lp-json-pollock-element-image');  //it can also includes loading
-      chai.expect(layout.childNodes[0].childNodes[0].localName).to.equal('img');
-      chai.expect(layout.childNodes[0].childNodes[0].src).to.equal('http://example.jpg/');
-      chai.expect(layout.childNodes[0].childNodes[0].title).to.equal('image tooltip');
-    });
-
-    it('An element of type text should be created', function () {
-      var layout = rooEl.childNodes[0].childNodes[0];
-      chai.expect(layout.childNodes[1].localName).to.equal('div');
-      chai.expect(layout.childNodes[1].className).to.equal('lp-json-pollock-element-text');
-      chai.expect(layout.childNodes[1].childNodes[0].localName).to.equal('span');
-      chai.expect(layout.childNodes[1].childNodes[0].title).to.equal('text tooltip');
-      chai.expect(layout.childNodes[1].childNodes[0].textContent).to.equal('product name (Title)');
-    });
-
     it('An element of type button should be created', function () {
       var layout = rooEl.childNodes[0].childNodes[0];
       chai.expect(layout.childNodes[2].localName).to.equal('div');
@@ -141,6 +121,179 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[3].className).to.equal('lp-json-pollock-element-map');
       chai.expect(layout.childNodes[3].title).to.equal('map tooltip');
     });
+
+    it('An element of type text should be created', function () {
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.childNodes[1].localName).to.equal('div');
+      chai.expect(layout.childNodes[1].className).to.equal('lp-json-pollock-element-text');
+      chai.expect(layout.childNodes[1].childNodes[0].localName).to.equal('span');
+      chai.expect(layout.childNodes[1].childNodes[0].title).to.equal('text tooltip');
+      chai.expect(layout.childNodes[1].childNodes[0].textContent).to.equal('product name (Title)');
+    });
+
+    // special cases - we would like the onload and onerror callbacks to be called right after the load
+    // therefore the test is async and we add the fargment to the DOM is the test itself 
+    it('An element of type image should be created', function (done) {
+      fragEl = JsonPollock.render(card);
+      var layout = fragEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[0].childNodes[1];          
+      chai.expect(layout.childNodes[0].localName).to.equal('div');
+      chai.expect(layout.childNodes[0].className).to.equal('lp-json-pollock-element-image loading');
+      chai.expect(layout.childNodes[0].childNodes[0].localName).to.equal('span');
+      chai.expect(layout.childNodes[0].childNodes[0].textContent).to.equal('this is a caption');
+      chai.expect(layout.childNodes[0].childNodes[1].localName).to.equal('img');
+      chai.expect(layout.childNodes[0].childNodes[1].src).to.contain('assets/iphone-8-concept.jpg');
+      chai.expect(layout.childNodes[0].childNodes[1].title).to.equal('image tooltip');
+      var origOnload = image.onload;
+      image.onload = function() {
+        origOnload.apply(this);
+        chai.expect(layout.childNodes[0].className).to.equal('lp-json-pollock-element-image');
+        done();
+      };
+      addToBody(fragEl);      
+    });
+
+    it('Image with wrong url should be created with error class', function (done) {
+      var errImg = {
+        "type": "image",
+        "url": "http://example.jpg",
+        "tooltip": "image tooltip",
+        "click": {
+          "actions": [{
+            "type": "navigate",
+            "name": "Navigate to store via image",
+            "lo": 23.423423,
+            "la": 2423423423
+          }]
+        }
+      };
+
+      fragEl = JsonPollock.render(errImg);
+      var layout = fragEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[0];
+      chai.expect(layout.localName).to.equal('div');
+      chai.expect(layout.className).to.equal('lp-json-pollock-element-image loading');
+      chai.expect(layout.childNodes[0].localName).to.equal('img');
+      chai.expect(layout.childNodes[0].src).to.contain('http://example.jpg/');
+      chai.expect(layout.childNodes[0].title).to.equal('image tooltip');
+      var origOnError = image.onerror;
+      image.onerror = function() {
+        origOnError.apply(this);
+        chai.expect(layout.className).to.equal('lp-json-pollock-element-image error');
+        done();
+      };
+      addToBody(fragEl);      
+    });
+  });
+
+  describe('render rtl elements', function () {
+    var rtlCard = {
+      "type": "vertical",
+      "elements": [{
+        "type": "image",
+        "url": "assets/iphone-8-concept.jpg",
+        "tooltip": "image tooltip",
+        "caption": "איזה יופי של תמונה",
+        "rtl": true,
+        "click": {
+          "actions": [{
+            "type": "navigate",
+            "name": "Navigate to store via image",
+            "lo": 23.423423,
+            "la": 2423423423
+          }]
+        }
+      }, {
+        "type": "image",
+        "url": "/wrong_url",
+        "tooltip": "image tooltip",
+        "caption": "איזה חרא של תמונה",
+        "rtl": true,
+        "click": {
+          "actions": [{
+            "type": "navigate",
+            "name": "Navigate to store via image",
+            "lo": 23.423423,
+            "la": 2423423423
+          }]
+        }
+      }, {
+        "type": "text",
+        "text": "אייפון 8",
+        "tooltip": "text tooltip",
+        "rtl": true,
+        "style": {
+          "bold": true,
+          "italic": true,
+          "color": "red",
+          "size": "large"
+        },
+      }, {
+        "type": "button",
+        "tooltip": "button tooltip",
+        "title": "קנה",
+        "rtl": true,
+        "click": {
+          "actions": [{
+            "type": "link",
+            "name": "add to cart",
+            "uri": "http://example.jpg"
+          }]
+        },
+      },]
+    }
+  
+    var fragEl = null;
+    var rooEl = null;
+
+    before(function () {
+      fragEl = JsonPollock.render(rtlCard);
+      rooEl = addToBody(fragEl);
+    });
+
+    function verifyRTL(el) {
+      chai.expect(el.className).to.contain('direction-rtl');
+      chai.expect(el.dir).to.equal('rtl');
+    }
+
+    it('image element should have dir=rtl and \'direction-rtl\' class', function (done) {
+      // special case - we would like the onload callback to be called right after the load
+      // therefore the test is async and we add the fargment to the DOM is the test itself 
+      fragEl = JsonPollock.render(rtlCard);
+      var image = fragEl.childNodes[0].childNodes[0].childNodes[0];
+      var origOnload = image.childNodes[1].onload;
+      image.childNodes[1].onload = function() {        
+        origOnload.apply(this);
+        verifyRTL(image);
+        done();
+      };
+      addToBody(fragEl);      
+    });
+
+    it('broken image element should still have dir=rtl and \'direction-rtl\' class', function (done) {
+      // special case - we would like the onerror callback to be called right after the load
+      // therefore the test is async and we add the fargment to the DOM is the test itself 
+      fragEl = JsonPollock.render(rtlCard);
+      var image = fragEl.childNodes[0].childNodes[0].childNodes[1];
+      var origOnError = image.childNodes[1].onerror;
+      image.childNodes[1].onerror = function() {  
+        origOnError.apply(this);
+        verifyRTL(image);
+        done();
+      };
+      addToBody(fragEl);
+    });
+
+    it('text element should have dir=rtl and \'direction-rtl\' class', function () {
+      var text = rooEl.childNodes[0].childNodes[0].childNodes[2];
+      verifyRTL(text);
+    });
+
+    it('button element should have dir=rtl and \'direction-rtl\' class', function () {
+      var btn = rooEl.childNodes[0].childNodes[0].childNodes[3];
+      verifyRTL(btn);
+    });
+
   });
 
   describe('render layout elements', function () {
@@ -260,7 +413,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "navigate",
-                    "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                     "name": "Navigate to store via image",
                     "lo": 23423423,
                     "la": 2423423423
@@ -274,7 +426,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "navigate",
-                    "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
                     "name": "Navigate to store via image",
                     "lo": 23423423,
                     "la": 2423423423
@@ -288,7 +439,6 @@ describe('json-pollock tests', function () {
                 "click": {
                   "actions": [{
                     "type": "link",
-                    "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                     "name": "add to cart",
                     "uri": "https://example.com"   
                   }]
@@ -328,7 +478,6 @@ describe('json-pollock tests', function () {
       it('Vertical with very long text should wrap word', function () {
 
         var conf = {
-          "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
           "type": "vertical",
           "elements": [{
             "type": "text",
@@ -354,6 +503,197 @@ describe('json-pollock tests', function () {
 
     });
 
+  });
+
+  describe('render carousel', function(){
+
+    var conf = {
+      "type": "carousel",
+      "padding": 10,
+      "elements": [
+        {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "1",
+              "tooltip": "1",
+              "rtl": false,
+              "style": {
+                "bold": false,
+                "italic": false,
+                "color": "#000000",
+                "size": "large"
+              }
+            },
+            {
+              "type": "text",
+              "text": "Twelve month plan BYO mobile",
+              "tooltip": "Twelve month plan BYO mobile",
+              "rtl": false,
+              "style": {
+                "bold": true,
+                "italic": false,
+                "color": "#000000"
+              }
+            },
+            {
+              "type": "button",
+              "tooltip": "Choose a plan",
+              "title": "Choose a plan",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_1"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "SIM only plan"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "2",
+              "tooltip": "2",
+              "rtl": false,
+              "style": {
+                "bold": false,
+                "italic": false,
+                "color": "#000000",
+                "size": "large"
+              }
+            },
+            {
+              "type": "text",
+              "text": "Two year plan leasing a mobile",
+              "tooltip": "Two year plan leasing a mobile",
+              "rtl": false,
+              "style": {
+                "bold": true,
+                "italic": false,
+                "color": "#000000"
+              }
+            },
+            {
+              "type": "button",
+              "tooltip": "Choose a plan",
+              "title": "Choose a plan",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_2"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "Two year plan leasing a mobile"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "text",
+              "text": "3",
+              "tooltip": "3",
+              "rtl": false,
+              "style": {
+                "bold": false,
+                "italic": false,
+                "color": "#000000",
+                "size": "large"
+              }
+            },
+            {
+              "type": "text",
+              "text": "Two year plan with a mobile",
+              "tooltip": "Two year plan with a mobile",
+              "rtl": false,
+              "style": {
+                "bold": true,
+                "italic": false,
+                "color": "#000000"
+              }
+            },
+            {
+              "type": "button",
+              "tooltip": "Choose a plan",
+              "title": "Choose a plan",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_3"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "Mobiles on a plan"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    const conteiner = addToBody(JsonPollock.render(JSON.stringify(conf)));
+    const carouselRoot = conteiner.children[0];
+    const carouselRootWrapper = conteiner.children[0].children[0];
+    const carouselRootLayout = conteiner.children[0].children[0];
+    const carouselRight = conteiner.children[0].children[0].children[1];
+    const carouselLeft = conteiner.children[0].children[0].children[2];
+    const card1 = carouselRootLayout.children[0].children[0];
+    const card2 = carouselRootLayout.children[0].children[1];
+    const card3 = carouselRootLayout.children[0].children[2];
+
+    it('carousel root exist', function () {
+      chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
+    });
+
+    it('carousel wrapper root exist', function () {
+      chai.expect(carouselRootWrapper.className).to.contain('lp-json-pollock-layout-carousel-wrapper');
+    });
+
+    it('carousel root layout exist', function () {
+      chai.expect(carouselRootLayout.className).to.contain('lp-json-pollock-layout-carousel');
+    });
+
+    it('carousel arrow right exist', function () {
+      chai.expect(carouselRight.className).to.contain('lp-json-pollock-layout-carousel-arrow');
+    });
+
+    it('carousel arrow left  exist', function () {
+      chai.expect(carouselLeft.className).to.contain('lp-json-pollock-layout-carousel-arrow left');
+    });
+
+    it('carousel elements length equal to conf element length', function () {
+      chai.expect(carouselRootLayout.children.length).to.be.equal(conf.elements.length);
+    });
+
+    it('carousel elements are in the right order', function () {
+      chai.expect(card1.children[0].innerText).to.be.equal('1');
+      chai.expect(card2.children[0].innerText).to.be.equal('2');
+      chai.expect(card3.children[0].innerText).to.be.equal('3');
+    });
   });
 
   describe('border policy', function () {
@@ -456,7 +796,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -486,7 +825,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -527,7 +865,6 @@ describe('json-pollock tests', function () {
                   "click": {
                     "actions": [{
                       "type": "link",
-                      "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                       "name": "add to cart",
                       "uri": "http://example.jpg"
                     }]
@@ -563,7 +900,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -631,7 +967,6 @@ describe('json-pollock tests', function () {
                   "click": {
                     "actions": [{
                       "type": "link",
-                      "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                       "name": "add to cart",
                       "uri": "http://example.jpg"
                     }]
@@ -667,7 +1002,6 @@ describe('json-pollock tests', function () {
               "click": {
                 "actions": [{
                   "type": "link",
-                  "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
                   "name": "add to cart",
                   "uri": "http://example.jpg"
                 }]
@@ -725,7 +1059,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "link",
-          "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
           "name": "add to cart",
           "uri": "http://example.jpg"
         }]
@@ -741,7 +1074,6 @@ describe('json-pollock tests', function () {
       "click": {
         "actions": [{
           "type": "navigate",
-          "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
           "name": "Navigate to store via image",
           "lo": 23.423423,
           "la": 2423423423
@@ -809,7 +1141,6 @@ describe('json-pollock tests', function () {
 
     before(function () {
       conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -818,7 +1149,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -831,7 +1161,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "https://example.com"   
             }]
@@ -862,7 +1191,6 @@ describe('json-pollock tests', function () {
               "text": "my text",
             },{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "https://example.com"
             }]
@@ -893,33 +1221,37 @@ describe('json-pollock tests', function () {
 
     it('Click on element with navigate action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('navigate', spy);
-      rooEl.childNodes[0].childNodes[0].childNodes[0].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[0].click.actions[0]});
+      rooEl.childNodes[0].childNodes[0].childNodes[0].childNodes[0].dispatchEvent(event);
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[0].click.actions[0], uiEvent: event});
     });
 
     it('Click on element with link action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('link', spy);
-      rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0]});
+      rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(event);
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0], uiEvent: event});
     });
 
     it('Click on element with publishText action should trigger its registered callbacks', function () {
       var spy = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('publishText', spy);
-      rooEl.childNodes[0].childNodes[0].childNodes[2].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[2].click.actions[0], metadata: conf.elements[2].click.metadata});
+      rooEl.childNodes[0].childNodes[0].childNodes[2].childNodes[0].dispatchEvent(event);
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[2].click.actions[0], metadata: conf.elements[2].click.metadata, uiEvent: event});
     });
 
     it('Click on element with multiple actions should trigger its registered callbacks', function () {
       var spy1 = sinon.spy();
       var spy2 = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('publishText', spy1);
       JsonPollock.registerAction('link', spy2);
-      rooEl.childNodes[0].childNodes[0].childNodes[3].childNodes[0].dispatchEvent(createClickEvent());
-      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[3].click.actions[0], metadata: conf.elements[3].click.metadata});
-      chai.expect(spy2).to.have.been.calledWith({actionData: conf.elements[3].click.actions[1], metadata: conf.elements[3].click.metadata});
+      rooEl.childNodes[0].childNodes[0].childNodes[3].childNodes[0].dispatchEvent(event);
+      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[3].click.actions[0], metadata: conf.elements[3].click.metadata, uiEvent: event});
+      chai.expect(spy2).to.have.been.calledWith({actionData: conf.elements[3].click.actions[1], metadata: conf.elements[3].click.metadata, uiEvent: event});
     });
 
     it('Click on map element which has no actions definition should trigger window.open for google maps', function () {
@@ -947,10 +1279,11 @@ describe('json-pollock tests', function () {
     it('Click on map element which has actions definition should not trigger window.open for google maps', function () {
       window.open = sinon.spy();
       var spy1 = sinon.spy();
+      var event = createClickEvent();
       JsonPollock.registerAction('navigate', spy1);
-      rooEl.childNodes[0].childNodes[0].childNodes[5].dispatchEvent(createClickEvent());
+      rooEl.childNodes[0].childNodes[0].childNodes[5].dispatchEvent(event);
       chai.expect(window.open).to.have.not.been.calledWith('https://www.google.com/maps/search/?api=1&query=64.128597,-21.89611');
-      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[5].click.actions[0]});
+      chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[5].click.actions[0], uiEvent: event});
     });
 
   });
@@ -961,7 +1294,6 @@ describe('json-pollock tests', function () {
 
     before(function () {
       var conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -970,7 +1302,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -993,7 +1324,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "link",
-              "id": "febf3237-f7d9-44bc-a17f-fc8abdfb0f25",
               "name": "add to cart",
               "uri": "http://example.jpg"
             }]
@@ -1023,7 +1353,6 @@ describe('json-pollock tests', function () {
 
     before(function (done) {
       var conf = {
-        "id": "04e7cd9a-40e7-440e-884a-82ca6af574e9",
         "type": "vertical",
         "elements": [{
           "type": "image",
@@ -1032,7 +1361,6 @@ describe('json-pollock tests', function () {
           "click": {
             "actions": [{
               "type": "navigate",
-              "id": "98446950-2f54-4594-b89b-1d60a9fdda49",
               "name": "Navigate to store via image",
               "lo": 23423423,
               "la": 2423423423
@@ -1099,9 +1427,9 @@ describe('json-pollock tests', function () {
         var layout = rooEl.childNodes[0].childNodes[0];
         chai.expect(layout.childNodes[0].localName).to.equal('div');
         chai.expect(layout.childNodes[0].className).to.contain('lp-json-pollock-element-image');  //it can also includes loading
-        chai.expect(layout.childNodes[0].childNodes[0].localName).to.equal('img');
-        chai.expect(layout.childNodes[0].childNodes[0].src).to.equal('http://example.jpg/');
-        chai.expect(layout.childNodes[0].childNodes[0].title).to.equal('image tooltip');
+        chai.expect(layout.childNodes[0].childNodes[1].localName).to.equal('img');
+        chai.expect(layout.childNodes[0].childNodes[1].src).to.contain('assets/iphone-8-concept.jpg');
+        chai.expect(layout.childNodes[0].childNodes[1].title).to.equal('image tooltip');
       });
 
     });
