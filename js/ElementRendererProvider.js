@@ -153,8 +153,8 @@ export default class ElementRendererProvider {
             (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           }
 
-          arrowRight.className = 'lp-json-pollock-layout-carousel-arrow';
-          arrowLeft.className = 'lp-json-pollock-layout-carousel-arrow left';
+          arrowRight.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow';
+          arrowLeft.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow left';
 
           /* create carousel wrapper */
           while ((divCarouselWrapper: any).hasChildNodes()) {
