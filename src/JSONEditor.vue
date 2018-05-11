@@ -1,6 +1,8 @@
 <template>
   <div ref='jsoneditor'>
-    
+    <div class='jsoneditor-loading' v-if="isLoading">
+      <span>Loading...</span>
+    </div>
   </div>
 </template>
 
@@ -25,8 +27,19 @@ export default {
   name: 'JSONEditor',
   components: {
   },
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
   mounted() {
     let editor = null;
+
+    const updateEditor = (json) => {
+      if (json) {
+        editor.set(this.$store.state.json);
+      }
+    };
 
     const options = {
       mode: 'code',
@@ -56,12 +69,44 @@ export default {
         }
       },
     };
+
     editor = new JSONEditor(this.$refs.jsoneditor, options);
-    editor.set(this.$store.state.json);
+
+    this.$store.watch(
+      state => state.json,
+      (val) => {
+        updateEditor(val);
+      },
+    );
+
+    this.$store.watch(
+      state => state.loading,
+      (val) => {
+        this.isLoading = val;
+      },
+    );
+
+    updateEditor(this.$store.state.json);
   },
 };
 </script>
 
 <style lang="scss" scoped>
   @import '../node_modules/jsoneditor/dist/jsoneditor.css';
+  .jsoneditor-loading {
+    position: absolute;
+    z-index: 999;
+    background: rgba(235,235,235, 0.9);
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: table;
+
+    span {
+      font-size: 30px;
+      font-weight: bold;
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
 </style>
