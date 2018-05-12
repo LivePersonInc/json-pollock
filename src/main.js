@@ -9,6 +9,10 @@ const store = new Vuex.Store({
   state: {
     json: undefined,
     loading: false,
+    gist: {
+      name: '',
+      url: '',
+    },
   },
   mutations: {
     setJson(state, json) {
@@ -16,6 +20,12 @@ const store = new Vuex.Store({
     },
     setLoading(state, val) {
       state.loading = val;
+    },
+    setGist(state, gistObj) {
+      if (gistObj) {
+        state.gist.name = gistObj.name;
+        state.gist.url = gistObj.url;
+      }
     },
   },
   getters: {

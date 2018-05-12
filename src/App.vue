@@ -34,6 +34,7 @@ export default {
       .then((gist) => {
         if (gist) {
           this.$store.commit('setJson', JSON.parse(gist.content));
+          this.$store.commit('setGist', { name: gist.name, url: gist.url });
           this.$store.commit('setLoading', false);
         } else {
           loadDefault();
