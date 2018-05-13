@@ -23,6 +23,8 @@ import richContentSchema from 'json-pollock/js/schema/rich_content.json';
 import templateSchema from 'json-pollock/js/schema/template.json';
 import textSchema from 'json-pollock/js/schema/text.json';
 
+let editor;
+
 export default {
   name: 'JSONEditor',
   components: {
@@ -32,15 +34,15 @@ export default {
       isLoading: false,
     };
   },
-  mounted() {
-    let editor = null;
-
-    const updateEditor = (json) => {
+  methods: {
+    setJson(json) {
       if (json) {
-        editor.set(this.$store.state.json);
+        editor.set(json);
+        this.$store.commit('setJson', json);
       }
-    };
-
+    },
+  },
+  mounted() {
     const options = {
       mode: 'code',
       modes: ['code', 'form', 'tree'],
@@ -73,20 +75,11 @@ export default {
     editor = new JSONEditor(this.$refs.jsoneditor, options);
 
     this.$store.watch(
-      state => state.json,
-      (val) => {
-        updateEditor(val);
-      },
-    );
-
-    this.$store.watch(
       state => state.loading,
       (val) => {
         this.isLoading = val;
       },
     );
-
-    updateEditor(this.$store.state.json);
   },
 };
 </script>
