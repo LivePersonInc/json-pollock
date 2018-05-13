@@ -30,7 +30,8 @@ export default {
       this.$store.commit('setLoading', false);
       this.$refs.editor.setJson(json);
     };
-    const gistExpr = location.search.replace('?', '').split('?').find(str => str.indexOf('gist=') === 0);
+    const gistExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('gist=') === 0);
+    const gistFileExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('file=') === 0);
     if (gistExpr) {
       this.$store.commit('setLoading', true);
       const gistId = gistExpr.slice(5);
@@ -44,7 +45,12 @@ export default {
 
       this.$store.commit('setToken', token);
 
-      GistHelper.load(gistId, token)
+      let filename;
+      if (gistFileExpr) {
+        filename = gistFileExpr.slice(5);
+      }
+
+      GistHelper.load(gistId, filename, token)
       .then((gist) => {
         if (gist) {
           if (gist.isGist) {

@@ -16,7 +16,7 @@ class Gist {
   }
 }
 
-const load = (gistId, token) => {
+const load = (gistId, filename, token) => {
   let storedGist;
   const storedGistStr = localStorage.getItem(`${STORAGE_KEYS.GIST_PREFIX}_${gistId}`);
   if (storedGistStr) {
@@ -41,7 +41,9 @@ const load = (gistId, token) => {
             }
             const files = gist.files && Object.keys(gist.files);
             if (files && files.length) {
-              const file = gist.files[files[0]];
+              const file = filename && gist.files[filename] ?
+                gist.files[filename] :
+                gist.files[files[0]];
               return new Gist(file.filename, file.content, gist.html_url);
             }
             return gist;
