@@ -1,6 +1,8 @@
 <template>
   <div ref='jsoneditor'>
-    
+    <div class='jsoneditor-loading' v-if="isLoading">
+      <span>Loading...</span>
+    </div>
   </div>
 </template>
 
@@ -21,13 +23,26 @@ import richContentSchema from 'json-pollock/js/schema/rich_content.json';
 import templateSchema from 'json-pollock/js/schema/template.json';
 import textSchema from 'json-pollock/js/schema/text.json';
 
+let editor;
+
 export default {
   name: 'JSONEditor',
   components: {
   },
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
+  methods: {
+    setJson(json) {
+      if (json) {
+        editor.set(json);
+        this.$store.commit('setJson', json);
+      }
+    },
+  },
   mounted() {
-    let editor = null;
-
     const options = {
       mode: 'code',
       modes: ['code', 'form', 'tree'],
@@ -56,12 +71,35 @@ export default {
         }
       },
     };
+
     editor = new JSONEditor(this.$refs.jsoneditor, options);
-    editor.set(this.$store.state.json);
+
+    this.$store.watch(
+      state => state.loading,
+      (val) => {
+        this.isLoading = val;
+      },
+    );
   },
 };
 </script>
 
 <style lang="scss" scoped>
   @import '../node_modules/jsoneditor/dist/jsoneditor.css';
+  .jsoneditor-loading {
+    position: absolute;
+    z-index: 999;
+    background: rgba(235,235,235, 0.9);
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: table;
+
+    span {
+      font-size: 30px;
+      font-weight: bold;
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
 </style>
