@@ -681,8 +681,16 @@ describe('json-pollock tests', function () {
       chai.expect(carouselRight.className).to.contain('lp-json-pollock-layout-carousel-arrow');
     });
 
-    it('carousel arrow left  exist', function () {
+    it('carousel arrow right holds component action mark', function () {
+      chai.expect(carouselRight.className).to.contain('lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow');
+    });
+
+    it('carousel arrow left exist', function () {
       chai.expect(carouselLeft.className).to.contain('lp-json-pollock-layout-carousel-arrow left');
+    });
+
+    it('carousel arrow left holds component action mark', function () {
+      chai.expect(carouselLeft.className).to.contain('lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow left');
     });
 
     it('carousel elements length equal to conf element length', function () {
