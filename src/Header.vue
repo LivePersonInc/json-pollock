@@ -35,7 +35,10 @@ export default {
   },
   computed: {
     gistTitle() {
-      return `Click to open ${this.gistName} Gist on GitHub.com`;
+      if (this.gistUrl) {
+        return `Click to open ${this.gistName} Gist on GitHub.com`;
+      }
+      return '';
     },
   },
   methods: {

@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import 'babel-polyfill';
 
 const FETCH_API = 'https://api.github.com/gists';
 
