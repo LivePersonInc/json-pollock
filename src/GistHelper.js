@@ -4,8 +4,8 @@ const FETCH_API = 'https://api.github.com/gists';
 
 const STORAGE_KEYS = {
   GITHUB_TOKEN: 'jsonPollockPlaygroundGithubToken',
+  GIST_PREFIX: 'jsonPollockPlayground',
 };
-// 'If-None-Match': 'W/"43328bbba367b98abc408d9861881e42"'
 
 class Gist {
   constructor(name, content, url) {
@@ -17,11 +17,28 @@ class Gist {
 }
 
 const load = (gistId, token) => {
-  const storedGist = localStorage.getItem(gistId);
-  if (storedGist) return {};
-  return fetch(`${FETCH_API}/${gistId}`, { headers: { Authorization: `token ${token}` } })
-          .then(res => res.json())
-          .then((gist) => {
+  let storedGist;
+  const storedGistStr = localStorage.getItem(`${STORAGE_KEYS.GIST_PREFIX}_${gistId}`);
+  if (storedGistStr) {
+    storedGist = JSON.parse(storedGistStr);
+  }
+  const options = { headers: { Authorization: `token ${token}` } };
+  if (storedGist) {
+    options.headers['If-None-Match'] = storedGist.etag;
+  }
+  return fetch(`${FETCH_API}/${gistId}`, options)
+          .then((res) => {
+            if (res.status === 304) { // not changed
+              return { gist: storedGist };
+            }
+            const etag = res.headers.get('Etag');
+            return res.json().then((json => ({ gist: json, etag })));
+          })
+          .then((res) => {
+            const gist = res.gist;
+            if (res.etag) {
+              localStorage.setItem(`${STORAGE_KEYS.GIST_PREFIX}_${gistId}`, JSON.stringify({ ...gist, etag: res.etag }));
+            }
             const files = gist.files && Object.keys(gist.files);
             if (files && files.length) {
               const file = gist.files[files[0]];
