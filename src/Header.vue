@@ -11,7 +11,8 @@
     </div>
     <div class='gist-token-explanation' v-if="showDescription">
         In order to be able to load content from GitHub Gists
-        you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token.</a><br>
+        you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token</a>
+        (no scopes are required).<br>
         Once you have the token please update it here:<br>
         <input v-model="token"/>
         <button @click="saveToken" :disabled="!token">Save</button>
