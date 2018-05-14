@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     loading: false,
     token: '',
     gist: {
+      id: '',
       name: '',
       url: '',
     },
@@ -30,6 +31,7 @@ const store = new Vuex.Store({
       if (gistObj) {
         state.gist.name = gistObj.name;
         state.gist.url = gistObj.url;
+        state.gist.id = gistObj.id;
       }
     },
     setMessage(state, msg) {
@@ -45,6 +47,10 @@ const store = new Vuex.Store({
   },
   getters: {
     json: state => state.json,
+    loading: state => state.loading,
+    gist: state => state.gist,
+    token: state => state.token,
+    message: state => state.message,
   },
 });
 

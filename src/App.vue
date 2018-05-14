@@ -55,10 +55,10 @@ export default {
         if (gist) {
           if (gist.isGist) {
             this.$refs.editor.setJson(JSON.parse(gist.content));
-            this.$store.commit('setGist', { name: gist.name, url: gist.url });
+            this.$store.commit('setGist', { id: gistId, name: gist.name, url: gist.url });
             this.$store.commit('setMessage', { text: 'Gist successfully loaded! :)', type: 'success' });
           } else {
-            this.$store.commit('setGist', { name: 'Gist not loaded' });
+            this.$store.commit('setGist', { id: gistId });
             this.$store.commit('setMessage', { text: `Fail to load Gist :( - default json loaded instead; reason: ${gist.message}`, type: 'error' });
             loadDefault();
           }
@@ -69,6 +69,7 @@ export default {
         }
       })
       .catch((error) => {
+        this.$store.commit('setGist', { id: gistId });
         this.$store.commit('setMessage', { text: `Fail to load Gist :( - default json loaded instead; reason: ${error.message}`, type: 'error' });
         loadDefault();
       });

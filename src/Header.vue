@@ -4,10 +4,14 @@
       <img src='./assets/logo.png' @click='onLogoClick'>
       <h1>Json-Pollock Playground</h1>
     </div>
-    <div class='gistbtn' v-if="gistName" :title="gistTitle">
+    <div class='gistbtn' :title="gistTitle" v-if="!loading">
       <img src='./assets/GitHub-Mark-32px.png' @click="showDescription = true">
-      <a v-if="token" :href='gistUrl' target="_blank">{{gistName}}</a>
-      <span v-if="!token" class='gist-token-needed' @click="showDescription = true">Access token is needed</span>      
+      <div class="gist-input" v-if="!gistName">
+        <input v-model="gistId" placeholder="Gist id..." :class="{ error: gistId && !gistName }" :title="gistIdInputTitle" @keyup.enter="loadGist"/>
+        <div v-if="gistId" @click="loadGist">Go</div>
+      </div>
+      <a v-if="gistName && token" :href='gistUrl' target="_blank">{{gistName}}</a>
+      <span v-if="gistName && !token" class='gist-token-needed' @click="showDescription = true">Access token is needed</span>      
     </div>
     <div class='gist-token-explanation' v-if="showDescription">
         In order to be able to load content from GitHub Gists
@@ -22,6 +26,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import GistHelper from './GistHelper';
 
 export default {
@@ -30,15 +35,30 @@ export default {
     return {
       gistName: '',
       gistUrl: '',
+      gistId: '',
       token: '',
       showDescription: false,
     };
   },
   computed: {
+    ...mapGetters([
+      'loading',
+    ]),
     gistTitle() {
       if (this.gistUrl) {
         return `Click to open ${this.gistName} Gist on GitHub.com`;
       }
+      return '';
+    },
+    gistIdInputTitle() {
+      if (this.gistId && !this.gistName) {
+        return 'Gist is not loaded..';
+      }
+
+      if (!this.gistName) {
+        return 'Add id of a Gist to load in the playground';
+      }
+
       return '';
     },
   },
@@ -58,6 +78,11 @@ export default {
         this.showDescription = false;
       }
     },
+    loadGist() {
+      if (this.gistId) {
+        location.search = `?gist=${this.gistId}`;
+      }
+    },
   },
   mounted() {
     this.$store.watch(
@@ -71,6 +96,13 @@ export default {
       state => state.gist.url,
       (url) => {
         this.gistUrl = url;
+      },
+    );
+
+    this.$store.watch(
+      state => state.gist.id,
+      (id) => {
+        this.gistId = id;
       },
     );
 
@@ -126,6 +158,40 @@ export default {
         cursor: pointer;
         cursor: hand;
         
+      .gist-input {
+        input {
+          font-size: 15px;        
+          margin: 7px 0 7px 0;
+          height: 23px;
+          padding-left: 5px;
+          border-radius: 3px;          
+
+          &.error {
+            border-color: red;
+          }
+        }
+
+        div {
+          position: absolute;
+          top: 10px;
+          right: 13px;
+          font-size: 14px;
+          font-weight: bold;
+          background: #fff;
+          cursor: pointer;
+          height: 23px;
+          line-height: 23px;
+          padding: 0 6px;
+          display: none;
+        }
+
+        &:hover, &:focus {
+          div {
+            display: block;
+          }
+        }
+      }
+
       a {
         color: #2c3e50;
         text-decoration: none;
@@ -158,6 +224,7 @@ export default {
         width: 98%;
         margin: 7px 0 7px 0;
         height: 23px;
+        border-radius: 3px;
       }
     }
     
