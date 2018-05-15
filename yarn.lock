@@ -3428,8 +3428,8 @@ json-loader@^0.5.4:
   resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
 
 json-pollock@^1.0.22:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/json-pollock/-/json-pollock-1.1.6.tgz#bbf08d34fe32ba0848f81d735ef9dbc8516d85af"
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/json-pollock/-/json-pollock-1.1.7.tgz#fa66302395f7823ae6d32c7f075f3b3a274e008c"
   dependencies:
     ajv "^5.4.0"
     chronosjs "^0.0.23"
