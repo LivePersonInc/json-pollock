@@ -32,18 +32,19 @@ export default {
     };
     const gistExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('gist=') === 0);
     const gistFileExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('file=') === 0);
+    const token = GistHelper.getToken();
+    if (token) {
+      this.$store.commit('setToken', token);
+    }
     if (gistExpr) {
       this.$store.commit('setLoading', true);
       const gistId = gistExpr.slice(5);
-      const token = GistHelper.getToken();
       if (!token) {
         this.$store.commit('setMessage', { text: 'Token is not configured - :( - default json loaded instead', type: 'error' });
         this.$store.commit('setGist', { name: 'Gist not loaded' });
         loadDefault();
         return;
       }
-
-      this.$store.commit('setToken', token);
 
       let filename;
       if (gistFileExpr) {

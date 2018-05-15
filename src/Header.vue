@@ -119,6 +119,11 @@ export default {
 <style lang="scss" scoped>
   .header {
 
+    input {
+      border-radius: 3px;
+      border: solid #a2aeb5 1px;
+    }
+
     .title {
       position: absolute;
       left: 32%;
@@ -160,11 +165,10 @@ export default {
         
       .gist-input {
         input {
-          font-size: 15px;        
+          font-size: 15px;
           margin: 7px 0 7px 0;
-          height: 23px;
-          padding-left: 5px;
-          border-radius: 3px;          
+          height: 25px;
+          padding-left: 5px;          
 
           &.error {
             border-color: red;
@@ -224,7 +228,6 @@ export default {
         width: 98%;
         margin: 7px 0 7px 0;
         height: 23px;
-        border-radius: 3px;
       }
     }
     
