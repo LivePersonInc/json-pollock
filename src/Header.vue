@@ -14,7 +14,7 @@
       <span v-if="gistName && !token" class='gist-token-needed' @click="showDescription = true">Access token is needed</span>      
     </div>
     <div class='gist-token-explanation' v-if="showDescription">
-        In order to be able to load content from GitHub Gists
+        In order to be able to load content from GitHub <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
         you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token</a>
         (no scopes are required).<br>
         Once you have the token please update it here:<br>
