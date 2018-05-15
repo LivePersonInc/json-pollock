@@ -114,14 +114,13 @@
                 border: $default-border;
                 display: inline-block;
                 width: 180px;
+                vertical-align: top;
             }
         }
         .lp-json-pollock-element-text{
             white-space: normal;
         }
     }
-
-
 
     .lp-json-pollock-element-text {
         padding: 5px 10px;
