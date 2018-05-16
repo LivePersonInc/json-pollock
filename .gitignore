@@ -1,2 +1,22 @@
+
+# os
+
+.DS_Store
+
+
+# ide
+
+*.iml
+.idea/
+out/
 .vscode/
+
+
+# node/npm
+
+logs/
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+test/unit/coverage

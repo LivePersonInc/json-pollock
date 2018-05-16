@@ -94,17 +94,11 @@ export default class LPJsonPollock {
     }
   }
 
-  render(json: Object|string): DocumentFragment {
+  render(json: Object | String, options: Object = {}): DocumentFragment {
     let jsonObj: Object;
-    if (Utils.isString(json)) {
-      // This will throws an error if fails
-      jsonObj = JSON.parse((json: any));
-    } else {
-      jsonObj = (json: any);
-    }
-    this.jsonValidator(jsonObj);
-    if (this.jsonValidator.errors) {
-      throw new JsonPollockError('Schema validation error, see \'errors\' for more details', this.jsonValidator.errors);
+    jsonObj = this.parse(json);
+    if (!options.skipValidation) {
+      this.validate(jsonObj);
     }
     const frag = document.createDocumentFragment();
     const divEl = document.createElement('div');
@@ -117,7 +111,25 @@ export default class LPJsonPollock {
     return frag;
   }
 
-  registerAction(actionName: string, callback: Function) {
+  parse(json: Object | String) {
+    let jsonObj: Object;
+    if (Utils.isString(json)) {
+      // This will throw an error on fail
+      jsonObj = JSON.parse((json: any));
+    } else {
+      jsonObj = (json: any);
+    }
+    return jsonObj;
+  }
+
+  validate(jsonObj: Object) {
+    this.jsonValidator(jsonObj);
+    if (this.jsonValidator.errors) {
+      throw new JsonPollockError('Schema validation error, see \'errors\' for more details', this.jsonValidator.errors);
+    }
+  }
+
+  registerAction(actionName: String, callback: Function) {
     this.events.bind({
       eventName: actionName,
       func: (EventData) => {
@@ -126,7 +138,7 @@ export default class LPJsonPollock {
     });
   }
 
-  unregisterAction(actionName: string) {
+  unregisterAction(actionName: String) {
     this.events.unbind({
       eventName: actionName,
     });
@@ -136,7 +148,7 @@ export default class LPJsonPollock {
     this.events.unbind({});
   }
 
-  registerElement(elementType: string, render: Function) {
+  registerElement(elementType: String, render: Function) {
     this.provider.set(elementType, render);
   }
 }
