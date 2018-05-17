@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     json: undefined,
     loading: false,
     token: '',
+    user: '',
     gist: {
       id: '',
       name: '',
@@ -44,6 +45,11 @@ const store = new Vuex.Store({
         state.token = token;
       }
     },
+    setUser(state, user) {
+      if (user) {
+        state.user = user;
+      }
+    },
   },
   getters: {
     json: state => state.json,
@@ -51,6 +57,7 @@ const store = new Vuex.Store({
     gist: state => state.gist,
     token: state => state.token,
     message: state => state.message,
+    user: state => state.user,
   },
 });
 

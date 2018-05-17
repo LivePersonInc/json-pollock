@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 import 'babel-polyfill';
 
-const FETCH_API = 'https://api.github.com/gists';
+const GITHUB_API = 'https://api.github.com';
 
 const STORAGE_KEYS = {
   GITHUB_TOKEN: 'jsonPollockPlaygroundGithubToken',
@@ -17,7 +17,17 @@ class Gist {
   }
 }
 
-const load = (gistId, filename, token) => {
+const getUserDetails = (token) => {
+  const options = { headers: { Authorization: `token ${token}` } };
+  return fetch(`${GITHUB_API}/user`, options).then((res) => {
+    if (res.status === 200) {
+      return res.json();
+    }
+    return '';
+  });
+};
+
+const loadGist = (gistId, filename, token) => {
   let storedGist;
   const storedGistStr = localStorage.getItem(`${STORAGE_KEYS.GIST_PREFIX}_${gistId}`);
   if (storedGistStr) {
@@ -27,7 +37,7 @@ const load = (gistId, filename, token) => {
   if (storedGist) {
     options.headers['If-None-Match'] = storedGist.etag;
   }
-  return fetch(`${FETCH_API}/${gistId}`, options)
+  return fetch(`${GITHUB_API}/gists/${gistId}`, options)
           .then((res) => {
             if (res.status === 304) { // not changed
               return { gist: storedGist };
@@ -58,7 +68,8 @@ const saveToken = (token) => {
 const getToken = () => localStorage.getItem(STORAGE_KEYS.GITHUB_TOKEN);
 
 export default {
-  load,
+  loadGist,
   saveToken,
   getToken,
+  getUserDetails,
 };

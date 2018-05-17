@@ -5,7 +5,8 @@
       <h1>Json-Pollock Playground</h1>
     </div>
     <div class='gistbtn' :title="gistTitle" v-if="!loading">
-      <img src='./assets/GitHub-Mark-32px.png' @click="showDescription = true">
+      <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' title='Login to GitHub' @click="showDescription = true">
+      <img v-else :src='user.avatar_url' :title='user && (user.name || user.login)' @click="showDescription = true">
       <div class="gist-input" v-if="!gistName">
         <input v-model="gistId" placeholder="Gist id..." :class="{ error: gistId && !gistName }" :title="gistIdInputTitle" @keyup.enter="loadGist"/>
         <div v-if="gistId" @click="loadGist">Go</div>
@@ -27,7 +28,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import GistHelper from './GistHelper';
+import GitHubHelper from './GitHubHelper';
 
 export default {
   name: 'Header',
@@ -43,6 +44,7 @@ export default {
   computed: {
     ...mapGetters([
       'loading',
+      'user',
     ]),
     gistTitle() {
       if (this.gistUrl) {
@@ -73,7 +75,7 @@ export default {
     },
     saveToken() {
       if (this.token) {
-        GistHelper.saveToken(this.token);
+        GitHubHelper.saveToken(this.token);
         this.$store.commit('setMessage', { text: 'Token successfully saved! :) reload the page to load content from Gist', type: 'success' });
         this.showDescription = false;
       }
@@ -205,6 +207,8 @@ export default {
         position: absolute;
         top: 6px;
         left: 6px;
+        width: 32px;
+        height: 32px;
       }
 
       .gist-token-needed {
