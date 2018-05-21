@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import 'babel-polyfill';
-import { get } from 'lodash';
+import { get, isString, isObject } from 'lodash';
 
 const GITHUB_API = 'https://api.github.com';
 
@@ -20,15 +20,36 @@ class Gist {
   }
 }
 
-const queryGitHubAPI = (token, path, storageKey) => {
-  const storageStr = localStorage.getItem(`${STORAGE_KEYS.GIST_PREFIX}_${storageKey}`);
+const saveToken = (token) => {
+  localStorage.setItem(STORAGE_KEYS.GITHUB_TOKEN, token);
+};
+
+const getToken = () => localStorage.getItem(STORAGE_KEYS.GITHUB_TOKEN);
+
+const queryGitHubAPI = (path, storageKeyOrOptions) => {
+  const token = getToken();
+  if (!token) return Promise.reject(new Error('Token not found'));
+
   let storageObj;
+  let storageStr;
+
+  if (isString(storageKeyOrOptions)) {
+    storageStr = localStorage.getItem(`${STORAGE_KEYS.GIST_PREFIX}_${storageKeyOrOptions}`);
+  }
+
   if (storageStr) {
     storageObj = JSON.parse(storageStr);
   }
   const options = { headers: { Authorization: `token ${token}` } };
+
   if (storageObj) {
     options.headers['If-None-Match'] = storageObj.etag;
+  }
+
+  if (isObject(storageKeyOrOptions)) {
+    options.method = storageKeyOrOptions.method;
+    options.body = JSON.stringify(storageKeyOrOptions.body);
+    options.headers['Content-Type'] = 'application/json';
   }
 
   return fetch(`${GITHUB_API}/${path}`, options)
@@ -40,8 +61,8 @@ const queryGitHubAPI = (token, path, storageKey) => {
       if (res.status === 200) {
         const etag = res.headers.get('Etag');
         return res.json().then((json) => {
-          if (storageKey) {
-            localStorage.setItem(`${STORAGE_KEYS.GIST_PREFIX}_${storageKey}`, JSON.stringify({ ...json, etag }));
+          if (isString(storageKeyOrOptions)) {
+            localStorage.setItem(`${STORAGE_KEYS.GIST_PREFIX}_${storageKeyOrOptions}`, JSON.stringify({ ...json, etag }));
           }
           return json;
         });
@@ -51,10 +72,10 @@ const queryGitHubAPI = (token, path, storageKey) => {
     });
 };
 
-const getUserDetails = token => queryGitHubAPI(token, 'user', STORAGE_KEYS.GITHUB_USER).then(res => (res.error ? '' : res));
+const getUserDetails = () => queryGitHubAPI('user', STORAGE_KEYS.GITHUB_USER).then(res => (res.error ? '' : res));
 
-const loadGist = (gistId, filename, token) =>
-  queryGitHubAPI(token, `gists/${gistId}`, gistId)
+const loadGist = (gistId, filename) =>
+  queryGitHubAPI(`gists/${gistId}`, gistId)
     .then((gist) => {
       const files = gist.files && Object.keys(gist.files);
       if (files && files.length) {
@@ -66,15 +87,37 @@ const loadGist = (gistId, filename, token) =>
       return gist;
     });
 
+const saveGist = (gistId, filename, content) => queryGitHubAPI(`gists/${gistId}`, {
+  method: 'PATCH',
+  body: {
+    files: { [filename]: {
+      content: JSON.stringify(content),
+    } },
+  },
+}).then((gist) => {
+  const files = gist.files && Object.keys(gist.files);
+  if (files && files.length) {
+    const file = filename && gist.files[filename] ?
+      gist.files[filename] :
+      gist.files[files[0]];
+    return new Gist(file.filename, file.content, gist.html_url, get(gist, 'owner.id'));
+  }
+  return gist;
+});
 
-const saveToken = (token) => {
-  localStorage.setItem(STORAGE_KEYS.GITHUB_TOKEN, token);
-};
-
-const getToken = () => localStorage.getItem(STORAGE_KEYS.GITHUB_TOKEN);
+const createGist = (filename, content) => queryGitHubAPI('gists', {
+  method: 'POST',
+  body: {
+    files: { [filename]: {
+      content: JSON.stringify(content),
+    } },
+  },
+}).then(gist => gist);
 
 export default {
   loadGist,
+  saveGist,
+  createGist,
   saveToken,
   getToken,
   getUserDetails,

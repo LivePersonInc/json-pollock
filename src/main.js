@@ -8,6 +8,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     json: undefined,
+    jsonValid: true,
+    edited: false,
     loading: false,
     token: '',
     user: '',
@@ -15,6 +17,7 @@ const store = new Vuex.Store({
       id: '',
       name: '',
       url: '',
+      ownerId: '',
     },
     message: {
       text: '',
@@ -25,6 +28,12 @@ const store = new Vuex.Store({
     setJson(state, json) {
       state.json = json;
     },
+    setJsonValid(state, bool) {
+      state.jsonValid = bool;
+    },
+    setEdited(state, bool) {
+      state.edited = bool;
+    },
     setLoading(state, val) {
       state.loading = val;
     },
@@ -33,6 +42,7 @@ const store = new Vuex.Store({
         state.gist.name = gistObj.name;
         state.gist.url = gistObj.url;
         state.gist.id = gistObj.id;
+        state.gist.ownerId = gistObj.ownerId;
       }
     },
     setMessage(state, msg) {
@@ -58,6 +68,8 @@ const store = new Vuex.Store({
     token: state => state.token,
     message: state => state.message,
     user: state => state.user,
+    jsonValid: state => state.jsonValid,
+    edited: state => state.edited,
   },
 });
 

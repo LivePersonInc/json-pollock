@@ -35,6 +35,8 @@ export default {
     const token = GitHubHelper.getToken();
     if (token) {
       this.$store.commit('setToken', token);
+      GitHubHelper.getUserDetails()
+      .then(userDetails => userDetails && this.$store.commit('setUser', userDetails));
     }
     if (gistExpr) {
       this.$store.commit('setLoading', true);
@@ -51,15 +53,12 @@ export default {
         filename = gistFileExpr.slice(5);
       }
 
-      GitHubHelper.getUserDetails(token)
-      .then(userDetails => userDetails && this.$store.commit('setUser', userDetails));
-
-      GitHubHelper.loadGist(gistId, filename, token)
+      GitHubHelper.loadGist(gistId, filename)
       .then((gist) => {
         if (gist) {
           if (gist.isGist) {
             this.$refs.editor.setJson(JSON.parse(gist.content));
-            this.$store.commit('setGist', { id: gistId, name: gist.name, url: gist.url });
+            this.$store.commit('setGist', { id: gistId, name: gist.name, url: gist.url, ownerId: gist.ownerId });
             this.$store.commit('setMessage', { text: 'Gist successfully loaded! :)', type: 'success' });
           } else {
             this.$store.commit('setGist', { id: gistId });
