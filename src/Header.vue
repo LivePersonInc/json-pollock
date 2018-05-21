@@ -1,24 +1,24 @@
 <template>
   <div class='header'>
-    <div class="savebtn" @click="saveGist" v-if="gist.ownerId" :class="{disabled: !edited || !jsonValid}">
+    <div class="savebtn" @click="saveGist" v-if="gist.ownerId" :class="{disabled: saveDisabled}">
       <img v-if="!saving" src='./assets/baseline-save-24px.svg'>
       <img v-if="saving" src='./assets/baseline-sync-24px.svg' class="saving">
-      <span v-if="isGistOwner">Save</span>
-      <span v-if="!isGistOwner">Save as New gist</span>
+      <span v-if="isGistOwner" v-tooltip="'Save to Gist'">Save</span>
+      <span v-if="!isGistOwner" v-tooltip="'You are not the owner of this Gist,<br> You can save this content into a new Gist'">Save as New Gist</span>
     </div>
     <div class='title'>
       <img src='./assets/logo.png' @click='onLogoClick'>
       <h1>Json-Pollock Playground</h1>
     </div>
-    <div class='gistbtn' :title="gistTitle" v-if="!loading">
-      <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' title='Login to GitHub' @click="showDescription = true">
-      <img v-else :src='user.avatar_url' :title='user && (user.name || user.login)' @click="showDescription = true">
+    <div class='gistbtn' v-tooltip="gistTitle" v-if="!loading">
+      <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip="'Login to GitHub'" @click="showDescription = true">
+      <img v-else :src='user.avatar_url' v-tooltip='user && (user.name || user.login)' @click="showDescription = true">
       <div class="gist-input" v-if="!gistName">
-        <input v-model="gistId" placeholder="Gist id..." :class="{ error: gistId && !gistName }" :title="gistIdInputTitle" @keyup.enter="loadGist"/>
+        <input v-model="gistId" placeholder="Gist id..." :class="{ error: gistId && !gistName }" v-tooltip="gistIdInputTitle" @keyup.enter="loadGist"/>
         <div v-if="gistId" @click="loadGist">Go</div>
       </div>
       <a v-if="gistName && token" :href='gistUrl' target="_blank">{{gistName}}</a>
-      <span v-if="gistName && !token" class='gist-token-needed' @click="showDescription = true">Access token is needed</span>      
+      <span v-if="gistName && !token" class='gist-token-needed' @click="showDescription = true">Access token is required</span>      
     </div>
     <div class='gist-token-explanation' v-if="showDescription">
         In order to be able to load content from GitHub <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
@@ -68,7 +68,7 @@ export default {
     },
     gistIdInputTitle() {
       if (this.gistId && !this.gistName) {
-        return 'Gist is not loaded..';
+        return 'Gist is not loaded <br> Make sure that the Gist Id is correct and your token is valid';
       }
 
       if (!this.gistName) {
@@ -78,7 +78,7 @@ export default {
       return '';
     },
     saveDisabled() {
-      return true;
+      return !this.edited || !this.jsonValid;
     },
   },
   methods: {
@@ -103,6 +103,8 @@ export default {
       }
     },
     saveGist() {
+      if (this.saveDisabled) return;
+
       if (this.gistId) {
         this.saving = true;
         if (this.isGistOwner) {

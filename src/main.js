@@ -1,6 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VTooltip from 'v-tooltip';
 import App from './App';
+
+import './scss/style.scss';
+
+Vue.use(VTooltip, { defaultOffset: 5, defaultPlacement: 'left' });
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);
