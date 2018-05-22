@@ -10,14 +10,14 @@
       <img src='./assets/logo.png' @click='onLogoClick'>
       <h1>Json-Pollock Playground</h1>
     </div>
-    <div class='gistbtn' v-tooltip="gistTitle" v-if="!loading">
+    <div class='gistbtn' v-if="!loading">
       <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip="'Login to GitHub'" @click="showDescription = true">
       <img v-else :src='user.avatar_url' v-tooltip='user && (user.name || user.login)' @click="showDescription = true">
       <div class="gist-input" v-if="!gistName">
         <input v-model="gistId" placeholder="Gist id..." :class="{ error: gistId && !gistName }" v-tooltip="gistIdInputTitle" @keyup.enter="loadGist"/>
         <div v-if="gistId" @click="loadGist">Go</div>
       </div>
-      <a v-if="gistName && token" :href='gistUrl' target="_blank">{{gistName}}</a>
+      <a v-if="gistName && token" :href='gistUrl' target="_blank" v-tooltip="gistTitle">{{gistName}}</a>
       <span v-if="gistName && !token" class='gist-token-needed' @click="showDescription = true">Access token is required</span>      
     </div>
     <div class='gist-token-explanation' v-if="showDescription">
