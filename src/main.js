@@ -1,6 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VTooltip from 'v-tooltip';
 import App from './App';
+
+import './scss/style.scss';
+
+Vue.use(VTooltip, { defaultOffset: 5, defaultPlacement: 'left' });
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);
@@ -8,12 +13,16 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     json: undefined,
+    jsonValid: true,
+    edited: false,
     loading: false,
     token: '',
+    user: '',
     gist: {
       id: '',
       name: '',
       url: '',
+      ownerId: '',
     },
     message: {
       text: '',
@@ -24,6 +33,12 @@ const store = new Vuex.Store({
     setJson(state, json) {
       state.json = json;
     },
+    setJsonValid(state, bool) {
+      state.jsonValid = bool;
+    },
+    setEdited(state, bool) {
+      state.edited = bool;
+    },
     setLoading(state, val) {
       state.loading = val;
     },
@@ -32,6 +47,7 @@ const store = new Vuex.Store({
         state.gist.name = gistObj.name;
         state.gist.url = gistObj.url;
         state.gist.id = gistObj.id;
+        state.gist.ownerId = gistObj.ownerId;
       }
     },
     setMessage(state, msg) {
@@ -44,6 +60,11 @@ const store = new Vuex.Store({
         state.token = token;
       }
     },
+    setUser(state, user) {
+      if (user) {
+        state.user = user;
+      }
+    },
   },
   getters: {
     json: state => state.json,
@@ -51,6 +72,9 @@ const store = new Vuex.Store({
     gist: state => state.gist,
     token: state => state.token,
     message: state => state.message,
+    user: state => state.user,
+    jsonValid: state => state.jsonValid,
+    edited: state => state.edited,
   },
 });
 

@@ -66,8 +66,10 @@ export default {
         try {
           const currentJson = editor.get();
           this.$store.commit('setJson', currentJson);
+          this.$store.commit('setJsonValid', true);
+          this.$store.commit('setEdited', true);
         } catch (e) {
-          // wrong json structure, do nothing
+          this.$store.commit('setJsonValid', false);
         }
       },
     };
