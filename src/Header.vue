@@ -62,13 +62,19 @@ export default {
     },
     gistTitle() {
       if (this.gistUrl) {
-        return `Click to open ${this.gistName} Gist on GitHub.com`;
+        return `Open ${this.gistName} Gist on GitHub.com`;
       }
       return '';
     },
     gistIdInputTitle() {
       if (this.gistId && !this.gistName) {
-        return 'Gist is not loaded <br> Make sure that the Gist Id is correct and your token is valid';
+        let msg = 'Gist is not loaded <br>';
+        if (!this.user) {
+          msg += 'Make sure that your Access Token is valid';
+        } else {
+          msg += 'Make sure that the Gist Id is correct';
+        }
+        return msg;
       }
 
       if (!this.gistName) {
@@ -93,7 +99,7 @@ export default {
     saveToken() {
       if (this.token) {
         GitHubHelper.saveToken(this.token);
-        this.$store.commit('setMessage', { text: 'Token successfully saved! :) reload the page to load content from Gist', type: 'success' });
+        this.$store.commit('setMessage', { text: 'Token successfully saved! :) refresh the page to load content from Gist', type: 'success' });
         this.showDescription = false;
       }
     },
@@ -103,7 +109,7 @@ export default {
       }
     },
     saveGist() {
-      if (this.saveDisabled) return;
+      if (this.saveDisabled || this.saving) return;
 
       if (this.gistId) {
         this.saving = true;
@@ -188,10 +194,6 @@ export default {
         margin-top: 16px;
         margin-right: 10px;
         cursor: hand;
-      }
-
-      h1 {
-        
       }
     }
 
