@@ -1,6 +1,6 @@
 <template>
   <div class='header'>
-    <div class="savebtn" @click="saveGist" v-if="token" :class="{disabled: saveDisabled}">
+    <div class="savebtn" @click="saveGist" v-if="token && !loading" :class="{disabled: saveDisabled}">
       <img v-if="!saving" src='./assets/baseline-save-24px.svg'>
       <img v-if="saving" src='./assets/baseline-sync-24px.svg' class="saving">
       <span v-if="isGistOwner" v-tooltip="'Save to Gist'">Save</span>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       gistName: '',
-      newGistName: '',
+      newGistName: 'StructuredContent.json',
       gistUrl: '',
       gistId: '',
       token: '',
@@ -167,8 +167,10 @@ export default {
     this.$store.watch(
       state => state.gist.name,
       (name) => {
-        this.gistName = name;
-        this.newGistName = name;
+        if (name) {
+          this.gistName = name;
+          this.newGistName = name;
+        }
       },
     );
 
@@ -192,9 +194,14 @@ export default {
         this.token = token;
       },
     );
+    if (this.$refs.gistBtn) {
+      this.descriptionArrwPos = 298 - this.$refs.gistBtn.offsetWidth;
+    }
   },
   updated() {
-    this.descriptionArrwPos = 298 - this.$refs.gistBtn.offsetWidth;
+    if (this.$refs.gistBtn) {
+      this.descriptionArrwPos = 298 - this.$refs.gistBtn.offsetWidth;
+    }
   },
 };
 </script>
