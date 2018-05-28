@@ -9,7 +9,7 @@ Json-Pollock
 
 The **Json-Pollock** package renders live DOM elements out of JSON according to the [Structured Messaging Templates specification](https://developers.liveperson.com/structured-content-templates.html)
 
-Installation
+Installation Instructions
 -------
 ```
 npm i json-pollock --save
