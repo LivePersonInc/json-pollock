@@ -29,7 +29,7 @@ class JsonPollockError extends Error {
   }
 }
 
-export default class LPJsonPollock {
+export default class JsonPollock {
 
   provider: ElementRendererProvider;
   events: Events;

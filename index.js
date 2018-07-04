@@ -3,9 +3,9 @@
 /*eslint-disable */
 import styles from './scss/style.scss';
 /*eslint-enable */
-import LPJsonPollock from './js/LPJsonPollock';
+import JsonPollock from './js/JsonPollock';
 
-const instance = new LPJsonPollock();
+const instance = new JsonPollock();
 
 const init = instance.init.bind(instance);
 const render = instance.render.bind(instance);
