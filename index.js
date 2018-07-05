@@ -4,8 +4,9 @@
 import styles from './scss/style.scss';
 /*eslint-enable */
 import JsonPollock from './js/JsonPollock';
+import SchemaValidator from './js/SchemaValidator';
 
-const instance = new JsonPollock();
+const instance = new JsonPollock(new SchemaValidator());
 
 const init = instance.init.bind(instance);
 const render = instance.render.bind(instance);
