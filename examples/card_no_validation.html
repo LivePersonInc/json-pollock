@@ -1,0 +1,45 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>SC Test</title>
+    <link rel="stylesheet" href="/dist/json-pollock.min.css">
+  <script src="/dist/json-pollock.global.no_validation.min.js"></script>
+  <script>
+    window.onload = function () {
+
+      let card = {
+        "type": "vertical",
+        "elements": [{
+          "type": "text",
+          "text": "foo"
+        }]
+      }
+
+      JsonPollock.registerAction('navigate', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('link', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('publishText', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      const el = JsonPollock.render(JSON.stringify(card));
+      document.getElementById('content').appendChild(el);
+    }
+  </script>
+</head>
+
+<body>
+  <div id='content'>
+  </div>
+</body>
+
+</html>
