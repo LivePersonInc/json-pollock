@@ -1585,6 +1585,22 @@ describe('json-pollock tests', function () {
 
     });
 
+    describe('Unrecognized elements', function () {    
+      it('If element is not recognized an invalid schema error should be triggered', function () {
+        var json = {
+          "type": "vertical",
+          "elements": [{      
+              "type": "text",
+              "text": "foo"            
+          },{
+            "type": "blablabla",
+            "text": "foo"            
+          }]
+        };
+        chai.expect(JsonPollock.render.bind(JsonPollock, json)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+    });
+
     describe('Type checking', function () {
 
       describe('Click property of basic element', function () {
@@ -1614,7 +1630,7 @@ describe('json-pollock tests', function () {
 
       describe('Action of type navigation', function () {
 
-        it('lo value nust be integer', function () {
+        it('lo value must be integer', function () {
           var navigateLoString = {
             "type": "vertical",
             "elements": [{
@@ -1635,7 +1651,7 @@ describe('json-pollock tests', function () {
           chai.expect(JsonPollock.render.bind(JsonPollock, navigateLoString)).to.throw(SCHEMA_VALIDATION_ERR);
         });
 
-        it('la value nust be integer', function () {
+        it('la value must be integer', function () {
           var navigateLaString = {
             "type": "vertical",
             "elements": [{
