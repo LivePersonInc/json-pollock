@@ -14,7 +14,7 @@ module.exports = {
         loader: 'eslint-loader',
       },
       {
-        test: /index.js$/,
+        test: /index.no_validation.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'string-replace-loader',
