@@ -2510,6 +2510,10 @@ module.exports = {
 		"style": {
 			"$ref": "style.json"
 		},
+		"alt": {
+			"type": "string",
+			"maxLength": 2000
+		},
 		"click": {
 			"type": "object",
 			"additionalProperties": false,
@@ -2569,6 +2573,10 @@ module.exports = {
 					"items": {
 						"$ref": "rich_content.json"
 					}
+				},
+				"alt": {
+					"type": "string",
+					"maxLength": 2000
 				}
 			},
 			"required": [
@@ -2603,6 +2611,10 @@ module.exports = {
 					"items": {
 						"$ref": "rich_content.json"
 					}
+				},
+				"alt": {
+					"type": "string",
+					"maxLength": 2000
 				}
 			},
 			"required": [
@@ -2647,6 +2659,10 @@ module.exports = {
 			"items": {
 				"$ref": "card.json"
 			}
+		},
+		"alt": {
+			"type": "string",
+			"maxLength": 2000
 		}
 	},
 	"required": [
@@ -2697,6 +2713,10 @@ module.exports = {
 		},
 		"style": {
 			"$ref": "style.json"
+		},
+		"alt": {
+			"type": "string",
+			"maxLength": 2000
 		},
 		"click": {
 			"type": "object",
@@ -2763,6 +2783,10 @@ module.exports = {
 		"style": {
 			"$ref": "style.json"
 		},
+		"alt": {
+			"type": "string",
+			"maxLength": 2000
+		},
 		"click": {
 			"type": "object",
 			"additionalProperties": false,
@@ -2825,6 +2849,10 @@ module.exports = {
 		},
 		"style": {
 			"$ref": "style.json"
+		},
+		"alt": {
+			"type": "string",
+			"maxLength": 2000
 		},
 		"click": {
 			"type": "object",
@@ -2965,6 +2993,10 @@ module.exports = {
 		"style": {
 			"$ref": "style.json"
 		},
+		"alt": {
+			"type": "string",
+			"maxLength": 2000
+		},
 		"click": {
 			"type": "object",
 			"additionalProperties": false,
@@ -3027,6 +3059,10 @@ module.exports = {
 		},
 		"style": {
 			"$ref": "style.json"
+		},
+		"alt": {
+			"type": "string",
+			"maxLength": 2000
 		},
 		"click": {
 			"type": "object",
@@ -8434,7 +8470,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.1.8';
+var version = '1.1.9';
 
 exports.init = init;
 exports.render = render;
