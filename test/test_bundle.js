@@ -39,6 +39,7 @@ describe('json-pollock tests', function () {
       "type": "button",
       "tooltip": "button tooltip",
       "title": "Add to cart",
+      "alt": "alt text",
       "click": {
         "actions": [{
           "type": "link",
