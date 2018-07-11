@@ -5,13 +5,17 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["template"],
+      "enum": [
+        "template"
+      ],
       "default": "template",
       "readonly": true
     },
     "templateType": {
       "type": "string",
-      "enum": ["quickReply"],
+      "enum": [
+        "quickReply"
+      ],
       "default": "quickReply",
       "readonly": true
     },
@@ -46,6 +50,10 @@
     "style": {
       "$ref": "style.json"
     },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    },
     "click": {
       "type": "object",
       "additionalProperties": false,
@@ -63,5 +71,9 @@
       }
     }
   },
-  "required": ["templateType", "title", "resp"]
+  "required": [
+    "templateType",
+    "title",
+    "resp"
+  ]
 }

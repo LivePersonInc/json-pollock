@@ -6,7 +6,7 @@
     },
     {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties" : false,
       "title": "horizontal",
       "properties": {
         "type": {
@@ -29,13 +29,17 @@
           "items": {
             "$ref": "rich_content.json"
           }
+        },
+        "alt": {
+          "type": "string",
+          "maxLength": 2000
         }
       },
       "required": ["type", "elements"]
     },
     {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties" : false,
       "title": "vertical",
       "properties": {
         "type": {
@@ -58,6 +62,10 @@
           "items": {
             "$ref": "rich_content.json"
           }
+        },
+        "alt": {
+          "type": "string",
+          "maxLength": 2000
         }
       },
       "required": ["type", "elements"]

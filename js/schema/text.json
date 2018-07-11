@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "additionalProperties": false,
+  "additionalProperties" : false,
   "title": "text",
   "properties": {
     "type": {
@@ -31,9 +31,13 @@
     "style": {
       "$ref": "style.json"
     },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    },
     "click": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties" : false,
       "properties": {
         "actions": {
           "type": "array",

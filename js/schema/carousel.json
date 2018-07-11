@@ -5,7 +5,9 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["carousel"],
+      "enum": [
+        "carousel"
+      ],
       "default": "carousel",
       "readonly": true
     },
@@ -26,7 +28,14 @@
       "items": {
         "$ref": "card.json"
       }
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
     }
   },
-  "required": ["type", "elements"]
+  "required": [
+    "type",
+    "elements"
+  ]
 }

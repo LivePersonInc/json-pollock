@@ -5,7 +5,9 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["linkPreview"],
+      "enum": [
+        "linkPreview"
+      ],
       "default": "linkPreview",
       "readonly": true
     },
@@ -35,6 +37,10 @@
     "style": {
       "$ref": "style.json"
     },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    },
     "click": {
       "type": "object",
       "additionalProperties": false,
@@ -52,5 +58,7 @@
       }
     }
   },
-  "required": ["url"]
+  "required": [
+    "url"
+  ]
 }

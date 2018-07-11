@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "image",
-  "additionalProperties": false,
+  "additionalProperties" : false,
 
   "properties": {
     "type": {
@@ -17,8 +17,8 @@
     "url": {
       "type": "string",
       "maxLength": 2048
-    },
-    "rtl": {
+    },      
+      "rtl": {
       "type": "boolean"
     },
     "tooltip": {
@@ -36,9 +36,13 @@
     "style": {
       "$ref": "style.json"
     },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    },
     "click": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties" : false,
       "properties": {
         "actions": {
           "type": "array",
