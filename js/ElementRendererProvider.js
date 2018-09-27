@@ -205,6 +205,7 @@ export default class ElementRendererProvider {
       function cardFocus(event) {
         const element = event.target;
         const cardRoot = findCardRoot(element);
+        divCarouselWrapper.scrollLeft = 0;
         const divCarouselWrapperBoundaries = divCarouselWrapper.getBoundingClientRect();
         const cardBoundaries = cardRoot.getBoundingClientRect();
         // check if the container card is Exceeding the carousel wrapper.
