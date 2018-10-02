@@ -7523,6 +7523,7 @@ var ElementRendererProvider = function () {
       function cardFocus(event) {
         var element = event.target;
         var cardRoot = findCardRoot(element);
+        divCarouselWrapper.scrollLeft = 0;
         var divCarouselWrapperBoundaries = divCarouselWrapper.getBoundingClientRect();
         var cardBoundaries = cardRoot.getBoundingClientRect();
         // check if the container card is Exceeding the carousel wrapper.
@@ -8495,7 +8496,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.1.10';
+var version = '1.1.11';
 
 exports.init = init;
 exports.render = render;
