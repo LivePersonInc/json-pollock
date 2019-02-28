@@ -91,6 +91,11 @@
             "maxLength": 1024
           }
         }
+      },
+      "target": {
+        "type": "string",
+        "enum": ["self", "blank"],
+        "default": "self"
       }
     },
     "required": ["type", "uri"]

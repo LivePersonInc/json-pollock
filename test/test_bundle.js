@@ -1201,7 +1201,17 @@ describe('json-pollock tests', function () {
             },{
               "type": "link",
               "name": "add to cart",
-              "uri": "https://example.com"
+              "uri": "https://example.com",
+              "ios": {
+                "uri": "https://ios.example.com"
+              },
+              "android": {
+                "uri": "https://android.example.com"
+              },
+              "web": {
+                "uri": "https://web.example.com"
+              },
+              "target": "blank"
             }]
           }
         },{
