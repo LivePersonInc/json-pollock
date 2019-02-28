@@ -2434,6 +2434,14 @@ module.exports = {
 							"maxLength": 1024
 						}
 					}
+				},
+				"target": {
+					"type": "string",
+					"enum": [
+						"self",
+						"blank"
+					],
+					"default": "self"
 				}
 			},
 			"required": [
@@ -8496,7 +8504,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.1.11';
+var version = '1.1.12';
 
 exports.init = init;
 exports.render = render;
