@@ -17,8 +17,7 @@
     "url": {
       "type": "string",
       "maxLength": 2048
-    },      
-      "rtl": {
+    },      "rtl": {
       "type": "boolean"
     },
     "tooltip": {
