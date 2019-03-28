@@ -61,11 +61,11 @@ export default {
     },
     onFocusOut() {
       this.onfocus = false;
-      this.$nextTick(() => {
+      setTimeout(() => {
         if (this.autoClose && !this.onfocus) {
           this.hide();
         }
-      });
+      }, 10);
     },
     onFocusIn() {
       this.onfocus = true;
