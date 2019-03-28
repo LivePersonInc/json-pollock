@@ -7446,7 +7446,7 @@ var ElementRendererProvider = function () {
       } else {
         // navigate to the location
         divEl.onclick = function () {
-          window.open('https://www.google.com/maps/search/?api=1&query=' + config.lo + ',' + config.la, '_blank');
+          window.open('https://www.google.com/maps/search/?api=1&query=' + config.la + ',' + config.lo, '_blank');
         };
       }
       return divEl;

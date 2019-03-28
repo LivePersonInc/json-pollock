@@ -1276,7 +1276,7 @@ describe('json-pollock tests', function () {
     it('Click on map element which has no actions definition should trigger window.open for google maps', function () {
       window.open = sinon.spy();
       rooEl.childNodes[0].childNodes[0].childNodes[4].dispatchEvent(createClickEvent());
-      chai.expect(window.open).to.have.been.calledWith('https://www.google.com/maps/search/?api=1&query=64.128597,-21.89611');
+      chai.expect(window.open).to.have.been.calledWith('https://www.google.com/maps/search/?api=1&query=-21.89611,64.128597');
     });
 
     it('Click on element with link action should not trigger its registered callbacks after unregister', function () {
