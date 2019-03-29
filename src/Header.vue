@@ -10,9 +10,14 @@
       <input ref="gistNameInput" v-model="newGistName" placeholder="Gist Name..."/>
       <div v-if="newGistName" @click="createGist">Save</div>
     </popup>
+    <div class="docu" v-tooltip="'Rich Content Documentation'">
+      <a href="https://developers.liveperson.com/getting-started-with-rich-messaging-introduction.html" target="_blank">
+      Documentation
+      </a>
+    </div>
     <div class='title'>
       <img src='./assets/logo.png' @click='onLogoClick'>
-      <h1>Json-Pollock Playground</h1>
+      <h1 class="title-text">Json-Pollock Playground</h1>
     </div>
     <div class='gistbtn' v-if="!loading" ref="gistBtn">
       <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip="'Login to GitHub'" @click="showDescription = true">
@@ -230,6 +235,21 @@ export default {
         margin-right: 10px;
         cursor: hand;
       }
+    }
+
+    @media screen and (max-width: 992px) {
+        .title {
+          left: 45%;
+          .title-text {
+            display: none;
+          }
+        }
+      }
+
+    .docu {
+      float: left;
+      line-height: 30px;
+      margin: 14px 0px 0px 11px;
     }
 
     .savebtn {
