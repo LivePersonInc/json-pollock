@@ -2,7 +2,14 @@
   <div id="app">
     <Header class="header_container"></Header>
     <JSONEditor class="jsoneditor_container" ref="editor"></JSONEditor>
-    <JSONPollock class="jsonpollock_container"></JSONPollock>
+    <JSONPollock class="jsonpollock_container" :class="{'actions-bar-open': actionsBarOpen}"></JSONPollock>
+    <div class="actions_toggle" :class="actionsBarOpen ? 'open' : 'close'" @click="actionsBarOpen = !actionsBarOpen" v-tooltip="actionsBarOpen ? 'Close' : 'Show the Actions View'">
+      {{actionsBarOpen ? '&#10005;' : 'Actions'}}
+    </div>
+    <div class="actions_clear" v-show="actionsBarOpen" @click="clearActionsList" v-tooltip="'Clear List'">
+      &#8635;
+    </div>
+    <ActionsViewer class="actions_container" v-show="actionsBarOpen"></ActionsViewer>
     <Message/>
   </div>
 </template>
@@ -11,6 +18,7 @@
 import Header from './Header';
 import JSONEditor from './JSONEditor';
 import JSONPollock from './JSONPollock';
+import ActionsViewer from './ActionsViewer';
 import Message from './Message';
 import GitHubHelper from './GitHubHelper';
 
@@ -22,7 +30,13 @@ export default {
     Header,
     JSONEditor,
     JSONPollock,
+    ActionsViewer,
     Message,
+  },
+  data() {
+    return {
+      actionsBarOpen: false,
+    };
   },
   mounted() {
     const loadDefault = () => {
@@ -80,6 +94,11 @@ export default {
       loadDefault();
     }
   },
+  methods: {
+    clearActionsList() {
+      this.$store.commit('clearActions');
+    },
+  },
 };
 </script>
 
@@ -123,8 +142,53 @@ export default {
 .jsonpollock_container {
   @extend .editor_container;
 
+  &.actions-bar-open {
+    height: calc(100% - 275px);
+  }
+
   left: 50%;
   border: solid rgb(56, 131, 250) 1px;
   overflow: auto;
+}
+
+.actions_container {
+  @extend .editor_container;
+  
+  top: auto;
+  bottom: 28px;
+  height: 145px;
+  left: 50%;
+  border: solid #3883fa 1px;
+  overflow: auto;
+}
+
+.actions_btn {
+  position: absolute;
+  height: 22px;
+  padding: 0 7px;
+  cursor: pointer;
+  text-align: center;
+  overflow: auto;
+  border-radius: 3px;
+  background: #ebebeb;
+}
+
+.actions_toggle {
+  @extend .actions_btn;
+  left: calc( 50% + 1px);
+
+  &.open {
+    bottom: 174px;
+  }
+
+  &.close {
+    bottom: 29px;
+  }
+}
+
+.actions_clear {
+  @extend .actions_btn;
+  left: calc( 50% + 23px);
+  bottom: 174px;
 }
 </style>

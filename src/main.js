@@ -28,6 +28,7 @@ const store = new Vuex.Store({
       text: '',
       type: '',
     },
+    actions: [],
   },
   mutations: {
     setJson(state, json) {
@@ -65,6 +66,14 @@ const store = new Vuex.Store({
         state.user = user;
       }
     },
+    addAction(state, action) {
+      if (action) {
+        state.actions.push(action);
+      }
+    },
+    clearActions(state) {
+      state.actions = [];
+    },
   },
   getters: {
     json: state => state.json,
@@ -75,6 +84,7 @@ const store = new Vuex.Store({
     user: state => state.user,
     jsonValid: state => state.jsonValid,
     edited: state => state.edited,
+    actions: state => state.actions,
   },
 });
 

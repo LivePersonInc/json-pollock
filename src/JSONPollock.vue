@@ -22,6 +22,10 @@ export default {
   components: {
   },
   mounted() {
+    JsonPollock.registerAction('link', this.onAction.bind(this));
+    JsonPollock.registerAction('navigate', this.onAction.bind(this));
+    JsonPollock.registerAction('publishText', this.onAction.bind(this));
+
     const updateDom = (json) => {
       this.styleObject['max-width'] = `${get(this.$refs.domParent, 'offsetWidth', 550) - 50}px`;
       this.version = JsonPollock.version;
@@ -41,6 +45,11 @@ export default {
       },
     );
     updateDom(this.$store.state.json);
+  },
+  methods: {
+    onAction(data) {
+      this.$store.commit('addAction', data);
+    },
   },
 };
 
