@@ -10,6 +10,11 @@ Vue.use(VTooltip, { defaultOffset: 5, defaultPlacement: 'left' });
 Vue.config.productionTip = false;
 Vue.use(Vuex);
 
+Vue.prototype.ga = (args) => {
+  // google analytics interactions handler
+  window.ga.apply(this, ['send', 'event', ...args]);
+};
+
 const store = new Vuex.Store({
   state: {
     json: undefined,

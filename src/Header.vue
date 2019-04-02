@@ -11,7 +11,8 @@
       <div v-if="newGistName" @click="createGist">Save</div>
     </popup>
     <div class="docu" v-tooltip="'Rich Content Documentation'">
-      <a href="https://developers.liveperson.com/getting-started-with-rich-messaging-introduction.html" target="_blank">
+      <a href="https://developers.liveperson.com/getting-started-with-rich-messaging-introduction.html" target="_blank"
+      @click="ga(['Documentation','navigate'])">
       Documentation
       </a>
     </div>

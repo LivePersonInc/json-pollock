@@ -3,7 +3,7 @@
     <Header class="header_container"></Header>
     <JSONEditor class="jsoneditor_container" ref="editor"></JSONEditor>
     <JSONPollock class="jsonpollock_container" :class="{'actions-bar-open': actionsBarOpen}"></JSONPollock>
-    <div class="actions_toggle" :class="actionsBarOpen ? 'open' : 'close'" @click="actionsBarOpen = !actionsBarOpen" v-tooltip="actionsBarOpen ? 'Close' : 'Show the Actions View'">
+    <div class="actions_toggle" :class="actionsBarOpen ? 'open' : 'close'" @click="toggleActions" v-tooltip="actionsBarOpen ? 'Close' : 'Show the Actions View'">
       {{actionsBarOpen ? '&#10005;' : 'Actions'}}
     </div>
     <div class="actions_clear" v-show="actionsBarOpen" @click="clearActionsList" v-tooltip="'Clear List'">
@@ -95,6 +95,10 @@ export default {
     }
   },
   methods: {
+    toggleActions() {
+      this.actionsBarOpen = !this.actionsBarOpen;
+      this.ga(['Actions', this.actionsBarOpen ? 'open' : 'close']);
+    },
     clearActionsList() {
       this.$store.commit('clearActions');
     },
