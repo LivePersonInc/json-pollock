@@ -125,6 +125,7 @@ export default {
     },
     loadGist() {
       if (this.gistId) {
+        this.ga(['Gist', 'Load', this.gistId]);
         location.search = `?gist=${this.gistId}`;
       }
     },
@@ -132,6 +133,7 @@ export default {
       if (this.saveDisabled || this.saving) return;
 
       if (this.gistId && this.isGistOwner) {
+        this.ga(['Gist', 'Save', this.gistId]);
         this.saving = true;
         GitHubHelper.saveGist(this.gistId, this.gistName, this.json)
           .then((res) => {
@@ -153,6 +155,7 @@ export default {
       const name = this.newGistName || this.gistName;
       if (!name) return;
 
+      this.ga(['Gist', 'Create', name]);
       this.saving = true;
       this.showNewGistInput = false;
       GitHubHelper.createGist(name, this.json)
