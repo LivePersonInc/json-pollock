@@ -20,6 +20,13 @@
       <img src='./assets/logo.png' @click='onLogoClick'>
       <h1 class="title-text">Json-Pollock Playground</h1>
     </div>
+    <div class="info" @click="gotoGitHubIssues"
+      v-tooltip.bottom="`
+      For fixes and improvements of this tool: <br> 
+      Click this icon and open an issue on our GitHub repo! <br> 
+      &#9758; Be sure to mark your issue with the <span style='background-color:#9960ba;color: #000000;border-radius:2px;padding:1px 5px'>playground</span> label &#9756;`">
+      &#9432;
+    </div>
     <div class='gistbtn' v-if="!loading" ref="gistBtn">
       <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip="'Login to GitHub'" @click="showDescription = true">
       <img v-else :src='user.avatar_url' v-tooltip='user && (user.name || user.login)' @click="showDescription = true">
@@ -171,6 +178,9 @@ export default {
           }
         });
     },
+    gotoGitHubIssues() {
+      window.open('https://github.com/LivePersonInc/json-pollock/issues', '_blank');
+    },
   },
   mounted() {
     this.$store.watch(
@@ -291,37 +301,47 @@ export default {
     }
 
     .gist-input {
-        input {
-          font-size: 15px;
-          margin: 7px 0 7px 0;
-          height: 25px;
-          padding-left: 5px;          
+      input {
+        font-size: 15px;
+        margin: 7px 0 7px 0;
+        height: 25px;
+        padding-left: 5px;          
 
-          &.error {
-            border-color: red;
-          }
-        }
-
-        div {
-          position: absolute;
-          top: 10px;
-          right: 13px;
-          font-size: 14px;
-          font-weight: bold;
-          background: #fff;
-          cursor: pointer;
-          height: 23px;
-          line-height: 23px;
-          padding: 0 6px;
-          display: none;
-        }
-
-        &:hover, &:focus {
-          div {
-            display: block;
-          }
+        &.error {
+          border-color: red;
         }
       }
+
+      div {
+        position: absolute;
+        top: 10px;
+        right: 13px;
+        font-size: 14px;
+        font-weight: bold;
+        background: #fff;
+        cursor: pointer;
+        height: 23px;
+        line-height: 23px;
+        padding: 0 6px;
+        display: none;
+      }
+
+      &:hover, &:focus {
+        div {
+          display: block;
+        }
+      }
+    }
+
+    .info {          
+      position: absolute;
+      right: 273px;
+      top: 13px;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      cursor: hand;
+    }
 
     .gistbtn {
       line-height: 42px;
