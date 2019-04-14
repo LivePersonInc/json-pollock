@@ -179,6 +179,7 @@ export default {
         });
     },
     gotoGitHubIssues() {
+      this.ga(['Issues', 'navigate']);
       window.open('https://github.com/LivePersonInc/json-pollock/issues', '_blank');
     },
   },
