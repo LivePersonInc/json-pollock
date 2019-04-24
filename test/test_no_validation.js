@@ -24,7 +24,7 @@ describe('json-pollock tests - no validation bundle', function () {
         var verticalNoElements = {
           "type": "vertical"
         };
-        chai.expect(JsonPollock.render.bind(JsonPollock, verticalNoElements)).not.not.to.throw(SCHEMA_VALIDATION_ERR);
+        chai.expect(JsonPollock.render.bind(JsonPollock, verticalNoElements)).not.to.throw(SCHEMA_VALIDATION_ERR);
       });
 
       it('If element of type text is lack of mandatory properties (text) an invalid schema error should not be triggered', function () {
