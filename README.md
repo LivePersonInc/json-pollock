@@ -75,6 +75,7 @@ JsonPollock.init({
 ```
 
 Supported options:
+
 |name | type | description | default |
 |---|---|---|---|
 | `maxAllowedElements` | Number |  max DOM elements that will be renderes, other elements will be ignored. | 50 |
