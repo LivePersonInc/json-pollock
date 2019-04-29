@@ -14,13 +14,22 @@ Installation
 ```
 npm i json-pollock --save
 ```
-In the `dist` folder you'll find a the following files:
+In the `dist` folder you'll find a list of file that allows you to consume json-pollock in a different ways:
+
+
+**As a Bundle**
 
 `json-pollock.bundle.min.js`  - this script bundle both package and styles, once you import it into your code it will inject the needed styles into your page header - no additional actions are needed from your side. it is also supports umd - meaning you can consume it using AMD, CommonJS and as simple script (see [examples](#examples))
 
+**Separate files for code and style**
+
 `json-pollock.min.js` - use this script if you want to handle the import of the styles by youself, if you use it you should also take care to link `json-pollock.min.css` to your web page. also supports umd.
 
+**No UMD**
+
 `json-pollock.global.min.js` - this script is the same as `json-pollock.min.js`, however is does not support umd - it only puts JsonPollock on the current `this` (usually the `window` object). use this in case you inject the package into sites that are not managed by you and you dont know if it uses AMD or not.
+
+**No validation**
 
 `json-pollock.global.no_validation.min.js` - a version of `json-pollock.global.min.js` which the validation phase is excluded. this bundle is lighter as it does not bundles the validation package ([Ajv](https://github.com/epoberezkin/ajv)), however it should be used with more care in regard to the json input.
 
