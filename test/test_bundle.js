@@ -1709,6 +1709,71 @@ describe('json-pollock tests', function () {
 
       });
 
+      describe('onAfterElementRendered hook', function () {
+        it('expect onAfterElementRendered callback to be called for each element', function () {
+          var spy = sinon.spy((element, tmpl) => {
+            return element;
+          });
+          JsonPollock.init({onAfterElementRendered: spy});
+          JsonPollock.render(card);
+
+          chai.expect(spy).to.have.been.callCount(5);
+        });
+
+        it('expect onAfterElementRendered callback to provide the given template type', function () {
+          var json = {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip"
+          };
+          var spy = sinon.spy((element, tmpl) => {
+            return element;
+          });
+
+          JsonPollock.init({onAfterElementRendered: spy});
+          var element = JsonPollock.render(json);
+
+          chai.expect(spy).to.have.been.calledWith(element.querySelector('.lp-json-pollock-element-text'), json);
+        });
+
+        it('expect onAfterElementRendered callback to provide manipilated element', function () {
+          var json = {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip"
+          };
+          var spy = sinon.spy((element, tmpl) => {
+            element.classList.add('my-custom-class');
+            return element;
+          });
+          
+          JsonPollock.init({onAfterElementRendered: spy});
+          var element = JsonPollock.render(json);
+
+          chai.expect(element.querySelector('.lp-json-pollock-element-text').className).to.contain('my-custom-class');
+        });
+
+        it('expect element not to be rendered if was not returned by onAfterElementRendered', function () {
+          var json = {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip"
+          };
+          var spy = sinon.spy((element, tmpl) => {
+            if (tmpl.type === 'text') {
+              return null;
+            }
+            return element;
+          });
+          
+          JsonPollock.init({onAfterElementRendered: spy});
+          var element = JsonPollock.render(json);
+
+          chai.expect(element.querySelector('.lp-json-pollock-element-text')).to.not.exist;
+        });
+
+      });
+
     });
 
   });

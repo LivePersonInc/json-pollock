@@ -2094,9 +2094,6 @@ var JsonPollockError = function (_Error) {
 }(Error);
 
 var JsonPollock = function () {
-  // do not change to real type (SchemaValidator)
-  // as this dependency should be injected
-
   function JsonPollock(validator) {
     _classCallCheck(this, JsonPollock);
 
@@ -2104,7 +2101,9 @@ var JsonPollock = function () {
     this.provider = new _ElementRendererProvider2.default(this.events);
     this.maxAllowedElements = 50;
     this.schemaValidator = validator;
-  }
+  } // do not change to real type (SchemaValidator)
+  // as this dependency should be injected
+
 
   _createClass(JsonPollock, [{
     key: 'init',
@@ -2118,6 +2117,9 @@ var JsonPollock = function () {
         } else {
           this.maxAllowedElements = 50;
         }
+      }
+      if (typeof config.onAfterElementRendered === 'function') {
+        this.onAfterElementRendered = config.onAfterElementRendered;
       }
     }
   }, {
@@ -2135,6 +2137,9 @@ var JsonPollock = function () {
       var element = void 0;
       if (elementRenderer) {
         element = elementRenderer(elJson);
+        if (this.onAfterElementRendered) {
+          element = this.onAfterElementRendered(element, elJson);
+        }
         if (element) {
           parent.appendChild(element);
           if (Array.isArray(elJson.elements)) {

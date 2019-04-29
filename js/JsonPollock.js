@@ -24,6 +24,7 @@ export default class JsonPollock {
   maxAllowedElements: number;
   schemaValidator: any; // do not change to real type (SchemaValidator)
                         // as this dependency should be injected
+  onAfterElementRendered: Function;
 
   constructor(validator: any) {
     this.events = new Events({ cloneEventData: true, appName: 'json-pollock' });
@@ -43,6 +44,9 @@ export default class JsonPollock {
         this.maxAllowedElements = 50;
       }
     }
+    if (typeof config.onAfterElementRendered === 'function') {
+      this.onAfterElementRendered = config.onAfterElementRendered;
+    }
   }
 
   renderElement(elJson: Object, parent: HTMLElement, numOfElements: number = 0) {
@@ -54,6 +58,9 @@ export default class JsonPollock {
     let element: HTMLElement;
     if (elementRenderer) {
       element = elementRenderer(elJson);
+      if (this.onAfterElementRendered) {
+        element = this.onAfterElementRendered(element, elJson);
+      }
       if (element) {
         parent.appendChild(element);
         if (Array.isArray(elJson.elements)) {
