@@ -21,7 +21,7 @@ In the `dist` folder you'll find a list of file that allows you to consume json-
 
 `json-pollock.bundle.min.js`  - this script bundle both package and styles, once you import it into your code it will inject the needed styles into your page header - no additional actions are needed from your side. it is also supports umd - meaning you can consume it using AMD, CommonJS and as simple script (see [examples](#examples))
 
-**A seperated files for code and style**
+**Separate files for code and style**
 
 `json-pollock.min.js` - use this script if you want to handle the import of the styles by youself, if you use it you should also take care to link `json-pollock.min.css` to your web page. also supports umd.
 
