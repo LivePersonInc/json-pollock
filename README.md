@@ -75,10 +75,10 @@ JsonPollock.init({
 ```
 
 Supported options:
-|name | type | description | default |   
+|name | type | description | default |
 |---|---|---|---|
 | `maxAllowedElements` | Number |  max DOM elements that will be renderes, other elements will be ignored. | 50 |
-| `onAfterElementRendered` | Function | A callback function that will be invoked after each render on an element, it allows to customize the result DOM element. see the following for exact signature and usage example of the callback function. ||
+| `onAfterElementRendered` | Function | A callback function that will be invoked after each render on an element, it allows to customize the result DOM element. see the following for exact signature and usage example of the callback function. |  |
 
 Example callback function for `onAfterElementRendered`:
 ```js
