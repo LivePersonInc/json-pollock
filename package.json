@@ -16,6 +16,8 @@
     "json-pollock": "^1.0.22",
     "jsoneditor": "^5.10.1",
     "lodash": "^4.17.4",
+    "lodash.assign": "^4.2.0",
+    "lodash.clonedeep": "^4.5.0",
     "v-tooltip": "^2.0.0-rc.32",
     "vue": "^2.3.3",
     "vuex": "^2.3.1",
