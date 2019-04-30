@@ -290,24 +290,26 @@
       const onAfterElementRendered = (element, template) => {
         console.log(element, template.type);
         switch (template.type) {
-          case 'vertical':
+          case JsonPollock.TEMPLATE_TYPES.VERTICAL:
             element.style = 'border-style:dashed;border-color:red;';
             break;
-          case 'image':            
+          case JsonPollock.TEMPLATE_TYPES.IMAGE:
             element.firstElementChild.src = 'https://image.shutterstock.com/image-vector/hacked-glitched-abstract-digital-background-450w-761155144.jpg';
             break;
-          case 'button':
+          case JsonPollock.TEMPLATE_TYPES.BUTTON:
             element.firstElementChild.onclick = () => {
               alert('hacked on after render hook!');
             }
             break;
-          case 'map':
+          case JsonPollock.TEMPLATE_TYPES.MAP:
             element.classList.add('take-me-out');
             break;
-          case 'text':
+          case JsonPollock.TEMPLATE_TYPES.TEXT:
             const color = Math.trunc(Math.random() * 1000000);
             element.firstElementChild.style.color = `#${color}`;
             break;
+          case JsonPollock.TEMPLATE_TYPES.HORIZONTAL:
+          case JsonPollock.TEMPLATE_TYPES.CAROUSEL:
           default:
             // this will remove the element
             element = null;

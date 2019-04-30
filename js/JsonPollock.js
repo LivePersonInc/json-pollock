@@ -18,6 +18,8 @@ class JsonPollockError extends Error {
 
 export default class JsonPollock {
 
+  static TEMPLATE_TYPES: Object = ElementRendererProvider.TYPES;
+
   provider: ElementRendererProvider;
   events: Events;
   currentNumOfElements: number;

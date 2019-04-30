@@ -5,7 +5,19 @@ import Utils from './Utils';
 const Events = require('Chronosjs/dist/min/Events');
 /*eslint-enable */
 
+const TYPES = {
+  TEXT: 'text',
+  BUTTON: 'button',
+  IMAGE: 'image',
+  MAP: 'map',
+  VERTICAL: 'vertical',
+  HORIZONTAL: 'horizontal',
+  CAROUSEL: 'carousel',
+};
+
 export default class ElementRendererProvider {
+
+  static TYPES: Object = TYPES;
 
   elements: Object;
   events: Events;
@@ -17,7 +29,7 @@ export default class ElementRendererProvider {
     /*
     predefined renderes
     */
-    this.set('text', (config): HTMLElement => {
+    this.set(TYPES.TEXT, (config): HTMLElement => {
       const divEl = document.createElement('div');
       const tooltip = config.tooltip ? Utils.escapeHtml(config.tooltip) : '';
       divEl.className = 'lp-json-pollock-element-text';
@@ -29,7 +41,7 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set('button', (config): HTMLElement => {
+    this.set(TYPES.BUTTON, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-button';
 
@@ -58,7 +70,7 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set('image', (config): HTMLElement => {
+    this.set(TYPES.IMAGE, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-image loading';
 
@@ -101,7 +113,7 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set('map', (config): HTMLElement => {
+    this.set(TYPES.MAP, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-map';
 
@@ -125,13 +137,13 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set('vertical', (): HTMLElement => {
+    this.set(TYPES.VERTICAL, (): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
       return divEl;
     });
 
-    this.set('carousel', (config): HTMLElement => {
+    this.set(TYPES.CAROUSEL, (config): HTMLElement => {
       const defaultPadding = 0;
       const padding = config.padding || defaultPadding;
       const CARD_DEFAULT_WIDTH = 180;
@@ -270,7 +282,7 @@ export default class ElementRendererProvider {
       return divCarouselWrapper;
     });
 
-    this.set('horizontal', (): HTMLElement => {
+    this.set(TYPES.HORIZONTAL, (): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
       (divEl: any).afterRender = () => {

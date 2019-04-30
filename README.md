@@ -91,15 +91,15 @@ Example callback function for `onAfterElementRendered`:
 const onAfterElementRendered = (element, template) => {
     // maniplate elements:
     switch (template.type) {
-      case 'text':
+      case JsonPollock.TEMPLATE_TYPES.TEXT:
         // add custom css class
         element.classList.add('my-ns-text');
         break;
-      case 'link':
+      case JsonPollock.TEMPLATE_TYPES.LINK:
         // edit inline style
         element.style.color = 'red';
         break;
-      case 'map':
+      case JsonPollock.TEMPLATE_TYPES.MAP:
         // prevent 'map' element to be rendered
         return null;
       ...
