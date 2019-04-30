@@ -69,9 +69,45 @@ Usage
 You can call the *init* function if you want to configure JsonPollock - it is not mandatory, if you won't call it JsonPollock will be initialized with defaults.
 ```js
 JsonPollock.init({
-	maxAllowedElements: 50    // max DOM elements that will be rendere, dother elements will be ignored, default is 50.
+	maxAllowedElements: 100,
+	onAfterElementRendered: onAfterElementRenderedHandler
 });
 ```
+
+Supported options:
+
+|name | type | description | default |
+|---|---|---|---|
+| `maxAllowedElements` | Number |  max DOM elements that will be renderes, other elements will be ignored. | 50 |
+| `onAfterElementRendered` | Function | A callback function that will be invoked after each render on an element, it allows to customize the result DOM element. see the following for exact signature and usage example of the callback function. |  |
+
+Example callback function for `onAfterElementRendered`:
+```js
+/**
+* @param {HTMLElement} element html element that was rendered by json-pollock
+* @param {Object} template SC template of this element  
+* @returns {HTMLElement} manipulated html element
+*/
+const onAfterElementRendered = (element, template) => {
+    // maniplate elements:
+    switch (template.type) {
+      case JsonPollock.TEMPLATE_TYPES.TEXT:
+        // add custom css class
+        element.classList.add('my-ns-text');
+        break;
+      case JsonPollock.TEMPLATE_TYPES.LINK:
+        // edit inline style
+        element.style.color = 'red';
+        break;
+      case JsonPollock.TEMPLATE_TYPES.MAP:
+        // prevent 'map' element to be rendered
+        return null;
+      ...
+    }
+    return element;
+}
+```
+
 **render**
 
 The *render* function renders json into a DOM element.

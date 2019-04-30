@@ -2094,9 +2094,6 @@ var JsonPollockError = function (_Error) {
 }(Error);
 
 var JsonPollock = function () {
-  // do not change to real type (SchemaValidator)
-  // as this dependency should be injected
-
   function JsonPollock(validator) {
     _classCallCheck(this, JsonPollock);
 
@@ -2104,7 +2101,9 @@ var JsonPollock = function () {
     this.provider = new _ElementRendererProvider2.default(this.events);
     this.maxAllowedElements = 50;
     this.schemaValidator = validator;
-  }
+  } // do not change to real type (SchemaValidator)
+  // as this dependency should be injected
+
 
   _createClass(JsonPollock, [{
     key: 'init',
@@ -2118,6 +2117,9 @@ var JsonPollock = function () {
         } else {
           this.maxAllowedElements = 50;
         }
+      }
+      if (typeof config.onAfterElementRendered === 'function') {
+        this.onAfterElementRendered = config.onAfterElementRendered;
       }
     }
   }, {
@@ -2135,6 +2137,9 @@ var JsonPollock = function () {
       var element = void 0;
       if (elementRenderer) {
         element = elementRenderer(elJson);
+        if (this.onAfterElementRendered) {
+          element = this.onAfterElementRendered(element, elJson);
+        }
         if (element) {
           parent.appendChild(element);
           if (Array.isArray(elJson.elements)) {
@@ -2207,6 +2212,7 @@ var JsonPollock = function () {
   return JsonPollock;
 }();
 
+JsonPollock.TEMPLATE_TYPES = _ElementRendererProvider2.default.TYPES;
 exports.default = JsonPollock;
 
 /***/ }),
@@ -7332,6 +7338,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Events = __webpack_require__(4);
 /*eslint-enable */
 
+var TYPES = {
+  TEXT: 'text',
+  BUTTON: 'button',
+  IMAGE: 'image',
+  MAP: 'map',
+  VERTICAL: 'vertical',
+  HORIZONTAL: 'horizontal',
+  CAROUSEL: 'carousel'
+};
+
 var ElementRendererProvider = function () {
   function ElementRendererProvider(events) {
     var _this = this;
@@ -7344,7 +7360,7 @@ var ElementRendererProvider = function () {
     /*
     predefined renderes
     */
-    this.set('text', function (config) {
+    this.set(TYPES.TEXT, function (config) {
       var divEl = document.createElement('div');
       var tooltip = config.tooltip ? _Utils2.default.escapeHtml(config.tooltip) : '';
       divEl.className = 'lp-json-pollock-element-text';
@@ -7356,7 +7372,7 @@ var ElementRendererProvider = function () {
       return divEl;
     });
 
-    this.set('button', function (config) {
+    this.set(TYPES.BUTTON, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-button';
 
@@ -7385,7 +7401,7 @@ var ElementRendererProvider = function () {
       return divEl;
     });
 
-    this.set('image', function (config) {
+    this.set(TYPES.IMAGE, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-image loading';
 
@@ -7428,7 +7444,7 @@ var ElementRendererProvider = function () {
       return divEl;
     });
 
-    this.set('map', function (config) {
+    this.set(TYPES.MAP, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-map';
 
@@ -7452,13 +7468,13 @@ var ElementRendererProvider = function () {
       return divEl;
     });
 
-    this.set('vertical', function () {
+    this.set(TYPES.VERTICAL, function () {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
       return divEl;
     });
 
-    this.set('carousel', function (config) {
+    this.set(TYPES.CAROUSEL, function (config) {
       var defaultPadding = 0;
       var padding = config.padding || defaultPadding;
       var CARD_DEFAULT_WIDTH = 180;
@@ -7593,7 +7609,7 @@ var ElementRendererProvider = function () {
       return divCarouselWrapper;
     });
 
-    this.set('horizontal', function () {
+    this.set(TYPES.HORIZONTAL, function () {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
       divEl.afterRender = function () {
@@ -7644,6 +7660,7 @@ var ElementRendererProvider = function () {
   return ElementRendererProvider;
 }();
 
+ElementRendererProvider.TYPES = TYPES;
 exports.default = ElementRendererProvider;
 
 /***/ }),
@@ -8477,7 +8494,7 @@ exports.encode = exports.stringify = __webpack_require__(64);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.version = exports.unregisterAllActions = exports.unregisterAction = exports.registerAction = exports.render = exports.init = undefined;
+exports.TEMPLATE_TYPES = exports.version = exports.unregisterAllActions = exports.unregisterAction = exports.registerAction = exports.render = exports.init = undefined;
 
 var _style = __webpack_require__(16);
 
@@ -8504,7 +8521,8 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.1.13';
+var version = '1.2.0';
+var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
 exports.render = render;
@@ -8512,6 +8530,7 @@ exports.registerAction = registerAction;
 exports.unregisterAction = unregisterAction;
 exports.unregisterAllActions = unregisterAllActions;
 exports.version = version;
+exports.TEMPLATE_TYPES = TEMPLATE_TYPES;
 
 /***/ }),
 /* 67 */
