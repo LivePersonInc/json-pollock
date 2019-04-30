@@ -88,7 +88,7 @@ Example callback function for `onAfterElementRendered`:
 * @param {Object} template SC template of this element  
 * @returns {HTMLElement} manipulated html element
 */
-(element, template) => {
+const onAfterElementRendered = (element, template) => {
     // maniplate elements:
     switch (template.type) {
       case 'text':
