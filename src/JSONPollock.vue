@@ -5,7 +5,7 @@
         :width=115
         :labels="{ checked: 'Go To Code: ON', unchecked: 'Go To Code: OFF' }"
         v-model="goToCodeEnabled"
-        @change="ga(['GoToElement','toogle',goToCodeEnabled])"/>
+        @change="ga(['GoToCode','toogle',goToCodeEnabled])"/>
     </div>
     <div class='dom_parent' ref="domParent">
       <div class="json_pollock_v">v.{{version}}</div>
@@ -74,7 +74,7 @@ export default {
       element.onclick = ((origHendler, path, elType, event) => {
         if (this.goToCodeEnabled) {
           event.stopPropagation();
-          this.ga(['GoToElement', 'select', elType]);
+          this.ga(['GoToCode', 'select', elType]);
           if (this.jsonSelectionPath === path) {
             this.$store.commit('setJsonSelectionPath', '-----');
           }
