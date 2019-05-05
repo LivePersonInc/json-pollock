@@ -2,9 +2,10 @@
   <div ref='jsonpollock' class='jsonpollock'>
     <div class="go_to_code_btn" v-tooltip="{ content: 'Click an element<br>to select its text<br>on the Code Editor', delay: { show: 500 }, placement: 'bottom' }">
       <toggle-button color="#3883fa"
-        :width=130
-        :labels="{ checked: 'Go To Element: ON', unchecked: 'Go To Element: OFF' }"
-        v-model="goToCodeEnabled"/>
+        :width=115
+        :labels="{ checked: 'Go To Code: ON', unchecked: 'Go To Code: OFF' }"
+        v-model="goToCodeEnabled"
+        @change="ga(['GoToElement','toogle',goToCodeEnabled])"/>
     </div>
     <div class='dom_parent' ref="domParent">
       <div class="json_pollock_v">v.{{version}}</div>
@@ -70,9 +71,10 @@ export default {
       }
 
       const origClickHandler = element.onclick;
-      element.onclick = ((origHendler, path, event) => {
+      element.onclick = ((origHendler, path, elType, event) => {
         if (this.goToCodeEnabled) {
           event.stopPropagation();
+          this.ga(['GoToElement', 'select', elType]);
           if (this.jsonSelectionPath === path) {
             this.$store.commit('setJsonSelectionPath', '-----');
           }
@@ -80,7 +82,7 @@ export default {
         } else if (origHendler) {
           origHendler();
         }
-      }).bind(this, origClickHandler, journy.path.join(''));
+      }).bind(this, origClickHandler, journy.path.join(''), template.type);
 
       if (template.elements) {
         element.classList.add('playground_ly');
