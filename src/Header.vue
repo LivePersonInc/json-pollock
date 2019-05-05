@@ -20,7 +20,7 @@
       <img src='./assets/logo.png' @click='onLogoClick'>
       <h1 class="title-text">Json-Pollock Playground</h1>
     </div>
-    <div class="info" @click="gotoGitHubIssues"
+    <div class="info safari_only" @click="gotoGitHubIssues"
       v-tooltip.bottom="`
       For fixes and improvements of this tool: <br> 
       Click this icon and open an issue on our GitHub repo! <br> 
@@ -343,6 +343,21 @@ export default {
       cursor: pointer;
       cursor: hand;
     }
+
+    @media not all and (min-resolution:.001dpcm)
+      { 
+        @supports (-webkit-appearance:none) {
+          .info { 
+            right: 288px !important;
+          }
+        }
+      }
+
+      @media screen and (min--moz-device-pixel-ratio:0) {
+          .info {
+              right: 297px !important;
+          }
+      }
 
     .gistbtn {
       line-height: 42px;
