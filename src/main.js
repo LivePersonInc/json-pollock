@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VTooltip from 'v-tooltip';
+import ToggleButton from 'vue-js-toggle-button';
 import App from './App';
 
 import './scss/style.scss';
 
 Vue.use(VTooltip, { defaultOffset: 5, defaultPlacement: 'left' });
+Vue.use(ToggleButton);
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);
@@ -21,6 +23,7 @@ const store = new Vuex.Store({
     jsonValid: true,
     edited: false,
     loading: false,
+    jsonSelectionPath: '',
     token: '',
     user: '',
     gist: {
@@ -47,6 +50,9 @@ const store = new Vuex.Store({
     },
     setLoading(state, val) {
       state.loading = val;
+    },
+    setJsonSelectionPath(state, val) {
+      state.jsonSelectionPath = val;
     },
     setGist(state, gistObj) {
       if (gistObj) {
@@ -90,6 +96,7 @@ const store = new Vuex.Store({
     jsonValid: state => state.jsonValid,
     edited: state => state.edited,
     actions: state => state.actions,
+    jsonSelectionPath: state => state.jsonSelectionPath,
   },
 });
 

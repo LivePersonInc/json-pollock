@@ -9,6 +9,8 @@
 <script>
 import JSONEditor from 'jsoneditor';
 import Ajv from 'ajv';
+import { parse } from 'json-source-map';
+import { get } from 'lodash';
 
 import basicSchema from 'json-pollock/js/schema/basic.json';
 import actionSchema from 'json-pollock/js/schema/action.json';
@@ -80,6 +82,25 @@ export default {
       state => state.loading,
       (val) => {
         this.isLoading = val;
+      },
+    );
+
+    this.$store.watch(
+      state => state.jsonSelectionPath,
+      (val) => {
+        try {
+          editor.setMode('code');
+          const currentJsonText = editor.getText();
+          const jsSourceMap = parse(currentJsonText);
+          const pointer = get(jsSourceMap, `pointers[${val}]`);
+          if (pointer) {
+            const startP = { row: pointer.value.line + 1, column: pointer.value.column + 1 };
+            const endP = { row: pointer.valueEnd.line + 1, column: pointer.valueEnd.column + 1 };
+            editor.setTextSelection(startP, endP);
+          }
+        } catch (e) {
+          // do nothing
+        }
       },
     );
   },
