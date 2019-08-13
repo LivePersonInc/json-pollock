@@ -60,9 +60,6 @@ export default class JsonPollock {
     let element: HTMLElement;
     if (elementRenderer) {
       element = elementRenderer(elJson);
-      if (this.onAfterElementRendered) {
-        element = this.onAfterElementRendered(element, elJson);
-      }
       if (element) {
         parent.appendChild(element);
         if (Array.isArray(elJson.elements)) {
@@ -73,6 +70,15 @@ export default class JsonPollock {
         }
         if (element.afterRender) {
           element.afterRender.call(element);
+        }
+        if (this.onAfterElementRendered) {
+          const manipulated = this.onAfterElementRendered(element, elJson);
+          if (manipulated !== element) {
+            parent.removeChild(element);
+            if (manipulated) {
+              parent.appendChild(manipulated);
+            }
+          }
         }
       }
     }

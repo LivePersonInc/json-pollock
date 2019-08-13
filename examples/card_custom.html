@@ -309,6 +309,9 @@
             element.firstElementChild.style.color = `#${color}`;
             break;
           case JsonPollock.TEMPLATE_TYPES.HORIZONTAL:
+            element = document.createElement('div');
+            element.textContent = 'this should have been HORTZINTAL!';
+            break;
           case JsonPollock.TEMPLATE_TYPES.CAROUSEL:
           default:
             // this will remove the element
