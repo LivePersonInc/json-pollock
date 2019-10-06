@@ -32,6 +32,20 @@ export default {
     return cssStr;
   },
 
+  splitBackgroundColorFromOtherStyles(originalStyle: string): Object {
+    let style = originalStyle;
+    const backgroundColorIndex = style.indexOf('background-color');
+    let backgroundColorStyle = '';
+    if (backgroundColorIndex > -1) {
+      backgroundColorStyle = style.substr(backgroundColorIndex, style.indexOf(';', backgroundColorIndex) - (backgroundColorIndex - 1)); // add backgroundColorStyle to div container
+      style = style.replace(backgroundColorStyle, ''); // remove backgroundColorStyle from span
+    }
+    return {
+      backgroundColorStyle,
+      style,
+    };
+  },
+
   sizeToPx(size: string): number {
     switch (size) {
       case 'small':
