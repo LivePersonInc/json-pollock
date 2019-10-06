@@ -107,8 +107,8 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[1].childNodes[0].style.fontWeight).to.equal('bold');
       chai.expect(layout.childNodes[1].childNodes[0].style.fontSize).to.equal('17px');
       chai.expect(layout.childNodes[1].childNodes[0].style.fontStyle).to.equal('italic');
-      // chai.expect(layout.childNodes[1].childNodes[0].style.backgroundColor).to.equal('green');
-      // chai.expect(layout.childNodes[1].style.backgroundColor).to.not.equal('green');
+      chai.expect(layout.childNodes[1].childNodes[0].style.backgroundColor).to.not.equal('green');
+      chai.expect(layout.childNodes[1].style.backgroundColor).to.equal('green');
     });
 
     it('Check for style generation of button element', function () {
@@ -118,8 +118,8 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[2].childNodes[0].style.fontWeight).to.equal('');
       chai.expect(layout.childNodes[2].childNodes[0].style.fontSize).to.equal('13px');
       chai.expect(layout.childNodes[2].childNodes[0].style.fontStyle).to.equal('');
-      // chai.expect(layout.childNodes[2].childNodes[0].style.backgroundColor).to.equal('green');
-      // chai.expect(layout.childNodes[2].style.backgroundColor).to.not.equal('green');
+      chai.expect(layout.childNodes[2].childNodes[0].style.backgroundColor).to.not.equal('green');
+      chai.expect(layout.childNodes[2].style.backgroundColor).to.equal('green');
     });
 
     it('An element of type map should be created', function () {
