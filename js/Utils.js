@@ -32,16 +32,16 @@ export default {
     return cssStr;
   },
 
-  splitBackgroundColorFromOtherStyles(originalStyle: string): Object {
+  extractFromStyles(originalStyle: string, prop: string): Object {
     let style = originalStyle;
-    const backgroundColorIndex = style.indexOf('background-color');
-    let backgroundColorStyle = '';
-    if (backgroundColorIndex > -1) {
-      backgroundColorStyle = style.substr(backgroundColorIndex, style.indexOf(';', backgroundColorIndex) - (backgroundColorIndex - 1)); // add backgroundColorStyle to div container
-      style = style.replace(backgroundColorStyle, ''); // remove backgroundColorStyle from span
+    const extractedStyleIndex = style.indexOf(prop);
+    let extractedStyle = '';
+    if (extractedStyleIndex > -1) {
+      extractedStyle = style.substr(extractedStyleIndex, style.indexOf(';', extractedStyleIndex) - (extractedStyleIndex - 1));
+      style = style.replace(extractedStyle, ''); // remove extractedStyle from the originalStyle
     }
     return {
-      backgroundColorStyle,
+      extractedStyle,
       style,
     };
   },
