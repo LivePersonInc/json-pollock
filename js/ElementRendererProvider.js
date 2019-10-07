@@ -37,7 +37,10 @@ export default class ElementRendererProvider {
         divEl.dir = 'rtl';
         Utils.addClass(divEl, 'direction-rtl');
       }
-      divEl.innerHTML = `<span style="${Utils.styleToCss(config.style)}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
+      const style = Utils.styleToCss(config.style);
+      const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+      divEl.setAttribute('style', splitedStyle.extractedStyle);
+      divEl.innerHTML = `<span style="${splitedStyle.style}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
       return divEl;
     });
 
@@ -58,7 +61,10 @@ export default class ElementRendererProvider {
         btnEl.setAttribute('aria-label', config.tooltip);
       }
       if (config.style) {
-        btnEl.style.cssText = Utils.styleToCss(config.style);
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+        divEl.setAttribute('style', splitedStyle.extractedStyle);
+        btnEl.style.cssText = splitedStyle.style;
       }
 
       if (config.click && config.click.actions) {

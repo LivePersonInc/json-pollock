@@ -32,6 +32,20 @@ export default {
     return cssStr;
   },
 
+  extractFromStyles(originalStyle: string, prop: string): Object {
+    let style = originalStyle;
+    const extractedStyleIndex = style.indexOf(prop);
+    let extractedStyle = '';
+    if (extractedStyleIndex > -1) {
+      extractedStyle = style.substr(extractedStyleIndex, style.indexOf(';', extractedStyleIndex) - (extractedStyleIndex - 1));
+      style = style.replace(extractedStyle, ''); // remove extractedStyle from the originalStyle
+    }
+    return {
+      extractedStyle,
+      style,
+    };
+  },
+
   sizeToPx(size: string): number {
     switch (size) {
       case 'small':
