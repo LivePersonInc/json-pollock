@@ -1669,16 +1669,16 @@ exports.default = {
 
     return cssStr;
   },
-  splitBackgroundColorFromOtherStyles: function splitBackgroundColorFromOtherStyles(originalStyle) {
+  extractFromStyles: function extractFromStyles(originalStyle, prop) {
     var style = originalStyle;
-    var backgroundColorIndex = style.indexOf('background-color');
-    var backgroundColorStyle = '';
-    if (backgroundColorIndex > -1) {
-      backgroundColorStyle = style.substr(backgroundColorIndex, style.indexOf(';', backgroundColorIndex) - (backgroundColorIndex - 1)); // add backgroundColorStyle to div container
-      style = style.replace(backgroundColorStyle, ''); // remove backgroundColorStyle from span
+    var extractedStyleIndex = style.indexOf(prop);
+    var extractedStyle = '';
+    if (extractedStyleIndex > -1) {
+      extractedStyle = style.substr(extractedStyleIndex, style.indexOf(';', extractedStyleIndex) - (extractedStyleIndex - 1));
+      style = style.replace(extractedStyle, ''); // remove extractedStyle from the originalStyle
     }
     return {
-      backgroundColorStyle: backgroundColorStyle,
+      extractedStyle: extractedStyle,
       style: style
     };
   },
@@ -6470,8 +6470,8 @@ var ElementRendererProvider = function () {
         _Utils2.default.addClass(divEl, 'direction-rtl');
       }
       var style = _Utils2.default.styleToCss(config.style);
-      var splitedStyle = _Utils2.default.splitBackgroundColorFromOtherStyles(style);
-      divEl.setAttribute('style', splitedStyle.backgroundColorStyle);
+      var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
+      divEl.setAttribute('style', splitedStyle.extractedStyle);
       divEl.innerHTML = '<span style="' + splitedStyle.style + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
       return divEl;
     });
@@ -6494,8 +6494,8 @@ var ElementRendererProvider = function () {
       }
       if (config.style) {
         var style = _Utils2.default.styleToCss(config.style);
-        var splitedStyle = _Utils2.default.splitBackgroundColorFromOtherStyles(style);
-        divEl.setAttribute('style', splitedStyle.backgroundColorStyle);
+        var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
+        divEl.setAttribute('style', splitedStyle.extractedStyle);
         btnEl.style.cssText = splitedStyle.style;
       }
 
