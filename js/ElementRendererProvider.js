@@ -13,6 +13,10 @@ const TYPES = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
   CAROUSEL: 'carousel',
+  SUBMIT: 'submit',
+  CHECKBOX: 'checkbox',
+  CHECKLIST: 'checklist',
+  FORMLIST: 'formList',
 };
 
 export default class ElementRendererProvider {
@@ -73,6 +77,93 @@ export default class ElementRendererProvider {
 
       divEl.appendChild(btnEl);
 
+      return divEl;
+    });
+
+    this.set(TYPES.SUBMIT, (config): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-submit-button';
+
+      if (config.rtl) {
+        divEl.dir = 'rtl';
+        Utils.addClass(divEl, 'direction-rtl');
+      }
+
+      const btnEl = document.createElement('button');
+      btnEl.innerHTML = Utils.normalizeHtmlText(config.title);
+
+      if (config.tooltip) {
+        btnEl.title = config.tooltip;
+        btnEl.setAttribute('aria-label', config.tooltip);
+      }
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+        divEl.setAttribute('style', splitedStyle.extractedStyle);
+        btnEl.style.cssText = splitedStyle.style;
+      }
+
+      if (config.click && config.click.actions) {
+        btnEl.onclick = this.wrapAction(config.click);
+      }
+
+      divEl.appendChild(btnEl);
+
+      return divEl;
+    });
+
+    this.set(TYPES.CHECKBOX, (config): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-checkbox';
+
+      if (config.rtl) {
+        divEl.dir = 'rtl';
+        Utils.addClass(divEl, 'direction-rtl');
+      }
+
+      const labelEl = document.createElement('label');
+      const checkEl = document.createElement('input');
+      const tmp = config;
+      checkEl.type = 'checkbox';
+      checkEl.name = config.name;
+      checkEl.value = config.value;
+      labelEl.appendChild(checkEl);
+
+      labelEl.className = 'lp-json-pollock-element-text';
+      labelEl.innerHTML += ' ';
+      labelEl.innerHTML += Utils.normalizeHtmlText(config.text);
+
+      if (config.rtl) {
+        labelEl.dir = 'rtl';
+        Utils.addClass(labelEl, 'direction-rtl');
+      }
+      if (config.tooltip) {
+        labelEl.title = config.tooltip;
+        labelEl.setAttribute('aria-label', config.tooltip);
+      }
+      if (config.style) {
+        labelEl.style.cssText = Utils.styleToCss(config.style);
+      }
+      divEl.appendChild(labelEl);
+
+      (divEl: any).afterRender = () => {
+        const checkBoxEl = divEl.getElementsByTagName('input')[0];
+        if (tmp.click && tmp.click.actions) {
+          checkBoxEl.onclick = this.wrapAction(tmp.click);
+        }
+      };
+      return divEl;
+    });
+
+    this.set(TYPES.CHECKLIST, (): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-checklist';
+      return divEl;
+    });
+
+    this.set(TYPES.FORMLIST, (): HTMLElement => {
+      const divEl = document.createElement('form');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-form';
       return divEl;
     });
 
