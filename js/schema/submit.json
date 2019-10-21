@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "additionalProperties" : false,
+  "title": "submit",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["submit"],
+      "default": "submit",
+      "readonly": true
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "rtl": {
+      "type": "boolean"
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "tag": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "tagVersion": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "style": {
+      "$ref": "style.json"
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "click": {
+      "type": "object",
+      "additionalProperties" : false,
+      "properties": {
+        "actions": {
+          "type": "array",
+          "maxItems": 1,
+          "items": [
+            {
+              "title": "Submit As Text",
+              "type": "object",
+              "additionalProperties" : false,
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "submitAsText"
+                  ],
+                  "default": "submitAsText",
+                  "readonly": true
+                },
+                "submit": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": ["type", "submit"]
+            }
+          ]
+        },
+        "metadata": {
+          "type": "array"
+        }
+      }
+    }
+  },
+  "required": [
+    "type",
+    "title",
+    "click"
+  ]
+}

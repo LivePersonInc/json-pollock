@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "checklist",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "checklist"
+      ],
+      "default": "checklist",
+      "readonly": true
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "padding": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 5,
+      "items": {
+        "$ref": "checkbox.json"
+      }
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "type",
+    "elements"
+  ]
+}

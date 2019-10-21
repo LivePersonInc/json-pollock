@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "formList",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "formList"
+      ],
+      "default": "formList",
+      "readonly": true
+    },
+    "elements": {
+      "type": "array",
+      "maxItems": 3,
+      "minItems": 3,
+      "items": [
+          {
+            "$ref": "text.json"
+          },
+          {
+            "oneOf": [
+              {
+                "$ref": "checklist.json"
+              }
+            ]
+          },
+          {
+            "$ref": "submit.json"
+          }
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "elements"
+  ]
+}
