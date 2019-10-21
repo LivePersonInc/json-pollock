@@ -104,6 +104,23 @@
             margin: 5%;
             width: 90%;
             border: solid 0.5px #d4d4d5;
+            word-break: break-word;
+            word-wrap: break-word;
+
+            button {
+                border: none;
+                background: none;
+                width: 100%;
+                min-height: 32px;
+                margin-bottom: -1px;
+                text-align: center;
+                color: $color-blue;
+                padding: 5px;
+
+                &:active {
+                    background: $gray7;
+                }
+            }
         }
     }
 
@@ -171,7 +188,7 @@
         word-break: break-word;
     }
 
-    .lp-json-pollock-element-button, .lp-json-pollock-element-submit-button {
+    .lp-json-pollock-element-button {
         width: 100%;
         word-break: break-word;
         word-wrap: break-word;
