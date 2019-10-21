@@ -127,10 +127,10 @@ export default class ElementRendererProvider {
       checkEl.type = 'checkbox';
       checkEl.name = config.name;
       checkEl.value = config.value;
+      checkEl.className = 'lp-json-pollock-element-checkbox-input';
       labelEl.appendChild(checkEl);
 
-      labelEl.className = 'lp-json-pollock-element-text';
-      labelEl.innerHTML += ' ';
+      labelEl.className = 'lp-json-pollock-element-checkbox-label';
       labelEl.innerHTML += Utils.normalizeHtmlText(config.text);
 
       if (config.rtl) {
@@ -144,6 +144,9 @@ export default class ElementRendererProvider {
       if (config.style) {
         labelEl.style.cssText = Utils.styleToCss(config.style);
       }
+      const borderEl = document.createElement('div');
+      borderEl.className = 'lp-json-pollock-border-element';
+      divEl.appendChild(borderEl);
       divEl.appendChild(labelEl);
 
       (divEl: any).afterRender = () => {
