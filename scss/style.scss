@@ -1,7 +1,7 @@
-/** 
+/**
 *   The following styles are given by the json pollock library
 *   In order to override it use a different css file
-*   PLEASE DO NOT MAKE ANY CHANGE IN THIS FILE 
+*   PLEASE DO NOT MAKE ANY CHANGE IN THIS FILE
 **/
 
 
@@ -41,6 +41,14 @@
         > *:first-child {
             border-top: none;
         }
+    }
+
+    .lp-json-pollock-layout-checklist {
+
+    }
+
+    .lp-json-pollock-layout-form {
+
     }
 
     .lp-json-pollock-layout-horizontal {
@@ -130,7 +138,7 @@
         word-break: break-word;
     }
 
-    .lp-json-pollock-element-button {
+    .lp-json-pollock-element-button, .lp-json-pollock-element-submit-button {
         width: 100%;
         word-break: break-word;
         word-wrap: break-word;
