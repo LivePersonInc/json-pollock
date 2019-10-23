@@ -20,11 +20,7 @@
             "$ref": "text.json"
           },
           {
-            "oneOf": [
-              {
-                "$ref": "checklist.json"
-              }
-            ]
+            "$ref": "section.json"
           },
           {
             "$ref": "submit.json"

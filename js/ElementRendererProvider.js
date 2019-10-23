@@ -17,6 +17,7 @@ const TYPES = {
   CHECKBOX: 'checkbox',
   CHECKLIST: 'checklist',
   FORMLIST: 'formList',
+  SECTION: 'section',
 };
 
 export default class ElementRendererProvider {
@@ -159,6 +160,12 @@ export default class ElementRendererProvider {
     });
 
     this.set(TYPES.CHECKLIST, (): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-checklist';
+      return divEl;
+    });
+
+    this.set(TYPES.SECTION, (): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-checklist';
       return divEl;
