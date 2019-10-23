@@ -67,35 +67,48 @@
     }
 
     .lp-json-pollock-layout-form {
-        .lp-json-pollock-element-text {
-            margin: 2.5%;
+        > .lp-json-pollock-element-text {
+            padding-top: 5%;
+            color: $color-black;
+            font-size: $text-size-large;
+            word-wrap: break-word;
+            word-break: break-word;
         }
 
-        .lp-json-pollock-layout-checklist {
+        .lp-json-pollock-layout-section {
             border: none;
-            margin: 5% 0%;
+            margin-bottom: 1%;
 
-            > .lp-json-pollock-element-checkbox {
-                padding: 2px 0px;
+            .lp-json-pollock-element-text {
+                color: $color-black;
+                font-size: $text-size-medium-large;
+                word-wrap: break-word;
+                word-break: break-word;
+            }
 
-                & > .lp-json-pollock-border-element {
-                    border-top: solid 0.5px #d4d4d5;
-                    width: 90%;
-                    margin-left: 5%;
-                    overflow: visible;
-                    padding-top: 0.5px;
-                }
+            .lp-json-pollock-layout-checklist {
+                > .lp-json-pollock-element-checkbox {
+                    padding: 2px 0px;
 
-                & .lp-json-pollock-element-checkbox-label {
-                    padding: 3% 5%;
-                    color: $color-black;
-                    font-size: $text-size-medium;
-                    word-wrap: break-word;
-                    word-break: break-word;
-                }
+                    & > .lp-json-pollock-border-element {
+                        border-top: $default-border;
+                        width: 90%;
+                        margin-left: 5%;
+                        overflow: visible;
+                        padding-top: 0.5px;
+                    }
 
-                & .lp-json-pollock-element-checkbox-input {
-                    margin-right: 5%;
+                    & .lp-json-pollock-element-checkbox-label {
+                        padding: 3% 5%;
+                        color: $color-black;
+                        font-size: $text-size-medium;
+                        word-wrap: break-word;
+                        word-break: break-word;
+                    }
+
+                    & .lp-json-pollock-element-checkbox-input {
+                        margin-right: 5%;
+                    }
                 }
             }
         }
@@ -103,7 +116,7 @@
         .lp-json-pollock-element-submit-button {
             margin: 5%;
             width: 90%;
-            border: solid 0.5px #d4d4d5;
+            border: $default-border;
             word-break: break-word;
             word-wrap: break-word;
 
