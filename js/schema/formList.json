@@ -13,18 +13,34 @@
     },
     "elements": {
       "type": "array",
-      "maxItems": 3,
+      "maxItems": 5,
       "minItems": 3,
       "items": [
-          {
-            "$ref": "text.json"
-          },
-          {
+        {
+          "$ref": "text.json"
+        },
+        {
+          "anyOf": [
+            {
+              "$ref": "section.json"
+            },
+            {
+              "$ref": "submit.json"
+            }
+          ]
+        }
+      ],
+      "allOf": [
+        {
+          "contains": {
             "$ref": "section.json"
-          },
-          {
+          }
+        },
+        {
+          "contains": {
             "$ref": "submit.json"
           }
+        }
       ]
     }
   },

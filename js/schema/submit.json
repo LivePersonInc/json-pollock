@@ -42,28 +42,9 @@
         "actions": {
           "type": "array",
           "maxItems": 1,
-          "items": [
-            {
-              "title": "Submit As Text",
-              "type": "object",
-              "additionalProperties" : false,
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "submitAsText"
-                  ],
-                  "default": "submitAsText",
-                  "readonly": true
-                },
-                "submit": {
-                  "type": "boolean",
-                  "default": false
-                }
-              },
-              "required": ["type", "submit"]
-            }
-          ]
+          "items": {
+            "$ref": "special_action.json#/definitions/submitAsText"
+          }
         },
         "metadata": {
           "type": "array"

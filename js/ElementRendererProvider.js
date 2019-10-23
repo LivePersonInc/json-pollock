@@ -91,6 +91,7 @@ export default class ElementRendererProvider {
       }
 
       const btnEl = document.createElement('button');
+      btnEl.type = 'button';
       btnEl.innerHTML = Utils.normalizeHtmlText(config.title);
 
       if (config.tooltip) {
@@ -161,13 +162,13 @@ export default class ElementRendererProvider {
 
     this.set(TYPES.CHECKLIST, (): HTMLElement => {
       const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-checklist';
+      divEl.className = 'lp-json-pollock-layout-checklist';
       return divEl;
     });
 
     this.set(TYPES.SECTION, (): HTMLElement => {
       const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-checklist';
+      divEl.className = 'lp-json-pollock-layout-section';
       return divEl;
     });
 
