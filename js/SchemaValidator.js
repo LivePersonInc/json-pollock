@@ -12,7 +12,7 @@ import richContentSchema from './schema/rich_content.json';
 import templateSchema from './schema/template.json';
 import textSchema from './schema/text.json';
 import checkBoxSchema from './schema/checkbox.json';
-import formListSchema from './schema/formList.json';
+import listSchema from './schema/list.json';
 import checkListSchema from './schema/checklist.json';
 import submitSchema from './schema/submit.json';
 import sectionSchema from './schema/section.json';
@@ -37,7 +37,7 @@ export default class SchemaValidator {
     ajv.addSchema(richContentSchema, 'rich_content.json');
     ajv.addSchema(templateSchema, 'template.json');
     ajv.addSchema(textSchema, 'text.json');
-    ajv.addSchema(formListSchema, 'formList.json');
+    ajv.addSchema(listSchema, 'list.json');
     ajv.addSchema(checkListSchema, 'checklist.json');
     ajv.addSchema(submitSchema, 'submit.json');
     ajv.addSchema(sectionSchema, 'section.json');

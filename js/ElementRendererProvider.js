@@ -16,9 +16,11 @@ const TYPES = {
   SUBMIT: 'submit',
   CHECKBOX: 'checkbox',
   CHECKLIST: 'checklist',
-  FORMLIST: 'formList',
+  LIST: 'list',
   SECTION: 'section',
 };
+
+const DATA_CHECKLIST_ID_ATTR = 'data-checklist-id';
 
 export default class ElementRendererProvider {
 
@@ -125,7 +127,6 @@ export default class ElementRendererProvider {
 
       const labelEl = document.createElement('label');
       const checkEl = document.createElement('input');
-      const tmp = config;
       checkEl.type = 'checkbox';
       checkEl.name = config.name;
       checkEl.value = config.value;
@@ -151,18 +152,23 @@ export default class ElementRendererProvider {
       divEl.appendChild(borderEl);
       divEl.appendChild(labelEl);
 
-      (divEl: any).afterRender = () => {
+      (divEl: any).afterRender = (el, elJson, parent) => {
         const checkBoxEl = divEl.getElementsByTagName('input')[0];
-        if (tmp.click && tmp.click.actions) {
-          checkBoxEl.onclick = this.wrapAction(tmp.click);
+        if (elJson.click && elJson.click.actions) {
+          checkBoxEl.onclick = this.wrapAction(elJson.click,
+            parent.getAttribute(DATA_CHECKLIST_ID_ATTR));
         }
       };
       return divEl;
     });
 
-    this.set(TYPES.CHECKLIST, (): HTMLElement => {
+    this.set(TYPES.CHECKLIST, (config): HTMLElement => {
       const divEl = document.createElement('div');
+      if (config.checklistID) {
+        divEl.setAttribute(DATA_CHECKLIST_ID_ATTR, config.checklistID);
+      }
       divEl.className = 'lp-json-pollock-layout-checklist';
+
       return divEl;
     });
 
@@ -172,7 +178,7 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set(TYPES.FORMLIST, (): HTMLElement => {
+    this.set(TYPES.LIST, (): HTMLElement => {
       const divEl = document.createElement('form');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-form';
       return divEl;
@@ -414,7 +420,7 @@ export default class ElementRendererProvider {
     this.elements[type] = render;
   }
 
-  wrapAction(clickData: Object): Function {
+  wrapAction(clickData: Object, refID?: String): Function {
     return (event) => {
       if (clickData.actions instanceof Array) {
         clickData.actions.forEach((actionData) => {
@@ -424,6 +430,7 @@ export default class ElementRendererProvider {
               actionData,
               metadata: clickData.metadata,
               uiEvent: event,
+              refID,
             },
           });
         });
