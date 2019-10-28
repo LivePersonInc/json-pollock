@@ -1,14 +1,14 @@
 {
   "type": "object",
   "additionalProperties": false,
-  "title": "formList",
+  "title": "list",
   "properties": {
     "type": {
       "type": "string",
       "enum": [
-        "formList"
+        "list"
       ],
-      "default": "formList",
+      "default": "list",
       "readonly": true
     },
     "elements": {

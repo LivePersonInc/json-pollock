@@ -9,8 +9,8 @@
       "$ref": "carousel.json"
     },
     {
-      "title": "formList",
-      "$ref": "formList.json"
+      "title": "list",
+      "$ref": "list.json"
     }
   ]
 }
