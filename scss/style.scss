@@ -67,6 +67,9 @@
     }
 
     .lp-json-pollock-layout-form {
+        border: none;
+        border-collapse: collapse;
+
         > .lp-json-pollock-element-text {
             padding-top: 5%;
             color: $color-black;
