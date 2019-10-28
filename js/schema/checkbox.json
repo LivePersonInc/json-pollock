@@ -9,14 +9,6 @@
       "default": "checkbox",
       "readonly": true
     },
-    "name": {
-      "type": "string",
-      "maxLength": 5000
-    },
-    "value": {
-      "type": "string",
-      "maxLength": 5000
-    },
     "text": {
       "type": "string",
       "maxLength": 5000
@@ -58,7 +50,7 @@
   },
   "required": [
     "type",
-    "name",
+    "text",
     "click"
   ]
 }

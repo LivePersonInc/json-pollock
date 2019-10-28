@@ -25,7 +25,7 @@
               "$ref": "section.json"
             },
             {
-              "$ref": "submit.json"
+              "$ref": "submitButton.json"
             }
           ]
         }
@@ -38,7 +38,7 @@
         },
         {
           "contains": {
-            "$ref": "submit.json"
+            "$ref": "submitButton.json"
           }
         }
       ]

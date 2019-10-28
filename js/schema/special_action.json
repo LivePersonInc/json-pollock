@@ -34,16 +34,12 @@
           "default": "checked",
           "readonly": true
         },
-        "value": {
+        "publishText": {
           "type": "string",
           "maxLength": 250
-        },
-        "name": {
-          "type": "string",
-          "maxLength": 256
         }
       },
-      "required": ["type", "value", "name"]
+      "required": ["type", "publishText"]
     }
   }
 }

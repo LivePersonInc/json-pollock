@@ -1,12 +1,12 @@
 {
   "type": "object",
   "additionalProperties" : false,
-  "title": "submit",
+  "title": "submitButton",
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["submit"],
-      "default": "submit",
+      "enum": ["submitButton"],
+      "default": "submitButton",
       "readonly": true
     },
     "title": {

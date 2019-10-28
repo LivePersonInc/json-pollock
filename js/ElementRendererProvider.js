@@ -13,7 +13,7 @@ const TYPES = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
   CAROUSEL: 'carousel',
-  SUBMIT: 'submit',
+  SUBMITBUTTON: 'submitButton',
   CHECKBOX: 'checkbox',
   CHECKLIST: 'checklist',
   LIST: 'list',
@@ -83,7 +83,7 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set(TYPES.SUBMIT, (config): HTMLElement => {
+    this.set(TYPES.SUBMITBUTTON, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-submit-button';
 
