@@ -164,17 +164,28 @@ export default class ElementRendererProvider {
 
     this.set(TYPES.CHECKLIST, (config): HTMLElement => {
       const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout-checklist';
+
       if (config.checklistID) {
         divEl.setAttribute(DATA_CHECKLIST_ID_ATTR, config.checklistID);
       }
-      divEl.className = 'lp-json-pollock-layout-checklist';
+      if (config.padding) {
+        const padding = config.padding;
+        (divEl: any).style.margin = `${padding / 2}px 0px`;
+      }
 
       return divEl;
     });
 
-    this.set(TYPES.SECTION, (): HTMLElement => {
+    this.set(TYPES.SECTION, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout-section';
+
+      if (config.padding) {
+        const padding = config.padding;
+        (divEl: any).style.margin = `${padding / 2}px 0px`;
+      }
+
       return divEl;
     });
 

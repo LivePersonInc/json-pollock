@@ -11,6 +11,10 @@
       "default": "list",
       "readonly": true
     },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
     "elements": {
       "type": "array",
       "maxItems": 5,
@@ -42,6 +46,10 @@
           }
         }
       ]
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
     }
   },
   "required": [
