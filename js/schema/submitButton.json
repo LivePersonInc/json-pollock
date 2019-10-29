@@ -43,7 +43,7 @@
           "type": "array",
           "maxItems": 1,
           "items": {
-            "$ref": "special_action.json#/definitions/submitAsText"
+            "$ref": "specialActions.json#/definitions/submitAsText"
           }
         },
         "metadata": {

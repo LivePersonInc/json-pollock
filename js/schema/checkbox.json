@@ -39,7 +39,7 @@
           "type": "array",
           "maxItems": 1,
           "items": {
-            "$ref": "special_action.json#/definitions/checked"
+            "$ref": "specialActions.json#/definitions/checked"
           }
         },
         "metadata": {
