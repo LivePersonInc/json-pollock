@@ -19,94 +19,128 @@
             "text": "The checklist"
           },
           {
-            "type": "section",
+            "type": "sections",
             "elements": [
               {
-                "type": "text",
-                "text": "lol"
-              },
-              {
-                "type": "checklist",
-                "checklistID": "123",
+                "type": "section",
+                "sectionID": "123",
                 "elements": [
                   {
-                    "type": "checkbox",
-                    "text": "product name (Title)",
-                    "tooltip": "text tooltip",
-                    "click": {
-                      "metadata": [
-                        {
-                          "type": "ExternalId",
-                          "id": "ANOTHER_ONE_35"
+                    "type": "checklist",
+                    "elements": [
+                      {
+                        "type": "checkbox",
+                        "text": "product name (Title) this is a random text this is a random text",
+                        "tooltip": "text tooltip",
+                        "borderLine": true,
+                        "click": {
+                          "metadata": [
+                            {
+                              "type": "ExternalId",
+                              "id": "ANOTHER_ONE_35"
+                            },
+                            {
+                              "type": "ActionReason",
+                              "reason": "escalated_by_bot",
+                              "reasonId": 3
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "checked",
+                              "publishText": "Two year plan leasing a mobile1"
+                            }
+                          ]
                         }
-                      ],
-                      "actions": [
-                        {
-                          "type": "checked",
-                          "publishText": "Two year plan leasing a mobile1"
+                      },
+                      {
+                        "type": "checkbox",
+                        "text": "product name (Title)",
+                        "tooltip": "image tooltip",
+                        "borderLine": true,
+                        "click": {
+                          "metadata": [
+                            {
+                              "type": "ExternalId",
+                              "id": "ANOTHER_ONE_32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "checked",
+                              "publishText": "Two year plan leasing a mobile12"
+                            }
+                          ]
                         }
-                      ]
-                    }
-                  },
-                  {
-                    "type": "checkbox",
-                    "text": "product name (Title)",
-                    "tooltip": "image tooltip",
-                    "click": {
-                      "metadata": [
-                        {
-                          "type": "ExternalId",
-                          "id": "ANOTHER_ONE_32"
+                      },
+                      {
+                        "type": "checkbox",
+                        "text": "product name (Title)  this is a random text this is a random text this is a random text",
+                        "tooltip": "image tooltip",
+                        "borderLine": true,
+                        "click": {
+                          "metadata": [
+                            {
+                              "type": "ExternalId",
+                              "id": "ANOTHER_ONE_33"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "checked",
+                              "publishText": "Two year plan leasing a mobile123"
+                            }
+                          ]
                         }
-                      ],
-                      "actions": [
-                        {
-                          "type": "checked",
-                          "publishText": "Two year plan leasing a mobile12"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "type": "checkbox",
-                    "text": "product name (Title)",
-                    "tooltip": "image tooltip",
-                    "click": {
-                      "metadata": [
-                        {
-                          "type": "ExternalId",
-                          "id": "ANOTHER_ONE_33"
-                        }
-                      ],
-                      "actions": [
-                        {
-                          "type": "checked",
-                          "publishText": "Two year plan leasing a mobile123"
-                        }
-                      ]
-                    }
+                      }
+                    ]
                   }
                 ]
               }
             ]
           },
           {
-            "type": "submitButton",
-            "title": "click me!",
-            "click": {
-              "metadata": [
-                {
-                  "type": "ExternalId",
-                  "id": "ANOTHER_ONE_2"
+            "type": "buttonlist",
+            "elements": [
+              {
+                "type": "submitButton",
+                "title": "click me!",
+                "disabled": true,
+                "click": {
+                  "metadata": [
+                    {
+                      "type": "ExternalId",
+                      "id": "ANOTHER_ONE_2"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "submitAsText",
+                      "submit": true
+                    }
+                  ]
                 }
-              ],
-              "actions": [
-                {
-                  "type": "submitAsText",
-                  "submit": true
+              },
+              {
+                "type": "button",
+                "tooltip": "Choose a plan",
+                "title": "Choose a plan",
+                "click": {
+                  "metadata": [
+                    {
+                      "type": "ExternalId",
+                      "id": "ANOTHER_ONE_1"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "publishText",
+                      "text": "SIM only plan"
+                    }
+                  ]
                 }
-              ]
-            }
+              }
+            ]
           }
         ]
       };
@@ -125,15 +159,18 @@
 
       JsonPollock.registerAction('checked', function (data) {
         console.log(data);
+        let tmp = data.formPtr.querySelector('input[type=submit]');
         if(!this.datalol) {
           this.datalol = "";
         }
         this.datalol += data;
+        tmp.disabled = !(!!this.datalol);
         console.log(this.datalol);
       }.bind(this));
 
       JsonPollock.registerAction('submitAsText', function (data) {
         console.log(data);
+        console.log(this);
       });
 
       var el = JsonPollock.render(JSON.stringify(example));
