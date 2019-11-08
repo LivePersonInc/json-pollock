@@ -78,63 +78,90 @@
             word-break: break-word;
         }
 
-        .lp-json-pollock-layout-section {
-            border: none;
-            margin-bottom: 1%;
+        .lp-json-pollock-layout-sections {
+            .lp-json-pollock-layout-section {
+                border: none;
+                margin-bottom: 1%;
 
-            .lp-json-pollock-element-text {
-                color: $color-black;
-                font-size: $text-size-medium-large;
-                word-wrap: break-word;
-                word-break: break-word;
-            }
+                .lp-json-pollock-element-text {
+                    color: $color-black;
+                    font-size: $text-size-medium-large;
+                    word-wrap: break-word;
+                    word-break: break-word;
+                }
 
-            .lp-json-pollock-layout-checklist {
-                > .lp-json-pollock-element-checkbox {
-                    padding: 2px 0px;
+                .lp-json-pollock-layout-checklist {
+                    > .lp-json-pollock-element-checkbox {
+                        > .lp-json-pollock-border-element {
+                            border-top: $default-border;
+                            width: 90%;
+                            margin: 0px 5%;
+                            padding: 0.5px 0px;
+                        }
 
-                    & > .lp-json-pollock-border-element {
-                        border-top: $default-border;
-                        width: 90%;
-                        margin-left: 5%;
-                        overflow: visible;
-                        padding-top: 0.5px;
-                    }
+                        .lp-json-pollock-element-checkbox-wrapper {
+                            padding: 3px 0px;
 
-                    & .lp-json-pollock-element-checkbox-label {
-                        padding: 3% 5%;
-                        color: $color-black;
-                        font-size: $text-size-medium;
-                        word-wrap: break-word;
-                        word-break: break-word;
-                    }
+                            .lp-json-pollock-element-checkbox-label {
+                                padding: 0px 1.5%;
+                                color: $color-black;
+                                font-size: $text-size-medium;
+                                word-wrap: break-word;
+                                word-break: break-word;
+                                display: inline-block;
+                                vertical-align: middle;
+                                width: 85%;
+                            }
 
-                    & .lp-json-pollock-element-checkbox-input {
-                        margin-right: 5%;
+                            .lp-json-pollock-element-checkbox-input {
+                                display: inline-block;
+                                vertical-align: middle;
+                                margin-left: 3%;
+                            }
+                        }
                     }
                 }
             }
         }
 
-        .lp-json-pollock-element-submit-button {
+        .lp-json-pollock-layout-buttonlist {
             margin: 5%;
-            width: 90%;
-            border: $default-border;
-            word-break: break-word;
-            word-wrap: break-word;
+            .lp-json-pollock-element-submit-button, .lp-json-pollock-element-button {
+                margin: 3%;
+                width: 93%;
+                border: $default-border;
+                word-break: break-word;
+                word-wrap: break-word;
 
-            button {
-                border: none;
-                background: none;
-                width: 100%;
-                min-height: 32px;
-                margin-bottom: -1px;
-                text-align: center;
-                color: $color-blue;
-                padding: 5px;
+                button {
+                    border: none;
+                    background: none;
+                    width: 100%;
+                    min-height: 32px;
+                    margin-bottom: -1px;
+                    text-align: center;
+                    color: $color-blue;
+                    padding: 5px;
 
-                &:active {
-                    background: $gray7;
+                    &:active {
+                        background: $gray7;
+                    }
+                }
+
+                input[type="submit"] {
+                    border: none;
+                    background: none;
+                    width: 100%;
+                    min-height: 32px;
+                    margin-bottom: -1px;
+                    text-align: center;
+                    color: $color-blue;
+                    padding: 5px;
+
+                    &:disabled.lp-json-pollock-element-submit-button-disabled {
+                        background-color: $gray7;
+                        color: $disabled-text-grey;
+                    }
                 }
             }
         }
