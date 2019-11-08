@@ -1,14 +1,14 @@
 {
   "type": "object",
   "additionalProperties": false,
-  "title": "list",
+  "title": "sections",
   "properties": {
     "type": {
       "type": "string",
       "enum": [
-        "list"
+        "sections"
       ],
-      "default": "list",
+      "default": "sections",
       "readonly": true
     },
     "tooltip": {
@@ -17,19 +17,11 @@
     },
     "elements": {
       "type": "array",
-      "maxItems": 3,
-      "minItems": 3,
-      "items": [
-        {
-          "$ref": "text.json"
-        },
-        {
-          "$ref": "sections.json"
-        },
-        {
-          "$ref": "buttonlist.json"
-        }
-      ]
+      "minItems": 1,
+      "maxItems": 5,
+      "items": {
+        "$ref": "section.json"
+      }
     },
     "alt": {
       "type": "string",

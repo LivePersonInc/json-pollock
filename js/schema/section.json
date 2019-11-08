@@ -21,6 +21,10 @@
       "minimum": 0,
       "maximum": 10
     },
+    "sectionID": {
+      "type": "string",
+      "maxLength": 256
+    },
     "elements": {
       "oneOf": [
         {
@@ -55,6 +59,7 @@
   },
   "required": [
     "type",
-    "elements"
+    "elements",
+    "sectionID"
   ]
 }

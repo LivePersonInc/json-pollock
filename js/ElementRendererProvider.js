@@ -18,9 +18,11 @@ const TYPES = {
   CHECKLIST: 'checklist',
   LIST: 'list',
   SECTION: 'section',
+  SECTIONS: 'sections',
+  BUTTONLIST: 'buttonlist',
 };
 
-const DATA_CHECKLIST_ID_ATTR = 'data-checklist-id';
+const DATA_SECTION_ID_ATTR = 'data-section-id';
 
 export default class ElementRendererProvider {
 
@@ -92,26 +94,30 @@ export default class ElementRendererProvider {
         Utils.addClass(divEl, 'direction-rtl');
       }
 
-      const btnEl = document.createElement('button');
-      btnEl.type = 'button';
-      btnEl.innerHTML = Utils.normalizeHtmlText(config.title);
+      const sbtEl = document.createElement('input');
+      sbtEl.type = 'submit';
+      sbtEl.innerHTML = Utils.normalizeHtmlText(config.title);
 
+      if (typeof config.disabled === 'undefined' || config.disabled) {
+        sbtEl.disabled = true;
+        sbtEl.classList.add('lp-json-pollock-element-submit-button-disabled');
+      }
       if (config.tooltip) {
-        btnEl.title = config.tooltip;
-        btnEl.setAttribute('aria-label', config.tooltip);
+        sbtEl.title = config.tooltip;
+        sbtEl.setAttribute('aria-label', config.tooltip);
       }
       if (config.style) {
         const style = Utils.styleToCss(config.style);
         const splitedStyle = Utils.extractFromStyles(style, 'background-color');
         divEl.setAttribute('style', splitedStyle.extractedStyle);
-        btnEl.style.cssText = splitedStyle.style;
+        sbtEl.style.cssText = splitedStyle.style;
       }
 
       if (config.click && config.click.actions) {
-        btnEl.onclick = this.wrapAction(config.click);
+        sbtEl.onclick = this.wrapActionWithForm(config.click, true);
       }
 
-      divEl.appendChild(btnEl);
+      divEl.appendChild(sbtEl);
 
       return divEl;
     });
@@ -119,23 +125,15 @@ export default class ElementRendererProvider {
     this.set(TYPES.CHECKBOX, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-checkbox';
-
-      if (config.rtl) {
-        divEl.dir = 'rtl';
-        Utils.addClass(divEl, 'direction-rtl');
-      }
-
-      const labelEl = document.createElement('label');
       const checkEl = document.createElement('input');
       checkEl.type = 'checkbox';
       checkEl.name = config.name;
       checkEl.value = config.value;
       checkEl.className = 'lp-json-pollock-element-checkbox-input';
-      labelEl.appendChild(checkEl);
 
+      const labelEl = document.createElement('label');
       labelEl.className = 'lp-json-pollock-element-checkbox-label';
       labelEl.innerHTML += Utils.normalizeHtmlText(config.text);
-
       if (config.rtl) {
         labelEl.dir = 'rtl';
         Utils.addClass(labelEl, 'direction-rtl');
@@ -147,16 +145,32 @@ export default class ElementRendererProvider {
       if (config.style) {
         labelEl.style.cssText = Utils.styleToCss(config.style);
       }
-      const borderEl = document.createElement('div');
-      borderEl.className = 'lp-json-pollock-border-element';
-      divEl.appendChild(borderEl);
-      divEl.appendChild(labelEl);
+
+      if (config.borderLine) {
+        const borderEl = document.createElement('div');
+        borderEl.className = 'lp-json-pollock-border-element';
+        if (config.borderColor) {
+          borderEl.style.borderColor = config.borderColor;
+        }
+        divEl.appendChild(borderEl);
+      }
+
+      const chkboxWrapdivEl = document.createElement('div');
+      chkboxWrapdivEl.className = 'lp-json-pollock-element-checkbox-wrapper';
+      if (config.rtl) {
+        chkboxWrapdivEl.dir = 'rtl';
+        Utils.addClass(chkboxWrapdivEl, 'direction-rtl');
+      }
+
+      chkboxWrapdivEl.appendChild(checkEl);
+      chkboxWrapdivEl.appendChild(labelEl);
+      divEl.appendChild(chkboxWrapdivEl);
 
       (divEl: any).afterRender = (el, elJson, parent) => {
         const checkBoxEl = divEl.getElementsByTagName('input')[0];
         if (elJson.click && elJson.click.actions) {
-          checkBoxEl.onclick = this.wrapAction(elJson.click,
-            parent.getAttribute(DATA_CHECKLIST_ID_ATTR));
+          checkBoxEl.onclick = this.wrapActionWithForm(elJson.click, false,
+            parent.parentElement.getAttribute(DATA_SECTION_ID_ATTR));
         }
       };
       return divEl;
@@ -165,10 +179,6 @@ export default class ElementRendererProvider {
     this.set(TYPES.CHECKLIST, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout-checklist';
-
-      if (config.checklistID) {
-        divEl.setAttribute(DATA_CHECKLIST_ID_ATTR, config.checklistID);
-      }
       if (config.padding) {
         const padding = config.padding;
         (divEl: any).style.margin = `${padding / 2}px 0px`;
@@ -185,14 +195,29 @@ export default class ElementRendererProvider {
         const padding = config.padding;
         (divEl: any).style.margin = `${padding / 2}px 0px`;
       }
+      if (config.sectionID) {
+        divEl.setAttribute(DATA_SECTION_ID_ATTR, config.sectionID);
+      }
 
       return divEl;
     });
 
-    this.set(TYPES.LIST, (): HTMLElement => {
-      const divEl = document.createElement('form');
-      divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-form';
+    this.set(TYPES.SECTIONS, (): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout-sections';
       return divEl;
+    });
+
+    this.set(TYPES.BUTTONLIST, (): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout-buttonlist';
+      return divEl;
+    });
+
+    this.set(TYPES.LIST, (): HTMLElement => {
+      const formEl = document.createElement('form');
+      formEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-form';
+      return formEl;
     });
 
     this.set(TYPES.IMAGE, (config): HTMLElement => {
@@ -448,4 +473,36 @@ export default class ElementRendererProvider {
       }
     };
   }
+
+  wrapActionWithForm(clickData: Object, preventDefault?: boolean, refID?: String): Function {
+    return (event) => {
+      if (preventDefault) {
+        event.preventDefault();
+      }
+      if (clickData.actions instanceof Array) {
+        const formPtr = event.target.form;
+        clickData.actions.forEach((actionData) => {
+          this.events.trigger({
+            eventName: actionData.type,
+            data: {
+              actionData,
+              metadata: clickData.metadata,
+              uiEvent: event,
+              refID,
+              formPtr,
+            },
+          });
+        });
+      }
+    };
+  }
 }
+
+/*
+-copy ABC
+-disable button (by default)
+-location of the checkbox
+-border
+-text-wrapping
+-the header should be an agent bubble
+ */

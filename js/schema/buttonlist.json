@@ -1,33 +1,40 @@
 {
   "type": "object",
   "additionalProperties": false,
-  "title": "list",
+  "title": "buttonlist",
   "properties": {
     "type": {
       "type": "string",
       "enum": [
-        "list"
+        "buttonlist"
       ],
-      "default": "list",
+      "default": "buttonlist",
       "readonly": true
     },
     "tooltip": {
       "type": "string",
       "maxLength": 256
     },
+    "padding": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10
+    },
     "elements": {
       "type": "array",
-      "maxItems": 3,
-      "minItems": 3,
+      "minItems": 1,
+      "maxItems": 5,
       "items": [
         {
-          "$ref": "text.json"
+          "$ref": "submitButton.json"
         },
         {
-          "$ref": "sections.json"
-        },
-        {
-          "$ref": "buttonlist.json"
+          "anyOf": [
+            {
+              "$ref": "button.json"
+            }
+          ]
         }
       ]
     },

@@ -35,6 +35,10 @@
       "type": "string",
       "maxLength": 2000
     },
+    "disabled": {
+      "type": "boolean",
+      "default": true
+    },
     "click": {
       "type": "object",
       "additionalProperties" : false,

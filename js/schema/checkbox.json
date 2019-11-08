@@ -31,6 +31,15 @@
     "style": {
       "$ref": "style.json"
     },
+    "borderLine": {
+      "type": "boolean",
+      "default": true
+    },
+    "borderColor": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
     "click": {
       "type": "object",
       "additionalProperties" : false,

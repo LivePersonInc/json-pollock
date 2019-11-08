@@ -21,10 +21,6 @@
       "minimum": 0,
       "maximum": 10
     },
-    "checklistID": {
-      "type": "string",
-      "maxLength": 256
-    },
     "elements": {
       "type": "array",
       "minItems": 2,
@@ -40,7 +36,6 @@
   },
   "required": [
     "type",
-    "elements",
-    "checklistID"
+    "elements"
   ]
 }
