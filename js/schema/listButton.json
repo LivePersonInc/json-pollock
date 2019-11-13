@@ -1,14 +1,14 @@
 {
   "type": "object",
   "additionalProperties": false,
-  "title": "buttonlist",
+  "title": "listButton",
   "properties": {
     "type": {
       "type": "string",
       "enum": [
-        "buttonlist"
+        "listButton"
       ],
-      "default": "buttonlist",
+      "default": "listButton",
       "readonly": true
     },
     "tooltip": {

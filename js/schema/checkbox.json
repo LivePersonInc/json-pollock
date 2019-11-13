@@ -46,9 +46,9 @@
       "properties": {
         "actions": {
           "type": "array",
-          "maxItems": 1,
+          "maxItems": 4,
           "items": {
-            "$ref": "specialActions.json#/definitions/checked"
+            "$ref": "specialAction.json#/definitions/checked"
           }
         },
         "metadata": {

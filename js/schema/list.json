@@ -27,7 +27,7 @@
           "$ref": "sections.json"
         },
         {
-          "$ref": "buttonlist.json"
+          "$ref": "listButton.json"
         }
       ]
     },

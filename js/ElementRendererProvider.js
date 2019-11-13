@@ -19,7 +19,7 @@ const TYPES = {
   LIST: 'list',
   SECTION: 'section',
   SECTIONS: 'sections',
-  BUTTONLIST: 'buttonlist',
+  LISTBUTTON: 'listButton',
 };
 
 const DATA_SECTION_ID_ATTR = 'data-section-id';
@@ -208,9 +208,9 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set(TYPES.BUTTONLIST, (): HTMLElement => {
+    this.set(TYPES.LISTBUTTON, (): HTMLElement => {
       const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout-buttonlist';
+      divEl.className = 'lp-json-pollock-layout-listButton';
       return divEl;
     });
 

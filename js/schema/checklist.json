@@ -24,7 +24,7 @@
     "elements": {
       "type": "array",
       "minItems": 2,
-      "maxItems": 5,
+      "maxItems": 256,
       "items": {
         "$ref": "checkbox.json"
       }

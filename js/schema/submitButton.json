@@ -45,9 +45,9 @@
       "properties": {
         "actions": {
           "type": "array",
-          "maxItems": 1,
+          "maxItems": 4,
           "items": {
-            "$ref": "specialActions.json#/definitions/submitAsText"
+            "$ref": "specialAction.json#/definitions/submitAsText"
           }
         },
         "metadata": {
