@@ -11,139 +11,212 @@
     <script>
       window.onload = function () {
 
-      var example = {
-        "type": "list",
-        "elements": [
-          {
-            "type": "text",
-            "text": "The checklist"
-          },
-          {
-            "type": "sections",
-            "elements": [
-              {
-                "type": "section",
-                "sectionID": "123",
-                "elements": [
-                  {
-                    "type": "checklist",
-                    "elements": [
-                      {
-                        "type": "checkbox",
-                        "text": "product name (Title) this is a random text this is a random text",
-                        "tooltip": "text tooltip",
-                        "borderLine": true,
-                        "click": {
-                          "metadata": [
+        var example = {
+                  "type": "list",
+                  "elements": [
+                    {
+                      "type": "text",
+                      "text": "The checklist"
+                    },
+                    {
+                      "type": "sections",
+                      "elements": [
+                        {
+                          "type": "section",
+                          "sectionID": "fruits",
+                          "elements": [
                             {
-                              "type": "ExternalId",
-                              "id": "ANOTHER_ONE_35"
+                              "type": "text",
+                              "text": "The subheader"
                             },
                             {
-                              "type": "ActionReason",
-                              "reason": "escalated_by_bot",
-                              "reasonId": 3
+                              "type": "checklist",
+                              "elements": [
+                                {
+                                  "type": "checkbox",
+                                  "text": "apple",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_35"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "apples"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "checkbox",
+                                  "text": "banana",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_32"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "bananas"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "checkbox",
+                                  "text": "avocado",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_36"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "avocados"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
                             }
-                          ],
-                          "actions": [
+                          ]
+                        },
+                        {
+                          "type": "section",
+                          "sectionID": "fruits123",
+                          "elements": [
                             {
-                              "type": "checked",
-                              "publishText": "Two year plan leasing a mobile1"
+                              "type": "text",
+                              "text": "The subheader2"
+                            },
+                            {
+                              "type": "checklist",
+                              "elements": [
+                                {
+                                  "type": "checkbox",
+                                  "text": "apple1",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_35"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "apples"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "checkbox",
+                                  "text": "banana2",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_32"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "bananas"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "checkbox",
+                                  "text": "avocado3",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_36"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "avocados"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
                             }
                           ]
                         }
-                      },
-                      {
-                        "type": "checkbox",
-                        "text": "product name (Title)",
-                        "tooltip": "image tooltip",
-                        "borderLine": true,
-                        "click": {
-                          "metadata": [
-                            {
-                              "type": "ExternalId",
-                              "id": "ANOTHER_ONE_32"
-                            }
-                          ],
-                          "actions": [
-                            {
-                              "type": "checked",
-                              "publishText": "Two year plan leasing a mobile12"
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        "type": "checkbox",
-                        "text": "product name (Title)  this is a random text this is a random text this is a random text",
-                        "tooltip": "image tooltip",
-                        "borderLine": true,
-                        "click": {
-                          "metadata": [
-                            {
-                              "type": "ExternalId",
-                              "id": "ANOTHER_ONE_33"
-                            }
-                          ],
-                          "actions": [
-                            {
-                              "type": "checked",
-                              "publishText": "Two year plan leasing a mobile123"
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "buttonlist",
-            "elements": [
-              {
-                "type": "submitButton",
-                "title": "click me!",
-                "disabled": true,
-                "click": {
-                  "metadata": [
+                      ]
+                    },
                     {
-                      "type": "ExternalId",
-                      "id": "ANOTHER_ONE_2"
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": "submitAsText",
-                      "submit": true
+                      "type": "listButton",
+                      "elements": [
+                        {
+                          "type": "submitButton",
+                          "title": "submit",
+                          "disabled": false,
+                          "click": {
+                            "metadata": [
+                              {
+                                "type": "ExternalId",
+                                "id": "submissionID"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "type": "submitAsText",
+                                "submit": true
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "title": "Back",
+                          "click": {
+                            "metadata": [
+                              {
+                                "type": "ExternalId",
+                                "id": "ANOTHER_ONE_20"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "type": "publishText",
+                                "text": "Back"
+                              }
+                            ]
+                          }
+                        }
+                      ]
                     }
                   ]
-                }
-              },
-              {
-                "type": "button",
-                "tooltip": "Choose a plan",
-                "title": "Choose a plan",
-                "click": {
-                  "metadata": [
-                    {
-                      "type": "ExternalId",
-                      "id": "ANOTHER_ONE_1"
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": "publishText",
-                      "text": "SIM only plan"
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        ]
-      };
+                };
 
       JsonPollock.registerAction('navigate', function (data) {
         alert(JSON.stringify(data));
