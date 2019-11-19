@@ -1,27 +1,42 @@
 {
   "type": "object",
   "additionalProperties": false,
-  "title": "sections",
+  "title": "buttonList",
   "properties": {
     "type": {
       "type": "string",
       "enum": [
-        "sections"
+        "buttonList"
       ],
-      "default": "sections",
+      "default": "buttonList",
       "readonly": true
     },
     "tooltip": {
       "type": "string",
       "maxLength": 256
     },
+    "padding": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10
+    },
     "elements": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 256,
-      "items": {
-        "$ref": "section.json"
-      }
+      "maxItems": 5,
+      "items": [
+        {
+          "$ref": "submitButton.json"
+        },
+        {
+          "anyOf": [
+            {
+              "$ref": "button.json"
+            }
+          ]
+        }
+      ]
     },
     "alt": {
       "type": "string",

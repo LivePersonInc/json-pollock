@@ -18,8 +18,8 @@ const TYPES = {
   CHECKLIST: 'checklist',
   LIST: 'list',
   SECTION: 'section',
-  SECTIONS: 'sections',
-  LISTBUTTON: 'listButton',
+  SECTIONS: 'sectionList',
+  LISTBUTTON: 'buttonList',
 };
 
 const DATA_SECTION_ID_ATTR = 'data-section-id';

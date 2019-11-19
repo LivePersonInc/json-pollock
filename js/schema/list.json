@@ -24,10 +24,10 @@
           "$ref": "text.json"
         },
         {
-          "$ref": "sections.json"
+          "$ref": "sectionList.json"
         },
         {
-          "$ref": "listButton.json"
+          "$ref": "buttonList.json"
         }
       ]
     },
