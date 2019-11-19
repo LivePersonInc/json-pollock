@@ -231,19 +231,11 @@
       });
 
       JsonPollock.registerAction('checked', function (data) {
-        console.log(data);
-        let tmp = data.formPtr.querySelector('input[type=submit]');
-        if(!this.datalol) {
-          this.datalol = "";
-        }
-        this.datalol += data;
-        tmp.disabled = !(!!this.datalol);
-        console.log(this.datalol);
-      }.bind(this));
+        alert(JSON.stringify(data));
+      });
 
       JsonPollock.registerAction('submitAsText', function (data) {
-        console.log(data);
-        console.log(this);
+        alert(JSON.stringify(data));
       });
 
       var el = JsonPollock.render(JSON.stringify(example));
