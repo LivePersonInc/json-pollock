@@ -114,7 +114,7 @@ export default class ElementRendererProvider {
       }
 
       if (config.click && config.click.actions) {
-        sbtEl.onclick = this.wrapActionWithForm(config.click, true);
+        sbtEl.onclick = this.wrapAction(config.click, true);
       }
 
       divEl.appendChild(sbtEl);
@@ -126,14 +126,14 @@ export default class ElementRendererProvider {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-checkbox';
       const checkEl = document.createElement('input');
+      const normalizedText = Utils.normalizeHtmlText(config.text);
       checkEl.type = 'checkbox';
-      checkEl.name = config.name;
-      checkEl.value = config.value;
+      checkEl.value = normalizedText;
       checkEl.className = 'lp-json-pollock-element-checkbox-input';
 
       const labelEl = document.createElement('label');
       labelEl.className = 'lp-json-pollock-element-checkbox-label';
-      labelEl.innerHTML += Utils.normalizeHtmlText(config.text);
+      labelEl.innerHTML += normalizedText;
       if (config.rtl) {
         labelEl.dir = 'rtl';
         Utils.addClass(labelEl, 'direction-rtl');
@@ -166,10 +166,10 @@ export default class ElementRendererProvider {
       chkboxWrapdivEl.appendChild(labelEl);
       divEl.appendChild(chkboxWrapdivEl);
 
-      (divEl: any).afterRender = (el, elJson, parent) => {
+      (divEl: any).afterRender = (elJson, parent) => {
         const checkBoxEl = divEl.getElementsByTagName('input')[0];
         if (elJson.click && elJson.click.actions) {
-          checkBoxEl.onclick = this.wrapActionWithForm(elJson.click, false,
+          checkBoxEl.onclick = this.wrapAction(elJson.click, false,
             parent.parentElement.getAttribute(DATA_SECTION_ID_ATTR));
         }
       };
@@ -456,41 +456,25 @@ export default class ElementRendererProvider {
     this.elements[type] = render;
   }
 
-  wrapAction(clickData: Object, refID?: String): Function {
-    return (event) => {
-      if (clickData.actions instanceof Array) {
-        clickData.actions.forEach((actionData) => {
-          this.events.trigger({
-            eventName: actionData.type,
-            data: {
-              actionData,
-              metadata: clickData.metadata,
-              uiEvent: event,
-              refID,
-            },
-          });
-        });
-      }
-    };
-  }
-
-  wrapActionWithForm(clickData: Object, preventDefault?: boolean, refID?: String): Function {
+  wrapAction(clickData: Object, preventDefault?: boolean, groupID?: String): Function {
     return (event) => {
       if (preventDefault) {
         event.preventDefault();
       }
       if (clickData.actions instanceof Array) {
-        const formPtr = event.target.form;
         clickData.actions.forEach((actionData) => {
+          const dataObj: { [key: string]: any } = {
+            actionData,
+            metadata: clickData.metadata,
+            uiEvent: event,
+          };
+          if (groupID) {
+            dataObj.groupID = groupID;
+          }
+
           this.events.trigger({
             eventName: actionData.type,
-            data: {
-              actionData,
-              metadata: clickData.metadata,
-              uiEvent: event,
-              refID,
-              formPtr,
-            },
+            data: dataObj,
           });
         });
       }
