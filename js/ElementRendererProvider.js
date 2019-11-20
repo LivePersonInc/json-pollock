@@ -98,7 +98,7 @@ export default class ElementRendererProvider {
       sbtEl.type = 'submit';
       sbtEl.innerHTML = Utils.normalizeHtmlText(config.title);
 
-      if (typeof config.disabled === 'undefined' || config.disabled) {
+      if (config.disabled) {
         sbtEl.disabled = true;
         sbtEl.classList.add('lp-json-pollock-element-submit-button-disabled');
       }
@@ -497,12 +497,3 @@ export default class ElementRendererProvider {
     };
   }
 }
-
-/*
--copy ABC
--disable button (by default)
--location of the checkbox
--border
--text-wrapping
--the header should be an agent bubble
- */
