@@ -99,26 +99,6 @@
       }
     },
     "required": ["type", "uri"]
-  }, {
-    "title": "Custom Action",
-    "type": "object",
-    "additionalProperties" : false,
-    "properties": {
-      "type": {
-        "type": "string",
-        "enum": ["custom"],
-        "default": "custom",
-        "readonly": true
-      },
-      "data": {
-        "type": "array",
-        "maxItems": 10,
-        "items": {
-          "$ref": "keyValuePair.json"
-        }
-      }
-    },
-    "required": ["type"]
   }
   ]
 }
