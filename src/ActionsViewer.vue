@@ -1,7 +1,7 @@
 <template>
   <div class='actions' ref="actions">
     <div v-for="(action, index) in actions" :key="index" class='action-line'>
-      {{index + 1}}. {{action.actionData}}
+      {{index + 1}}. {{action}}
     </div>
     <div class="empty" v-show="!actionsExists ">NO ACTIONS</div>
   </div>
