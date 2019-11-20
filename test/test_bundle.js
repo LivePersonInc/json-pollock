@@ -2053,10 +2053,9 @@ describe('json-pollock tests', function () {
       JsonPollock.registerAction('checked', spy);
       rooEl.querySelectorAll('.lp-json-pollock-element-checkbox-input')[0].dispatchEvent(event);
       chai.expect(spy).to.have.been.calledWith({
-        formPtr: rooEl.children[0].children[0],
         actionData: conf.elements[1].elements[0].elements[0].elements[0].click.actions[0],
         uiEvent: event,
-        refID: conf.elements[1].elements[0].sectionID
+        groupID: conf.elements[1].elements[0].sectionID
       });
     });
 
@@ -2066,7 +2065,6 @@ describe('json-pollock tests', function () {
       JsonPollock.registerAction('submitAsText', spy);
       rooEl.querySelectorAll('input[type=submit]')[0].dispatchEvent(event);
       chai.expect(spy).to.have.been.calledWith({
-        formPtr: rooEl.children[0].children[0],
         actionData: conf.elements[2].elements[0].click.actions[0],
         uiEvent: event
       });
