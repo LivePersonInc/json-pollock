@@ -106,7 +106,8 @@ export default {
     JsonPollock.registerAction('link', this.onAction.bind(this));
     JsonPollock.registerAction('navigate', this.onAction.bind(this));
     JsonPollock.registerAction('publishText', this.onAction.bind(this));
-
+    JsonPollock.registerAction('submitAsText', this.onAction.bind(this));
+    JsonPollock.registerAction('checked', this.onAction.bind(this));
     this.$store.watch(
       state => state.json,
       (val) => {

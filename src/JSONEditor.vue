@@ -24,6 +24,14 @@ import mapSchema from 'json-pollock/js/schema/map.json';
 import richContentSchema from 'json-pollock/js/schema/rich_content.json';
 import templateSchema from 'json-pollock/js/schema/template.json';
 import textSchema from 'json-pollock/js/schema/text.json';
+import checkBoxSchema from 'json-pollock/js/schema/checkbox.json';
+import listSchema from 'json-pollock/js/schema/list.json';
+import checkListSchema from 'json-pollock/js/schema/checklist.json';
+import submitButtonSchema from 'json-pollock/js/schema/submitButton.json';
+import sectionSchema from 'json-pollock/js/schema/section.json';
+import sectionListSchema from 'json-pollock/js/schema/sectionList.json';
+import specialActionSchema from 'json-pollock/js/schema/specialAction.json';
+import buttonListSchema from 'json-pollock/js/schema/buttonList.json';
 
 let editor;
 
@@ -63,6 +71,14 @@ export default {
         'rich_content.json': richContentSchema,
         'template.json': templateSchema,
         'text.json': textSchema,
+        'checkbox.json': checkBoxSchema,
+        'list.json': listSchema,
+        'checklist.json': checkListSchema,
+        'submitButton.json': submitButtonSchema,
+        'section.json': sectionSchema,
+        'sectionList.json': sectionListSchema,
+        'specialAction.json': specialActionSchema,
+        'buttonList.json': buttonListSchema,
       },
       onChange: () => {
         try {
