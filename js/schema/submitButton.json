@@ -37,7 +37,7 @@
     },
     "disabled": {
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "click": {
       "type": "object",

@@ -24,7 +24,7 @@
     "elements": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 5,
+      "maxItems": 2,
       "items": [
         {
           "$ref": "submitButton.json"

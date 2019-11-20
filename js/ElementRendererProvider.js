@@ -18,8 +18,8 @@ const TYPES = {
   CHECKLIST: 'checklist',
   LIST: 'list',
   SECTION: 'section',
-  SECTIONS: 'sectionList',
-  LISTBUTTON: 'buttonList',
+  SECTIONLIST: 'sectionList',
+  BUTTONLIST: 'buttonList',
 };
 
 const DATA_SECTION_ID_ATTR = 'data-section-id';
@@ -202,15 +202,15 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set(TYPES.SECTIONS, (): HTMLElement => {
+    this.set(TYPES.SECTIONLIST, (): HTMLElement => {
       const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout-sections';
+      divEl.className = 'lp-json-pollock-layout-sectionList';
       return divEl;
     });
 
-    this.set(TYPES.LISTBUTTON, (): HTMLElement => {
+    this.set(TYPES.BUTTONLIST, (): HTMLElement => {
       const divEl = document.createElement('div');
-      divEl.className = 'lp-json-pollock-layout-listButton';
+      divEl.className = 'lp-json-pollock-layout-buttonList';
       return divEl;
     });
 
