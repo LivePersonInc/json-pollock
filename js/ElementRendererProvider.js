@@ -128,7 +128,6 @@ export default class ElementRendererProvider {
       const checkEl = document.createElement('input');
       const normalizedText = Utils.normalizeHtmlText(config.text);
       checkEl.type = 'checkbox';
-      checkEl.value = normalizedText;
       checkEl.className = 'lp-json-pollock-element-checkbox-input';
 
       const labelEl = document.createElement('label');
