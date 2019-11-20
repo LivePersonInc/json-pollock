@@ -89,19 +89,19 @@ Example callback function for `onAfterElementRendered`:
 * @returns {HTMLElement} manipulated html element
 */
 const onAfterElementRendered = (element, template) => {
-    // maniplate elements:
-    switch (template.type) {
-      case JsonPollock.TEMPLATE_TYPES.TEXT:
-        // add custom css class
-        element.classList.add('my-ns-text');
-        break;
-      case JsonPollock.TEMPLATE_TYPES.LINK:
-        // edit inline style
-        element.style.color = 'red';
-        break;
-      case JsonPollock.TEMPLATE_TYPES.MAP:
-        // prevent 'map' element to be rendered
-        return null;
+	// maniplate elements:
+	switch (template.type) {
+		case JsonPollock.TEMPLATE_TYPES.TEXT:
+			// add custom css class
+			element.classList.add('my-ns-text');
+			break;
+		case JsonPollock.TEMPLATE_TYPES.LINK:
+			// edit inline style
+			element.style.color = 'red';
+			break;
+		case JsonPollock.TEMPLATE_TYPES.MAP:
+			// prevent 'map' element to be rendered
+			return null;
       ...
     }
     return element;
@@ -115,18 +115,18 @@ The *render* function renders json into a DOM element.
 const content = {
 	"type": "vertical",
 	"elements": [{
-        	"type": "image",
-        	"url": "http://assets/phone.jpg",
-        	"tooltip": "Great Phone!",
-        	"click": {
-          		"actions": [{
-            			"type": "navigate",
-            			"name": "Navigate to store via image",
-            			"lo": 23423423,
-            			"la": 2423423423
-          		}]
-        	}
-      	}]
+		"type": "image",
+		"url": "http://assets/phone.jpg",
+		"tooltip": "Great Phone!",
+		"click": {
+			"actions": [{
+				"type": "navigate",
+				"name": "Navigate to store via image",
+				"lo": 23423423,
+				"la": 2423423423
+			}]
+		}
+	}]
 }
 const rooEl = JsonPollock.render(content);
 document.getElementById('container').appendChild(rooEl);
@@ -135,9 +135,15 @@ document.getElementById('container').appendChild(rooEl);
 
 The *registerAction* function allow to register a callback to a certain action type, as defined in the [spec](https://developers.liveperson.com/structured-content-templates.html).
 ```js
-const linkCallback = (data) => {
-	//data => {actionData: <action configuration>, metadata: <metadata configuration, if given>, uiEvent: <ui dom event object>, groupID: <referenceID to sectionID, if given}
-    	window.open(data.actionData.uri,"_blank")
+/**
+ * @param {Object} data	callback payload
+ * @param {Object} data.actionData action configuration as defined in the json
+ * @param {Object=} data.metadata metadata configuration as defined in the json, optional
+ * @param {Event=} data.uiEvent UI DOM Event object of the clicked element, optional
+ * @param {String=}	data.groupID reference to section id - curently relevant to checkbox element, optional. 
+ **/
+const linkCallback = (data) => {	
+  window.open(data.actionData.uri,"_blank");
 };
 JsonPollock.registerAction('link', linkCallback);
 ```
@@ -164,8 +170,8 @@ Perior to the rendering the JSON object is validated against the JSON [schema](j
 ```js
 ...
 try {
-    const rooEl = JsonPollock.render(json);
-    ...
+  const rooEl = JsonPollock.render(json);
+  ...
 } catch(e) {
 	console.log(e.message);    // error message
 	console.log(e.errors);     // validation errors
