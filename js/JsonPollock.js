@@ -72,7 +72,7 @@ export default class JsonPollock {
           });
         }
         if (element.afterRender) {
-          element.afterRender.call(element, element, elJson, parent);
+          element.afterRender.call(element, elJson, parent);
         }
       }
     }
