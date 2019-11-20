@@ -1164,6 +1164,183 @@ describe('json-pollock tests', function () {
     });
   });
 
+  describe('render list with rtl and button disabled', function () {
+
+    var conf = {
+      "type": "list",
+      "elements": [
+        {
+          "type": "text",
+          "text": "The checklist"
+        },
+        {
+          "type": "sectionList",
+          "elements": [
+            {
+              "type": "section",
+              "sectionID": "fruits",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "The subheader"
+                },
+                {
+                  "type": "checklist",
+                  "elements": [
+                    {
+                      "type": "checkbox",
+                      "text": "1",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "rtl": true,
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_35"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "apples"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "2",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "rtl": true,
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_32"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "bananas"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "3",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "rtl": true,
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_36"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "avocados"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "buttonList",
+          "elements": [
+            {
+              "type": "submitButton",
+              "title": "submit",
+              "disabled": true,
+              "rtl": true,
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "submissionID"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "submitAsText",
+                    "submit": true
+                  }
+                ]
+              }
+            },
+            {
+              "type": "button",
+              "title": "Back",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_20"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "Back"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    const container = addToBody(JsonPollock.render(JSON.stringify(conf)));
+    const listContainerRoot = container.children[0];
+    const listRootLayout = container.children[0].children[0];
+    const header = container.children[0].children[0].children[0];
+    const sectionListLayout = container.children[0].children[0].children[1];
+    const buttonListLayout = container.children[0].children[0].children[2];
+    const section1Layout = sectionListLayout.children[0];
+    const subheader1Layout = section1Layout.children[0];
+    const checklist1Layout = section1Layout.children[1];
+
+    it('container element exists', function () {
+      chai.expect(listContainerRoot.className).to.contains('lp-json-pollock');
+    });
+
+    it('3 checkboxes exists within checklist with rtl', function () {
+      chai.expect(checklist1Layout.children.length).to.equal(3);
+      chai.expect(checklist1Layout.children[0].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[0].children[1].children[1].className).to.contains('direction-rtl');
+      chai.expect(checklist1Layout.children[0].children[1].children[1].dir).to.equal('rtl');
+      chai.expect(checklist1Layout.children[1].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[1].children[1].children[1].className).to.contains('direction-rtl');
+      chai.expect(checklist1Layout.children[1].children[1].children[1].dir).to.equal('rtl');
+      chai.expect(checklist1Layout.children[2].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[2].children[1].children[1].className).to.contains('direction-rtl');
+      chai.expect(checklist1Layout.children[2].children[1].children[1].dir).to.equal('rtl');
+      chai.expect(checklist1Layout.children[0].innerText).to.equal('1');
+      chai.expect(checklist1Layout.children[1].innerText).to.equal('2');
+      chai.expect(checklist1Layout.children[2].innerText).to.equal('3');
+    });
+
+    it('submitButton exist', function () {
+      chai.expect(buttonListLayout.children[0].className).to.contains('lp-json-pollock-element-submit-button');
+      chai.expect(buttonListLayout.children[0].className).to.contains('direction-rtl');
+      chai.expect(buttonListLayout.children[0].dir).to.equal('rtl');
+      chai.expect(buttonListLayout.children[0].children[0].disabled).to.equal(true);
+    });
+
+  });
+
   describe('border policy', function () {
 
     var rooEl = null;
