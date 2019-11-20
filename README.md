@@ -136,7 +136,7 @@ document.getElementById('container').appendChild(rooEl);
 The *registerAction* function allow to register a callback to a certain action type, as defined in the [spec](https://developers.liveperson.com/structured-content-templates.html).
 ```js
 const linkCallback = (data) => {
-	//data => {actionData: <action configuration>, metadata: <metadata configuration, if given>, uiEvent: <ui dom event object>}
+	//data => {actionData: <action configuration>, metadata: <metadata configuration, if given>, uiEvent: <ui dom event object>, groupID: <referenceID to sectionID, if given}
     	window.open(data.actionData.uri,"_blank")
 };
 JsonPollock.registerAction('link', linkCallback);
