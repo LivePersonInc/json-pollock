@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "list",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "list"
+      ],
+      "default": "list",
+      "readonly": true
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "elements": {
+      "type": "array",
+      "maxItems": 3,
+      "minItems": 3,
+      "items": [
+        {
+          "$ref": "text.json"
+        },
+        {
+          "$ref": "sectionList.json"
+        },
+        {
+          "$ref": "buttonList.json"
+        }
+      ]
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "type",
+    "elements"
+  ]
+}

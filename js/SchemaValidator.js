@@ -11,6 +11,14 @@ import mapSchema from './schema/map.json';
 import richContentSchema from './schema/rich_content.json';
 import templateSchema from './schema/template.json';
 import textSchema from './schema/text.json';
+import checkBoxSchema from './schema/checkbox.json';
+import listSchema from './schema/list.json';
+import checkListSchema from './schema/checklist.json';
+import submitButtonSchema from './schema/submitButton.json';
+import sectionSchema from './schema/section.json';
+import sectionListSchema from './schema/sectionList.json';
+import specialActionSchema from './schema/specialAction.json';
+import buttonListSchema from './schema/buttonList.json';
 
 export default class SchemaValidator {
 
@@ -22,6 +30,7 @@ export default class SchemaValidator {
     ajv.addSchema(basicSchema, 'basic.json');
     ajv.addSchema(styleSchema, 'style.json');
     ajv.addSchema(buttonSchema, 'button.json');
+    ajv.addSchema(checkBoxSchema, 'checkbox.json');
     ajv.addSchema(cardSchema, 'card.json');
     ajv.addSchema(carouselSchema, 'carousel.json');
     ajv.addSchema(imagelSchema, 'image.json');
@@ -30,6 +39,13 @@ export default class SchemaValidator {
     ajv.addSchema(richContentSchema, 'rich_content.json');
     ajv.addSchema(templateSchema, 'template.json');
     ajv.addSchema(textSchema, 'text.json');
+    ajv.addSchema(listSchema, 'list.json');
+    ajv.addSchema(checkListSchema, 'checklist.json');
+    ajv.addSchema(submitButtonSchema, 'submitButton.json');
+    ajv.addSchema(sectionSchema, 'section.json');
+    ajv.addSchema(sectionListSchema, 'sectionList.json');
+    ajv.addSchema(buttonListSchema, 'buttonList.json');
+    ajv.addSchema(specialActionSchema, 'specialAction.json');
     this.jsonValidator = ajv.compile(richContentSchema);
   }
 

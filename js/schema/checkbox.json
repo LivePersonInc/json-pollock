@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "title": "checkbox",
+  "additionalProperties" : false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["checkbox"],
+      "default": "checkbox",
+      "readonly": true
+    },
+    "text": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "rtl": {
+      "type": "boolean"
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "tag": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "tagVersion": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "style": {
+      "$ref": "style.json"
+    },
+    "borderLine": {
+      "type": "boolean",
+      "default": true
+    },
+    "borderColor": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "click": {
+      "type": "object",
+      "additionalProperties" : false,
+      "properties": {
+        "actions": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "$ref": "specialAction.json#/definitions/checked"
+          }
+        },
+        "metadata": {
+          "type": "array"
+        }
+      }
+    }
+  },
+  "required": [
+    "type",
+    "text",
+    "click"
+  ]
+}

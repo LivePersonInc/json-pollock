@@ -1,5 +1,5 @@
 #!/bin/bash
-echoGreen() 
+echoGreen()
 {
 	echo -e "\033[0;32m $1 \033[0m"
 }
@@ -27,6 +27,14 @@ SCHEMA_URL=(
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/template.json"
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/text.json"
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/carousel.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/section.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/list.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/checklist.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/sectionList.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/checkbox.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/submitButton.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/buttonList.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/specialAction.json"
 )
 
 echoGreen "This script sync the schema files under the 'js/schema' folder."
@@ -36,7 +44,7 @@ echoGreen "Make sure to provide the credentials for the corporate Github (lpgith
 echo
 echo
 
-echoNormal "lpgithub user: " 
+echoNormal "lpgithub user: "
 read -p " " USER
 echoNormal "lpgithub password: "
 read  -s PASS

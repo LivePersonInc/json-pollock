@@ -139,11 +139,11 @@ describe('json-pollock tests', function () {
     });
 
     // special cases - we would like the onload and onerror callbacks to be called right after the load
-    // therefore the test is async and we add the fargment to the DOM is the test itself 
+    // therefore the test is async and we add the fargment to the DOM is the test itself
     it('An element of type image should be created', function (done) {
       fragEl = JsonPollock.render(card);
       var layout = fragEl.childNodes[0].childNodes[0];
-      var image = layout.childNodes[0].childNodes[1];          
+      var image = layout.childNodes[0].childNodes[1];
       chai.expect(layout.childNodes[0].localName).to.equal('div');
       chai.expect(layout.childNodes[0].className).to.equal('lp-json-pollock-element-image loading');
       chai.expect(layout.childNodes[0].childNodes[0].localName).to.equal('span');
@@ -157,7 +157,7 @@ describe('json-pollock tests', function () {
         chai.expect(layout.childNodes[0].className).to.equal('lp-json-pollock-element-image');
         done();
       };
-      addToBody(fragEl);      
+      addToBody(fragEl);
     });
 
     it('Image with wrong url should be created with error class', function (done) {
@@ -189,7 +189,7 @@ describe('json-pollock tests', function () {
         chai.expect(layout.className).to.equal('lp-json-pollock-element-image error');
         done();
       };
-      addToBody(fragEl);      
+      addToBody(fragEl);
     });
   });
 
@@ -249,7 +249,7 @@ describe('json-pollock tests', function () {
         },
       },]
     }
-  
+
     var fragEl = null;
     var rooEl = null;
 
@@ -265,25 +265,25 @@ describe('json-pollock tests', function () {
 
     it('image element should have dir=rtl and \'direction-rtl\' class', function (done) {
       // special case - we would like the onload callback to be called right after the load
-      // therefore the test is async and we add the fargment to the DOM is the test itself 
+      // therefore the test is async and we add the fargment to the DOM is the test itself
       fragEl = JsonPollock.render(rtlCard);
       var image = fragEl.childNodes[0].childNodes[0].childNodes[0];
       var origOnload = image.childNodes[1].onload;
-      image.childNodes[1].onload = function() {        
+      image.childNodes[1].onload = function() {
         origOnload.apply(this);
         verifyRTL(image);
         done();
       };
-      addToBody(fragEl);      
+      addToBody(fragEl);
     });
 
     it('broken image element should still have dir=rtl and \'direction-rtl\' class', function (done) {
       // special case - we would like the onerror callback to be called right after the load
-      // therefore the test is async and we add the fargment to the DOM is the test itself 
+      // therefore the test is async and we add the fargment to the DOM is the test itself
       fragEl = JsonPollock.render(rtlCard);
       var image = fragEl.childNodes[0].childNodes[0].childNodes[1];
       var origOnError = image.childNodes[1].onerror;
-      image.childNodes[1].onerror = function() {  
+      image.childNodes[1].onerror = function() {
         origOnError.apply(this);
         verifyRTL(image);
         done();
@@ -330,7 +330,7 @@ describe('json-pollock tests', function () {
       firstLayout = rooEl.childNodes[0].childNodes[0];
       secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
       textEl = secondLayout.childNodes[0];
-      
+
       chai.expect(firstLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-vertical');
       chai.expect(secondLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-horizontal');
       chai.expect(textEl.className).to.contain('lp-json-pollock-element-text');
@@ -338,7 +338,7 @@ describe('json-pollock tests', function () {
 
     it('Vertical nested in Horizontal', function () {
 
-      var conf = {       
+      var conf = {
         "type": "horizontal",
         "elements": [{
           "type": "vertical",
@@ -356,7 +356,7 @@ describe('json-pollock tests', function () {
       firstLayout = rooEl.childNodes[0].childNodes[0];
       secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
       textEl = secondLayout.childNodes[0];
-      
+
       chai.expect(firstLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-horizontal');
       chai.expect(secondLayout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-vertical');
       chai.expect(textEl.className).to.contain('lp-json-pollock-element-text');
@@ -367,7 +367,7 @@ describe('json-pollock tests', function () {
       it('Horizontal layout with many elements - width must not exceeds parent layout', function () {
 
         var conf = {
-          "type": "horizontal",          
+          "type": "horizontal",
             "elements": [
               {
                 "type": "text",
@@ -447,7 +447,7 @@ describe('json-pollock tests', function () {
                   "actions": [{
                     "type": "link",
                     "name": "add to cart",
-                    "uri": "https://example.com"   
+                    "uri": "https://example.com"
                   }]
                 }
               },
@@ -476,7 +476,7 @@ describe('json-pollock tests', function () {
         Array.prototype.forEach.call(layout.childNodes, function (node) {
           elementsWidth += node.offsetWidth;
         });
-        
+
         chai.expect(layout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-horizontal');
         chai.expect(elementsWidth).to.be.at.least(layoutWidth - 10);
         // chai.expect(elementsWidth).to.be.at.most(layoutWidth);
@@ -497,13 +497,13 @@ describe('json-pollock tests', function () {
 
         layout = rooEl.childNodes[0].childNodes[0];
         textEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
-        
+
         var layoutWidth = layout.offsetWidth;
         var layoutHeight = layout.offsetHeight;
         var textWidth = textEl.offsetWidth;
         var textHeight = textEl.offsetHeight;
-        
-        chai.expect(layout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-vertical');        
+
+        chai.expect(layout.className).to.contain('lp-json-pollock-layout lp-json-pollock-layout-vertical');
         chai.expect(textWidth).to.be.at.most(layoutWidth);
         chai.expect(textHeight).to.be.at.most(layoutHeight);
       });
@@ -711,8 +711,638 @@ describe('json-pollock tests', function () {
     });
   });
 
+  describe('render list', function () {
+
+    var conf = {
+      "type": "list",
+      "elements": [
+        {
+          "type": "text",
+          "text": "The checklist"
+        },
+        {
+          "type": "sectionList",
+          "elements": [
+            {
+              "type": "section",
+              "sectionID": "fruits",
+              "elements": [
+                {
+                  "type": "checklist",
+                  "elements": [
+                    {
+                      "type": "checkbox",
+                      "text": "1",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_35"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "apples"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "2",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_32"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "bananas"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "3",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_36"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "avocados"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "buttonList",
+          "elements": [
+            {
+              "type": "submitButton",
+              "title": "submit",
+              "disabled": false,
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "submissionID"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "submitAsText",
+                    "submit": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    const container = addToBody(JsonPollock.render(JSON.stringify(conf)));
+    const listContainerRoot = container.children[0];
+    const listRootLayout = container.children[0].children[0];
+    const header = container.children[0].children[0].children[0];
+    const sectionListLayout = container.children[0].children[0].children[1];
+    const buttonListLayout = container.children[0].children[0].children[2];
+    const sectionLayout = sectionListLayout.children[0];
+    const checklistLayout = sectionLayout.children[0];
+
+    it('container element exists', function () {
+      chai.expect(listContainerRoot.className).to.contains('lp-json-pollock');
+    });
+
+    it('list wrapper root exist', function () {
+      chai.expect(listRootLayout.className).to.contains('lp-json-pollock-layout-form');
+    });
+
+    it('header exist', function () {
+      chai.expect(header.className).to.contains('lp-json-pollock-element-text');
+    });
+
+    it('sectionListLayout exist', function () {
+      chai.expect(sectionListLayout.className).to.contains('lp-json-pollock-layout-sectionList');
+    });
+
+    it('buttonListLayout exist', function () {
+      chai.expect(buttonListLayout.className).to.contains('lp-json-pollock-layout-buttonList');
+    });
+
+    it('section exist within sectionList', function () {
+      chai.expect(sectionLayout.className).to.contains('lp-json-pollock-layout-section');
+      chai.expect(sectionLayout.getAttribute('data-section-id')).to.equal('fruits');
+    });
+
+    it('checklist exists within section', function () {
+      chai.expect(checklistLayout.className).to.contains('lp-json-pollock-layout-checklist');
+    });
+
+    it('checkbox exists within checklist', function () {
+      chai.expect(checklistLayout.children.length).to.equal(3);
+      chai.expect(checklistLayout.children[0].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklistLayout.children[1].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklistLayout.children[2].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklistLayout.children[0].innerText).to.equal('1');
+      chai.expect(checklistLayout.children[1].innerText).to.equal('2');
+      chai.expect(checklistLayout.children[2].innerText).to.equal('3');
+    });
+
+    it('submitButton exist', function () {
+      chai.expect(buttonListLayout.children[0].className).to.contains('lp-json-pollock-element-submit-button');
+      chai.expect(buttonListLayout.children[0].children[0].disabled).to.equal(false);
+    });
+  });
+
+  describe('render list with multiple sections and multiple buttons', function () {
+
+    var conf = {
+      "type": "list",
+      "elements": [
+        {
+          "type": "text",
+          "text": "The checklist"
+        },
+        {
+          "type": "sectionList",
+          "elements": [
+            {
+              "type": "section",
+              "sectionID": "fruits",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "The subheader"
+                },
+                {
+                  "type": "checklist",
+                  "elements": [
+                    {
+                      "type": "checkbox",
+                      "text": "1",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_35"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "apples"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "2",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_32"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "bananas"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "3",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_36"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "avocados"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "sectionID": "fruits123",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "The subheader"
+                },
+                {
+                  "type": "checklist",
+                  "elements": [
+                    {
+                      "type": "checkbox",
+                      "text": "01",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_35"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "apples"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "02",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_32"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "bananas"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "03",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_36"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "avocados"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "buttonList",
+          "elements": [
+            {
+              "type": "submitButton",
+              "title": "submit",
+              "disabled": false,
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "submissionID"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "submitAsText",
+                    "submit": true
+                  }
+                ]
+              }
+            },
+            {
+              "type": "button",
+              "title": "Back",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_20"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "Back"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    const container = addToBody(JsonPollock.render(JSON.stringify(conf)));
+    const listContainerRoot = container.children[0];
+    const listRootLayout = container.children[0].children[0];
+    const header = container.children[0].children[0].children[0];
+    const sectionListLayout = container.children[0].children[0].children[1];
+    const buttonListLayout = container.children[0].children[0].children[2];
+    const section1Layout = sectionListLayout.children[0];
+    const section2Layout = sectionListLayout.children[1];
+    const subheader1Layout = section1Layout.children[0];
+    const subheader2Layout = section2Layout.children[0];
+    const checklist1Layout = section1Layout.children[1];
+    const checklist2Layout = section2Layout.children[1];
+
+    it('container element exists', function () {
+      chai.expect(listContainerRoot.className).to.contains('lp-json-pollock');
+    });
+
+    it('list wrapper root exist', function () {
+      chai.expect(listRootLayout.className).to.contains('lp-json-pollock-layout-form');
+    });
+
+    it('header exist', function () {
+      chai.expect(header.className).to.contains('lp-json-pollock-element-text');
+    });
+
+    it('sectionListLayout exist', function () {
+      chai.expect(sectionListLayout.className).to.contains('lp-json-pollock-layout-sectionList');
+    });
+
+    it('buttonListLayout exist', function () {
+      chai.expect(buttonListLayout.className).to.contains('lp-json-pollock-layout-buttonList');
+    });
+
+    it('both sections exist within sectionList', function () {
+      chai.expect(section1Layout.className).to.contains('lp-json-pollock-layout-section');
+      chai.expect(section1Layout.getAttribute('data-section-id')).to.equal('fruits');
+      chai.expect(section2Layout.className).to.contains('lp-json-pollock-layout-section');
+      chai.expect(section2Layout.getAttribute('data-section-id')).to.equal('fruits123');
+    });
+
+    it('both section subheaders exists', function () {
+      chai.expect(subheader1Layout.className).to.contains('lp-json-pollock-element-text');
+      chai.expect(subheader2Layout.className).to.contains('lp-json-pollock-element-text');
+    });
+
+    it('both checklists exists within section', function () {
+      chai.expect(checklist1Layout.className).to.contains('lp-json-pollock-layout-checklist');
+      chai.expect(checklist2Layout.className).to.contains('lp-json-pollock-layout-checklist');
+    });
+
+    it('6 checkboxes exists within checklist', function () {
+      chai.expect(checklist1Layout.children.length).to.equal(3);
+      chai.expect(checklist1Layout.children[0].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[1].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[2].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[0].innerText).to.equal('1');
+      chai.expect(checklist1Layout.children[1].innerText).to.equal('2');
+      chai.expect(checklist1Layout.children[2].innerText).to.equal('3');
+
+      chai.expect(checklist2Layout.children.length).to.equal(3);
+      chai.expect(checklist2Layout.children[0].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist2Layout.children[1].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist2Layout.children[2].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist2Layout.children[0].innerText).to.equal('01');
+      chai.expect(checklist2Layout.children[1].innerText).to.equal('02');
+      chai.expect(checklist2Layout.children[2].innerText).to.equal('03');
+    });
+
+    it('submitButton exist', function () {
+      chai.expect(buttonListLayout.children[0].className).to.contains('lp-json-pollock-element-submit-button');
+      chai.expect(buttonListLayout.children[0].children[0].disabled).to.equal(false);
+    });
+
+    it('button exist', function () {
+      chai.expect(buttonListLayout.children[1].className).to.contains('lp-json-pollock-element-button');
+    });
+  });
+
+  describe('render list with rtl and button disabled', function () {
+
+    var conf = {
+      "type": "list",
+      "elements": [
+        {
+          "type": "text",
+          "text": "The checklist"
+        },
+        {
+          "type": "sectionList",
+          "elements": [
+            {
+              "type": "section",
+              "sectionID": "fruits",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "The subheader"
+                },
+                {
+                  "type": "checklist",
+                  "elements": [
+                    {
+                      "type": "checkbox",
+                      "text": "1",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "rtl": true,
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_35"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "apples"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "2",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "rtl": true,
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_32"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "bananas"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "text": "3",
+                      "borderLine": true,
+                      "borderColor": "#000000",
+                      "rtl": true,
+                      "click": {
+                        "metadata": [
+                          {
+                            "type": "ExternalId",
+                            "id": "ANOTHER_ONE_36"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "checked",
+                            "publishText": "avocados"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "buttonList",
+          "elements": [
+            {
+              "type": "submitButton",
+              "title": "submit",
+              "disabled": true,
+              "rtl": true,
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "submissionID"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "submitAsText",
+                    "submit": true
+                  }
+                ]
+              }
+            },
+            {
+              "type": "button",
+              "title": "Back",
+              "click": {
+                "metadata": [
+                  {
+                    "type": "ExternalId",
+                    "id": "ANOTHER_ONE_20"
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "publishText",
+                    "text": "Back"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    const container = addToBody(JsonPollock.render(JSON.stringify(conf)));
+    const listContainerRoot = container.children[0];
+    const listRootLayout = container.children[0].children[0];
+    const header = container.children[0].children[0].children[0];
+    const sectionListLayout = container.children[0].children[0].children[1];
+    const buttonListLayout = container.children[0].children[0].children[2];
+    const section1Layout = sectionListLayout.children[0];
+    const subheader1Layout = section1Layout.children[0];
+    const checklist1Layout = section1Layout.children[1];
+
+    it('container element exists', function () {
+      chai.expect(listContainerRoot.className).to.contains('lp-json-pollock');
+    });
+
+    it('3 checkboxes exists within checklist with rtl', function () {
+      chai.expect(checklist1Layout.children.length).to.equal(3);
+      chai.expect(checklist1Layout.children[0].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[0].children[1].children[1].className).to.contains('direction-rtl');
+      chai.expect(checklist1Layout.children[0].children[1].children[1].dir).to.equal('rtl');
+      chai.expect(checklist1Layout.children[1].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[1].children[1].children[1].className).to.contains('direction-rtl');
+      chai.expect(checklist1Layout.children[1].children[1].children[1].dir).to.equal('rtl');
+      chai.expect(checklist1Layout.children[2].className).to.contains('lp-json-pollock-element-checkbox');
+      chai.expect(checklist1Layout.children[2].children[1].children[1].className).to.contains('direction-rtl');
+      chai.expect(checklist1Layout.children[2].children[1].children[1].dir).to.equal('rtl');
+      chai.expect(checklist1Layout.children[0].innerText).to.equal('1');
+      chai.expect(checklist1Layout.children[1].innerText).to.equal('2');
+      chai.expect(checklist1Layout.children[2].innerText).to.equal('3');
+    });
+
+    it('submitButton exist with rtl and disabled', function () {
+      chai.expect(buttonListLayout.children[0].className).to.contains('lp-json-pollock-element-submit-button');
+      chai.expect(buttonListLayout.children[0].className).to.contains('direction-rtl');
+      chai.expect(buttonListLayout.children[0].dir).to.equal('rtl');
+      chai.expect(buttonListLayout.children[0].children[0].disabled).to.equal(true);
+    });
+
+  });
+
   describe('border policy', function () {
-    
+
     var rooEl = null;
     var firstLayout = null;
     var secondLayout = null;
@@ -723,7 +1353,7 @@ describe('json-pollock tests', function () {
     }
 
     it('Root vertical and horizontal layout should have a complete border', function () {
-      
+
       var conf1 = {
         "type": "vertical",
         "elements": [{
@@ -745,7 +1375,7 @@ describe('json-pollock tests', function () {
       chai.expect(getStyle(firstLayout, 'border')).to.contain('1px solid');
 
       rooEl = addToBody(JsonPollock.render(JSON.stringify(conf2)));
-      
+
       firstLayout = rooEl.childNodes[0].childNodes[0];
       chai.expect(getStyle(firstLayout, 'border')).to.contain('1px solid');
     });
@@ -764,10 +1394,10 @@ describe('json-pollock tests', function () {
               }]
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
         chai.expect(getStyle(secondLayout, 'border')).to.contain('none');
         chai.expect(getStyle(secondLayout, 'borderLeft')).to.contain('none');
@@ -788,10 +1418,10 @@ describe('json-pollock tests', function () {
               }]
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         secondLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
         chai.expect(getStyle(secondLayout, 'border')).to.contain('none');
         chai.expect(getStyle(secondLayout, 'borderLeft')).to.contain('none');
@@ -817,10 +1447,10 @@ describe('json-pollock tests', function () {
               }
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
         chai.expect(getStyle(simpleEl, 'border')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');
@@ -846,10 +1476,10 @@ describe('json-pollock tests', function () {
               }
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
         chai.expect(getStyle(simpleEl, 'border')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');
@@ -884,17 +1514,17 @@ describe('json-pollock tests', function () {
                       "uri": "http://example.jpg"
                     }]
                   }
-                }    
+                }
               ]
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
         chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('1px solid');
-        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');        
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
       });
@@ -921,13 +1551,13 @@ describe('json-pollock tests', function () {
               }
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
         chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('1px solid');
-        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');        
+        chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
       });
@@ -947,10 +1577,10 @@ describe('json-pollock tests', function () {
               "tooltip": "text tooltip"
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
         chai.expect(getStyle(simpleEl, 'border')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('none');
@@ -962,7 +1592,7 @@ describe('json-pollock tests', function () {
     });
 
     describe('Horizontal layout\'s child with is not the first child should have a left border only', function () {
-      
+
       it('Layout element as second child', function () {
         var conf = {
           "type": "horizontal",
@@ -986,17 +1616,17 @@ describe('json-pollock tests', function () {
                       "uri": "http://example.jpg"
                     }]
                   }
-                }    
+                }
               ]
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
         chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('1px solid');
-        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');        
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
       });
@@ -1023,13 +1653,13 @@ describe('json-pollock tests', function () {
               }
             }
           ]
-        };        
-  
+        };
+
         rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
-  
+
         simpleEl = rooEl.childNodes[0].childNodes[0].childNodes[1];
         chai.expect(getStyle(simpleEl, 'borderLeft')).to.contain('1px solid');
-        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');        
+        chai.expect(getStyle(simpleEl, 'borderTop')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
       });
@@ -1045,14 +1675,14 @@ describe('json-pollock tests', function () {
 
     function singleElementTest(title, conf, assertionClass) {
       it(title + ' element' , function () {
-        
+
         rooEl = addToBody(JsonPollock.render(conf));
-        
-        var wrapdiv = rooEl.childNodes[0];      
+
+        var wrapdiv = rooEl.childNodes[0];
         chai.expect(wrapdiv.localName).to.equal('div');
         chai.expect(wrapdiv.className).to.equal('lp-json-pollock lp-json-pollock-single-element');
         chai.expect(wrapdiv.childNodes.length).to.equal(1);
-  
+
         childEl = wrapdiv.childNodes[0];
         chai.expect(childEl.className).to.contain(assertionClass);
       });
@@ -1109,7 +1739,7 @@ describe('json-pollock tests', function () {
   });
 
   describe('special characters', function () {
-    
+
     var rooEl = null;
     var childEl = null;
 
@@ -1121,7 +1751,7 @@ describe('json-pollock tests', function () {
       }
 
       rooEl = addToBody(JsonPollock.render(conf));
-      
+
       childEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
       chai.expect(childEl.title).to.equal("and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =");
     });
@@ -1133,18 +1763,18 @@ describe('json-pollock tests', function () {
       }
 
       rooEl = addToBody(JsonPollock.render(conf));
-      
+
       childEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
       chai.expect(childEl.innerHTML).to.equal("line1<br>line2");
     });
-    
+
   });
 
   describe('trigger actions', function () {
 
     var rooEl = null;
     var conf = null;
-  
+
     //although most browser can deal with element.click() - phantomjs doesnt for some elements (e.g. img)
     //therefore this prehistoric method is needed
     function createClickEvent() {
@@ -1177,7 +1807,7 @@ describe('json-pollock tests', function () {
             "actions": [{
               "type": "link",
               "name": "add to cart",
-              "uri": "https://example.com"   
+              "uri": "https://example.com"
             }]
           }
         },{
@@ -1309,6 +1939,135 @@ describe('json-pollock tests', function () {
       rooEl.childNodes[0].childNodes[0].childNodes[5].dispatchEvent(event);
       chai.expect(window.open).to.have.not.been.calledWith('https://www.google.com/maps/search/?api=1&query=64.128597,-21.89611');
       chai.expect(spy1).to.have.been.calledWith({actionData: conf.elements[5].click.actions[0], uiEvent: event});
+    });
+
+  });
+
+  describe('trigger actions', function () {
+
+    var rooEl = null;
+    var conf = null;
+
+    //although most browser can deal with element.click() - phantomjs doesnt for some elements (e.g. img)
+    //therefore this prehistoric method is needed
+    function createClickEvent() {
+      var event = document.createEvent('MouseEvents');
+      event.initMouseEvent('click', true, true, window, 1, 0, 0);
+
+      return event;
+    }
+
+    before(function () {
+      conf = {
+        "type": "list",
+        "elements": [
+          {
+            "type": "text",
+            "text": "The checklist"
+          },
+          {
+            "type": "sectionList",
+            "elements": [
+              {
+                "type": "section",
+                "sectionID": "fruits",
+                "elements": [
+                  {
+                    "type": "checklist",
+                    "elements": [
+                      {
+                        "type": "checkbox",
+                        "text": "1",
+                        "borderLine": true,
+                        "borderColor": "#000000",
+                        "click": {
+                          "actions": [
+                            {
+                              "type": "checked",
+                              "publishText": "apples"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "checkbox",
+                        "text": "2",
+                        "borderLine": true,
+                        "borderColor": "#000000",
+                        "click": {
+                          "actions": [
+                            {
+                              "type": "checked",
+                              "publishText": "bananas"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "checkbox",
+                        "text": "3",
+                        "borderLine": true,
+                        "borderColor": "#000000",
+                        "click": {
+                          "actions": [
+                            {
+                              "type": "checked",
+                              "publishText": "avocados"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "buttonList",
+            "elements": [
+              {
+                "type": "submitButton",
+                "title": "submit",
+                "disabled": false,
+                "click": {
+                  "actions": [
+                    {
+                      "type": "submitAsText",
+                      "submit": true
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      };
+
+      rooEl = addToBody(JsonPollock.render(conf));
+    });
+
+    it('Click on checkbox element with checked action should trigger its registered callbacks', function () {
+      var spy = sinon.spy();
+      var event = createClickEvent();
+      JsonPollock.registerAction('checked', spy);
+      rooEl.querySelectorAll('.lp-json-pollock-element-checkbox-input')[0].dispatchEvent(event);
+      chai.expect(spy).to.have.been.calledWith({
+        actionData: conf.elements[1].elements[0].elements[0].elements[0].click.actions[0],
+        uiEvent: event,
+        groupID: conf.elements[1].elements[0].sectionID
+      });
+    });
+
+    it('Click on submit element with checked action should trigger its registered callbacks', function () {
+      var spy = sinon.spy();
+      var event = createClickEvent();
+      JsonPollock.registerAction('submitAsText', spy);
+      rooEl.querySelectorAll('input[type=submit]')[0].dispatchEvent(event);
+      chai.expect(spy).to.have.been.calledWith({
+        actionData: conf.elements[2].elements[0].click.actions[0],
+        uiEvent: event
+      });
     });
 
   });
@@ -1602,16 +2361,288 @@ describe('json-pollock tests', function () {
 
     });
 
-    describe('Unrecognized elements', function () {    
+    describe('list negative tests', function () {
+      var conf = null;
+      beforeEach(function () {
+        conf = {
+          "type": "list",
+          "elements": [
+            {
+              "type": "text",
+              "text": "header"
+            },
+            {
+              "type": "sectionList",
+              "elements": [
+                {
+                  "type": "section",
+                  "sectionID": "fruits",
+                  "elements": [
+                    {
+                      "type": "checklist",
+                      "elements": [
+                        {
+                          "type": "checkbox",
+                          "text": "1",
+                          "borderLine": true,
+                          "borderColor": "#000000",
+                          "click": {
+                            "metadata": [
+                              {
+                                "type": "ExternalId",
+                                "id": "ANOTHER_ONE_35"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "type": "checked",
+                                "publishText": "apples"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "checkbox",
+                          "text": "2",
+                          "borderLine": true,
+                          "borderColor": "#000000",
+                          "click": {
+                            "metadata": [
+                              {
+                                "type": "ExternalId",
+                                "id": "ANOTHER_ONE_32"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "type": "checked",
+                                "publishText": "bananas"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "checkbox",
+                          "text": "3",
+                          "borderLine": true,
+                          "borderColor": "#000000",
+                          "click": {
+                            "metadata": [
+                              {
+                                "type": "ExternalId",
+                                "id": "ANOTHER_ONE_36"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "type": "checked",
+                                "publishText": "avocados"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "buttonList",
+              "elements": [
+                {
+                  "type": "submitButton",
+                  "title": "submit",
+                  "disabled": false,
+                  "click": {
+                    "metadata": [
+                      {
+                        "type": "ExternalId",
+                        "id": "submissionID"
+                      }
+                    ],
+                    "actions": [
+                      {
+                        "type": "submitAsText",
+                        "submit": true
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "button",
+                  "title": "mytitle",
+                  "click": {
+                    "actions": [{
+                      "type": "link",
+                      "uri": "www.example.com"
+                    }]
+                  },
+                  "tooltip": "button tooltip",
+                  "rtl": true
+                }
+              ]
+            }
+          ]
+        }
+      });
+
+      it('list cannot have any random basic elements', function () {
+        var list = {
+          "type": "list",
+          "elements": [
+            {
+              "type": "button",
+              "title": "mytitle",
+              "click": {
+                "actions": [{
+                  "type": "link",
+                  "uri": "www.example.com"
+                }]
+              },
+              "tooltip": "button tooltip",
+              "rtl": true
+            },
+            {
+              "type": "text",
+              "text": "header"
+            }
+          ]
+        };
+
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      function cloneObject(obj) {
+        return JSON.parse(JSON.stringify(obj));
+      }
+
+      it('list must have header', function () {
+        var list = cloneObject(conf);
+        list.elements.splice(0, 1);
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('list elements cannot start with other element except a header', function () {
+        var list = cloneObject(conf);
+        var header = list.elements.splice(0, 1);
+        list.elements.push(header);
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('list elements must have buttonList', function () {
+        var list = cloneObject(conf);
+        list.elements.splice(2, 1);
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('list elements must have sectionList', function () {
+        var list = cloneObject(conf);
+        list.elements.splice(1, 1);
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('sectionList elements cannot have other elements except sections', function () {
+        var list = cloneObject(conf);
+        list.elements[1].elements.push({
+          "type": "text",
+          "text": "hello"
+        });
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('section cannot start without subheaders start if the user wishes to have subheader', function () {
+        var list = cloneObject(conf);
+        list.elements[1].elements[0].elements.push({
+            "type": "text",
+            "text": "foo"
+          });
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('section cannot have other elements besides text and checklist', function () {
+        var list = cloneObject(conf);
+        list.elements[1].elements[0].elements.push({
+          "type": "vertical",
+          "elements": [{
+            "type": "text",
+            "text": "foo"
+          },{
+            "type": "blablabla",
+            "text": "foo"
+          }]
+        });
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('checklist cannot have other elements except checkboxes', function () {
+        var list = cloneObject(conf);
+        list.elements[1].elements[0].elements[0].elements.push({
+          "type": "vertical",
+          "elements": [{
+            "type": "text",
+            "text": "foo"
+          },{
+            "type": "blablabla",
+            "text": "foo"
+          }]
+        });
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('buttonList cannot start with other button besides submitButton', function () {
+        var list = cloneObject(conf);
+        var submitButton = list.elements[2].elements.splice(0, 1);
+        list.elements[2].elements.push(submitButton);
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('buttonList cannot have other elements besides button and submitButton', function () {
+        var list = cloneObject(conf);
+        list.elements[2].elements.push({
+          "type": "vertical",
+          "elements": [{
+            "type": "text",
+            "text": "foo"
+          },{
+            "type": "blablabla",
+            "text": "foo"
+          }]
+        });
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('checkbox cannot have other actions besides checked', function () {
+        var list = cloneObject(conf);
+        list.elements[1].elements[0].elements[0].elements[0].click.actions.push({
+          "type": "navigate",
+          "lo": 2423423423,
+          "la": 7897967267
+        });
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+
+      it('submitButton cannot have other actions besides submitAsText', function () {
+        var list = cloneObject(conf);
+        list.elements[2].elements[0].click.actions.push({
+          "type": "navigate",
+          "lo": 2423423423,
+          "la": 7897967267
+        });
+        chai.expect(JsonPollock.render.bind(JsonPollock, list)).to.throw(SCHEMA_VALIDATION_ERR);
+      });
+    });
+
+    describe('Unrecognized elements', function () {
       it('If element is not recognized an invalid schema error should be triggered', function () {
         var json = {
           "type": "vertical",
-          "elements": [{      
+          "elements": [{
               "type": "text",
-              "text": "foo"            
+              "text": "foo"
           },{
             "type": "blablabla",
-            "text": "foo"            
+            "text": "foo"
           }]
         };
         chai.expect(JsonPollock.render.bind(JsonPollock, json)).to.throw(SCHEMA_VALIDATION_ERR);
@@ -1680,7 +2711,7 @@ describe('json-pollock tests', function () {
                   "lo": 2423423423,
                   "la": "7897967267"
                 }]
-              },              
+              },
               "tooltip": "button tooltip",
               "rtl": true
             }]
@@ -1704,7 +2735,7 @@ describe('json-pollock tests', function () {
                   "type": "link",
                   "uri": "www.example.com"
                 }]
-              },              
+              },
               "tooltip": "button tooltip",
               "rtl": true
             }]
@@ -1755,7 +2786,7 @@ describe('json-pollock tests', function () {
         element.classList.add('my-custom-class');
         return element;
       });
-      
+
       JsonPollock.init({onAfterElementRendered: spy});
       var element = JsonPollock.render(json);
 
@@ -1774,7 +2805,7 @@ describe('json-pollock tests', function () {
         }
         return element;
       });
-      
+
       JsonPollock.init({onAfterElementRendered: spy});
       var element = JsonPollock.render(json);
 

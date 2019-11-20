@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "section",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "section"
+      ],
+      "default": "section",
+      "readonly": true
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "padding": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "sectionID": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "elements": {
+      "oneOf": [
+        {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": [
+            {
+              "$ref": "checklist.json"
+            }
+          ]
+        },
+        {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": [
+            {
+              "$ref": "text.json"
+            },
+            {
+              "$ref": "checklist.json"
+            }
+          ]
+        }
+      ]
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "type",
+    "elements",
+    "sectionID"
+  ]
+}

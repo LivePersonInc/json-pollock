@@ -13,7 +13,16 @@ const TYPES = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
   CAROUSEL: 'carousel',
+  SUBMITBUTTON: 'submitButton',
+  CHECKBOX: 'checkbox',
+  CHECKLIST: 'checklist',
+  LIST: 'list',
+  SECTION: 'section',
+  SECTIONLIST: 'sectionList',
+  BUTTONLIST: 'buttonList',
 };
+
+const DATA_SECTION_ID_ATTR = 'data-section-id';
 
 export default class ElementRendererProvider {
 
@@ -74,6 +83,140 @@ export default class ElementRendererProvider {
       divEl.appendChild(btnEl);
 
       return divEl;
+    });
+
+    this.set(TYPES.SUBMITBUTTON, (config): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-submit-button';
+
+      if (config.rtl) {
+        divEl.dir = 'rtl';
+        Utils.addClass(divEl, 'direction-rtl');
+      }
+
+      const sbtEl = document.createElement('input');
+      sbtEl.type = 'submit';
+      sbtEl.value = Utils.normalizeHtmlText(config.title);
+
+      if (config.disabled) {
+        sbtEl.disabled = true;
+        sbtEl.classList.add('lp-json-pollock-element-submit-button-disabled');
+      }
+      if (config.tooltip) {
+        sbtEl.title = config.tooltip;
+        sbtEl.setAttribute('aria-label', config.tooltip);
+      }
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+        divEl.setAttribute('style', splitedStyle.extractedStyle);
+        sbtEl.style.cssText = splitedStyle.style;
+      }
+
+      if (config.click && config.click.actions) {
+        sbtEl.onclick = this.wrapAction(config.click, true);
+      }
+
+      divEl.appendChild(sbtEl);
+
+      return divEl;
+    });
+
+    this.set(TYPES.CHECKBOX, (config): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-element-checkbox';
+      const checkEl = document.createElement('input');
+      const normalizedText = Utils.normalizeHtmlText(config.text);
+      checkEl.type = 'checkbox';
+      checkEl.className = 'lp-json-pollock-element-checkbox-input';
+
+      const labelEl = document.createElement('label');
+      labelEl.className = 'lp-json-pollock-element-checkbox-label';
+      labelEl.innerHTML += normalizedText;
+      if (config.rtl) {
+        labelEl.dir = 'rtl';
+        Utils.addClass(labelEl, 'direction-rtl');
+      }
+      if (config.tooltip) {
+        labelEl.title = config.tooltip;
+        labelEl.setAttribute('aria-label', config.tooltip);
+      }
+      if (config.style) {
+        labelEl.style.cssText = Utils.styleToCss(config.style);
+      }
+
+      if (config.borderLine) {
+        const borderEl = document.createElement('div');
+        borderEl.className = 'lp-json-pollock-border-element';
+        if (config.borderColor) {
+          borderEl.style.borderColor = config.borderColor;
+        }
+        divEl.appendChild(borderEl);
+      }
+
+      const chkboxWrapdivEl = document.createElement('div');
+      chkboxWrapdivEl.className = 'lp-json-pollock-element-checkbox-wrapper';
+      if (config.rtl) {
+        chkboxWrapdivEl.dir = 'rtl';
+        Utils.addClass(chkboxWrapdivEl, 'direction-rtl');
+      }
+
+      chkboxWrapdivEl.appendChild(checkEl);
+      chkboxWrapdivEl.appendChild(labelEl);
+      divEl.appendChild(chkboxWrapdivEl);
+
+      (divEl: any).afterRender = (elJson, parent) => {
+        const checkBoxEl = divEl.getElementsByTagName('input')[0];
+        if (elJson.click && elJson.click.actions) {
+          checkBoxEl.onclick = this.wrapAction(elJson.click, false,
+            parent.parentElement.getAttribute(DATA_SECTION_ID_ATTR));
+        }
+      };
+      return divEl;
+    });
+
+    this.set(TYPES.CHECKLIST, (config): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout-checklist';
+      if (config.padding) {
+        const padding = config.padding;
+        (divEl: any).style.margin = `${padding / 2}px 0px`;
+      }
+
+      return divEl;
+    });
+
+    this.set(TYPES.SECTION, (config): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout-section';
+
+      if (config.padding) {
+        const padding = config.padding;
+        (divEl: any).style.margin = `${padding / 2}px 0px`;
+      }
+      if (config.sectionID) {
+        divEl.setAttribute(DATA_SECTION_ID_ATTR, config.sectionID);
+      }
+
+      return divEl;
+    });
+
+    this.set(TYPES.SECTIONLIST, (): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout-sectionList';
+      return divEl;
+    });
+
+    this.set(TYPES.BUTTONLIST, (): HTMLElement => {
+      const divEl = document.createElement('div');
+      divEl.className = 'lp-json-pollock-layout-buttonList';
+      return divEl;
+    });
+
+    this.set(TYPES.LIST, (): HTMLElement => {
+      const formEl = document.createElement('form');
+      formEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-form';
+      return formEl;
     });
 
     this.set(TYPES.IMAGE, (config): HTMLElement => {
@@ -312,17 +455,25 @@ export default class ElementRendererProvider {
     this.elements[type] = render;
   }
 
-  wrapAction(clickData: Object): Function {
+  wrapAction(clickData: Object, preventDefault?: boolean, groupID?: String): Function {
     return (event) => {
+      if (preventDefault) {
+        event.preventDefault();
+      }
       if (clickData.actions instanceof Array) {
         clickData.actions.forEach((actionData) => {
+          const dataObj: { [key: string]: any } = {
+            actionData,
+            metadata: clickData.metadata,
+            uiEvent: event,
+          };
+          if (groupID) {
+            dataObj.groupID = groupID;
+          }
+
           this.events.trigger({
             eventName: actionData.type,
-            data: {
-              actionData,
-              metadata: clickData.metadata,
-              uiEvent: event,
-            },
+            data: dataObj,
           });
         });
       }

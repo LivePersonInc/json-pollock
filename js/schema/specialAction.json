@@ -1,0 +1,45 @@
+{
+  "definitions": {
+    "submitAsText": {
+      "title": "Submit As Text",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "submitAsText"
+          ],
+          "default": "submitAsText",
+          "readonly": true
+        },
+        "submit": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "type",
+        "submit"
+      ]
+    },
+    "checked": {
+      "title": "checked",
+      "type": "object",
+      "additionalProperties" : false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["checked"],
+          "default": "checked",
+          "readonly": true
+        },
+        "publishText": {
+          "type": "string",
+          "maxLength": 250
+        }
+      },
+      "required": ["type", "publishText"]
+    }
+  }
+}

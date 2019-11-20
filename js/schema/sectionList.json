@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "sectionList",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "sectionList"
+      ],
+      "default": "sectionList",
+      "readonly": true
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "section.json"
+      }
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "type",
+    "elements"
+  ]
+}

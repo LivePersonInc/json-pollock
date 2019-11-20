@@ -1,0 +1,253 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>SC Test</title>
+      <link rel="stylesheet" href="/dist/json-pollock.min.css">
+    <script src="/dist/json-pollock.js"></script>
+    <script>
+      window.onload = function () {
+
+        var example = {
+                  "type": "list",
+                  "elements": [
+                    {
+                      "type": "text",
+                      "text": "The checklist"
+                    },
+                    {
+                      "type": "sectionList",
+                      "elements": [
+                        {
+                          "type": "section",
+                          "sectionID": "fruits",
+                          "elements": [
+                            {
+                              "type": "text",
+                              "text": "The subheader"
+                            },
+                            {
+                              "type": "checklist",
+                              "elements": [
+                                {
+                                  "type": "checkbox",
+                                  "text": "apple",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_35"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "apples"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "checkbox",
+                                  "text": "banana",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_32"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "bananas"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "checkbox",
+                                  "text": "avocado",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_36"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "avocados"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "section",
+                          "sectionID": "fruits123",
+                          "elements": [
+                            {
+                              "type": "text",
+                              "text": "The subheader2"
+                            },
+                            {
+                              "type": "checklist",
+                              "elements": [
+                                {
+                                  "type": "checkbox",
+                                  "text": "apple1",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_35"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "apples"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "checkbox",
+                                  "text": "banana2",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_32"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "bananas"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "checkbox",
+                                  "text": "avocado3",
+                                  "borderLine": true,
+                                  "borderColor": "#000000",
+                                  "click": {
+                                    "metadata": [
+                                      {
+                                        "type": "ExternalId",
+                                        "id": "ANOTHER_ONE_36"
+                                      }
+                                    ],
+                                    "actions": [
+                                      {
+                                        "type": "checked",
+                                        "publishText": "avocados"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "buttonList",
+                      "elements": [
+                        {
+                          "type": "submitButton",
+                          "title": "submit",
+                          "disabled": false,
+                          "click": {
+                            "metadata": [
+                              {
+                                "type": "ExternalId",
+                                "id": "submissionID"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "type": "submitAsText",
+                                "submit": true
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "title": "Back",
+                          "click": {
+                            "metadata": [
+                              {
+                                "type": "ExternalId",
+                                "id": "ANOTHER_ONE_20"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "type": "publishText",
+                                "text": "Back"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                };
+
+      JsonPollock.registerAction('navigate', function (data) {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('link', function (data) {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('publishText', function (data) {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('checked', function (data) {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('submitAsText', function (data) {
+        alert(JSON.stringify(data));
+      });
+
+      var el = JsonPollock.render(JSON.stringify(example));
+      document.getElementById('content').appendChild(el);
+    }
+  </script>
+</head>
+
+<body>
+  <div id='content'>
+  </div>
+
+</body>
+
+</html>

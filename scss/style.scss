@@ -1,7 +1,7 @@
-/** 
+/**
 *   The following styles are given by the json pollock library
 *   In order to override it use a different css file
-*   PLEASE DO NOT MAKE ANY CHANGE IN THIS FILE 
+*   PLEASE DO NOT MAKE ANY CHANGE IN THIS FILE
 **/
 
 
@@ -63,6 +63,107 @@
 
         > *:first-child {
             border-left: none;
+        }
+    }
+
+    .lp-json-pollock-layout-form {
+        border: none;
+        border-collapse: collapse;
+
+        > .lp-json-pollock-element-text {
+            padding-top: 5%;
+            color: $color-black;
+            font-size: $text-size-large;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .lp-json-pollock-layout-sectionList {
+            .lp-json-pollock-layout-section {
+                border: none;
+                margin-bottom: 1%;
+
+                .lp-json-pollock-element-text {
+                    color: $color-black;
+                    font-size: $text-size-medium-large;
+                    word-wrap: break-word;
+                    word-break: break-word;
+                }
+
+                .lp-json-pollock-layout-checklist {
+                    > .lp-json-pollock-element-checkbox {
+                        > .lp-json-pollock-border-element {
+                            border-top: $default-border;
+                            width: 90%;
+                            margin: 0px 5%;
+                            padding: 0.5px 0px;
+                        }
+
+                        .lp-json-pollock-element-checkbox-wrapper {
+                            padding: 3px 0px;
+
+                            .lp-json-pollock-element-checkbox-label {
+                                padding: 0px 1.5%;
+                                color: $color-black;
+                                font-size: $text-size-medium;
+                                word-wrap: break-word;
+                                word-break: break-word;
+                                display: inline-block;
+                                vertical-align: middle;
+                                width: 85%;
+                            }
+
+                            .lp-json-pollock-element-checkbox-input {
+                                display: inline-block;
+                                vertical-align: middle;
+                                margin-left: 3%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .lp-json-pollock-layout-buttonList {
+            margin: 5%;
+            .lp-json-pollock-element-submit-button, .lp-json-pollock-element-button {
+                margin: 3%;
+                width: 93%;
+                border: $default-border;
+                word-break: break-word;
+                word-wrap: break-word;
+
+                button {
+                    border: none;
+                    background: none;
+                    width: 100%;
+                    min-height: 32px;
+                    margin-bottom: -1px;
+                    text-align: center;
+                    color: $color-blue;
+                    padding: 5px;
+
+                    &:active {
+                        background: $gray7;
+                    }
+                }
+
+                input[type="submit"] {
+                    border: none;
+                    background: none;
+                    width: 100%;
+                    min-height: 32px;
+                    margin-bottom: -1px;
+                    text-align: center;
+                    color: $color-blue;
+                    padding: 5px;
+
+                    &:disabled.lp-json-pollock-element-submit-button-disabled {
+                        background-color: $gray7;
+                        color: $disabled-text-grey;
+                    }
+                }
+            }
         }
     }
 

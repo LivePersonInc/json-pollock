@@ -7,6 +7,10 @@
     {
       "title": "carousel",
       "$ref": "carousel.json"
+    },
+    {
+      "title": "list",
+      "$ref": "list.json"
     }
   ]
 }
