@@ -1332,7 +1332,7 @@ describe('json-pollock tests', function () {
       chai.expect(checklist1Layout.children[2].innerText).to.equal('3');
     });
 
-    it('submitButton exist', function () {
+    it('submitButton exist with rtl and disabled', function () {
       chai.expect(buttonListLayout.children[0].className).to.contains('lp-json-pollock-element-submit-button');
       chai.expect(buttonListLayout.children[0].className).to.contains('direction-rtl');
       chai.expect(buttonListLayout.children[0].dir).to.equal('rtl');
