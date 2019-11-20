@@ -96,7 +96,7 @@ export default class ElementRendererProvider {
 
       const sbtEl = document.createElement('input');
       sbtEl.type = 'submit';
-      sbtEl.innerHTML = Utils.normalizeHtmlText(config.title);
+      sbtEl.value = Utils.normalizeHtmlText(config.title);
 
       if (config.disabled) {
         sbtEl.disabled = true;
