@@ -136,10 +136,10 @@ document.getElementById('container').appendChild(rooEl);
 The *registerAction* function allow to register a callback to a certain action type, as defined in the [spec](https://developers.liveperson.com/structured-content-templates.html).
 ```js
 /**
- * @param {Object} data	callback payload
- * @param {Object} data.actionData action configuration as defined in the json
- * @param {Object=} data.metadata metadata configuration as defined in the json, optional
- * @param {Event=} data.uiEvent UI DOM Event object of the clicked element, optional
+ * @param {Object} 	data	callback payload
+ * @param {Object} 	data.actionData action configuration as defined in the json
+ * @param {Object=} 	data.metadata metadata configuration as defined in the json, optional
+ * @param {Event=} 	data.uiEvent UI DOM Event object of the clicked element, optional
  * @param {String=}	data.groupID reference to section id - curently relevant to checkbox element, optional. 
  **/
 const linkCallback = (data) => {	
