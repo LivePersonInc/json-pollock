@@ -102,7 +102,7 @@
                         }
 
                         .lp-json-pollock-element-checkbox-wrapper {
-                            padding: 3px 0px 3px 8px;
+                            padding: 3px 12px 3px 12px;
 
                             .lp-json-pollock-element-checkbox-label {
                                 padding: 0px 6px;
@@ -111,13 +111,15 @@
                                 word-wrap: break-word;
                                 word-break: break-word;
                                 display: inline-block;
-                                vertical-align: middle;
+                                vertical-align: top;
                                 width: 80%;
                             }
 
                             .lp-json-pollock-element-checkbox-input {
                                 display: inline-block;
-                                vertical-align: middle;
+                                vertical-align: 2px;
+                                font-size: 13px;
+                                margin: 0;
                             }
                         }
                     }
@@ -126,23 +128,19 @@
         }
 
         .lp-json-pollock-layout-buttonList {
-            margin: 5% 30%;
-            width: 80px;
+            margin: 8% 20% 5% 20%;
             .lp-json-pollock-element-submit-button, .lp-json-pollock-element-button {
-                margin: 3% 0%;
-                border: $default-border;
-                width: 93%;
+                margin: 6% 0%;
                 word-break: break-word;
                 word-wrap: break-word;
 
                 button {
-                    border: none;
+                    border: $default-border;
                     background: none;
                     width: 100%;
                     min-height: 32px;
                     text-align: center;
                     color: $color-blue;
-                    padding: 5px;
 
                     &:active {
                         background: $gray7;
@@ -150,13 +148,12 @@
                 }
 
                 input[type="submit"] {
-                    border: none;
+                    border: $default-border;
                     background-color: $color-blue;
                     width: 100%;
                     min-height: 32px;
                     text-align: center;
-                    color: $text-white;
-                    padding: 5px;
+                    color: $color-white;
 
                     &:disabled.lp-json-pollock-element-submit-button-disabled {
                         background-color: $gray7;
