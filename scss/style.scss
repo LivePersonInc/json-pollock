@@ -112,13 +112,15 @@
                                 word-break: break-word;
                                 display: inline-block;
                                 vertical-align: top;
-                                width: 80%;
+                                width: 90%;
                             }
 
                             .lp-json-pollock-element-checkbox-input {
                                 display: inline-block;
-                                vertical-align: 2px;
+                                vertical-align: 1.5px;
                                 font-size: 13px;
+                                width: 13px;
+                                height: 13px;
                                 margin: 0;
                             }
                         }
@@ -129,23 +131,10 @@
 
         .lp-json-pollock-layout-buttonList {
             margin: 8% 20% 5% 20%;
-            .lp-json-pollock-element-submit-button, .lp-json-pollock-element-button {
+            .lp-json-pollock-element-submit-button {
                 margin: 6% 0%;
                 word-break: break-word;
                 word-wrap: break-word;
-
-                button {
-                    border: $default-border;
-                    background: none;
-                    width: 100%;
-                    min-height: 32px;
-                    text-align: center;
-                    color: $color-blue;
-
-                    &:active {
-                        background: $gray7;
-                    }
-                }
 
                 input[type="submit"] {
                     border: $default-border;
@@ -158,6 +147,26 @@
                     &:disabled.lp-json-pollock-element-submit-button-disabled {
                         background-color: $gray7;
                         color: $disabled-text-grey;
+                    }
+                }
+            }
+
+            .lp-json-pollock-element-button {
+                margin: 6% 0%;
+                word-break: break-word;
+                word-wrap: break-word;
+
+                button {
+                    border: $default-border;
+                    background: none;
+                    width: 100%;
+                    min-height: 32px;
+                    text-align: center;
+                    color: $color-blue;
+                    padding: 0px;
+
+                    &:active {
+                        background: $gray7;
                     }
                 }
             }
