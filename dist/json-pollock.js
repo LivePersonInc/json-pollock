@@ -7877,7 +7877,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.3.1';
+var version = '1.3.2';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
