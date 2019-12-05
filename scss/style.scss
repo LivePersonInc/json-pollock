@@ -72,6 +72,7 @@
 
         > .lp-json-pollock-element-text {
             padding-top: 5%;
+            padding-left: 12px;
             color: $color-black;
             font-size: $text-size-large;
             word-wrap: break-word;
@@ -84,8 +85,9 @@
                 margin-bottom: 1%;
 
                 .lp-json-pollock-element-text {
+                    padding-left: 12px;
                     color: $color-black;
-                    font-size: $text-size-medium-large;
+                    font-size: $text-size-medium;
                     word-wrap: break-word;
                     word-break: break-word;
                 }
@@ -100,23 +102,26 @@
                         }
 
                         .lp-json-pollock-element-checkbox-wrapper {
-                            padding: 3px 0px;
+                            padding: 3px 12px 3px 12px;
 
                             .lp-json-pollock-element-checkbox-label {
-                                padding: 0px 1.5%;
+                                padding: 0px 6px;
                                 color: $color-black;
                                 font-size: $text-size-medium;
                                 word-wrap: break-word;
                                 word-break: break-word;
                                 display: inline-block;
-                                vertical-align: middle;
+                                vertical-align: top;
                                 width: 85%;
                             }
 
                             .lp-json-pollock-element-checkbox-input {
                                 display: inline-block;
-                                vertical-align: middle;
-                                margin-left: 3%;
+                                vertical-align: 1.5px;
+                                font-size: 13px;
+                                width: 13px;
+                                height: 13px;
+                                margin: 0;
                             }
                         }
                     }
@@ -125,42 +130,43 @@
         }
 
         .lp-json-pollock-layout-buttonList {
-            margin: 5%;
-            .lp-json-pollock-element-submit-button, .lp-json-pollock-element-button {
-                margin: 3%;
-                width: 93%;
-                border: $default-border;
+            margin: 8% 20% 5% 20%;
+            .lp-json-pollock-element-submit-button {
+                margin: 6% 0%;
                 word-break: break-word;
                 word-wrap: break-word;
 
-                button {
-                    border: none;
-                    background: none;
-                    width: 100%;
-                    min-height: 32px;
-                    margin-bottom: -1px;
-                    text-align: center;
-                    color: $color-blue;
-                    padding: 5px;
-
-                    &:active {
-                        background: $gray7;
-                    }
-                }
-
                 input[type="submit"] {
-                    border: none;
-                    background: none;
+                    border: $default-border;
+                    background-color: $color-blue;
                     width: 100%;
                     min-height: 32px;
-                    margin-bottom: -1px;
                     text-align: center;
-                    color: $color-blue;
-                    padding: 5px;
+                    color: $color-white;
 
                     &:disabled.lp-json-pollock-element-submit-button-disabled {
                         background-color: $gray7;
                         color: $disabled-text-grey;
+                    }
+                }
+            }
+
+            .lp-json-pollock-element-button {
+                margin: 6% 0%;
+                word-break: break-word;
+                word-wrap: break-word;
+
+                button {
+                    border: $default-border;
+                    background: none;
+                    width: 100%;
+                    min-height: 32px;
+                    text-align: center;
+                    color: $color-blue;
+                    padding: 0px;
+
+                    &:active {
+                        background: $gray7;
                     }
                 }
             }
