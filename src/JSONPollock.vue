@@ -159,6 +159,7 @@ export default {
         .lp-json-pollock {
           border: solid;
           border-color: #3883fa;
+          padding: 2px;
 
           .playground_el {
             position: relative;
