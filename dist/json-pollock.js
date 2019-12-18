@@ -6672,9 +6672,6 @@ var ElementRendererProvider = function () {
         labelEl.title = config.tooltip;
         labelEl.setAttribute('aria-label', config.tooltip);
       }
-      if (config.style) {
-        labelEl.style.cssText = _Utils2.default.styleToCss(config.style);
-      }
 
       if (config.borderLine) {
         var borderEl = document.createElement('div');
@@ -6690,6 +6687,12 @@ var ElementRendererProvider = function () {
       if (config.rtl) {
         chkboxWrapdivEl.dir = 'rtl';
         _Utils2.default.addClass(chkboxWrapdivEl, 'direction-rtl');
+      }
+      if (config.style) {
+        var style = _Utils2.default.styleToCss(config.style);
+        var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
+        labelEl.style.cssText = style;
+        chkboxWrapdivEl.setAttribute('style', splitedStyle.extractedStyle);
       }
 
       chkboxWrapdivEl.appendChild(checkEl);
@@ -7877,7 +7880,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.3.2';
+var version = '1.3.3';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
