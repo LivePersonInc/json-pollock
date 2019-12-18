@@ -135,10 +135,11 @@
                 margin: 6% 0%;
                 word-break: break-word;
                 word-wrap: break-word;
+                background-color: $color-blue;
 
                 input[type="submit"] {
                     border: $default-border;
-                    background-color: $color-blue;
+                    background: none;
                     width: 100%;
                     min-height: 32px;
                     text-align: center;

@@ -141,9 +141,6 @@ export default class ElementRendererProvider {
         labelEl.title = config.tooltip;
         labelEl.setAttribute('aria-label', config.tooltip);
       }
-      if (config.style) {
-        labelEl.style.cssText = Utils.styleToCss(config.style);
-      }
 
       if (config.borderLine) {
         const borderEl = document.createElement('div');
@@ -159,6 +156,12 @@ export default class ElementRendererProvider {
       if (config.rtl) {
         chkboxWrapdivEl.dir = 'rtl';
         Utils.addClass(chkboxWrapdivEl, 'direction-rtl');
+      }
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+        labelEl.style.cssText = style;
+        chkboxWrapdivEl.setAttribute('style', splitedStyle.extractedStyle);
       }
 
       chkboxWrapdivEl.appendChild(checkEl);
