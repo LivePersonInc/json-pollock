@@ -1807,7 +1807,8 @@ describe('json-pollock tests', function () {
             "actions": [{
               "type": "link",
               "name": "add to cart",
-              "uri": "https://example.com"
+              "uri": "https://example.com",
+              "target": "slideout"
             }]
           }
         },{
@@ -1943,7 +1944,7 @@ describe('json-pollock tests', function () {
 
   });
 
-  describe('trigger actions', function () {
+  describe('trigger actions #2 - checkbox & submit button', function () {
 
     var rooEl = null;
     var conf = null;
@@ -2109,7 +2110,8 @@ describe('json-pollock tests', function () {
             "actions": [{
               "type": "link",
               "name": "add to cart",
-              "uri": "http://example.jpg"
+              "uri": "http://example.jpg",
+              "target": "self"
             }]
           },
           "style": {

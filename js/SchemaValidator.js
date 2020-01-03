@@ -19,6 +19,7 @@ import sectionSchema from './schema/section.json';
 import sectionListSchema from './schema/sectionList.json';
 import specialActionSchema from './schema/specialAction.json';
 import buttonListSchema from './schema/buttonList.json';
+import keyValuePairSchema from './schema/keyValuePair.json';
 
 export default class SchemaValidator {
 
@@ -46,6 +47,7 @@ export default class SchemaValidator {
     ajv.addSchema(sectionListSchema, 'sectionList.json');
     ajv.addSchema(buttonListSchema, 'buttonList.json');
     ajv.addSchema(specialActionSchema, 'specialAction.json');
+    ajv.addSchema(keyValuePairSchema, 'keyValuePair.json');
     this.jsonValidator = ajv.compile(richContentSchema);
   }
 

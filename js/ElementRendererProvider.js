@@ -486,7 +486,7 @@ export default class ElementRendererProvider {
 
   wrapAction(clickData: Object, preventDefault?: boolean, groupID?: String): Function {
     return (event, extElementPtr) => {
-      if (preventDefault) {
+      if (preventDefault && event && event.preventDefault) {
         event.preventDefault();
       }
       if (clickData.actions instanceof Array) {
