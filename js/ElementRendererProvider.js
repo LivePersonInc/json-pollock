@@ -485,7 +485,7 @@ export default class ElementRendererProvider {
   }
 
   wrapAction(clickData: Object, preventDefault?: boolean, groupID?: String): Function {
-    return (event, extElementPtr) => {
+    return (event, formEl) => {
       if (preventDefault && event && event.preventDefault) {
         event.preventDefault();
       }
@@ -499,8 +499,8 @@ export default class ElementRendererProvider {
           if (groupID) {
             dataObj.groupID = groupID;
           }
-          if (extElementPtr) {
-            dataObj.extElementPtr = extElementPtr;
+          if (formEl) {
+            dataObj.formEl = formEl;
           }
 
           this.events.trigger({
