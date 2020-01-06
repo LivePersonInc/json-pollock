@@ -1161,6 +1161,7 @@ describe('json-pollock tests', function () {
 
     it('button exist', function () {
       chai.expect(buttonListLayout.children[1].className).to.contains('lp-json-pollock-element-button');
+      chai.expect(buttonListLayout.children[1].children[0].type).to.equal('button');
     });
   });
 
@@ -2056,7 +2057,8 @@ describe('json-pollock tests', function () {
       chai.expect(spy).to.have.been.calledWith({
         actionData: conf.elements[1].elements[0].elements[0].elements[0].click.actions[0],
         uiEvent: event,
-        groupID: conf.elements[1].elements[0].sectionID
+        groupID: conf.elements[1].elements[0].sectionID,
+        formEl: rooEl.children[0].children[0]
       });
     });
 
@@ -2067,7 +2069,8 @@ describe('json-pollock tests', function () {
       rooEl.querySelectorAll('input[type=submit]')[0].dispatchEvent(event);
       chai.expect(spy).to.have.been.calledWith({
         actionData: conf.elements[2].elements[0].click.actions[0],
-        uiEvent: event
+        uiEvent: event,
+        formEl: rooEl.children[0].children[0]
       });
     });
 

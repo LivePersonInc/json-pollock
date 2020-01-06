@@ -141,6 +141,7 @@ The *registerAction* function allow to register a callback to a certain action t
  * @param {Object=} data.metadata metadata configuration as defined in the json, optional
  * @param {Event=} data.uiEvent UI DOM Event object of the clicked element, optional
  * @param {String=} data.groupID reference to section id - curently relevant to checkbox element, optional. 
+ * @param {DOMElement=} data.formEl reference to the associated form element, optional
  **/
 const linkCallback = (data) => {	
   window.open(data.actionData.uri,"_blank");

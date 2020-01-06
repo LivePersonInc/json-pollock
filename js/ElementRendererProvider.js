@@ -219,6 +219,32 @@ export default class ElementRendererProvider {
     this.set(TYPES.LIST, (): HTMLElement => {
       const formEl = document.createElement('form');
       formEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-form';
+      (formEl: any).afterRender = () => {
+        const allInputElArr = formEl.querySelectorAll('input');
+        if (allInputElArr.length > 0) {
+          for (let i = 0; i < allInputElArr.length; i += 1) {
+            const inputEl = allInputElArr[i];
+            if (inputEl.onclick) {
+              const funcToCall = inputEl.onclick;
+              inputEl.onclick = (event) => {
+                funcToCall.call(this, event, formEl);
+              };
+            }
+          }
+        }
+
+        // in form, the type button needs to be added so that the browser does not
+        // interpret button elements as submit button and trigger page refresh
+        const allBtnElArr = formEl.querySelectorAll('button');
+        if (allBtnElArr.length > 0) {
+          for (let i = 0; i < allBtnElArr.length; i += 1) {
+            const btnEl = allBtnElArr[i];
+            if (!btnEl.getAttribute('type')) {
+              btnEl.setAttribute('type', 'button');
+            }
+          }
+        }
+      };
       return formEl;
     });
 
@@ -459,7 +485,7 @@ export default class ElementRendererProvider {
   }
 
   wrapAction(clickData: Object, preventDefault?: boolean, groupID?: String): Function {
-    return (event) => {
+    return (event, formEl) => {
       if (preventDefault && event && event.preventDefault) {
         event.preventDefault();
       }
@@ -472,6 +498,9 @@ export default class ElementRendererProvider {
           };
           if (groupID) {
             dataObj.groupID = groupID;
+          }
+          if (formEl) {
+            dataObj.formEl = formEl;
           }
 
           this.events.trigger({
