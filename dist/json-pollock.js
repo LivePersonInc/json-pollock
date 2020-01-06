@@ -6749,6 +6749,34 @@ var ElementRendererProvider = function () {
     this.set(TYPES.LIST, function () {
       var formEl = document.createElement('form');
       formEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-form';
+      formEl.afterRender = function () {
+        var allInputElArr = formEl.querySelectorAll('input');
+        if (allInputElArr.length > 0) {
+          for (var i = 0; i < allInputElArr.length; i += 1) {
+            var inputEl = allInputElArr[i];
+            if (inputEl.onclick) {
+              (function () {
+                var funcToCall = inputEl.onclick;
+                inputEl.onclick = function (event) {
+                  funcToCall.call(_this, event, formEl);
+                };
+              })();
+            }
+          }
+        }
+
+        // in form, the type button needs to be added so that the browser does not
+        // interpret button elements as submit button and trigger page refresh
+        var allBtnElArr = formEl.querySelectorAll('button');
+        if (allBtnElArr.length > 0) {
+          for (var _i = 0; _i < allBtnElArr.length; _i += 1) {
+            var btnEl = allBtnElArr[_i];
+            if (!btnEl.getAttribute('type')) {
+              btnEl.setAttribute('type', 'button');
+            }
+          }
+        }
+      };
       return formEl;
     });
 
@@ -6991,7 +7019,7 @@ var ElementRendererProvider = function () {
     value: function wrapAction(clickData, preventDefault, groupID) {
       var _this2 = this;
 
-      return function (event) {
+      return function (event, formEl) {
         if (preventDefault && event && event.preventDefault) {
           event.preventDefault();
         }
@@ -7004,6 +7032,9 @@ var ElementRendererProvider = function () {
             };
             if (groupID) {
               dataObj.groupID = groupID;
+            }
+            if (formEl) {
+              dataObj.formEl = formEl;
             }
 
             _this2.events.trigger({
@@ -7880,7 +7911,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
-var version = '1.3.3';
+var version = '1.3.4';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
