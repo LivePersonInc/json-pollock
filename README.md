@@ -163,6 +163,18 @@ The *unregisterAllActions* function allow to unregister all callbacks to all act
 JsonPollock.unregisterAllActions();
 ```
 
+**validate**
+
+The *validate* function allow check if a given JSON is a valid for rendering, if validation fails it will thorw an Error (see [Error Handling](#error-handling))
+
+Note that this function is availble on the **No validation** build
+```js
+/**
+ * @parame {Object} json JSON object
+ * */
+JsonPollock.validate(json);
+```
+
 Error Handling
 -------
 *JsonPollock.render()* will throw an Error if it fails from any reason, the error object will have a *message* property that will give the error description.

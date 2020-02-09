@@ -1639,6 +1639,9 @@ module.exports = function generate_validate(it, $keyword, $ruleType) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var LAYOUT_TYPES = ['vertical', 'horizontal', 'carousel'];
 
 exports.default = {
@@ -1711,6 +1714,9 @@ exports.default = {
   },
   isString: function isString(val) {
     return val instanceof String || typeof val === 'string';
+  },
+  isObject: function isObject(val) {
+    return val !== null && (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object';
   },
   isLayout: function isLayout(type) {
     return LAYOUT_TYPES.indexOf(type) >= 0;
@@ -2189,12 +2195,7 @@ var JsonPollock = function () {
       } else {
         jsonObj = json;
       }
-      if (this.schemaValidator) {
-        var validation = this.schemaValidator.validate(jsonObj);
-        if (!validation.valid) {
-          throw new JsonPollockError('Schema validation error, see \'errors\' for more details', validation.errors);
-        }
-      }
+      this.validate(jsonObj);
       var frag = document.createDocumentFragment();
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock';
@@ -2204,6 +2205,20 @@ var JsonPollock = function () {
       frag.appendChild(divEl);
       this.renderElement(jsonObj, divEl);
       return frag;
+    }
+  }, {
+    key: 'validate',
+    value: function validate(json) {
+      if (_Utils2.default.isObject(json)) {
+        if (this.schemaValidator) {
+          var validation = this.schemaValidator.validate(json);
+          if (!validation.valid) {
+            throw new JsonPollockError('Schema validation error, see \'errors\' for more details', validation.errors);
+          }
+        }
+      } else {
+        throw new JsonPollockError('JsonPollock::validte - input is not an object');
+      }
     }
   }, {
     key: 'registerAction',
@@ -7884,7 +7899,7 @@ exports.encode = exports.stringify = __webpack_require__(73);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TEMPLATE_TYPES = exports.version = exports.unregisterAllActions = exports.unregisterAction = exports.registerAction = exports.render = exports.init = undefined;
+exports.TEMPLATE_TYPES = exports.version = exports.validate = exports.unregisterAllActions = exports.unregisterAction = exports.registerAction = exports.render = exports.init = undefined;
 
 var _style = __webpack_require__(16);
 
@@ -7911,6 +7926,7 @@ var render = instance.render.bind(instance);
 var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
+var validate = instance.validate.bind(instance);
 var version = '1.3.4';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
@@ -7919,6 +7935,7 @@ exports.render = render;
 exports.registerAction = registerAction;
 exports.unregisterAction = unregisterAction;
 exports.unregisterAllActions = unregisterAllActions;
+exports.validate = validate;
 exports.version = version;
 exports.TEMPLATE_TYPES = TEMPLATE_TYPES;
 
