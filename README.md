@@ -167,7 +167,7 @@ JsonPollock.unregisterAllActions();
 
 The *validate* function allow check if a given JSON is a valid for rendering, if validation fails it will thorw an Error (see [Error Handling](#error-handling))
 
-Note that this function is availble on the **No validation** build
+Note that this function is not availble on the **No validation** build
 ```js
 /**
  * @parame {Object} json JSON object
