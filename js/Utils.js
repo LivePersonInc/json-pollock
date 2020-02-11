@@ -75,6 +75,10 @@ export default {
     return (val instanceof String || typeof val === 'string');
   },
 
+  isObject(val: any): boolean {
+    return (val !== null && typeof val === 'object');
+  },
+
   isLayout(type: string) {
     return LAYOUT_TYPES.indexOf(type) >= 0;
   },

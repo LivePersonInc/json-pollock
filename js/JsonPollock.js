@@ -86,12 +86,7 @@ export default class JsonPollock {
     } else {
       jsonObj = (json: any);
     }
-    if (this.schemaValidator) {
-      const validation = this.schemaValidator.validate(jsonObj);
-      if (!validation.valid) {
-        throw new JsonPollockError('Schema validation error, see \'errors\' for more details', validation.errors);
-      }
-    }
+    this.validate(jsonObj);
     const frag = document.createDocumentFragment();
     const divEl = document.createElement('div');
     divEl.className = 'lp-json-pollock';
@@ -101,6 +96,19 @@ export default class JsonPollock {
     frag.appendChild(divEl);
     this.renderElement(jsonObj, divEl);
     return frag;
+  }
+
+  validate(json: Object) {
+    if (Utils.isObject(json)) {
+      if (this.schemaValidator) {
+        const validation = this.schemaValidator.validate(json);
+        if (!validation.valid) {
+          throw new JsonPollockError('Schema validation error, see \'errors\' for more details', validation.errors);
+        }
+      }
+    } else {
+      throw new JsonPollockError('JsonPollock::validte - input is not an object');
+    }
   }
 
   registerAction(actionName: string, callback: Function) {

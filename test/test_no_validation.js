@@ -1,14 +1,17 @@
 
 describe('json-pollock tests - no validation bundle', function () {
 
-  var pollockContainer = document.createElement('div');
-  document.body.appendChild(pollockContainer);
+  it('should expose public function except of validate', function () {
+    chai.expect(JsonPollock.init).to.exist;
+    chai.expect(JsonPollock.render).to.exist;
+    chai.expect(JsonPollock.registerAction).to.exist;
+    chai.expect(JsonPollock.unregisterAction).to.exist;
+    chai.expect(JsonPollock.unregisterAllActions).to.exist;
+    chai.expect(JsonPollock.version).to.exist;
+    chai.expect(JsonPollock.TEMPLATE_TYPES).to.exist;
 
-  function addToBody(element) {
-    pollockContainer.innerHTML = "";
-    pollockContainer.appendChild(element);
-    return pollockContainer;
-  }
+    chai.expect(JsonPollock.validate).not.to.exist;
+  });
 
   describe('Wrong schema tests should not trigger validation error', function () {
 

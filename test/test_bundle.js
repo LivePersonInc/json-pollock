@@ -77,6 +77,17 @@ describe('json-pollock tests', function () {
       chai.expect(fragEl).to.be.instanceOf(DocumentFragment);
     });
 
+    it('should expose public function', function () {
+      chai.expect(JsonPollock.init).to.exist;
+      chai.expect(JsonPollock.render).to.exist;
+      chai.expect(JsonPollock.registerAction).to.exist;
+      chai.expect(JsonPollock.unregisterAction).to.exist;
+      chai.expect(JsonPollock.unregisterAllActions).to.exist;
+      chai.expect(JsonPollock.version).to.exist;
+      chai.expect(JsonPollock.validate).to.exist;
+      chai.expect(JsonPollock.TEMPLATE_TYPES).to.exist;
+    });
+
     it('All rendered elements should be wrapped with a div with a \'lp-json-pollock\' class', function () {
       chai.expect(rooEl.childNodes.length).to.equal(1);
       chai.expect(rooEl.childNodes[0].localName).to.equal('div');
@@ -2818,5 +2829,42 @@ describe('json-pollock tests', function () {
     });
 
   });
+
+  describe('validate function', function () {
+
+    var SCHEMA_VALIDATION_ERR = 'Schema validation error, see \'errors\' for more details';
+    var SCHEMA_VALIDATION_INPT_ERR = 'JsonPollock::validte - input is not an object';
+
+    it('expect validate function not to throw error for valid json', function () {
+      var jsonOK = {
+        "type": "text",
+        "text": "product name (Title)",
+        "tooltip": "text tooltip"
+      };
+
+      chai.expect(JsonPollock.validate.bind(JsonPollock, jsonOK)).to.not.throw(SCHEMA_VALIDATION_ERR);
+    });
+
+    it('expect validate function to throw error for non valid json', function () {
+      
+      var jsonBAD = {
+        "type": "text",        
+        "tooltip": "text tooltip"
+      };
+      
+      chai.expect(JsonPollock.validate.bind(JsonPollock, jsonBAD)).to.throw(SCHEMA_VALIDATION_ERR);
+    });
+
+    it('expect validate function to throw error non json input', function () {
+      
+      var jsonBAD = JSON.stringify({
+        "type": "text",        
+        "tooltip": "text tooltip"
+      });
+      
+      chai.expect(JsonPollock.validate.bind(JsonPollock, jsonBAD)).to.throw(SCHEMA_VALIDATION_INPT_ERR);
+    });
+
+  })
 
 });

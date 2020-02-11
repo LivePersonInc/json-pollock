@@ -13,6 +13,7 @@ const render = instance.render.bind(instance);
 const registerAction = instance.registerAction.bind(instance);
 const unregisterAction = instance.unregisterAction.bind(instance);
 const unregisterAllActions = instance.unregisterAllActions.bind(instance);
+const validate = instance.validate.bind(instance);
 const version = '@@VERSION';
 const TEMPLATE_TYPES = JsonPollock.TEMPLATE_TYPES;
 
@@ -22,6 +23,7 @@ export {
   registerAction,
   unregisterAction,
   unregisterAllActions,
+  validate,
   version,
   TEMPLATE_TYPES,
 };
