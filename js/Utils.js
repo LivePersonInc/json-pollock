@@ -129,4 +129,9 @@ export default {
       el.className = el.className.replace(reg, ' '); // eslint-disable-line no-param-reassign
     }
   },
+
+  generateRandomId() {
+    return Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
+  },
 };
