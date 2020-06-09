@@ -123,16 +123,19 @@ export default class ElementRendererProvider {
     });
 
     this.set(TYPES.CHECKBOX, (config): HTMLElement => {
+      const randomId = Utils.generateRandomId();
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-checkbox';
       const checkEl = document.createElement('input');
       const normalizedText = Utils.normalizeHtmlText(config.text);
       checkEl.type = 'checkbox';
       checkEl.className = 'lp-json-pollock-element-checkbox-input';
+      checkEl.id = randomId;
 
       const labelEl = document.createElement('label');
       labelEl.className = 'lp-json-pollock-element-checkbox-label';
       labelEl.innerHTML += normalizedText;
+      labelEl.setAttribute('for', randomId);
       if (config.rtl) {
         labelEl.dir = 'rtl';
         Utils.addClass(labelEl, 'direction-rtl');
@@ -181,6 +184,7 @@ export default class ElementRendererProvider {
     this.set(TYPES.CHECKLIST, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout-checklist';
+      divEl.setAttribute('role', 'group');
       if (config.padding) {
         const padding = config.padding;
         (divEl: any).style.margin = `${padding / 2}px 0px`;
