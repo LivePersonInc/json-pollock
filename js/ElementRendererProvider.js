@@ -338,6 +338,18 @@ export default class ElementRendererProvider {
       const divCarouselWrapper = document.createElement('div');
       const carousel = document.createElement('div');
       const carouselOffsetChangedEventName = 'carouselOffsetChange';
+
+      function getCardWidth() {
+        let cardWidth = CARD_DEFAULT_WIDTH;
+        const CARDS = carousel.getElementsByClassName('lp-json-pollock-layout');
+
+        if (CARDS.length > 0) {
+          let style = window.getComputedStyle(CARDS[0]);
+          cardWidth = CARDS[0].getBoundingClientRect().width + parseInt(style.marginLeft) + parseInt(style.marginRight);
+        }
+
+        return cardWidth;
+      }
       function rightArrowClicked(event) {
         currentPos = 0;
         if (nextLeft === 0) {
@@ -354,14 +366,14 @@ export default class ElementRendererProvider {
           currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
         }
         /* when click on the right arrow the carousel div will shift to the left */
-        nextLeft = currentPos - CARD_DEFAULT_WIDTH - (padding) - BORDER_WIDTH;
+        nextLeft = currentPos - getCardWidth();
+
         (arrowLeft: any).style.visibility = 'visible';
         (arrowRight: any).style.visibility = 'visible';
         /* check if the the viewport width is bigger then the carousel width + the next "Left"
          * value => shift the carousel div to its rightest point */
         if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
-          nextLeft = -((carousel.offsetWidth + padding)
-            - divCarouselWrapper.offsetWidth);
+          nextLeft = -((carousel.offsetWidth + padding) - divCarouselWrapper.offsetWidth);
           (arrowRight: any).style.visibility = 'hidden';
         }
         (carousel: any).style.left = `${nextLeft}px`;
@@ -371,7 +383,8 @@ export default class ElementRendererProvider {
         if ((carousel: any).style.left !== '') {
           currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
         }
-        nextLeft = currentPos + CARD_DEFAULT_WIDTH + padding + BORDER_WIDTH;
+
+        nextLeft = currentPos + getCardWidth();
         (arrowRight: any).style.visibility = 'visible';
         if (nextLeft >= 0) {
           nextLeft = 0;
@@ -402,6 +415,7 @@ export default class ElementRendererProvider {
         divCarouselWrapper.scrollLeft = 0;
         const divCarouselWrapperBoundaries = divCarouselWrapper.getBoundingClientRect();
         const cardBoundaries = cardRoot.getBoundingClientRect();
+        debugger;
         // check if the container card is Exceeding the carousel wrapper.
         if (divCarouselWrapperBoundaries.left > cardBoundaries.left) {
           leftArrowClicked.call(this, event);
