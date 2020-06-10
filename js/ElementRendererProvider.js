@@ -343,6 +343,11 @@ export default class ElementRendererProvider {
         }
         nextLeft = `-${cards[carouselItemIndex].offsetLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
 
+        // Right align the last card in the carousel
+        if (carouselItemIndex === cards.length - 1) {
+          nextLeft = `-${cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)}px`;
+        }
+
         if (this && this.events) {
           this.events.trigger({
             eventName: carouselOffsetChangedEventName,
