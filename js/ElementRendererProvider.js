@@ -335,11 +335,10 @@ export default class ElementRendererProvider {
       const carousel = document.createElement('div');
       const carouselOffsetChangedEventName = 'carouselOffsetChange';
       let carouselItemIndex = 0;
-      let cards = undefined;
+      let cards;
 
       function setShowingCard(event) {
         if (!cards || !cards[carouselItemIndex]) {
-          console.error("cards or carouselItemIndex not found");
           return;
         }
         nextLeft = `-${cards[carouselItemIndex].offsetLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
@@ -356,8 +355,8 @@ export default class ElementRendererProvider {
         }
 
         (carousel: any).style.left = nextLeft;
-        (arrowRight: any).style.visibility = carouselItemIndex >= cards.length - 1 ? 'hidden': 'visible';
-        (arrowLeft: any).style.visibility = carouselItemIndex <= 0 ? 'hidden': 'visible';
+        (arrowRight: any).style.visibility = carouselItemIndex >= cards.length - 1 ? 'hidden' : 'visible';
+        (arrowLeft: any).style.visibility = carouselItemIndex <= 0 ? 'hidden' : 'visible';
       }
       function rightArrowClicked(event) {
         carouselItemIndex += 1;
@@ -376,17 +375,16 @@ export default class ElementRendererProvider {
       function cardFocus(event) {
         const element = event.target;
         const cardRoot = findCardRoot(element);
-        const cardIndex = cardRoot.getAttribute("data-carousel-index");
+        const cardIndex = cardRoot.getAttribute('data-carousel-index');
 
         if (!cardIndex) {
-          console.error('root element does not have an index');
           return;
         }
 
         divCarouselWrapper.scrollLeft = 0;
         // if the currently focused card is not the carouselItem being shown, show the focused card
-        if (cardIndex && carouselItemIndex !== parseInt(cardIndex)) {
-          carouselItemIndex = parseInt(cardIndex);
+        if (cardIndex && carouselItemIndex !== parseInt(cardIndex, 10)) {
+          carouselItemIndex = parseInt(cardIndex, 10);
           setShowingCard.call(this, event);
         }
       }
@@ -399,7 +397,7 @@ export default class ElementRendererProvider {
             // add card focus event
             (node: any).addEventListener('focus', cardFocus.bind(this), true);
             (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
-            (node: any).setAttribute("data-carousel-index", itemCounter);   // Add an index reference for faster lookup on focus changes
+            (node: any).setAttribute('data-carousel-index', itemCounter);   // Add an index reference for faster lookup on focus changes
           }
 
           arrowRight.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow';
@@ -425,7 +423,7 @@ export default class ElementRendererProvider {
               (arrowLeft: any).style.visibility = 'hidden';
               (arrowRight: any).style.visibility = 'hidden';
             }
-            //Set up card reference for carousel
+            // Set up card reference for carousel
             cards = carousel.getElementsByClassName('lp-json-pollock-layout');
           }, 0);
           arrowRight.onclick = (event) => {
