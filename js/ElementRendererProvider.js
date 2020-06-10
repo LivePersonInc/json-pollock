@@ -356,8 +356,8 @@ export default class ElementRendererProvider {
         }
 
         (carousel: any).style.left = nextLeft;
-        (arrowLeft: any).style.visibility = carouselItemIndex >= cards.length - 1 ? 'hidden': 'visible';
-        (arrowRight: any).style.visibility = carouselItemIndex <= 0 ? 'hidden': 'visible';
+        (arrowRight: any).style.visibility = carouselItemIndex >= cards.length - 1 ? 'hidden': 'visible';
+        (arrowLeft: any).style.visibility = carouselItemIndex <= 0 ? 'hidden': 'visible';
       }
       function rightArrowClicked(event) {
         carouselItemIndex += 1;
