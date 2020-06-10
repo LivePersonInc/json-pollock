@@ -12,6 +12,7 @@
     &.lp-json-pollock-single-element {
         border: $default-border;
         border-collapse:collapse;
+        max-width: 200px;
         background: white;
     }
 
@@ -19,6 +20,7 @@
         border: $default-border;
         border-collapse:collapse;
         width: 100%;
+        max-width: 200px;
         background: white;
     }
 
@@ -222,7 +224,6 @@
                 border: $default-border;
                 display: inline-block;
                 width: 180px;
-
                 vertical-align: top;
             }
         }

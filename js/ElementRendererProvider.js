@@ -328,80 +328,44 @@ export default class ElementRendererProvider {
     this.set(TYPES.CAROUSEL, (config): HTMLElement => {
       const defaultPadding = 0;
       const padding = config.padding || defaultPadding;
-      const CARD_DEFAULT_WIDTH = 180;
-      const PARSE_DECIMAL = 10;
-      const BORDER_WIDTH = 2;
       let nextLeft = 0;
-      let currentPos = 0;
       const arrowRight = document.createElement('div');
       const arrowLeft = document.createElement('div');
       const divCarouselWrapper = document.createElement('div');
       const carousel = document.createElement('div');
       const carouselOffsetChangedEventName = 'carouselOffsetChange';
+      let carouselItemIndex = 0;
+      let cards = undefined;
 
-      function getCardWidth() {
-        let cardWidth = CARD_DEFAULT_WIDTH;
-        const CARDS = carousel.getElementsByClassName('lp-json-pollock-layout');
+      function setShowingCard(event) {
+        if (!cards || !cards[carouselItemIndex]) {
+          console.error("cards or carouselItemIndex not found");
+          return;
+        }
+        nextLeft = `-${cards[carouselItemIndex].offsetLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
 
-        if (CARDS.length > 0) {
-          let style = window.getComputedStyle(CARDS[0]);
-          cardWidth = CARDS[0].getBoundingClientRect().width + parseInt(style.marginLeft) + parseInt(style.marginRight);
+        if (this && this.events) {
+          this.events.trigger({
+            eventName: carouselOffsetChangedEventName,
+            data: {
+              offset: nextLeft,
+              prevOffset: (carousel: any).style.left,
+              uiEvent: event,
+            },
+          });
         }
 
-        return cardWidth;
+        (carousel: any).style.left = nextLeft;
+        (arrowLeft: any).style.visibility = carouselItemIndex >= cards.length - 1 ? 'hidden': 'visible';
+        (arrowRight: any).style.visibility = carouselItemIndex <= 0 ? 'hidden': 'visible';
       }
       function rightArrowClicked(event) {
-        currentPos = 0;
-        if (nextLeft === 0) {
-          this.events.trigger({
-            eventName: carouselOffsetChangedEventName,
-            data: {
-              offset: nextLeft,
-              prevOffset: currentPos,
-              uiEvent: event,
-            },
-          });
-        }
-        if ((carousel: any).style.left !== '') {
-          currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
-        }
-        /* when click on the right arrow the carousel div will shift to the left */
-        nextLeft = currentPos - getCardWidth();
-
-        (arrowLeft: any).style.visibility = 'visible';
-        (arrowRight: any).style.visibility = 'visible';
-        /* check if the the viewport width is bigger then the carousel width + the next "Left"
-         * value => shift the carousel div to its rightest point */
-        if (divCarouselWrapper.offsetWidth > carousel.offsetWidth + nextLeft) {
-          nextLeft = -((carousel.offsetWidth + padding) - divCarouselWrapper.offsetWidth);
-          (arrowRight: any).style.visibility = 'hidden';
-        }
-        (carousel: any).style.left = `${nextLeft}px`;
+        carouselItemIndex += 1;
+        setShowingCard.call(this, event);
       }
       function leftArrowClicked(event) {
-        currentPos = 0;
-        if ((carousel: any).style.left !== '') {
-          currentPos = parseInt((carousel: any).style.left, PARSE_DECIMAL);
-        }
-
-        nextLeft = currentPos + getCardWidth();
-        (arrowRight: any).style.visibility = 'visible';
-        if (nextLeft >= 0) {
-          nextLeft = 0;
-          (arrowLeft: any).style.visibility = 'hidden';
-          (arrowRight: any).style.visibility = 'visible';
-        }
-        if (nextLeft === 0) {
-          this.events.trigger({
-            eventName: carouselOffsetChangedEventName,
-            data: {
-              offset: nextLeft,
-              prevOffset: currentPos,
-              uiEvent: event,
-            },
-          });
-        }
-        (carousel: any).style.left = `${nextLeft}px`;// this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+        carouselItemIndex -= 1;
+        setShowingCard.call(this, event);
       }
       function findCardRoot(element) {
         if (element.className.indexOf('lp-json-pollock-layout') > -1) {
@@ -412,15 +376,18 @@ export default class ElementRendererProvider {
       function cardFocus(event) {
         const element = event.target;
         const cardRoot = findCardRoot(element);
+        const cardIndex = cardRoot.getAttribute("data-carousel-index");
+
+        if (!cardIndex) {
+          console.error('root element does not have an index');
+          return;
+        }
+
         divCarouselWrapper.scrollLeft = 0;
-        const divCarouselWrapperBoundaries = divCarouselWrapper.getBoundingClientRect();
-        const cardBoundaries = cardRoot.getBoundingClientRect();
-        debugger;
-        // check if the container card is Exceeding the carousel wrapper.
-        if (divCarouselWrapperBoundaries.left > cardBoundaries.left) {
-          leftArrowClicked.call(this, event);
-        } else if (divCarouselWrapperBoundaries.right < cardBoundaries.right) {
-          rightArrowClicked.call(this, event);
+        // if the currently focused card is not the carouselItem being shown, show the focused card
+        if (cardIndex && carouselItemIndex !== parseInt(cardIndex)) {
+          carouselItemIndex = parseInt(cardIndex);
+          setShowingCard.call(this, event);
         }
       }
       (divCarouselWrapper: any).afterRender = () => {
@@ -432,6 +399,7 @@ export default class ElementRendererProvider {
             // add card focus event
             (node: any).addEventListener('focus', cardFocus.bind(this), true);
             (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            (node: any).setAttribute("data-carousel-index", itemCounter);   // Add an index reference for faster lookup on focus changes
           }
 
           arrowRight.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow';
@@ -443,15 +411,6 @@ export default class ElementRendererProvider {
           }
 
           divCarouselWrapper.appendChild(carousel);
-          /* calculate carousel static width */
-          let middleItemsWidth = 0;
-          const cornerItemsWidth = (2 * (CARD_DEFAULT_WIDTH + BORDER_WIDTH)) + padding;
-          if (carousel.childNodes.length > 2) {
-            middleItemsWidth = (carousel.childNodes.length - 2) *
-              (BORDER_WIDTH + CARD_DEFAULT_WIDTH + padding);
-          }
-          const totalWidth = cornerItemsWidth + middleItemsWidth;
-          carousel.style.width = `${totalWidth}px`;
           carousel.className = 'lp-json-pollock-layout-carousel';
           divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
 
@@ -466,6 +425,8 @@ export default class ElementRendererProvider {
               (arrowLeft: any).style.visibility = 'hidden';
               (arrowRight: any).style.visibility = 'hidden';
             }
+            //Set up card reference for carousel
+            cards = carousel.getElementsByClassName('lp-json-pollock-layout');
           }, 0);
           arrowRight.onclick = (event) => {
             rightArrowClicked.call(this, event);
