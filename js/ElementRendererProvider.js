@@ -371,16 +371,17 @@ export default class ElementRendererProvider {
         carouselItemIndex -= 1;
         setShowingCard.call(this, event);
       }
-      function findCardRoot(element) {
-        if (element.className.indexOf('lp-json-pollock-layout') > -1) {
-          return element;
+      function findCardIndex(element) {
+        if (!element) return undefined;
+        const index = element.getAttribute('data-carousel-index');
+        if (index) {
+          return index;
         }
-        return findCardRoot(element.parentNode);
+        return findCardIndex(element.parentNode);
       }
       function cardFocus(event) {
         const element = event.target;
-        const cardRoot = findCardRoot(element);
-        const cardIndex = cardRoot.getAttribute('data-carousel-index');
+        const cardIndex = findCardIndex(element);
 
         if (!cardIndex) {
           return;
@@ -429,7 +430,7 @@ export default class ElementRendererProvider {
               (arrowRight: any).style.visibility = 'hidden';
             }
             // Set up card reference for carousel
-            cards = carousel.getElementsByClassName('lp-json-pollock-layout');
+            cards = carousel.children;
           }, 0);
           arrowRight.onclick = (event) => {
             rightArrowClicked.call(this, event);
