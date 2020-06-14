@@ -882,6 +882,15 @@ describe('json-pollock tests', function () {
       chai.expect(checklistLayout.children[2].innerText).to.equal('3');
     });
 
+    it('a11y attributes exists within checklist', function () {
+      var inputEl = checklistLayout.children[0].querySelector('.lp-json-pollock-element-checkbox-input');
+      var labelEl = checklistLayout.children[0].querySelector('.lp-json-pollock-element-checkbox-label');
+      chai.expect(inputEl).to.exist;
+      chai.expect(inputEl.id).to.exist;
+      chai.expect(labelEl).to.exist;
+      chai.expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+    });
+
     it('submitButton exist', function () {
       chai.expect(buttonListLayout.children[0].className).to.contains('lp-json-pollock-element-submit-button');
       chai.expect(buttonListLayout.children[0].children[0].disabled).to.equal(false);
