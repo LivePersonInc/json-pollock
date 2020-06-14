@@ -1764,6 +1764,9 @@ exports.default = {
       var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
       el.className = el.className.replace(reg, ' '); // eslint-disable-line no-param-reassign
     }
+  },
+  generateRandomId: function generateRandomId() {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 };
 
@@ -6669,16 +6672,19 @@ var ElementRendererProvider = function () {
     });
 
     this.set(TYPES.CHECKBOX, function (config) {
+      var randomId = _Utils2.default.generateRandomId();
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-checkbox';
       var checkEl = document.createElement('input');
       var normalizedText = _Utils2.default.normalizeHtmlText(config.text);
       checkEl.type = 'checkbox';
       checkEl.className = 'lp-json-pollock-element-checkbox-input';
+      checkEl.id = randomId;
 
       var labelEl = document.createElement('label');
       labelEl.className = 'lp-json-pollock-element-checkbox-label';
       labelEl.innerHTML += normalizedText;
+      labelEl.setAttribute('for', randomId);
       if (config.rtl) {
         labelEl.dir = 'rtl';
         _Utils2.default.addClass(labelEl, 'direction-rtl');
@@ -6726,6 +6732,7 @@ var ElementRendererProvider = function () {
     this.set(TYPES.CHECKLIST, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout-checklist';
+      divEl.setAttribute('role', 'group');
       if (config.padding) {
         var padding = config.padding;
         divEl.style.margin = padding / 2 + 'px 0px';
@@ -7927,7 +7934,7 @@ var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
 var validate = instance.validate.bind(instance);
-var version = '1.4.0';
+var version = '1.4.1';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
