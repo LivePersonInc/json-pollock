@@ -404,6 +404,7 @@ export default class ElementRendererProvider {
             (node: any).addEventListener('focus', cardFocus.bind(this), true);
             (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
             (node: any).setAttribute('data-carousel-index', itemCounter);   // Add an index reference for faster lookup on focus changes
+            (node: any).setAttribute('role', 'listitem');
           }
 
           arrowRight.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow';
@@ -417,7 +418,7 @@ export default class ElementRendererProvider {
           divCarouselWrapper.appendChild(carousel);
           carousel.className = 'lp-json-pollock-layout-carousel';
           divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
-
+          (carousel: any).setAttribute('role', 'list');
           divCarouselWrapper.appendChild(carousel);
           divCarouselWrapper.appendChild(arrowRight);
           divCarouselWrapper.appendChild(arrowLeft);
