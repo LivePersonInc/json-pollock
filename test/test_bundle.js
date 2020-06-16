@@ -679,6 +679,7 @@ describe('json-pollock tests', function () {
     const carouselRootLayout = conteiner.children[0].children[0];
     const carouselRight = conteiner.children[0].children[0].children[1];
     const carouselLeft = conteiner.children[0].children[0].children[2];
+    const carouselListRoot =  carouselRootLayout.children[0];
     const card1 = carouselRootLayout.children[0].children[0];
     const card2 = carouselRootLayout.children[0].children[1];
     const card3 = carouselRootLayout.children[0].children[2];
@@ -720,6 +721,14 @@ describe('json-pollock tests', function () {
       chai.expect(card2.children[0].innerText).to.be.equal('2');
       chai.expect(card3.children[0].innerText).to.be.equal('3');
     });
+
+    it('carousel accessability attrbs', function () {
+      chai.expect(carouselListRoot.getAttribute('role')).to.be.equal('list');
+      chai.expect(card1.getAttribute('role')).to.be.equal('listitem');
+      chai.expect(card2.getAttribute('role')).to.be.equal('listitem');
+      chai.expect(card3.getAttribute('role')).to.be.equal('listitem');
+    });
+
   });
 
   describe('render list', function () {
