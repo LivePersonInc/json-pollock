@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "aspectRatio": {
+      "type": "string",
+      "enum": ["rectangle", "square", "horizontal"]
+    },
+    "size": {
+      "type": "string",
+      "enum": ["cover", "contain", "large", "compact", "tall", "full"]
+    }
+  }
+}
