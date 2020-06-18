@@ -32,6 +32,9 @@
     "alt": {
       "type": "string",
       "maxLength": 2000
+    },
+    "display": {
+      "$ref": "displaySettings.json"
     }
   },
   "required": [
