@@ -112,7 +112,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -135,6 +135,24 @@ export default {
   top: 0;
   left: 0;
   z-index: -1;
+}
+
+.splitter-pane-resizer {
+  opacity: 1 !important;
+  background-color: #ff720b !important;
+  
+  &::before {
+    position: absolute;
+    content: '\2022 \2022 \2022';
+    border: solid 2px #ff720b;
+    color: #5879da;
+    top: 50%;
+    width: 8px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    height: 63px;
+    left: -6px;
+  }
 }
 
 .header_container {

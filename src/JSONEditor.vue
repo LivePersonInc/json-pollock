@@ -132,9 +132,12 @@ export default {
   div.jsoneditor {
     border: thin solid #ff720b;
     div.jsoneditor-menu {
-    background-color: #ff720b;
-    border-bottom: 1px solid #ff720b;
-  }
+      background-color: #ff720b;
+      border-bottom: 1px solid #ff720b;
+    }
+    div.jsoneditor-contextmenu ul li button.jsoneditor-selected {
+      background-color: #ff720b;
+    }
   }
   .jsoneditor-loading {
     position: absolute;
