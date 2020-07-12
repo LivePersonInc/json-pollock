@@ -127,8 +127,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '../node_modules/jsoneditor/dist/jsoneditor.css';
+  div.jsoneditor {
+    border: thin solid #ff720b;
+    div.jsoneditor-menu {
+    background-color: #ff720b;
+    border-bottom: 1px solid #ff720b;
+  }
+  }
   .jsoneditor-loading {
     position: absolute;
     z-index: 999;

@@ -1,7 +1,7 @@
 <template>
   <div ref='jsonpollock' class='jsonpollock'>
     <div class="go_to_code_btn" v-tooltip="{ content: 'Click an element<br>to select its text<br>on the Code Editor', delay: { show: 500 }, placement: 'bottom' }">
-      <toggle-button color="#3883fa"
+      <toggle-button color="#5879da"
         :width=115
         :labels="{ checked: 'Go To Code: ON', unchecked: 'Go To Code: OFF' }"
         v-model="goToCodeEnabled"
@@ -158,7 +158,7 @@ export default {
       &.locate_element {
         .lp-json-pollock {
           border: solid;
-          border-color: #3883fa;
+          border-color: #5879da;
           padding: 2px;
 
           .playground_el {

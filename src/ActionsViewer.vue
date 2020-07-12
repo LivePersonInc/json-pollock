@@ -42,6 +42,7 @@ export default {
 <style lang="scss" scoped>
   .actions {
     font-size: 13px;
+    background-color: #ffffff;
     .empty {
       width: 100%;
       height: 100%;

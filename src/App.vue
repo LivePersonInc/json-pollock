@@ -1,32 +1,39 @@
 <template>
   <div id="app">
     <Header class="header_container"></Header>
-    <JSONEditor class="jsoneditor_container" ref="editor"></JSONEditor>
-    <JSONPollock class="jsonpollock_container" :class="{'actions-bar-open': actionsBarOpen}"></JSONPollock>
-    <div class="actions_toggle" :class="actionsBarOpen ? 'open' : 'close'" @click="toggleActions" v-tooltip="actionsBarOpen ? 'Close' : 'Show the Actions View'">
-      {{actionsBarOpen ? '&#10005;' : 'Actions'}}
-    </div>
-    <div class="actions_clear" v-show="actionsBarOpen" @click="clearActionsList" v-tooltip="'Clear List'">
-      &#8635;
-    </div>
-    <ActionsViewer class="actions_container" v-show="actionsBarOpen"></ActionsViewer>
+    <split-pane class="custom-resizer" split="vertical" min-percent=30>
+      <template slot="paneL">
+        <JSONEditor class="jsoneditor_container" ref="editor"></JSONEditor>
+      </template>
+      <template slot="paneR">
+         <JSONPollock class="jsonpollock_container" :class="{'actions-bar-open': actionsBarOpen}"></JSONPollock>
+         <div class="actions_toggle" :class="actionsBarOpen ? 'open' : 'close'" @click="toggleActions" v-tooltip="actionsBarOpen ? 'Close' : 'Show the Actions View'">
+          {{actionsBarOpen ? '&#10005;' : 'Actions'}}
+        </div>
+        <div class="actions_clear" v-show="actionsBarOpen" @click="clearActionsList" v-tooltip="'Clear List'">
+          &#10227;
+        </div>
+        <ActionsViewer class="actions_container" v-show="actionsBarOpen"></ActionsViewer>
+      </template>
+    </split-pane>
     <Message/>
   </div>
 </template>
 
 <script>
+import splitPane from 'vue-splitpane';
 import Header from './Header';
 import JSONEditor from './JSONEditor';
 import JSONPollock from './JSONPollock';
 import ActionsViewer from './ActionsViewer';
 import Message from './Message';
 import GitHubHelper from './GitHubHelper';
-
-const defaultContent = '{"type":"vertical","elements":[{"type":"image","url":"https://i.imgur.com/odHIleY.jpg","tooltip":"image tooltip","click":{"actions":[{"type":"navigate","name":"Navigate to store via image","lo":23423423,"la":2423423423}]}},{"type":"carousel","padding":0,"elements":[{"type":"vertical","elements":[{"type":"text","text":"SIM only plan","tooltip":"SIM only plan","rtl":false,"style":{"bold":false,"italic":false,"color":"#000000","size":"large"}},{"type":"text","text":"Twelve month plan BYO mobile","tooltip":"Twelve month plan BYO mobile","rtl":false,"style":{"bold":true,"italic":false,"color":"#000000"}},{"type":"button","tooltip":"Choose a plan","title":"Choose a plan","click":{"metadata":[{"type":"ExternalId","id":"ANOTHER_ONE_1"}],"actions":[{"type":"publishText","text":"SIM only plan"}]}}]},{"type":"vertical","elements":[{"type":"text","text":"Swap plan","tooltip":"Swap plan","rtl":false,"style":{"bold":false,"italic":false,"color":"#000000","size":"large"}},{"type":"text","text":"Two year plan leasing a mobile","tooltip":"Two year plan leasing a mobile","rtl":false,"style":{"bold":true,"italic":false,"color":"#000000"}},{"type":"button","tooltip":"Choose a plan","title":"Choose a plan","click":{"metadata":[{"type":"ExternalId","id":"ANOTHER_ONE_2"}],"actions":[{"type":"publishText","text":"Two year plan leasing a mobile"}]}}]},{"type":"vertical","elements":[{"type":"text","text":"Mobiles on a plan","tooltip":"Mobiles on a plan","rtl":false,"style":{"bold":false,"italic":false,"color":"#000000","size":"large"}},{"type":"text","text":"Two year plan with a mobile","tooltip":"Two year plan with a mobile","rtl":false,"style":{"bold":true,"italic":false,"color":"#000000"}},{"type":"button","tooltip":"Choose a plan","title":"Choose a plan","click":{"metadata":[{"type":"ExternalId","id":"ANOTHER_ONE_3"}],"actions":[{"type":"publishText","text":"Mobiles on a plan"}]}}]}]},{"type":"text","text":"product name (Title)","tooltip":"text tooltip","style":{"bold":true,"size":"large"}},{"type":"text","text":"product name (Title)","tooltip":"text tooltip"},{"type":"button","tooltip":"button tooltip","title":"Add to cart","click":{"actions":[{"type":"link","name":"Add to cart","uri":"https://example.com"}]}},{"type":"horizontal","elements":[{"type":"button","title":"Buy","tooltip":"Buy this broduct","click":{"actions":[{"type":"link","name":"Buy","uri":"https://example.com"}]}},{"type":"button","title":"Find similar","tooltip":"store is the thing","click":{"actions":[{"type":"link","name":"Buy","uri":"https://search.com"}]}}]},{"type":"map","la":64.128597,"lo":-21.89611,"tooltip":"map tooltip"},{"type":"button","tooltip":"button tooltip","title":"Navigate","click":{"actions":[{"type":"publishText","text":"my text"},{"type":"navigate","name":"Navigate to store via image","lo":23423423,"la":2423423423}]}},{"type":"list","elements":[{"type":"text","text":"Select your fruit"},{"type":"sectionList","elements":[{"type":"section","sectionID":"fruits","elements":[{"type":"checklist","elements":[{"type":"checkbox","text":"apple","borderLine":true,"borderColor":"#000000","click":{"metadata":[{"type":"ExternalId","id":"ANOTHER_ONE_35"}],"actions":[{"type":"checked","publishText":"apples"}]}},{"type":"checkbox","text":"banana","borderLine":true,"borderColor":"#000000","click":{"metadata":[{"type":"ExternalId","id":"ANOTHER_ONE_32"}],"actions":[{"type":"checked","publishText":"bananas"}]}},{"type":"checkbox","text":"avocado","borderLine":true,"borderColor":"#000000","click":{"metadata":[{"type":"ExternalId","id":"ANOTHER_ONE_36"}],"actions":[{"type":"checked","publishText":"avocados"}]}}]}]}]},{"type":"buttonList","elements":[{"type":"submitButton","title":"submit","disabled":false,"click":{"metadata":[{"type":"ExternalId","id":"submissionID"}],"actions":[{"type":"submitAsText","submit":true}]}}]}]}]}';
+import defaultContent from './defaultContent.json';
 
 export default {
   name: 'app',
   components: {
+    splitPane,
     Header,
     JSONEditor,
     JSONPollock,
@@ -40,9 +47,8 @@ export default {
   },
   mounted() {
     const loadDefault = () => {
-      const json = JSON.parse(defaultContent);
       this.$store.commit('setLoading', false);
-      this.$refs.editor.setJson(json);
+      this.$refs.editor.setJson(defaultContent);
     };
     const gistExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('gist=') === 0);
     const gistFileExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('file=') === 0);
@@ -117,52 +123,49 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  padding: 10px;
-  background: url(assets/pollock-paint.jpg);
+  background-color: rgba(93, 125, 213, 0.8);
 }
 
-.header_container {
+#app::after {
+  content: '';
+  background: url(assets/back-blue.jpg);
+  width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  margin-top: 12px;
-  height: 60px;
-  background-color: #EBEBEB;
+  z-index: -1;
+}
+
+.header_container {
+  height: 40px;
 }
 
 .editor_container {
-  width: 48%;
-  top: 90px;  
-  height:calc(100% - 120px);
-  position: absolute;
   background-color: #FFFFFF;
 }
 
 .jsoneditor_container {
+  height: calc(100% - 41px);
   @extend .editor_container;
 }
 
 .jsonpollock_container {
+  height: calc(100% - 43px);
   @extend .editor_container;
 
   &.actions-bar-open {
-    height: calc(100% - 275px);
+    height: calc(100% - 188px);
   }
 
-  left: 50%;
-  border: solid rgb(56, 131, 250) 1px;
+  // left: 50%;
+  border: solid #ff720b 1px;
   overflow: auto;
 }
 
 .actions_container {
-  @extend .editor_container;
-  
-  top: auto;
-  bottom: 28px;
-  height: 145px;
-  left: 50%;
-  border: solid #3883fa 1px;
+  border: solid #ff720b 1px;
+  height: 144px;
   overflow: auto;
 }
 
@@ -179,20 +182,21 @@ export default {
 
 .actions_toggle {
   @extend .actions_btn;
-  left: calc( 50% + 1px);
+  right:1px;
 
   &.open {
-    bottom: 174px;
+    bottom: 187px;
   }
 
   &.close {
-    bottom: 29px;
+    bottom: 42px;
   }
 }
 
 .actions_clear {
   @extend .actions_btn;
-  left: calc( 50% + 23px);
-  bottom: 174px;
+  right: 23px;
+  bottom: 187px;
+  font-size: 13px;
 }
 </style>
