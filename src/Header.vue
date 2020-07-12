@@ -262,13 +262,12 @@ export default {
     }
 
     @media screen and (max-width: 992px) {
-        .title {
-          left: 45%;
-          .title-text {
-            display: none;
-          }
+      .title {
+        .title-text {
+          display: none;
         }
       }
+    }
 
     .docu {
       position: absolute;
@@ -346,20 +345,7 @@ export default {
       right: 54px;
     }
 
-    @media not all and (min-resolution:.001dpcm)
-      { 
-        @supports (-webkit-appearance:none) {
-          .info { 
-            right: 288px !important;
-          }
-        }
-      }
-
-      @media screen and (min--moz-device-pixel-ratio:0) {
-          .info {
-              right: 297px !important;
-          }
-      }
+    
 
     .loginbtn {
       float: right;
