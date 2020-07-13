@@ -1,8 +1,8 @@
 <template>
   <div class='message'>
-    <div v-for="(msg, index) in messages" :key="index" :class="msg.type">
+    <span v-for="(msg, index) in messages" :key="index" :class="msg.type">
       {{msg.text}}
-    </div>
+    </span>
   </div>
 </template>
 
@@ -31,18 +31,18 @@ export default {
 
 <style lang="scss" scoped>
   .message {
+    top: 24px;
+    width: 50%;
     z-index: 999;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
     position: absolute;
-    bottom: 11px;
-    left: 11px;
+    left: 25%;
+    text-align: center;
 
     .error {
       color: #a94442;
       background-color: #f2dede;
       border-color: #ebccd1;
+      border-radius: 6px;
       padding: 10px;
     }
 
@@ -50,6 +50,7 @@ export default {
       color: #3c763d;
       background-color: #dff0d8;
       border-color: #d6e9c6;
+      border-radius: 6px;
       padding: 10px;
     }
   }
