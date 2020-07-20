@@ -1,7 +1,7 @@
 <template>
   <div ref='jsonpollock' class='jsonpollock'>
     <div class="go_to_code_btn" v-tooltip="{ content: 'Click an element<br>to select its text<br>on the Code Editor', delay: { show: 500 }, placement: 'bottom' }">
-      <toggle-button color="#5879da"
+      <toggle-button :color="{checked: '#6986D8', unchecked: '#a3a3a3'}" switch-color="#162036"
         :width=115
         :labels="{ checked: 'Go To Code: ON', unchecked: 'Go To Code: OFF' }"
         v-model="goToCodeEnabled"
@@ -135,16 +135,24 @@ export default {
 
   .go_to_code_btn {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 6px;
+    right: 8px;
+
+    .v-switch-core {
+      z-index: 1;
+    }
   }
 
   .dom_parent {
     position: relative;
 
     .json_pollock_v {
-      margin-top: 10px;
+      padding: 10px;
       text-align: center;
+      background: #162036;
+      color: #fff;
+      height: 15px;
+      line-height: 15px;
     }
 
     .dom_container{

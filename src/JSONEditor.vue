@@ -11,6 +11,8 @@ import JSONEditor from 'jsoneditor';
 import Ajv from 'ajv';
 import { parse } from 'json-source-map';
 import { get } from 'lodash';
+import { RichContentValidator, RcChannels } from 'lp-rich-content-validator';
+
 
 import basicSchema from 'json-pollock/js/schema/basic.json';
 import actionSchema from 'json-pollock/js/schema/action.json';
@@ -36,6 +38,7 @@ import keyValuePairSchema from 'json-pollock/js/schema/keyValuePair.json';
 import displaySettingsSchema from 'json-pollock/js/schema/displaySettings.json';
 
 let editor;
+let rcValidator;
 
 export default {
   name: 'JSONEditor',
@@ -55,6 +58,12 @@ export default {
     },
   },
   mounted() {
+    const config = {
+      channel: RcChannels.FB,
+      declinePastDates: false,
+    };
+
+    rcValidator = new RichContentValidator(config);
     const options = {
       mode: 'code',
       modes: ['code', 'form', 'tree'],
@@ -90,6 +99,8 @@ export default {
           this.$store.commit('setJson', currentJson);
           this.$store.commit('setJsonValid', true);
           this.$store.commit('setEdited', true);
+          const result = rcValidator.validateRcBody(currentJson);
+          console.log(result);
         } catch (e) {
           this.$store.commit('setJsonValid', false);
         }
@@ -130,13 +141,17 @@ export default {
 <style lang="scss">
   @import '../node_modules/jsoneditor/dist/jsoneditor.css';
   div.jsoneditor {
-    border: thin solid #ff720b;
+    // border: thin solid #ff720b;
+    border: thin solid #162036;
     div.jsoneditor-menu {
-      background-color: #ff720b;
-      border-bottom: 1px solid #ff720b;
+      // background-color: #ff720b;
+      // border-bottom: 1px solid #ff720b;
+      background-color: #162036;
+      border-bottom: 1px solid #162036;
     }
     div.jsoneditor-contextmenu ul li button.jsoneditor-selected {
-      background-color: #ff720b;
+      // background-color: #ff720b;
+      background-color: #162036;
     }
   }
   .jsoneditor-loading {
@@ -147,6 +162,7 @@ export default {
     width: 100%;
     text-align: center;
     display: table;
+    color: #162036;
 
     span {
       font-size: 30px;

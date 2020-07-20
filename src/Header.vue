@@ -4,48 +4,55 @@
       <img src='./assets/logo.png' @click='onLogoClick'>
       <h3 class="title-text">Json-Pollock Playground</h3>
     </div>
-    <div class='gistbtn' v-if="token && !loading">
-      <a v-if="gistName && token" :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle">{{gistName}}</a>
-      <span v-else-if="gistName && !token" class='gist-token-needed' @click="showDescription = true">Access token is required</span>
-      <span v-else v-tooltip.bottom="'Load Gist by ID'" @click="showLoadGistInput = true">Load</span>
-      <popup class="gist-input gist-input-id" v-model="showLoadGistInput" :leftOffset="8">
-        <input ref="gistNameInput" v-model="gistId" placeholder="Gist ID..."/>
-        <div v-if="gistId" class="gist-input-id-save" @click="loadGist">Go</div>
-      </popup>
-    </div>
-    <div class="savebtn" @click="saveGist" v-if="token && !loading" :class="{disabled: saveDisabled}"
-      v-tooltip.bottom="isGistOwner && gist ? 'Save' : 'Save as a new Gist'">
-      <img v-if="!saving" src='./assets/save.svg'>
-      <img v-if="saving" src='./assets/sync.svg' class="saving">
-      Save
-      <popup class="gist-input gist-input-name" v-model="showNewGistInput" :leftOffset="8">
-        <input ref="gistNameInput" v-model="newGistName" placeholder="Gist Name..."/>
-        <div v-if="newGistName" class="gist-input-name-save" @click="createGist">Save</div>
-      </popup>
-    </div>
-    <div class="docu" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
-      Documentation
-    </div>
-    
-    <div class="info" @click="gotoGitHubIssues"
-      v-tooltip.bottom="`
-      For fixes and improvements of this tool: <br> 
-      Click this button and open an issue on our GitHub repo! <br>
-      &#9758; Be sure to mark your issue with the <span style='background-color:#9960ba;color: #000000;border-radius:2px;padding:1px 5px'>playground</span> label &#9756;`">
-      <!-- &#9432; --> Feedback
-    </div>
-    <div class="loginbtn">
-        <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Login to GitHub'" @click="showDescription = true">
-        <img v-else :src='user.avatar_url' v-tooltip.bottom='user && (user.name || user.login)' @click="showDescription = true">
-        <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="256" :autoPosition="false">
-          In order to be able to load content from GitHub <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
-          you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token</a>
-          - <b>make sure to check the 'gist' scope.</b><br>
-          Once you have generated a token please update it here:<br>
-          <input v-model="token"/>
-          <button @click="saveToken" :disabled="!token">Save</button>
-          <button @click="showDescription = false">Cancel</button>
+    <div class="buttons-bar">
+      <div class="loginbtn">
+          <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Login to GitHub'" @click="showDescription = true">
+          <img v-else :src='user.avatar_url' v-tooltip.bottom='user && (user.name || user.login)' @click="showDescription = true">
+          <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="256" :autoPosition="false">
+            In order to be able to load content from GitHub <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
+            you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token</a>
+            - <b>make sure to check the 'gist' scope.</b><br>
+            Once you have generated a token please update it here:<br>
+            <input v-model="token"/>
+            <button @click="saveToken" :disabled="!token">Save</button>
+            <button @click="showDescription = false">Cancel</button>
+          </popup>
+      </div>
+      <div class="gistbtn header-btn weak" v-if="token && !loading">
+        <a v-if="gistName && token" :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle">View on Github</a>
+        <span v-else-if="gistName && !token" class='gist-token-needed' @click="showDescription = true">Access token is required</span>
+        <span v-else v-tooltip.bottom="'Load Gist by ID'" @click="showLoadGistInput = true">Load</span>
+        <popup class="gist-input gist-input-id" v-model="showLoadGistInput">
+          <input ref="gistNameInput" v-model="gistId" placeholder="Gist ID..."/>
+          <div v-if="gistId" class="gist-input-id-save" @click="loadGist">Go</div>
         </popup>
+      </div>
+      <div class="savebtn header-btn weak" @click="saveGist" v-if="token && !loading" :class="{disabled: saveDisabled}"
+        v-tooltip.bottom="isGistOwner && gist ? 'Save' : 'Save as a new Gist'">
+        <img v-if="!saving" src='./assets/save.svg'>
+        <img v-if="saving" src='./assets/sync.svg' class="saving">
+        Save
+        <popup class="gist-input gist-input-name" v-model="showNewGistInput" :leftOffset="8">
+          <input ref="gistNameInput" v-model="newGistName" placeholder="Gist Name..."/>
+          <div v-if="newGistName" class="gist-input-name-save" @click="createGist">Save</div>
+        </popup>
+      </div>
+      <div class="docu header-btn weak" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
+        Documentation
+      </div>    
+      <div class="info header-btn weak" @click="gotoGitHubIssues"
+        v-tooltip.bottom="`
+        For fixes and improvements of this tool: <br> 
+        Click this button and open an issue on our GitHub repo! <br>
+        &#9758; Be sure to mark your issue with the <span style='background-color:#9960ba;color: #000000;border-radius:2px;padding:1px 5px'>playground</span> label &#9756;`">
+        Feedback
+      </div>
+      <div class="docu header-btn strong" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
+        Templates
+      </div> 
+      <div class="docu header-btn strong" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
+        Validate
+      </div> 
     </div>
   </div>
 </template>
@@ -226,16 +233,26 @@ export default {
   .header {
 
     .header-btn {
-      position: absolute;
-      top: 4px;
+      float: right;
       font-weight: bold;
       cursor: pointer;
-      border: solid #ff720b;
       border-radius: 6px;
       padding: 2px;
       cursor: hand;
       color: #fff;
-      background-color: #ff720b;
+      margin: 13px 20px 13px 0;
+      padding: 4px 14px;
+
+      &.strong {
+        background-color: #ff720b;
+        border: solid #ff720b;
+      }
+
+      &.weak {
+        background-color: #6986D8;
+        border: solid #6986D8;
+      }
+
     }
 
     input {
@@ -244,11 +261,10 @@ export default {
     }
 
     .title {
-      position: absolute;
-      top: -12px;
-      width: 500px;
+      float: left;
+      width: 300px;
       color: #fff;
-      margin-left: 10px;
+      margin: -2px 20px;
       text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 
       img {
@@ -263,160 +279,147 @@ export default {
 
     @media screen and (max-width: 992px) {
       .title {
+        width: 30px;
         .title-text {
           display: none;
         }
       }
     }
 
-    .docu {
-      position: absolute;
-      right: 146px;
-      top: 4px;
-      font-weight: bold;
-      cursor: pointer;
-      border: solid #ff720b;
-      border-radius: 6px;
-      padding: 2px;
-      cursor: hand;
-      color: #fff;
-      background-color: #ff720b;
-    }
-
-    .savebtn {
-      @extend .header-btn;
-      right: 280px;
-      padding-left: 25px;
-
-      img {
-        position: absolute;
-        top: 1px;
-        left: 0px;
-
-        &.saving {
-          -webkit-animation:spin 1.5s linear infinite;
-          -moz-animation:spin 1.5s linear infinite;
-          animation:spin 1.5s linear infinite;
-        }
-      }
-
-      &.disabled {
-        opacity: 0.3;
-        cursor: default;
-      }
-    }
-
-    .gist-input {
-      input {
-        font-size: 15px;
-        margin: 7px 0 7px 0;
-        height: 25px;
-        padding-left: 5px;          
-
-        &.error {
-          border-color: red;
-        }
-      }
-
-      div {
-        position: absolute;
-        top: 10px;
-        right: 13px;
-        font-size: 14px;
-        font-weight: bold;
-        background: #fff;
-        cursor: pointer;
-        height: 23px;
-        line-height: 23px;
-        padding: 0 6px;
-        display: none;
-      }
-
-      &:hover, &:focus {
-        div {
-          display: block;
-        }
-      }
-    }
-
-    .info {
-      @extend .header-btn;
-      position: absolute;
-      right: 54px;
-    }
-
-    
-
-    .loginbtn {
+    .buttons-bar {
       float: right;
-      background: #fff;
-      border: solid 2px #ff715b;
-      border-radius: 30px;
-      width: 34px;
-      height: 34px;
-      margin: 1px 8px;
 
-      img {
+      .loginbtn {
+        float: right;
+        background: #fff;
+        border: solid 2px #ff715b;
+        border-radius: 30px;
         width: 34px;
         height: 34px;
-        border-radius: 34px;
-      }
-    }
+        margin: 11px 15px 11px 0;
 
-    .gistbtn {
-      @extend .header-btn;
-      position: absolute;
-      right: 357px;
-
-      a {
-        color: #ffffff;
-        text-decoration: none;
+        img {
+          width: 34px;
+          height: 34px;
+          border-radius: 34px;
+        }
       }
 
-      .gist-token-needed {
-        color: red;
-      }
-    }
-
-    .gist-input-name {
-      top: 49px;
-
-      input {
-        margin: 7px 10px 7px 10px;
-        max-width: 190px;
+      .docu {
       }
 
-      .gist-input-name-save {
-        color: #000;
+      .savebtn {
+        padding-left: 38px;
+        position: relative;
+
+        img {
+          position: absolute;
+          top: 3px;
+          left: 8px;
+
+          &.saving {
+            -webkit-animation:spin 1.5s linear infinite;
+            -moz-animation:spin 1.5s linear infinite;
+            animation:spin 1.5s linear infinite;
+          }
+        }
+
+        &.disabled {
+          opacity: 0.3;
+          cursor: default;
+        }
       }
-    }
 
-    .gist-input-id {
-      top: 49px;
+      .gist-input {
+        input {
+          font-size: 15px;
+          margin: 7px 0 7px 0;
+          height: 25px;
+          padding-left: 5px;          
 
-      input {
-        margin: 7px 10px 7px 10px;
-        max-width: 190px;
+          &.error {
+            border-color: red;
+          }
+        }
+
+        div {
+          position: absolute;
+          top: 10px;
+          right: 13px;
+          font-size: 14px;
+          font-weight: bold;
+          background: #fff;
+          cursor: pointer;
+          height: 23px;
+          line-height: 23px;
+          padding: 0 6px;
+          display: none;
+        }
+
+        &:hover, &:focus {
+          div {
+            display: block;
+          }
+        }
       }
 
-      .gist-input-id-save {
-        color: #000;
+      .info {
+        
       }
-    }
 
-    .gist-token-explanation {
-      width: 266px;
-      padding: 5px 10px 5px 10px;
-      right: 6px;
-      top: 56px;
+      .gistbtn {
+        position: relative;
+        a {
+          color: #ffffff;
+          text-decoration: none;
+        }
 
-
-      input {
-        font-size: 15px;
-        width: 98%;
-        margin: 7px 0 7px 0;
-        height: 23px;
+        .gist-token-needed {
+          color: red;
+        }
       }
+
+      .gist-input-name {
+        top: 49px;
+
+        input {
+          margin: 7px 10px 7px 10px;
+          max-width: 190px;
+        }
+
+        .gist-input-name-save {
+          color: #000;
+        }
+      }
+
+      .gist-input-id {
+        top: 49px;
+
+        input {
+          margin: 7px 10px 7px 10px;
+          max-width: 190px;
+        }
+
+        .gist-input-id-save {
+          color: #000;
+        }
+      }
+
+      .gist-token-explanation {
+        width: 266px;
+        padding: 5px 10px 5px 10px;
+        right: 6px;
+        top: 56px;
+
+
+        input {
+          font-size: 15px;
+          width: 98%;
+          margin: 7px 0 7px 0;
+          height: 23px;
+        }
+      }
+
     }
 
     @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }

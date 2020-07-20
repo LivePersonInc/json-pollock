@@ -123,7 +123,7 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(93, 125, 213, 0.8);
+  background-color: rgba(22, 32, 54, 0.8);
 }
 
 #app::after {
@@ -139,24 +139,33 @@ export default {
 
 .splitter-pane-resizer {
   opacity: 1 !important;
-  background-color: #ff720b !important;
+  margin-left: -3px !important;
+  border: solid #ebebeb !important;
+  background: #EBEBED !important;
+  width: 8px !important;
+  margin-top: 36px;
+  height: calc(100% - 98px) !important;
+  // background-color: #ff720b !important;
+  // background-color: #162036 !important;
   
-  &::before {
-    position: absolute;
-    content: '\2022 \2022 \2022';
-    border: solid 2px #ff720b;
-    color: #5879da;
-    top: 50%;
-    width: 8px;
-    border-radius: 5px;
-    background-color: #ffffff;
-    height: 63px;
-    left: -6px;
-  }
+  // &::before {
+  //   position: absolute;
+  //   content: '\2022 \2022 \2022';
+  //   // border: solid 2px #ff720b;
+  //   border: solid 2px #162036;
+  //   // color: #5879da;
+  //   color: #ff720b;
+  //   top: 50%;
+  //   width: 8px;
+  //   border-radius: 5px;
+  //   background-color: #ffffff;
+  //   height: 63px;
+  //   left: -6px;
+  // }
 }
 
 .header_container {
-  height: 40px;
+  height: 60px;
 }
 
 .editor_container {
@@ -164,25 +173,25 @@ export default {
 }
 
 .jsoneditor_container {
-  height: calc(100% - 41px);
+  height: calc(100% - 61px);
   @extend .editor_container;
 }
 
 .jsonpollock_container {
-  height: calc(100% - 43px);
+  height: calc(100% - 63px);
   @extend .editor_container;
 
   &.actions-bar-open {
-    height: calc(100% - 188px);
+    height: calc(100% - 209px);
+    border-bottom: 0px;
   }
 
-  // left: 50%;
-  border: solid #ff720b 1px;
+  border: solid #162036 1px;
   overflow: auto;
 }
 
 .actions_container {
-  border: solid #ff720b 1px;
+  border: solid #ebebee 1px;
   height: 144px;
   overflow: auto;
 }
@@ -200,21 +209,21 @@ export default {
 
 .actions_toggle {
   @extend .actions_btn;
-  right:1px;
+  right:5px;
 
   &.open {
-    bottom: 187px;
+    bottom: 208px;
   }
 
   &.close {
-    bottom: 42px;
+    bottom: 62px;
   }
 }
 
 .actions_clear {
   @extend .actions_btn;
   right: 23px;
-  bottom: 187px;
+  bottom: 208px;
   font-size: 13px;
 }
 </style>
