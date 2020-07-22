@@ -108,3 +108,18 @@
     transition: opacity .15s;
   }
 }
+
+.btn-sml {
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 2px;
+  cursor: hand;
+  color: #fff;
+  padding: 2px 7px;
+  background-color: #6986D8;
+  border: solid #6986D8;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}

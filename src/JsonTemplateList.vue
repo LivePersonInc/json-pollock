@@ -3,10 +3,9 @@
     <div v-for="(tmpl, index) in templates" :key="index" class='json-template-item' @click="$emit('selected', tmpl)">
       <span class="json-template-item-name">{{ tmpl.name }}</span><br>
       <span class="json-template-item-desc" v-tooltip="tmpl.description">{{ tmpl.description }}</span>
-    <div class="json-template-item-channels">
-      <div v-for="(type, index) in tmpl.types" :key="index" class="json-template-item-channel" :class="type" v-tooltip="getChannelName(type)"></div>
-    </div>
-    </div>
+      <div class="json-template-item-channels">
+        <div v-for="(type, index) in tmpl.types" :key="index" class="json-template-item-channel" :class="type" v-tooltip="getChannelName(type)"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -31,9 +30,9 @@ export default {
         case 'fb':
           return 'Facebook';
         case 'line':
-          return 'Line';
+          return 'LINE';
         case 'abc':
-          return 'Apple Business Chat ';
+          return 'Apple Business Chat';
         case 'rcs':
           return 'RCS Business Messaging';
         default:

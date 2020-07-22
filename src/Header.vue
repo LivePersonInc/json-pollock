@@ -14,8 +14,8 @@
             - <b>make sure to check the 'gist' scope.</b><br>
             Once you have generated a token please update it here:<br>
             <input v-model="token"/>
-            <button @click="saveToken" :disabled="!token">Save</button>
-            <button @click="showDescription = false">Cancel</button>
+            <button class="btn-sml" @click="saveToken" :disabled="!token">Save</button>
+            <button class="btn-sml" @click="showDescription = false">Cancel</button>
           </popup>
       </div>
       <div class="gistbtn header-btn weak" v-if="token && !loading">
@@ -53,8 +53,11 @@
           <json-template-list @selected="onTemplateSelected"></json-template-list>
         </popup>
       </div> 
-      <div class="validate-btn header-btn strong" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
-        Validate
+      <div class="validate-btn header-btn strong">
+        <span v-tooltip.bottom="'Validate by Channels'" @click="showValidationDialog = true">Validate</span>
+        <popup class="validation-dialog" v-model="showValidationDialog">
+          <channels-validation @close="showValidationDialog = false"></channels-validation>
+        </popup>
       </div> 
     </div>
   </div>
@@ -65,6 +68,7 @@ import { mapGetters } from 'vuex';
 import Popup from './Popup';
 import GitHubHelper from './GitHubHelper';
 import JsonTemplateList from './JsonTemplateList';
+import ChannelsValidation from './ChannelsValidation';
 
 export default {
   name: 'Header',
@@ -80,12 +84,14 @@ export default {
       showNewGistInput: false,
       showLoadGistInput: false,
       showJsonTemplates: false,
+      showValidationDialog: true,
       descriptionArrwPos: 0,
     };
   },
   components: {
     Popup,
     JsonTemplateList,
+    ChannelsValidation,
   },
   computed: {
     ...mapGetters([
@@ -434,6 +440,14 @@ export default {
         position: relative;
 
         .template-list {
+          top: 49px;
+        }
+      }
+
+      .validate-btn {
+        position: relative;
+
+        .validation-dialog {
           top: 49px;
         }
       }
