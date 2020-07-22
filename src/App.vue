@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header class="header_container"></Header>
+    <Header class="header_container" @templateSelected="onTemplateSelected"></Header>
     <split-pane class="custom-resizer" split="vertical" min-percent=30>
       <template slot="paneL">
         <JSONEditor class="jsoneditor_container" ref="editor"></JSONEditor>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { get } from 'lodash';
 import splitPane from 'vue-splitpane';
 import Header from './Header';
 import JSONEditor from './JSONEditor';
@@ -28,7 +29,7 @@ import JSONPollock from './JSONPollock';
 import ActionsViewer from './ActionsViewer';
 import Message from './Message';
 import GitHubHelper from './GitHubHelper';
-import defaultContent from './defaultContent.json';
+import { defaultTemplate } from './json-templates';
 
 export default {
   name: 'app',
@@ -48,7 +49,7 @@ export default {
   mounted() {
     const loadDefault = () => {
       this.$store.commit('setLoading', false);
-      this.$refs.editor.setJson(defaultContent);
+      this.$refs.editor.setJson(defaultTemplate.content);
     };
     const gistExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('gist=') === 0);
     const gistFileExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('file=') === 0);
@@ -107,6 +108,12 @@ export default {
     },
     clearActionsList() {
       this.$store.commit('clearActions');
+    },
+    onTemplateSelected(template) {
+      const content = get(template, 'content');
+      if (content) {
+        this.$refs.editor.setJson(content);
+      }
     },
   },
 };

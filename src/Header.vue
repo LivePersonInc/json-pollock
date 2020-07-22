@@ -47,10 +47,13 @@
         &#9758; Be sure to mark your issue with the <span style='background-color:#9960ba;color: #000000;border-radius:2px;padding:1px 5px'>playground</span> label &#9756;`">
         Feedback
       </div>
-      <div class="docu header-btn strong" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
-        Templates
+      <div class="templates-btn header-btn strong">
+        <span v-tooltip.bottom="'Select a JSON template'" @click="showJsonTemplates = true">Templates</span>
+        <popup class="template-list" v-model="showJsonTemplates">
+          <json-template-list @selected="onTemplateSelected"></json-template-list>
+        </popup>
       </div> 
-      <div class="docu header-btn strong" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
+      <div class="validate-btn header-btn strong" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
         Validate
       </div> 
     </div>
@@ -61,6 +64,7 @@
 import { mapGetters } from 'vuex';
 import Popup from './Popup';
 import GitHubHelper from './GitHubHelper';
+import JsonTemplateList from './JsonTemplateList';
 
 export default {
   name: 'Header',
@@ -75,11 +79,13 @@ export default {
       saving: false,
       showNewGistInput: false,
       showLoadGistInput: false,
+      showJsonTemplates: false,
       descriptionArrwPos: 0,
     };
   },
   components: {
     Popup,
+    JsonTemplateList,
   },
   computed: {
     ...mapGetters([
@@ -128,6 +134,10 @@ export default {
       if (this.gistUrl) {
         window.open(this.gistUrl, '_blank');
       }
+    },
+    onTemplateSelected(template) {
+      this.$emit('templateSelected', template);
+      this.showJsonTemplates = false;
     },
     saveToken() {
       if (this.token) {
@@ -417,6 +427,14 @@ export default {
           width: 98%;
           margin: 7px 0 7px 0;
           height: 23px;
+        }
+      }
+
+      .templates-btn {
+        position: relative;
+
+        .template-list {
+          top: 49px;
         }
       }
 
