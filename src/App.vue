@@ -194,7 +194,6 @@ export default {
   }
 
   border: solid #162036 1px;
-  overflow: auto;
 }
 
 .actions_container {
