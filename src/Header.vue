@@ -53,7 +53,7 @@
           <json-template-list @selected="onTemplateSelected"></json-template-list>
         </popup>
       </div> 
-      <div class="validate-btn header-btn strong">
+      <div class="validate-btn header-btn strong" :class="{ disabled: validateDisabled }">
         <span v-tooltip.bottom="'Validate by Channels'" @click="showValidationDialog = true">Validate</span>
         <popup class="validation-dialog" v-model="showValidationDialog">
           <channels-validation @close="showValidationDialog = false"></channels-validation>
@@ -84,7 +84,7 @@ export default {
       showNewGistInput: false,
       showLoadGistInput: false,
       showJsonTemplates: false,
-      showValidationDialog: true,
+      showValidationDialog: false,
       descriptionArrwPos: 0,
     };
   },
@@ -101,6 +101,7 @@ export default {
       'json',
       'jsonValid',
       'edited',
+      'schemaValid',
     ]),
     isGistOwner() {
       return !!(this.gist && this.user && this.gist.ownerId === this.user.id);
@@ -131,6 +132,10 @@ export default {
     saveDisabled() {
       return !this.edited || !this.jsonValid;
     },
+    validateDisabled() {
+      return !this.schemaValid;
+    },
+
   },
   methods: {
     onLogoClick() {
@@ -446,6 +451,11 @@ export default {
 
       .validate-btn {
         position: relative;
+
+        &.disabled {
+          opacity: 0.3;
+          cursor: default;
+        }
 
         .validation-dialog {
           top: 49px;

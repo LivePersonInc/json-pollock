@@ -94,6 +94,9 @@ export default {
           this.$store.commit('setJsonValid', false);
         }
       },
+      onValidationError: (errors) => {
+        this.$store.commit('setSchemaValid', (errors || []).length === 0);
+      },
     };
 
     editor = new JSONEditor(this.$refs.jsoneditor, options);

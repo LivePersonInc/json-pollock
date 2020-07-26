@@ -15,7 +15,7 @@
     "babel-polyfill": "^6.26.0",
     "json-pollock": "^1.0.22",
     "json-source-map": "^0.4.0",
-    "jsoneditor": "^5.10.1",
+    "jsoneditor": "^9.0.3",
     "lodash": "^4.17.4",
     "lodash.assign": "^4.2.0",
     "lodash.clonedeep": "^4.5.0",
