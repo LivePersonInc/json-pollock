@@ -1,6 +1,9 @@
 <template>
-  <div ref="popup" class="popup" v-if="value" tabindex="1" @focusout="onFocusOut" @focusin="onFocusIn" :style="autoPosition && `left:${leftOffset || popupLeftOffset}px`">
-    <div class="popup_arrow top" :style="`left:${topArrowLeftOffset}px`" v-show="hasTopArrow">
+  <div ref="popup" class="popup" v-if="value" tabindex="1" 
+    @focusout="onFocusOut" @focusin="onFocusIn"
+    :style="autoPosition && `left:${leftOffset || popupLeftOffset}px`">
+    <div v-if="pinnable" class="popup_pin" :class="{'pinned': pinned}" v-tooltip="pinned ? '' : 'Pin Window'" @click="pinned = true" @mousedown="dragMouseDown"></div>
+    <div v-if="!pinned" class="popup_arrow top" :style="`left:${topArrowLeftOffset}px`" v-show="hasTopArrow">
       <div class="popup_arrow_border"></div>
       <div class="popup_arrow_body"></div>
     </div>
@@ -43,6 +46,11 @@ export default {
       required: false,
       default: true,
     },
+    pinnable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   components: {},
   watch: {
@@ -57,12 +65,13 @@ export default {
     },
     hide() {
       this.visible = false;
+      this.pinned = false;
       this.$emit('input', false);
     },
     onFocusOut() {
       this.onfocus = false;
       setTimeout(() => {
-        if (this.autoClose && !this.onfocus) {
+        if (this.autoClose && !this.onfocus && !this.pinned) {
           this.hide();
         }
       }, 10);
@@ -93,13 +102,42 @@ export default {
         }
       }
     },
+    dragMouseDown(e) {
+      if (this.pinned) {
+        e.preventDefault();
+        this.positions.clientX = e.clientX;
+        this.positions.clientY = e.clientY;
+        document.onmousemove = this.elementDrag;
+        document.onmouseup = this.closeDragElement;
+      }
+    },
+    elementDrag(e) {
+      event.preventDefault();
+      this.positions.movementX = this.positions.clientX - e.clientX;
+      this.positions.movementY = this.positions.clientY - e.clientY;
+      this.positions.clientX = e.clientX;
+      this.positions.clientY = e.clientY;
+      this.$refs.popup.style.top = `${this.$refs.popup.offsetTop - this.positions.movementY}px`;
+      this.$refs.popup.style.left = `${this.$refs.popup.offsetLeft - this.positions.movementX}px`;
+    },
+    closeDragElement() {
+      document.onmouseup = null;
+      document.onmousemove = null;
+    },
   },
   data() {
     return {
       visible: false,
       onfocus: false,
+      pinned: false,
       topArrowLeftOffset: 0,
       popupLeftOffset: 0,
+      positions: {
+        clientX: undefined,
+        clientY: undefined,
+        movementX: 0,
+        movementY: 0,
+      },
     };
   },
   updated() {
@@ -108,6 +146,8 @@ export default {
       this.$refs.popup.focus();
       // here we can be sure that the slot contents are also available
       this.$emit('input', true);
+    } else if (!this.visible) {
+      this.pinned = false;
     }
   },
 };
@@ -121,6 +161,24 @@ export default {
   z-index: 999;
   border-radius: 5px;
   outline: none;
+
+  .popup_pin {
+    margin: 13px;
+    float: right;
+    background: url('assets/16x16-sprite.png') no-repeat -841px 0;
+    width: 16px;
+    height: 16px;
+
+    &.pinned {
+      width: 100%;
+      background: #ebebebeb;
+      margin: 0px;
+      border-radius: 5px 5px 0px 0px;
+      height: 18px;
+      position: absolute;
+      cursor: move;
+    }
+  }
 
   .popup_arrow {
     position: absolute;

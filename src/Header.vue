@@ -53,10 +53,10 @@
           <json-template-list @selected="onTemplateSelected"></json-template-list>
         </popup>
       </div> 
-      <div class="validate-btn header-btn strong" :class="{ disabled: validateDisabled }">
+      <div class="validate-btn header-btn strong">
         <span class="header-btn-title" v-tooltip.bottom="'Validate by Channels'" @click="showValidationDialog = true">Validate</span>
-        <popup class="validation-dialog" v-model="showValidationDialog">
-          <channels-validation @close="showValidationDialog = false"></channels-validation>
+        <popup class="validation-dialog" v-model="showValidationDialog" :pinnable="true">
+          <channels-validation @close="showValidationDialog = false" :validateDisabled="validateDisabled"></channels-validation>
         </popup>
       </div> 
     </div>

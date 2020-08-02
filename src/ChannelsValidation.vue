@@ -64,7 +64,7 @@
       </div>
     </div>
     <div class="channel-validate-btns">
-      <button class="btn-sml" @click="validate" :disabled="!validationSelected">Validate</button>
+      <button class="btn-sml" @click="validate" :disabled="!validationSelected || validateDisabled">Validate</button>
       <button class="btn-sml" @click="resetAll" >Reset</button>
       <button class="btn-sml" @click="$emit('close')">Close</button>
     </div>
@@ -90,6 +90,13 @@ each(channels, (channel) => {
 
 export default {
   name: 'channels-validation',
+  props: {
+    validateDisabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   data() {
     return dataObj;
   },
