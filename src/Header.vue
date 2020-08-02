@@ -8,7 +8,7 @@
       <div class="loginbtn">
           <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Login to GitHub'" @click="showDescription = true">
           <img v-else :src='user.avatar_url' v-tooltip.bottom='user && (user.name || user.login)' @click="showDescription = true">
-          <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="256" :autoPosition="false">
+          <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="248" :autoPosition="false">
             In order to be able to load content from GitHub <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
             you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token</a>
             - <b>make sure to check the 'gist' scope.</b><br>
@@ -19,9 +19,9 @@
           </popup>
       </div>
       <div class="gistbtn header-btn weak" v-if="token && !loading">
-        <a v-if="gistName && token" :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle">View on Github</a>
-        <span v-else-if="gistName && !token" class='gist-token-needed' @click="showDescription = true">Access token is required</span>
-        <span v-else v-tooltip.bottom="'Load Gist by ID'" @click="showLoadGistInput = true">Load</span>
+        <a v-if="gistName && token" :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle"><span class="header-btn-title">View on Github</span></a>
+        <span v-else-if="gistName && !token" class='header-btn-title gist-token-needed' @click="showDescription = true">Access token is required</span>
+        <span class="header-btn-title" v-else v-tooltip.bottom="'Load Gist by ID'" @click="showLoadGistInput = true">Load</span>
         <popup class="gist-input gist-input-id" v-model="showLoadGistInput">
           <input ref="gistNameInput" v-model="gistId" placeholder="Gist ID..."/>
           <div v-if="gistId" class="gist-input-id-save" @click="loadGist">Go</div>
@@ -31,30 +31,30 @@
         v-tooltip.bottom="isGistOwner && gist ? 'Save' : 'Save as a new Gist'">
         <img v-if="!saving" src='./assets/save.svg'>
         <img v-if="saving" src='./assets/sync.svg' class="saving">
-        Save
+        <span class="header-btn-title">Save</span>
         <popup class="gist-input gist-input-name" v-model="showNewGistInput" :leftOffset="8">
           <input ref="gistNameInput" v-model="newGistName" placeholder="Gist Name..."/>
           <div v-if="newGistName" class="gist-input-name-save" @click="createGist">Save</div>
         </popup>
       </div>
       <div class="docu header-btn weak" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
-        Documentation
+        <span class="header-btn-title">Documentation</span>
       </div>    
       <div class="info header-btn weak" @click="gotoGitHubIssues"
         v-tooltip.bottom="`
         For fixes and improvements of this tool: <br> 
         Click this button and open an issue on our GitHub repo! <br>
         &#9758; Be sure to mark your issue with the <span style='background-color:#9960ba;color: #000000;border-radius:2px;padding:1px 5px'>playground</span> label &#9756;`">
-        Feedback
+        <span class="header-btn-title">Feedback</span>
       </div>
       <div class="templates-btn header-btn strong">
-        <span v-tooltip.bottom="'Select a JSON template'" @click="showJsonTemplates = true">Templates</span>
+        <span class="header-btn-title" v-tooltip.bottom="'Select a JSON template'" @click="showJsonTemplates = true">Templates</span>
         <popup class="template-list" v-model="showJsonTemplates">
           <json-template-list @selected="onTemplateSelected"></json-template-list>
         </popup>
       </div> 
       <div class="validate-btn header-btn strong" :class="{ disabled: validateDisabled }">
-        <span v-tooltip.bottom="'Validate by Channels'" @click="showValidationDialog = true">Validate</span>
+        <span class="header-btn-title" v-tooltip.bottom="'Validate by Channels'" @click="showValidationDialog = true">Validate</span>
         <popup class="validation-dialog" v-model="showValidationDialog">
           <channels-validation @close="showValidationDialog = false"></channels-validation>
         </popup>
@@ -262,7 +262,10 @@ export default {
       cursor: hand;
       color: #fff;
       margin: 13px 20px 13px 0;
-      padding: 4px 14px;
+      
+      .header-btn-title {
+        padding: 4px 14px;
+      }
 
       &.strong {
         background-color: #ff720b;
@@ -330,12 +333,12 @@ export default {
       }
 
       .savebtn {
-        padding-left: 38px;
+        padding-left: 23px;
         position: relative;
 
         img {
           position: absolute;
-          top: 3px;
+          top: 1px;
           left: 8px;
 
           &.saving {
@@ -401,7 +404,7 @@ export default {
       }
 
       .gist-input-name {
-        top: 49px;
+        top: 42px;
 
         input {
           margin: 7px 10px 7px 10px;
@@ -414,7 +417,7 @@ export default {
       }
 
       .gist-input-id {
-        top: 49px;
+        top: 42px;
 
         input {
           margin: 7px 10px 7px 10px;
@@ -427,10 +430,10 @@ export default {
       }
 
       .gist-token-explanation {
+        top: 62px;
         width: 266px;
         padding: 5px 10px 5px 10px;
         right: 6px;
-        top: 56px;
 
 
         input {
@@ -445,7 +448,7 @@ export default {
         position: relative;
 
         .template-list {
-          top: 49px;
+          top: 42px;
         }
       }
 
@@ -458,7 +461,7 @@ export default {
         }
 
         .validation-dialog {
-          top: 49px;
+          top: 42px;
         }
       }
 
