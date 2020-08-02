@@ -1,0 +1,38 @@
+{
+  "type": "vertical",
+  "elements": [
+    {
+      "type": "vertical",
+      "elements": [
+        {
+          "type": "image",
+          "url": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/New_Japan_Pro_Wrestling_Logo_2.svg/1200px-New_Japan_Pro_Wrestling_Logo_2.svg.png"
+        },
+        {
+          "type": "text",
+          "tag": "title",
+          "text": "(Title:) This is the New Japan Lion"
+        },
+        {
+          "type": "text",
+          "tag": "subtitle",
+          "text": "(Subtitle:) He likes to Roar"
+        },
+        {
+          "type": "button",
+          "title": "Go to NJPW Homepage!",
+          "click": {
+            "actions": [
+              {
+                "type": "link",
+                "uri": "https://www.njpw1972.com"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "tag": "generic",
+  "alt": "Pssst Kid, wanna now something bout New Japan?"
+}
