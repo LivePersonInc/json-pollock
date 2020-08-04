@@ -161,8 +161,10 @@ export default {
       if (isString(error)) {
         return error;
       }
+      //  dataPath array locations ([0], [1], etc) will be replaced with [?] as the validation index
+      //  is not reliable due to reordering made by the validaton lib
       return `<span class="channel-error-type">${isString(error.data) ? error.data : error.data.type || ''}</span>
-      <span class="channel-error-path">${error.dataPath}</span>
+      <span class="channel-error-path">${(error.dataPath || '').replace(/\[\d+\]/g, '[?]')}</span>
       <span class="channel-error-msg">${error.message} ${isObject(error.params) ? JSON.stringify(error.params) : error.params}</span>`;
     },
   },
