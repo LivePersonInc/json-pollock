@@ -107,8 +107,10 @@ export default {
   methods: {
     validate() {
       this.resetResults();
+      const gaInput = [];
       if (this.validate_abc) {
         this.validating_abc = true;
+        gaInput.push('abc');
         this.$nextTick(() => {
           this.results_abc = this.validateChannel(RcChannels.ABC);
           this.validating_abc = false;
@@ -116,6 +118,7 @@ export default {
       }
       if (this.validate_fb) {
         this.validating_fb = true;
+        gaInput.push('fb');
         this.$nextTick(() => {
           this.results_fb = this.validateChannel(RcChannels.FB);
           this.validating_fb = false;
@@ -123,6 +126,7 @@ export default {
       }
       if (this.validate_line) {
         this.validating_line = true;
+        gaInput.push('line');
         this.$nextTick(() => {
           this.results_line = this.validateChannel(RcChannels.LINE);
           this.validating_line = false;
@@ -130,11 +134,13 @@ export default {
       }
       if (this.validate_rcs) {
         this.validating_rcs = true;
+        gaInput.push('rbm');
         this.$nextTick(() => {
           this.results_rcs = this.validateChannel(RcChannels.RBM);
           this.validating_rcs = false;
         });
       }
+      this.ga(['Validation', 'validate', gaInput.join(',')]);
     },
     validateChannel(channel) {
       rcValidator.setChannelTo(channel);

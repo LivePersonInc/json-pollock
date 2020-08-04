@@ -1,6 +1,6 @@
 <template>
   <div class='json-template-list'>
-    <div v-for="(tmpl, index) in templates" :key="index" class='json-template-item' @click="$emit('selected', tmpl)">
+    <div v-for="(tmpl, index) in templates" :key="index" class='json-template-item' @click="onTemplateSelected(tmpl)">
       <span class="json-template-item-name">{{ tmpl.name }}</span><br>
       <span class="json-template-item-desc" v-tooltip="tmpl.description">{{ tmpl.description }}</span>
       <div class="json-template-item-channels">
@@ -38,6 +38,10 @@ export default {
         default:
           return '';
       }
+    },
+    onTemplateSelected(tmpl) {
+      this.$emit('selected', tmpl);
+      this.ga(['Templates', 'selection', tmpl.name]);
     },
   },
   computed: {
