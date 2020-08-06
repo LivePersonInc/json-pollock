@@ -44,7 +44,7 @@
         v-tooltip.bottom="`
         For fixes and improvements of this tool: <br> 
         Click this button and open an issue on our GitHub repo! <br>
-        &#9758; Be sure to mark your issue with the <span style='background-color:#9960ba;color: #000000;border-radius:2px;padding:1px 5px'>playground</span> label &#9756;`">
+        Be sure to mark your issue with the <span style='background-color:#9960ba;color: #000000;border-radius:15px;padding:1px 8px';font-weight:bold;>playground</span> label`">
         <span class="header-btn-title">Feedback</span>
       </div>
       <div class="templates-btn header-btn strong">
