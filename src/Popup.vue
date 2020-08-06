@@ -171,7 +171,7 @@ export default {
 
     &.pinned {
       width: 100%;
-      background: #ebebebeb;
+      background: #ebebeb;
       margin: 0px;
       border-radius: 5px 5px 0px 0px;
       height: 18px;
