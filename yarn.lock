@@ -4296,10 +4296,9 @@ lower-case@^1.1.1:
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/lower-case/-/lower-case-1.1.4.tgz#9a2cabd1b9e8e0ae993a4bf7d5875c39c42e8eac"
   integrity sha1-miyr0bno4K6ZOkv31YdcOcQujqw=
 
-lp-rich-content-validator@^1.1.0:
+"lp-rich-content-validator@git+https://7c06979a4c1ace1100a386b0ab64822ea3d3b854:x-oauth-basic@lpgithub.dev.lprnd.net/meirr/lp-rich-content-validator.git":
   version "1.1.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/lp-rich-content-validator/-/lp-rich-content-validator-1.1.0.tgz#6230ff967ed709562d6f541e8b45ae92b790d960"
-  integrity sha1-YjD/ln7XCVYtb1Qei0WukreQ2WA=
+  resolved "git+https://7c06979a4c1ace1100a386b0ab64822ea3d3b854:x-oauth-basic@lpgithub.dev.lprnd.net/meirr/lp-rich-content-validator.git#396b08eff6d4f73503e0ef2658f230e858228942"
   dependencies:
     ajv "^6.12.0"
     tslib "2.0.0"
