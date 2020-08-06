@@ -277,6 +277,9 @@ export default {
         border: solid #6986D8;
       }
 
+      @media screen and (max-width: 400px) {
+        display: none;
+      }
     }
 
     input {
@@ -301,7 +304,7 @@ export default {
       }
     }
 
-    @media screen and (max-width: 992px) {
+    @media screen and (max-width: 1160px) {
       .title {
         width: 30px;
         .title-text {
@@ -330,6 +333,9 @@ export default {
       }
 
       .docu {
+        @media screen and (max-width: 890px) {
+          display: none;
+        }
       }
 
       .savebtn {
@@ -351,6 +357,10 @@ export default {
         &.disabled {
           opacity: 0.3;
           cursor: default;
+        }
+
+        @media screen and (max-width: 640px) {
+          display: none;
         }
       }
 
@@ -385,10 +395,13 @@ export default {
             display: block;
           }
         }
+        
       }
 
       .info {
-        
+        @media screen and (max-width: 890px) {
+          display: none;
+        }
       }
 
       .gistbtn {
@@ -400,6 +413,10 @@ export default {
 
         .gist-token-needed {
           color: red;
+        }
+
+        @media screen and (max-width: 640px) {
+          display: none;
         }
       }
 
