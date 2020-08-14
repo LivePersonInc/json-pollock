@@ -152,23 +152,6 @@ export default {
   width: 8px !important;
   margin-top: 36px;
   height: calc(100% - 98px) !important;
-  // background-color: #ff720b !important;
-  // background-color: #162036 !important;
-  
-  // &::before {
-  //   position: absolute;
-  //   content: '\2022 \2022 \2022';
-  //   // border: solid 2px #ff720b;
-  //   border: solid 2px #162036;
-  //   // color: #5879da;
-  //   color: #ff720b;
-  //   top: 50%;
-  //   width: 8px;
-  //   border-radius: 5px;
-  //   background-color: #ffffff;
-  //   height: 63px;
-  //   left: -6px;
-  // }
 }
 
 .header_container {
