@@ -7,6 +7,7 @@
     color: white;
     border-radius: 5x;
     padding: 5px 10px 4px;
+    max-width: 300px;
   }
 
   .tooltip-arrow {
@@ -105,5 +106,20 @@
     visibility: visible;
     opacity: 1;
     transition: opacity .15s;
+  }
+}
+
+.btn-sml {
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 2px;
+  cursor: hand;
+  color: #fff;
+  padding: 2px 7px;
+  background-color: #6986D8;
+  border: solid #6986D8;
+
+  &:disabled {
+    opacity: 0.5;
   }
 }

@@ -1,15 +1,19 @@
 <template>
   <div ref='jsonpollock' class='jsonpollock'>
+    <div class="json_pollock_v">v.{{version}}</div>
     <div class="go_to_code_btn" v-tooltip="{ content: 'Click an element<br>to select its text<br>on the Code Editor', delay: { show: 500 }, placement: 'bottom' }">
-      <toggle-button color="#5879da"
+      <toggle-button :color="{checked: '#6986D8', unchecked: '#a3a3a3'}" switch-color="#162036"
         :width=115
         :labels="{ checked: 'Go To Code: ON', unchecked: 'Go To Code: OFF' }"
         v-model="goToCodeEnabled"
         @change="ga(['GoToCode','toogle',goToCodeEnabled])"/>
     </div>
-    <div class='dom_parent' ref="domParent">
-      <div class="json_pollock_v">v.{{version}}</div>
-      <div class='dom_container' :class="{locate_element: goToCodeEnabled}" ref='dom_container' v-bind:style="styleObject"/>
+    <div class="pollock_container">
+      <div class='dom_parent' ref="domParent">
+      <div calss="dom_wrapper">
+        <div class='dom_container' :class="{locate_element: goToCodeEnabled}" ref='dom_container' v-bind:style="styleObject"/>
+      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -133,49 +137,63 @@ export default {
 
 <style lang="scss">
 
-  .go_to_code_btn {
-    position: absolute;
-    top: 4px;
-    right: 4px;
+  .json_pollock_v {
+    padding: 10px;
+    text-align: center;
+    background: #162036;
+    color: #fff;
+    height: 15px;
+    line-height: 15px;
   }
 
-  .dom_parent {
-    position: relative;
+  .go_to_code_btn {
+    position: absolute;
+    top: 5px;
+    right: 8px;
 
-    .json_pollock_v {
-      margin-top: 10px;
-      text-align: center;
+    .v-switch-core {
+      z-index: 1;
     }
+  }
 
-    .dom_container{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 200px;
-      transform: translate(-50%, 45px);
-      padding-bottom: 20px;
+  .pollock_container {
+    height: calc( 100% - 35px); 
+    width: 100%;
+    overflow: auto;
 
-      &.locate_element {
-        .lp-json-pollock {
-          border: solid;
-          border-color: #5879da;
-          padding: 2px;
+    .dom_parent {
+      position: relative;
 
-          .playground_el {
-            position: relative;
-            &:hover:after {
-              content: ' ';
-              border: solid;
-              border-color: #200ce8;
-              border-width: 2px;
-              position: absolute;
-              top: -2px;
-              left: 0px;
-              width: 98%;
-              height: 98%;
-              cursor: pointer;
-              background-color: #3883fa;
-              opacity: 0.2;
+      .dom_container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 200px;
+        transform: translate(-50%, 45px);
+        padding-bottom: 20px;
+
+        &.locate_element {
+          .lp-json-pollock {
+            border: solid;
+            border-color: #5879da;
+            padding: 2px;
+
+            .playground_el {
+              position: relative;
+              &:hover:after {
+                content: ' ';
+                border: solid;
+                border-color: #200ce8;
+                border-width: 2px;
+                position: absolute;
+                top: -2px;
+                left: 0px;
+                width: 98%;
+                height: 98%;
+                cursor: pointer;
+                background-color: #3883fa;
+                opacity: 0.2;
+              }
             }
           }
         }

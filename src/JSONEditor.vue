@@ -94,6 +94,9 @@ export default {
           this.$store.commit('setJsonValid', false);
         }
       },
+      onValidationError: (errors) => {
+        this.$store.commit('setSchemaValid', (errors || []).length === 0);
+      },
     };
 
     editor = new JSONEditor(this.$refs.jsoneditor, options);
@@ -130,11 +133,14 @@ export default {
 <style lang="scss">
   @import '../node_modules/jsoneditor/dist/jsoneditor.css';
   div.jsoneditor {
-    border: thin solid #ff720b;
+    border: thin solid #162036;
     div.jsoneditor-menu {
-    background-color: #ff720b;
-    border-bottom: 1px solid #ff720b;
-  }
+      background-color: #162036;
+      border-bottom: 1px solid #162036;
+    }
+    div.jsoneditor-contextmenu ul li button.jsoneditor-selected {
+      background-color: #162036;
+    }
   }
   .jsoneditor-loading {
     position: absolute;
@@ -144,6 +150,7 @@ export default {
     width: 100%;
     text-align: center;
     display: table;
+    color: #162036;
 
     span {
       font-size: 30px;

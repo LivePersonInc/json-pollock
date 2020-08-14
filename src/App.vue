@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header class="header_container"></Header>
+    <Header class="header_container" @templateSelected="onTemplateSelected"></Header>
     <split-pane class="custom-resizer" split="vertical" min-percent=30>
       <template slot="paneL">
         <JSONEditor class="jsoneditor_container" ref="editor"></JSONEditor>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { get } from 'lodash';
 import splitPane from 'vue-splitpane';
 import Header from './Header';
 import JSONEditor from './JSONEditor';
@@ -28,7 +29,7 @@ import JSONPollock from './JSONPollock';
 import ActionsViewer from './ActionsViewer';
 import Message from './Message';
 import GitHubHelper from './GitHubHelper';
-import defaultContent from './defaultContent.json';
+import { defaultTemplate } from './json-templates';
 
 export default {
   name: 'app',
@@ -48,7 +49,7 @@ export default {
   mounted() {
     const loadDefault = () => {
       this.$store.commit('setLoading', false);
-      this.$refs.editor.setJson(defaultContent);
+      this.$refs.editor.setJson(defaultTemplate.content);
     };
     const gistExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('gist=') === 0);
     const gistFileExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('file=') === 0);
@@ -108,11 +109,17 @@ export default {
     clearActionsList() {
       this.$store.commit('clearActions');
     },
+    onTemplateSelected(template) {
+      const content = get(template, 'content');
+      if (content) {
+        this.$refs.editor.setJson(content);
+      }
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -123,7 +130,7 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(93, 125, 213, 0.8);
+  background-color: rgba(22, 32, 54, 0.8);
 }
 
 #app::after {
@@ -137,8 +144,18 @@ export default {
   z-index: -1;
 }
 
+.splitter-pane-resizer {
+  opacity: 1 !important;
+  margin-left: -3px !important;
+  border: solid #ebebeb !important;
+  background: #EBEBED !important;
+  width: 8px !important;
+  margin-top: 36px;
+  height: calc(100% - 98px) !important;
+}
+
 .header_container {
-  height: 40px;
+  height: 60px;
 }
 
 .editor_container {
@@ -146,25 +163,24 @@ export default {
 }
 
 .jsoneditor_container {
-  height: calc(100% - 41px);
+  height: calc(100% - 61px);
   @extend .editor_container;
 }
 
 .jsonpollock_container {
-  height: calc(100% - 43px);
+  height: calc(100% - 63px);
   @extend .editor_container;
 
   &.actions-bar-open {
-    height: calc(100% - 188px);
+    height: calc(100% - 209px);
+    border-bottom: 0px;
   }
 
-  // left: 50%;
-  border: solid #ff720b 1px;
-  overflow: auto;
+  border: solid #162036 1px;
 }
 
 .actions_container {
-  border: solid #ff720b 1px;
+  border: solid #ebebee 1px;
   height: 144px;
   overflow: auto;
 }
@@ -182,21 +198,21 @@ export default {
 
 .actions_toggle {
   @extend .actions_btn;
-  right:1px;
+  right:5px;
 
   &.open {
-    bottom: 187px;
+    bottom: 208px;
   }
 
   &.close {
-    bottom: 42px;
+    bottom: 62px;
   }
 }
 
 .actions_clear {
   @extend .actions_btn;
   right: 23px;
-  bottom: 187px;
+  bottom: 208px;
   font-size: 13px;
 }
 </style>

@@ -1,0 +1,22 @@
+{
+  "type": "vertical",
+  "tag": "richLink",
+  "elements": [
+    {
+      "type": "image",
+      "url": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/New_Japan_Pro_Wrestling_Logo_2.svg/1200px-New_Japan_Pro_Wrestling_Logo_2.svg.png"
+    },
+    {
+      "type": "button",
+      "title": "New Japans Homepage",
+      "click": {
+        "actions": [
+          {
+            "type": "link",
+            "uri": "https://www.njpw1972.com"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -21,6 +21,7 @@ const store = new Vuex.Store({
   state: {
     json: undefined,
     jsonValid: true,
+    schemaValid: true,
     edited: false,
     loading: false,
     jsonSelectionPath: '',
@@ -44,6 +45,9 @@ const store = new Vuex.Store({
     },
     setJsonValid(state, bool) {
       state.jsonValid = bool;
+    },
+    setSchemaValid(state, bool) {
+      state.schemaValid = bool;
     },
     setEdited(state, bool) {
       state.edited = bool;
@@ -94,6 +98,7 @@ const store = new Vuex.Store({
     message: state => state.message,
     user: state => state.user,
     jsonValid: state => state.jsonValid,
+    schemaValid: state => state.schemaValid,
     edited: state => state.edited,
     actions: state => state.actions,
     jsonSelectionPath: state => state.jsonSelectionPath,
