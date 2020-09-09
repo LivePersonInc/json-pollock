@@ -700,12 +700,28 @@ describe('json-pollock tests', function () {
       chai.expect(carouselRight.className).to.contain('lp-json-pollock-layout-carousel-arrow');
     });
 
+    it('carousel arrow right has role attribute', function () {
+      chai.expect(carouselRight.getAttribute('role')).to.be.equal('button');
+    });
+
+    it('carousel arrow right has aria-label attribute', function () {
+      chai.expect(carouselRight.getAttribute('aria-label')).to.be.equal('Next');
+    });
+
     it('carousel arrow right holds component action mark', function () {
       chai.expect(carouselRight.className).to.contain('lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow');
     });
 
     it('carousel arrow left exist', function () {
       chai.expect(carouselLeft.className).to.contain('lp-json-pollock-layout-carousel-arrow left');
+    });
+
+    it('carousel arrow left has role attribute', function () {
+      chai.expect(carouselLeft.getAttribute('role')).to.be.equal('button');
+    });
+
+    it('carousel arrow left has aria-label attribute', function () {
+      chai.expect(carouselLeft.getAttribute('aria-label')).to.be.equal('Previous');
     });
 
     it('carousel arrow left holds component action mark', function () {
