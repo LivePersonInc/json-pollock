@@ -108,6 +108,7 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[2].className).to.equal('lp-json-pollock-element-button');
       chai.expect(layout.childNodes[2].childNodes[0].localName).to.equal('button');
       chai.expect(layout.childNodes[2].childNodes[0].title).to.equal('button tooltip');
+      chai.expect(layout.childNodes[2].childNodes[0].getAttribute('aria-label')).to.equal('Add to cart');
       chai.expect(layout.childNodes[2].childNodes[0].textContent).to.equal('Add to cart');
     });
 
@@ -2864,22 +2865,22 @@ describe('json-pollock tests', function () {
     });
 
     it('expect validate function to throw error for non valid json', function () {
-      
+
       var jsonBAD = {
-        "type": "text",        
+        "type": "text",
         "tooltip": "text tooltip"
       };
-      
+
       chai.expect(JsonPollock.validate.bind(JsonPollock, jsonBAD)).to.throw(SCHEMA_VALIDATION_ERR);
     });
 
     it('expect validate function to throw error non json input', function () {
-      
+
       var jsonBAD = JSON.stringify({
-        "type": "text",        
+        "type": "text",
         "tooltip": "text tooltip"
       });
-      
+
       chai.expect(JsonPollock.validate.bind(JsonPollock, jsonBAD)).to.throw(SCHEMA_VALIDATION_INPT_ERR);
     });
 
