@@ -64,10 +64,10 @@ export default class ElementRendererProvider {
 
       const btnEl = document.createElement('button');
       btnEl.innerHTML = Utils.normalizeHtmlText(config.title);
+      btnEl.setAttribute('aria-label', config.title);
 
       if (config.tooltip) {
         btnEl.title = config.tooltip;
-        btnEl.setAttribute('aria-label', config.tooltip);
       }
       if (config.style) {
         const style = Utils.styleToCss(config.style);
@@ -97,14 +97,13 @@ export default class ElementRendererProvider {
       const sbtEl = document.createElement('input');
       sbtEl.type = 'submit';
       sbtEl.value = Utils.normalizeHtmlText(config.title);
-
+      sbtEl.setAttribute('aria-label', config.title);
       if (config.disabled) {
         sbtEl.disabled = true;
         sbtEl.classList.add('lp-json-pollock-element-submit-button-disabled');
       }
       if (config.tooltip) {
         sbtEl.title = config.tooltip;
-        sbtEl.setAttribute('aria-label', config.tooltip);
       }
       if (config.style) {
         const style = Utils.styleToCss(config.style);
