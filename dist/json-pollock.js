@@ -6899,6 +6899,11 @@ var ElementRendererProvider = function () {
       var carouselItemIndex = 0;
       var cards = void 0;
 
+      arrowRight.setAttribute('role', 'button');
+      arrowRight.setAttribute('aria-label', 'Next');
+      arrowLeft.setAttribute('role', 'button');
+      arrowLeft.setAttribute('aria-label', 'Previous');
+
       function setShowingCard(event) {
         if (!cards || !cards[carouselItemIndex]) {
           return;
