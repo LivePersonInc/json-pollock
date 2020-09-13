@@ -178,6 +178,7 @@
     .lp-json-pollock-layout-carousel-wrapper {
         overflow: hidden;
         position: relative;
+        direction: ltr;
         &:hover{
             .lp-json-pollock-layout-carousel-arrow{
                 opacity: 1;
