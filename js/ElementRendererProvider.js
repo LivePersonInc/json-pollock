@@ -335,6 +335,7 @@ export default class ElementRendererProvider {
       const carousel = document.createElement('div');
       const carouselOffsetChangedEventName = 'carouselOffsetChange';
       let carouselItemIndex = 0;
+      let isRTLDirection = false;
       let cards;
 
       arrowRight.setAttribute('role', 'button');
@@ -346,7 +347,7 @@ export default class ElementRendererProvider {
         if (!cards || !cards[carouselItemIndex]) {
           return;
         }
-        nextLeft = `-${cards[carouselItemIndex].offsetLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+        nextLeft = `${-1 * cards[carouselItemIndex].offsetLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
 
         // Right align the last card in the carousel
         if (carouselItemIndex === cards.length - 1) {
@@ -437,6 +438,16 @@ export default class ElementRendererProvider {
             }
             // Set up card reference for carousel
             cards = carousel.children;
+            isRTLDirection = window.getComputedStyle(arrowRight).direction === 'rtl';
+
+            if (isRTLDirection) {
+              arrowLeft.style.visibility = 'visible';
+              arrowRight.style.visibility = 'hidden';
+              carouselItemIndex = cards.length - 1;
+              cards = [].slice.call(cards, 0).reverse();
+              nextLeft = `-${cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)}px`;
+              (carousel: any).style.left = nextLeft;
+            }
           }, 0);
           arrowRight.onclick = (event) => {
             rightArrowClicked.call(this, event);
