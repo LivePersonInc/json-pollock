@@ -351,7 +351,7 @@ export default class ElementRendererProvider {
 
         // Right align the last card in the carousel
         if (carouselItemIndex === cards.length - 1) {
-          nextLeft = `-${cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)}px`;
+          nextLeft = `${-1 * (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth))}px`;
         }
 
         if (this && this.events) {
@@ -445,7 +445,7 @@ export default class ElementRendererProvider {
               arrowRight.style.visibility = 'hidden';
               carouselItemIndex = cards.length - 1;
               cards = [].slice.call(cards, 0).reverse();
-              nextLeft = `-${cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)}px`;
+              nextLeft = `${-1 * (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth))}px`;
               (carousel: any).style.left = nextLeft;
             }
           }, 0);
