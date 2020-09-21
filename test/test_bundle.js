@@ -61,7 +61,155 @@ describe('json-pollock tests', function () {
       "la": -21.896110,
       "tooltip": "map tooltip"
     },]
-  }
+  };
+
+  var carouselConf = {
+    "type": "carousel",
+    "padding": 10,
+    "elements": [
+      {
+        "type": "vertical",
+        "elements": [
+          {
+            "type": "text",
+            "text": "1",
+            "tooltip": "1",
+            "rtl": false,
+            "style": {
+              "bold": false,
+              "italic": false,
+              "color": "#000000",
+              "size": "large"
+            }
+          },
+          {
+            "type": "text",
+            "text": "Twelve month plan BYO mobile",
+            "tooltip": "Twelve month plan BYO mobile",
+            "rtl": false,
+            "style": {
+              "bold": true,
+              "italic": false,
+              "color": "#000000"
+            }
+          },
+          {
+            "type": "button",
+            "tooltip": "Choose a plan",
+            "title": "Choose a plan",
+            "click": {
+              "metadata": [
+                {
+                  "type": "ExternalId",
+                  "id": "ANOTHER_ONE_1"
+                }
+              ],
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "SIM only plan"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "vertical",
+        "elements": [
+          {
+            "type": "text",
+            "text": "2",
+            "tooltip": "2",
+            "rtl": false,
+            "style": {
+              "bold": false,
+              "italic": false,
+              "color": "#000000",
+              "size": "large"
+            }
+          },
+          {
+            "type": "text",
+            "text": "Two year plan leasing a mobile",
+            "tooltip": "Two year plan leasing a mobile",
+            "rtl": false,
+            "style": {
+              "bold": true,
+              "italic": false,
+              "color": "#000000"
+            }
+          },
+          {
+            "type": "button",
+            "tooltip": "Choose a plan",
+            "title": "Choose a plan",
+            "click": {
+              "metadata": [
+                {
+                  "type": "ExternalId",
+                  "id": "ANOTHER_ONE_2"
+                }
+              ],
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "Two year plan leasing a mobile"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "vertical",
+        "elements": [
+          {
+            "type": "text",
+            "text": "3",
+            "tooltip": "3",
+            "rtl": false,
+            "style": {
+              "bold": false,
+              "italic": false,
+              "color": "#000000",
+              "size": "large"
+            }
+          },
+          {
+            "type": "text",
+            "text": "Two year plan with a mobile",
+            "tooltip": "Two year plan with a mobile",
+            "rtl": false,
+            "style": {
+              "bold": true,
+              "italic": false,
+              "color": "#000000"
+            }
+          },
+          {
+            "type": "button",
+            "tooltip": "Choose a plan",
+            "title": "Choose a plan",
+            "click": {
+              "metadata": [
+                {
+                  "type": "ExternalId",
+                  "id": "ANOTHER_ONE_3"
+                }
+              ],
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "Mobiles on a plan"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  };
 
   describe('render basic elements', function () {
 
@@ -525,155 +673,7 @@ describe('json-pollock tests', function () {
 
   describe('render carousel', function(){
 
-    var conf = {
-      "type": "carousel",
-      "padding": 10,
-      "elements": [
-        {
-          "type": "vertical",
-          "elements": [
-            {
-              "type": "text",
-              "text": "1",
-              "tooltip": "1",
-              "rtl": false,
-              "style": {
-                "bold": false,
-                "italic": false,
-                "color": "#000000",
-                "size": "large"
-              }
-            },
-            {
-              "type": "text",
-              "text": "Twelve month plan BYO mobile",
-              "tooltip": "Twelve month plan BYO mobile",
-              "rtl": false,
-              "style": {
-                "bold": true,
-                "italic": false,
-                "color": "#000000"
-              }
-            },
-            {
-              "type": "button",
-              "tooltip": "Choose a plan",
-              "title": "Choose a plan",
-              "click": {
-                "metadata": [
-                  {
-                    "type": "ExternalId",
-                    "id": "ANOTHER_ONE_1"
-                  }
-                ],
-                "actions": [
-                  {
-                    "type": "publishText",
-                    "text": "SIM only plan"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "type": "vertical",
-          "elements": [
-            {
-              "type": "text",
-              "text": "2",
-              "tooltip": "2",
-              "rtl": false,
-              "style": {
-                "bold": false,
-                "italic": false,
-                "color": "#000000",
-                "size": "large"
-              }
-            },
-            {
-              "type": "text",
-              "text": "Two year plan leasing a mobile",
-              "tooltip": "Two year plan leasing a mobile",
-              "rtl": false,
-              "style": {
-                "bold": true,
-                "italic": false,
-                "color": "#000000"
-              }
-            },
-            {
-              "type": "button",
-              "tooltip": "Choose a plan",
-              "title": "Choose a plan",
-              "click": {
-                "metadata": [
-                  {
-                    "type": "ExternalId",
-                    "id": "ANOTHER_ONE_2"
-                  }
-                ],
-                "actions": [
-                  {
-                    "type": "publishText",
-                    "text": "Two year plan leasing a mobile"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "type": "vertical",
-          "elements": [
-            {
-              "type": "text",
-              "text": "3",
-              "tooltip": "3",
-              "rtl": false,
-              "style": {
-                "bold": false,
-                "italic": false,
-                "color": "#000000",
-                "size": "large"
-              }
-            },
-            {
-              "type": "text",
-              "text": "Two year plan with a mobile",
-              "tooltip": "Two year plan with a mobile",
-              "rtl": false,
-              "style": {
-                "bold": true,
-                "italic": false,
-                "color": "#000000"
-              }
-            },
-            {
-              "type": "button",
-              "tooltip": "Choose a plan",
-              "title": "Choose a plan",
-              "click": {
-                "metadata": [
-                  {
-                    "type": "ExternalId",
-                    "id": "ANOTHER_ONE_3"
-                  }
-                ],
-                "actions": [
-                  {
-                    "type": "publishText",
-                    "text": "Mobiles on a plan"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    };
-
-    const conteiner = addToBody(JsonPollock.render(JSON.stringify(conf)));
+    const conteiner = addToBody(JsonPollock.render(JSON.stringify(carouselConf)));
     const carouselRoot = conteiner.children[0];
     const carouselRootWrapper = conteiner.children[0].children[0];
     const carouselRootLayout = conteiner.children[0].children[0];
@@ -729,7 +729,7 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel elements length equal to conf element length', function () {
-      chai.expect(carouselRootLayout.children.length).to.be.equal(conf.elements.length);
+      chai.expect(carouselRootLayout.children.length).to.be.equal(carouselConf.elements.length);
     });
 
     it('carousel elements are in the right order', function () {
@@ -2900,5 +2900,84 @@ describe('json-pollock tests', function () {
     });
 
   })
+
+  describe('render carousel in ltr direction', function() {
+
+    var carouselListRoot;
+    var carouselRight;
+    var carouselLeft;
+
+    before(function (done) {
+      const conteiner = addToBody(JsonPollock.render(JSON.stringify(carouselConf)));
+      const carouselRootLayout = conteiner.children[0].children[0];
+      carouselRight = conteiner.children[0].children[0].children[1];
+      carouselLeft = conteiner.children[0].children[0].children[2];
+      carouselListRoot = carouselRootLayout.children[0];
+
+      setTimeout(function () {
+        done();
+      }, 0);
+    });
+
+
+    it('arrow should be rendered properly for ltr direction', function () {
+      chai.expect(window.getComputedStyle(carouselLeft).visibility).to.be.equal('hidden');
+      chai.expect(window.getComputedStyle(carouselRight).visibility).to.be.equal('visible');
+
+    });
+
+    it('carousel should move to the right', function (done) {
+      chai.expect(window.getComputedStyle(carouselListRoot).left).to.be.equal('0px');
+      carouselRight.click();
+
+      setTimeout(function () {
+        const left = parseInt(window.getComputedStyle(carouselListRoot).left);
+        chai.expect(left).to.not.equal(0);
+        done();
+      }, 100);
+    });
+  });
+
+  describe('render carousel in rtl direction', function() {
+
+    var carouselListRoot;
+    var carouselRight;
+    var carouselLeft;
+
+    before(function (done) {
+      const css = 'body * {direction: rtl; text-align: right}';
+      const head = document.head || document.getElementsByTagName('head')[0];
+      const style = document.createElement('style');
+
+      head.appendChild(style);
+      style.appendChild(document.createTextNode(css));
+
+      const conteiner = addToBody(JsonPollock.render(JSON.stringify(carouselConf)));
+      const carouselRootLayout = conteiner.children[0].children[0];
+      carouselRight = conteiner.children[0].children[0].children[1];
+      carouselLeft = conteiner.children[0].children[0].children[2];
+      carouselListRoot = carouselRootLayout.children[0];
+
+      setTimeout(function () {
+        done();
+      }, 0);
+    })
+
+    it('arrow should be rendered properly for rtl direction', function () {
+      chai.expect(window.getComputedStyle(carouselLeft).visibility).to.be.equal('visible');
+      chai.expect(window.getComputedStyle(carouselRight).visibility).to.be.equal('hidden');
+    });
+
+    it('carousel should move to the left', function (done) {
+      chai.expect(window.getComputedStyle(carouselListRoot).left).to.be.equal('0px');
+      carouselLeft.click();
+
+      setTimeout(function () {
+        const left = parseInt(window.getComputedStyle(carouselListRoot).left);
+        chai.expect(left).to.not.equal(0);
+        done();
+      }, 100);
+    });
+  });
 
 });
