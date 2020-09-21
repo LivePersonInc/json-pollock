@@ -2934,7 +2934,7 @@ describe('json-pollock tests', function () {
         const left = parseInt(window.getComputedStyle(carouselListRoot).left);
         chai.expect(left).to.not.equal(0);
         done();
-      }, 40);
+      }, 100);
     });
   });
 
@@ -2976,7 +2976,7 @@ describe('json-pollock tests', function () {
         const left = parseInt(window.getComputedStyle(carouselListRoot).left);
         chai.expect(left).to.not.equal(0);
         done();
-      }, 40);
+      }, 100);
     });
   });
 
