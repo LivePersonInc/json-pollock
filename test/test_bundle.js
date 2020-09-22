@@ -2927,12 +2927,12 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel should move to the right', function (done) {
-      chai.expect(window.getComputedStyle(carouselListRoot).left).to.be.equal('0px');
+      const prevLeft = window.getComputedStyle(carouselListRoot).left;
       carouselRight.click();
 
       setTimeout(function () {
-        const left = parseInt(window.getComputedStyle(carouselListRoot).left);
-        chai.expect(left).to.not.equal(0);
+        const left = window.getComputedStyle(carouselListRoot).left;
+        chai.expect(left).to.be.below(prevLeft);
         done();
       }, 100);
     });
@@ -2969,12 +2969,12 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel should move to the left', function (done) {
-      chai.expect(window.getComputedStyle(carouselListRoot).left).to.be.equal('0px');
+      const prevLeft = window.getComputedStyle(carouselListRoot).left;
       carouselLeft.click();
 
       setTimeout(function () {
-        const left = parseInt(window.getComputedStyle(carouselListRoot).left);
-        chai.expect(left).to.not.equal(0);
+        const left = window.getComputedStyle(carouselListRoot).left;
+        chai.expect(left).to.be.below(prevLeft);
         done();
       }, 100);
     });

@@ -6913,7 +6913,7 @@ var ElementRendererProvider = function () {
 
         // Right align the last card in the carousel
         if (carouselItemIndex === cards.length - 1) {
-          nextLeft = '-' + (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)) + 'px';
+          nextLeft = -1 * (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)) + 'px';
         }
 
         if (this && this.events) {
@@ -7005,7 +7005,7 @@ var ElementRendererProvider = function () {
               arrowRight.style.visibility = 'hidden';
               carouselItemIndex = cards.length - 1;
               cards = [].slice.call(cards, 0).reverse();
-              nextLeft = '-' + (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)) + 'px';
+              nextLeft = -1 * (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)) + 'px';
               carousel.style.left = nextLeft;
             }
           }, 0);
