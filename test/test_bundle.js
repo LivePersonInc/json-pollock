@@ -2932,7 +2932,7 @@ describe('json-pollock tests', function () {
 
       setTimeout(function () {
         const left = window.getComputedStyle(carouselListRoot).left;
-        chai.expect(left).to.not.equal(prevLeft);
+        chai.expect(left).to.be.below(prevLeft);
         done();
       }, 100);
     });
@@ -2974,7 +2974,7 @@ describe('json-pollock tests', function () {
 
       setTimeout(function () {
         const left = window.getComputedStyle(carouselListRoot).left;
-        chai.expect(left).to.not.equal(prevLeft);
+        chai.expect(left).to.be.below(prevLeft);
         done();
       }, 100);
     });
