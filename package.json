@@ -19,7 +19,7 @@
     "lodash": "^4.17.4",
     "lodash.assign": "^4.2.0",
     "lodash.clonedeep": "^4.5.0",
-    "lp-rich-content-validator": "git+https://7c06979a4c1ace1100a386b0ab64822ea3d3b854:x-oauth-basic@lpgithub.dev.lprnd.net/meirr/lp-rich-content-validator.git",
+    "lp-rich-content-validator": "^1.1.0",
     "v-tooltip": "2.0.0-rc.33",
     "vue": "^2.3.3",
     "vue-js-toggle-button": "^1.3.2",
