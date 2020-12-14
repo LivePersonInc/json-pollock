@@ -1,0 +1,153 @@
+{
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "role": {
+      "type": "string"
+    },
+    "tabindex": {
+      "type": "string"
+    },
+    "aria-activedescendant": {
+      "type": "string"
+    },
+    "aria-atomic": {
+      "type": "string"
+    },
+    "aria-autocomplete": {
+      "type": "string"
+    },
+    "aria-busy": {
+      "type": "string"
+    },
+    "aria-checked": {
+      "type": "string"
+    },
+    "aria-colcount": {
+      "type": "string"
+    },
+    "aria-colindex": {
+      "type": "string"
+    },
+    "aria-colspan": {
+      "type": "string"
+    },
+    "aria-controls": {
+      "type": "string"
+    },
+    "aria-current": {
+      "type": "string"
+    },
+    "aria-describedby": {
+      "type": "string"
+    },
+    "aria-details": {
+      "type": "string"
+    },
+    "aria-disabled": {
+      "type": "string"
+    },
+    "aria-errormessage": {
+      "type": "string"
+    },
+    "aria-expanded": {
+      "type": "string"
+    },
+    "aria-flowto": {
+      "type": "string"
+    },
+    "aria-grabbed": {
+      "type": "string"
+    },
+    "aria-haspopup": {
+      "type": "string"
+    },
+    "aria-hidden": {
+      "type": "string"
+    },
+    "aria-invalid": {
+      "type": "string"
+    },
+    "aria-keyshortcuts": {
+      "type": "string"
+    },
+    "aria-label": {
+      "type": "string"
+    },
+    "aria-labelledby": {
+      "type": "string"
+    },
+    "aria-level": {
+      "type": "string"
+    },
+    "aria-live": {
+      "type": "string"
+    },
+    "aria-modal": {
+      "type": "string"
+    },
+    "aria-multiline": {
+      "type": "string"
+    },
+    "aria-multiselectable": {
+      "type": "string"
+    },
+    "aria-orientation": {
+      "type": "string"
+    },
+    "aria-owns": {
+      "type": "string"
+    },
+    "aria-placeholder": {
+      "type": "string"
+    },
+    "aria-posinset": {
+      "type": "string"
+    },
+    "aria-pressed": {
+      "type": "string"
+    },
+    "aria-readonly": {
+      "type": "string"
+    },
+    "aria-relevant": {
+      "type": "string"
+    },
+    "aria-required": {
+      "type": "string"
+    },
+    "aria-roledescription": {
+      "type": "string"
+    },
+    "aria-rowcount": {
+      "type": "string"
+    },
+    "aria-rowindex": {
+      "type": "string"
+    },
+    "aria-rowspan": {
+      "type": "string"
+    },
+    "aria-selected": {
+      "type": "string"
+    },
+    "aria-setsize": {
+      "type": "string"
+    },
+    "aria-sort": {
+      "type": "string"
+    },
+    "aria-valuemax": {
+      "type": "string"
+    },
+    "aria-valuemin": {
+      "type": "string"
+    },
+    "aria-valuenow": {
+      "type": "string"
+    },
+    "aria-valuetext": {
+      "type": "string"
+    }
+  }
+}
