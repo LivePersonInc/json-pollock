@@ -62,12 +62,13 @@ export default {
     if (gistExpr) {
       this.$store.commit('setLoading', true);
       const gistId = gistExpr.slice(5);
-      if (!token) {
-        this.$store.commit('setMessage', { text: 'Token is not configured - :( - default json loaded instead', type: 'error' });
-        this.$store.commit('setGist', { name: 'Gist not loaded' });
-        loadDefault();
-        return;
-      }
+      // if (!token) {
+      //   this.$store.commit('setMessage', { text: 'Token is not configured -
+      // :( - default json loaded instead', type: 'error' });
+      //   this.$store.commit('setGist', { name: 'Gist not loaded' });
+      //   loadDefault();
+      //   return;
+      // }
 
       let filename;
       if (gistFileExpr) {

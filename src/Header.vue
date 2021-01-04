@@ -9,7 +9,7 @@
           <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Login to GitHub'" @click="showDescription = true">
           <img v-else :src='user.avatar_url' v-tooltip.bottom='user && (user.name || user.login)' @click="showDescription = true">
           <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="248" :autoPosition="false">
-            In order to be able to load content from GitHub <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
+            In order to be able to save content on this editor via Github <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
             you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token</a>
             - <b>make sure to check the 'gist' scope.</b><br>
             Once you have generated a token please update it here:<br>
@@ -18,9 +18,9 @@
             <button class="btn-sml" @click="showDescription = false">Cancel</button>
           </popup>
       </div>
-      <div class="gistbtn header-btn weak" v-if="token && !loading">
-        <a v-if="gistName && token" :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle"><span class="header-btn-title">View on Github</span></a>
-        <span v-else-if="gistName && !token" class='header-btn-title gist-token-needed' @click="showDescription = true">Access token is required</span>
+      <div class="gistbtn header-btn weak" v-if="gistUrl && !loading">
+        <a v-if="gistName" :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle"><span class="header-btn-title">View on Github</span></a>
+        <!-- <span v-else-if="gistName && !token" class='header-btn-title gist-token-needed' @click="showDescription = true">Access token is required</span> -->
         <span class="header-btn-title" v-else v-tooltip.bottom="'Load Gist by ID'" @click="showLoadGistInput = true">Load</span>
         <popup class="gist-input gist-input-id" v-model="showLoadGistInput">
           <input ref="gistNameInput" v-model="gistId" placeholder="Gist ID..."/>

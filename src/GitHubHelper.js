@@ -3,6 +3,7 @@ import 'babel-polyfill';
 import { get, isString, isObject } from 'lodash';
 
 const GITHUB_API = 'https://api.github.com';
+const PROXY_API = 'https://json-pollock-service.herokuapp.com/api';
 
 const STORAGE_KEYS = {
   GITHUB_TOKEN: 'jsonPollockPlaygroundGithubToken',
@@ -26,9 +27,9 @@ const saveToken = (token) => {
 
 const getToken = () => localStorage.getItem(STORAGE_KEYS.GITHUB_TOKEN);
 
-const queryGitHubAPI = (path, storageKeyOrOptions) => {
+const queryGitHubAPI = (path, storageKeyOrOptions, fallbackToProxy) => {
   const token = getToken();
-  if (!token) return Promise.reject(new Error('Token not found'));
+  if (!token && !fallbackToProxy) return Promise.reject(new Error('Token not found'));
 
   let storageObj;
   let storageStr;
@@ -40,19 +41,25 @@ const queryGitHubAPI = (path, storageKeyOrOptions) => {
   if (storageStr) {
     storageObj = JSON.parse(storageStr);
   }
-  const options = { headers: { Authorization: `token ${token}` } };
+  const options = { 'Access-Control-Allow-Origin': '*' };
 
-  if (storageObj) {
-    options.headers['If-None-Match'] = storageObj.etag;
+  if (token) {  // tkoen is required for any non-get request, as of these configurations.
+    options.headers = { Authorization: `token ${token}` };
+
+    if (storageObj) {
+      options.headers['If-None-Match'] = storageObj.etag;
+    }
+
+    if (isObject(storageKeyOrOptions)) {
+      options.method = storageKeyOrOptions.method;
+      options.body = JSON.stringify(storageKeyOrOptions.body);
+      options.headers['Content-Type'] = 'application/json';
+    }
   }
 
-  if (isObject(storageKeyOrOptions)) {
-    options.method = storageKeyOrOptions.method;
-    options.body = JSON.stringify(storageKeyOrOptions.body);
-    options.headers['Content-Type'] = 'application/json';
-  }
+  const serviceUrl = token ? GITHUB_API : PROXY_API;
 
-  return fetch(`${GITHUB_API}/${path}`, options)
+  return fetch(`${serviceUrl}/${path}`, options)
     .then((res) => {
       if (res.status === 304) { // not changed
         return storageObj;
@@ -75,7 +82,7 @@ const queryGitHubAPI = (path, storageKeyOrOptions) => {
 const getUserDetails = () => queryGitHubAPI('user', STORAGE_KEYS.GITHUB_USER).then(res => (res.error ? '' : res));
 
 const loadGist = (gistId, filename) =>
-  queryGitHubAPI(`gists/${gistId}`, gistId)
+  queryGitHubAPI(`gists/${gistId}`, gistId, true)
     .then((gist) => {
       const files = gist.files && Object.keys(gist.files);
       if (files && files.length) {
