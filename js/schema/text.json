@@ -56,7 +56,7 @@
       "additionalProperties": false,
       "properties": {
         "web": {
-          "$ref": "accessibility_web.json"
+          "$ref": "accessibilityWeb.json"
         }
       }
     }

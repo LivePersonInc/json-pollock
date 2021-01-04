@@ -134,4 +134,11 @@ export default {
     return Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
   },
+
+  appendAttributesFromObject(el: HTMLElement, attributes: any): void {
+    const keys = Object.keys(attributes);
+    keys.forEach((key) => {
+      el.setAttribute(key, attributes[key]);
+    });
+  },
 };

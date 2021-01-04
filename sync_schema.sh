@@ -37,6 +37,7 @@ SCHEMA_URL=(
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/specialAction.json"
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/keyValuePair.json"
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/displaySettings.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/accessibilityWeb.json"
 )
 
 echoGreen "This script sync the schema files under the 'js/schema' folder."
