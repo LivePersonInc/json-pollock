@@ -17,6 +17,12 @@ describe('json-pollock tests', function () {
       "url": "assets/iphone-8-concept.jpg",
       "tooltip": "image tooltip",
       "caption": "this is a caption",
+      "alt": "Test image alt",
+      "accessibility": {
+        "web": {
+          "tabindex": "5"
+        }
+      },
       "click": {
         "actions": [{
           "type": "navigate",
@@ -295,6 +301,16 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[1].childNodes[0].localName).to.equal('span');
       chai.expect(layout.childNodes[1].childNodes[0].title).to.equal('text tooltip');
       chai.expect(layout.childNodes[1].childNodes[0].textContent).to.equal('product name (Title)');
+    });
+    it('An image element should contain appropriate alt attribute', function () {
+      var layout = rooEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[0].childNodes[1];
+      chai.expect(image.getAttribute('alt')).to.equal('Test image alt');
+    });
+    it('An image element should contain a11y tabindex attribute', function () {
+      var layout = rooEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[0].childNodes[1];
+      chai.expect(image.getAttribute('tabindex')).to.equal('5');
     });
 
     // special cases - we would like the onload and onerror callbacks to be called right after the load
