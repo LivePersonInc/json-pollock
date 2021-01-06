@@ -353,9 +353,12 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set(TYPES.VERTICAL, (): HTMLElement => {
+    this.set(TYPES.VERTICAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
       return divEl;
     });
 
@@ -376,6 +379,9 @@ export default class ElementRendererProvider {
       arrowRight.setAttribute('aria-label', 'Next');
       arrowLeft.setAttribute('role', 'button');
       arrowLeft.setAttribute('aria-label', 'Previous');
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
+      }
 
       function setShowingCard(event) {
         if (!cards || !cards[carouselItemIndex]) {
@@ -494,9 +500,12 @@ export default class ElementRendererProvider {
       return divCarouselWrapper;
     });
 
-    this.set(TYPES.HORIZONTAL, (): HTMLElement => {
+    this.set(TYPES.HORIZONTAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
       (divEl: any).afterRender = () => {
         if (divEl.childNodes.length) {
           const percentage = 100 / divEl.childNodes.length;
