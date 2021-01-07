@@ -21,10 +21,6 @@
     var state = getUrlParam('state');
     var code = getUrlParam('code');
 
-    fetch(PLAYGROUND_SERVICE_API + 'rate_limit')
-    .then(response => response.json())
-    .then(data => console.log(data));
-
     fetch(PLAYGROUND_SERVICE_API + 'access_token', {
       method: 'POST',
       headers: {
@@ -40,14 +36,50 @@
       window.opener.postMessage(data.access_token, window.location);
       window.close();
     })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+    .catch((error) => {
+      document.querySelector('.primary').innerText = 'Login has failed';
+      document.querySelector('.primary').style.color = '#da2a2a'
+      document.querySelector('.secondary').innerText = 'Please close this window and try again';
+      console.error('Error:', error);
+    });
   </script>
   <link rel=icon type=image/png href=/json-pollock/src/assets/logo.png>
   <title>JsonPollock Playground Login page</title>
+  <style>
+    .text-area {
+      position: absolute;
+      background: rgba(235,235,235, 0.9);
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      display: table;
+      color: #162036;
+      top: 0;
+      left: 0;
+    }
+
+    .text-area .text-warp {      
+      font-weight: bold;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .text-area .text-warp .primary {
+      font-size: 30px;
+    }
+
+    .text-area .text-warp .secondary {
+      font-size: 21px;
+    }
+  </style>
 </head>
 
-<body>
+  <body>    
+    <div class="text-area">
+      <p class="text-warp">
+        <span class="primary">Logging in...</span><br><br>
+        <span class="secondary">You will be redirected back to the json-pollock playground when done</span>
+      </p>
+    </div>
   </body>
 </html>
