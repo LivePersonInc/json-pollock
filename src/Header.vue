@@ -6,16 +6,16 @@
     </div>
     <div class="buttons-bar">
       <div class="loginbtn">
-          <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Login to GitHub'" @click="showDescription = true">
+          <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Sign in with Github to save this JSON'" @click="redirectToLoginPage">
           <img v-else :src='user.avatar_url' v-tooltip.bottom='user && (user.name || user.login)' @click="showDescription = true">
           <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="248" :autoPosition="false">
-            In order to be able to save content on this editor via Github <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
+            <!-- In order to be able to save content on this editor via Github <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
             you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token</a>
             - <b>make sure to check the 'gist' scope.</b><br>
             Once you have generated a token please update it here:<br>
             <input v-model="token"/>
             <button class="btn-sml" @click="saveToken" :disabled="!token">Save</button>
-            <button class="btn-sml" @click="showDescription = false">Cancel</button>
+            <button class="btn-sml" @click="showDescription = false">Cancel</button> -->
           </popup>
       </div>
       <div class="gistbtn header-btn weak" v-if="gistUrl && !loading">
@@ -150,10 +150,9 @@ export default {
       this.$emit('templateSelected', template);
       this.showJsonTemplates = false;
     },
-    saveToken() {
-      if (this.token) {
-        GitHubHelper.saveToken(this.token);
-        this.$store.commit('setMessage', { text: 'Token successfully saved! :) refresh the page to load content from Gist', type: 'success' });
+    saveToken(token) {
+      if (token) {
+        GitHubHelper.saveToken(token);
         this.showDescription = false;
       }
     },
@@ -212,6 +211,29 @@ export default {
     gotoDocu() {
       this.ga(['Documentation', 'navigate']);
       window.open('https://developers.liveperson.com/getting-started-with-rich-messaging-introduction.html', '_blank');
+    },
+    redirectToLoginPage() {
+      const url = 'https://github.com/login/oauth/authorize';
+      const clientIdParam = `client_id=${process.env.VUE_APP_CLIENT_ID}`;
+      const scopeParam = 'scope=gist';
+      const stateParam = `state=${Math.random().toString(16).substr(2, 8)}`;
+      window.open(`${url}?${clientIdParam}&${scopeParam}&${stateParam}`, '_blank');
+
+      window.addEventListener('message', this.waitForLoginResult, false);
+    },
+    waitForLoginResult(event) {
+      if (event.source.location.pathname === '/static/login.html') {
+        this.$store.commit('setToken', event.data);
+        this.saveToken(event.data);
+        GitHubHelper.getUserDetails()
+          .then((userDetails) => {
+            if (userDetails) {
+              this.$store.commit('setUser', userDetails);
+              this.$store.commit('setMessage', { text: `Hello ${userDetails.name || userDetails.login}`, type: 'success' });
+            }
+          });
+        window.removeEventListener('message', this.waitForLoginResult);
+      }
     },
   },
   mounted() {
@@ -324,6 +346,7 @@ export default {
         width: 34px;
         height: 34px;
         margin: 11px 15px 11px 0;
+        cursor: pointer;
 
         img {
           width: 34px;
