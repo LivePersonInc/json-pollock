@@ -1,153 +1,202 @@
 {
   "type": "object",
-  "additionalProperties": true,
+  "additionalProperties": false,
   "properties": {
     "role": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "tabindex": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-activedescendant": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-atomic": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-autocomplete": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-busy": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-checked": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-colcount": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 10
     },
     "aria-colindex": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 10
     },
     "aria-colspan": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 10
     },
     "aria-controls": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-current": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-describedby": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-details": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-disabled": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-errormessage": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-expanded": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-flowto": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-grabbed": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 1000
     },
     "aria-haspopup": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-hidden": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-invalid": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-keyshortcuts": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 1000
     },
     "aria-label": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 1000
     },
     "aria-labelledby": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-level": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-live": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-modal": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-multiline": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-multiselectable": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-orientation": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-owns": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-placeholder": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 1000
     },
     "aria-posinset": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-pressed": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-readonly": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-relevant": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 1000
     },
     "aria-required": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-roledescription": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 1000
     },
     "aria-rowcount": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-rowindex": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-rowspan": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 20
     },
     "aria-selected": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-setsize": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-sort": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-valuemax": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-valuemin": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-valuenow": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100
     },
     "aria-valuetext": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 1000
     }
   }
 }
