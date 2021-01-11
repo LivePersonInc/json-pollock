@@ -27,12 +27,12 @@
           <div v-if="gistId" class="gist-input-id-save" @click="loadGist">Go</div>
         </popup>
       </div>
-      <div class="savebtn header-btn weak" @click="saveGist" v-if="token && !loading" :class="{disabled: saveDisabled}"
+      <div class="savebtn header-btn weak" @click="saveGist" v-if="!loading" :class="{disabled: saveDisabled}"
         v-tooltip.bottom="isGistOwner && gist ? 'Save' : 'Save as a new Gist'">
         <img v-if="!saving" src='./assets/save.svg'>
         <img v-if="saving" src='./assets/sync.svg' class="saving">
         <span class="header-btn-title">Save</span>
-        <popup class="gist-input gist-input-name" v-model="showNewGistInput" :leftOffset="8">
+        <popup class="gist-input gist-input-name" v-model="showNewGistInput" :leftOffset="-30">
           <input ref="gistNameInput" v-model="newGistName" placeholder="Gist Name..."/>
           <div v-if="newGistName" class="gist-input-name-save" @click="createGist">Save</div>
         </popup>
@@ -130,7 +130,7 @@ export default {
       return '';
     },
     saveDisabled() {
-      return !this.edited || !this.jsonValid;
+      return !this.jsonValid;
     },
     validateDisabled() {
       return !this.schemaValid;
