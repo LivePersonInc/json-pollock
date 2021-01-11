@@ -16,6 +16,15 @@
         "submit": {
           "type": "boolean",
           "default": false
+        },
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "web": {
+              "$ref": "accessibilityWeb.json"
+            }
+          }
         }
       },
       "required": [
@@ -37,6 +46,15 @@
         "publishText": {
           "type": "string",
           "maxLength": 250
+        },
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "web": {
+              "$ref": "accessibilityWeb.json"
+            }
+          }
         }
       },
       "required": ["type", "publishText"]

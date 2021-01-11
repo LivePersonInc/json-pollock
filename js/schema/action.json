@@ -96,6 +96,15 @@
         "type": "string",
         "enum": ["self", "blank", "slideout"],
         "default": "self"
+      },
+      "accessibility": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "web": {
+            "$ref": "accessibilityWeb.json"
+          }
+        }
       }
     },
     "required": ["type", "uri"]

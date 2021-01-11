@@ -54,6 +54,15 @@
           "type": "array"
         }
       }
+    },
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "web": {
+          "$ref": "accessibilityWeb.json"
+        }
+      }
     }
   },
   "required": [

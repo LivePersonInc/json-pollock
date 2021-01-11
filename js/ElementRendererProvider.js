@@ -40,6 +40,7 @@ export default class ElementRendererProvider {
     */
     this.set(TYPES.TEXT, (config): HTMLElement => {
       const divEl = document.createElement('div');
+      const textEl = document.createElement('span');
       const tooltip = config.tooltip ? Utils.escapeHtml(config.tooltip) : '';
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
@@ -49,7 +50,16 @@ export default class ElementRendererProvider {
       const style = Utils.styleToCss(config.style);
       const splitedStyle = Utils.extractFromStyles(style, 'background-color');
       divEl.setAttribute('style', splitedStyle.extractedStyle);
-      divEl.innerHTML = `<span style="${splitedStyle.style}" title="${tooltip}" aria-label="${tooltip}">${Utils.normalizeHtmlText(config.text)}</span>`;
+      textEl.innerHTML = Utils.normalizeHtmlText(config.text);
+      textEl.setAttribute('style', splitedStyle.style);
+      textEl.setAttribute('title', tooltip);
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(textEl, config.accessibility.web);
+      } else {
+        // Backward compatibility
+        textEl.setAttribute('aria-label', tooltip);
+      }
+      divEl.appendChild(textEl);
       return divEl;
     });
 
@@ -74,6 +84,9 @@ export default class ElementRendererProvider {
         const splitedStyle = Utils.extractFromStyles(style, 'background-color');
         divEl.setAttribute('style', splitedStyle.extractedStyle);
         btnEl.style.cssText = splitedStyle.style;
+      }
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
 
       if (config.click && config.click.actions) {
@@ -111,6 +124,9 @@ export default class ElementRendererProvider {
         const splitedStyle = Utils.extractFromStyles(style, 'background-color');
         divEl.setAttribute('style', splitedStyle.extractedStyle);
         sbtEl.style.cssText = splitedStyle.style;
+      }
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(sbtEl, config.accessibility.web);
       }
 
       if (config.click && config.click.actions) {
@@ -152,6 +168,10 @@ export default class ElementRendererProvider {
           borderEl.style.borderColor = config.borderColor;
         }
         divEl.appendChild(borderEl);
+      }
+
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(labelEl, config.accessibility.web);
       }
 
       const chkboxWrapdivEl = document.createElement('div');
@@ -203,6 +223,9 @@ export default class ElementRendererProvider {
       }
       if (config.sectionID) {
         divEl.setAttribute(DATA_SECTION_ID_ATTR, config.sectionID);
+      }
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
 
       return divEl;
@@ -271,9 +294,16 @@ export default class ElementRendererProvider {
       if (config.style) {
         imgEl.style.cssText = Utils.styleToCss(config.style);
       }
+      if (config.alt) {
+        imgEl.setAttribute('alt', config.alt);
+      }
 
       if (config.caption) {
         divEl.innerHTML += `<span>${config.caption}</span>`;
+      }
+
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(imgEl, config.accessibility.web);
       }
 
       imgEl.onload = () => {
@@ -308,6 +338,10 @@ export default class ElementRendererProvider {
         divEl.style.cssText = Utils.styleToCss(config.style);
       }
 
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
+
       if (config.click && config.click.actions) {
         divEl.onclick = this.wrapAction(config.click);
       } else {
@@ -319,9 +353,12 @@ export default class ElementRendererProvider {
       return divEl;
     });
 
-    this.set(TYPES.VERTICAL, (): HTMLElement => {
+    this.set(TYPES.VERTICAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
       return divEl;
     });
 
@@ -342,6 +379,9 @@ export default class ElementRendererProvider {
       arrowRight.setAttribute('aria-label', 'Next');
       arrowLeft.setAttribute('role', 'button');
       arrowLeft.setAttribute('aria-label', 'Previous');
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
+      }
 
       function setShowingCard(event) {
         if (!cards || !cards[carouselItemIndex]) {
@@ -460,9 +500,12 @@ export default class ElementRendererProvider {
       return divCarouselWrapper;
     });
 
-    this.set(TYPES.HORIZONTAL, (): HTMLElement => {
+    this.set(TYPES.HORIZONTAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
       (divEl: any).afterRender = () => {
         if (divEl.childNodes.length) {
           const percentage = 100 / divEl.childNodes.length;

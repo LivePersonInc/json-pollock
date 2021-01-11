@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 76);
+/******/ 	return __webpack_require__(__webpack_require__.s = 77);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -93,7 +93,7 @@ module.exports = {
   getProperty: getProperty,
   escapeQuotes: escapeQuotes,
   equal: __webpack_require__(3),
-  ucs2length: __webpack_require__(47),
+  ucs2length: __webpack_require__(48),
   varOccurences: varOccurences,
   varReplace: varReplace,
   cleanUpCode: cleanUpCode,
@@ -398,11 +398,11 @@ function errorSubclass(Subclass) {
 "use strict";
 
 
-var url = __webpack_require__(77)
+var url = __webpack_require__(78)
   , equal = __webpack_require__(3)
   , util = __webpack_require__(0)
   , SchemaObject = __webpack_require__(5)
-  , traverse = __webpack_require__(71);
+  , traverse = __webpack_require__(72);
 
 module.exports = resolve;
 
@@ -1767,6 +1767,12 @@ exports.default = {
   },
   generateRandomId: function generateRandomId() {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  },
+  appendAttributesFromObject: function appendAttributesFromObject(el, attributes) {
+    var keys = Object.keys(attributes);
+    keys.forEach(function (key) {
+      el.setAttribute(key, attributes[key]);
+    });
   }
 };
 
@@ -2092,7 +2098,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _ElementRendererProvider = __webpack_require__(70);
+var _ElementRendererProvider = __webpack_require__(71);
 
 var _ElementRendererProvider2 = _interopRequireDefault(_ElementRendererProvider);
 
@@ -2271,97 +2277,101 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _ajv = __webpack_require__(40);
+var _ajv = __webpack_require__(41);
 
 var _ajv2 = _interopRequireDefault(_ajv);
 
-var _action = __webpack_require__(17);
+var _action = __webpack_require__(18);
 
 var _action2 = _interopRequireDefault(_action);
 
-var _basic = __webpack_require__(18);
+var _basic = __webpack_require__(19);
 
 var _basic2 = _interopRequireDefault(_basic);
 
-var _style = __webpack_require__(35);
+var _style = __webpack_require__(36);
 
 var _style2 = _interopRequireDefault(_style);
 
-var _button = __webpack_require__(19);
+var _button = __webpack_require__(20);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _card = __webpack_require__(21);
+var _card = __webpack_require__(22);
 
 var _card2 = _interopRequireDefault(_card);
 
-var _carousel = __webpack_require__(22);
+var _carousel = __webpack_require__(23);
 
 var _carousel2 = _interopRequireDefault(_carousel);
 
-var _image = __webpack_require__(26);
+var _image = __webpack_require__(27);
 
 var _image2 = _interopRequireDefault(_image);
 
-var _linkPreview = __webpack_require__(28);
+var _linkPreview = __webpack_require__(29);
 
 var _linkPreview2 = _interopRequireDefault(_linkPreview);
 
-var _map = __webpack_require__(30);
+var _map = __webpack_require__(31);
 
 var _map2 = _interopRequireDefault(_map);
 
-var _rich_content = __webpack_require__(31);
+var _rich_content = __webpack_require__(32);
 
 var _rich_content2 = _interopRequireDefault(_rich_content);
 
-var _template = __webpack_require__(37);
+var _template = __webpack_require__(38);
 
 var _template2 = _interopRequireDefault(_template);
 
-var _text = __webpack_require__(38);
+var _text = __webpack_require__(39);
 
 var _text2 = _interopRequireDefault(_text);
 
-var _checkbox = __webpack_require__(23);
+var _checkbox = __webpack_require__(24);
 
 var _checkbox2 = _interopRequireDefault(_checkbox);
 
-var _list = __webpack_require__(29);
+var _list = __webpack_require__(30);
 
 var _list2 = _interopRequireDefault(_list);
 
-var _checklist = __webpack_require__(24);
+var _checklist = __webpack_require__(25);
 
 var _checklist2 = _interopRequireDefault(_checklist);
 
-var _submitButton = __webpack_require__(36);
+var _submitButton = __webpack_require__(37);
 
 var _submitButton2 = _interopRequireDefault(_submitButton);
 
-var _section = __webpack_require__(32);
+var _section = __webpack_require__(33);
 
 var _section2 = _interopRequireDefault(_section);
 
-var _sectionList = __webpack_require__(33);
+var _sectionList = __webpack_require__(34);
 
 var _sectionList2 = _interopRequireDefault(_sectionList);
 
-var _specialAction = __webpack_require__(34);
+var _specialAction = __webpack_require__(35);
 
 var _specialAction2 = _interopRequireDefault(_specialAction);
 
-var _buttonList = __webpack_require__(20);
+var _buttonList = __webpack_require__(21);
 
 var _buttonList2 = _interopRequireDefault(_buttonList);
 
-var _keyValuePair = __webpack_require__(27);
+var _keyValuePair = __webpack_require__(28);
 
 var _keyValuePair2 = _interopRequireDefault(_keyValuePair);
 
-var _displaySettings = __webpack_require__(25);
+var _displaySettings = __webpack_require__(26);
 
 var _displaySettings2 = _interopRequireDefault(_displaySettings);
+
+var _accessibilityWeb = __webpack_require__(17);
+
+var _accessibilityWeb2 = _interopRequireDefault(_accessibilityWeb);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2394,6 +2404,7 @@ var SchemaValidator = function () {
     ajv.addSchema(_specialAction2.default, 'specialAction.json');
     ajv.addSchema(_keyValuePair2.default, 'keyValuePair.json');
     ajv.addSchema(_displaySettings2.default, 'displaySettings.json');
+    ajv.addSchema(_accessibilityWeb2.default, 'accessibilityWeb.json');
 
     this.jsonValidator = ajv.compile(_rich_content2.default);
   }
@@ -2425,136 +2436,142 @@ exports.default = SchemaValidator;
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"Publish Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["publishText"],"default":"publishText","readonly":true},"text":{"type":"string","maxLength":256}},"required":["type","text"]},{"title":"navigate","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["navigate"],"default":"navigate","readonly":true},"la":{"type":"number"},"lo":{"type":"number"},"name":{"type":"string","maxLength":256}},"required":["type","la","lo"]},{"title":"link","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["link"],"default":"link","readonly":true},"uri":{"type":"string","format":"uri","maxLength":1024},"name":{"type":"string","maxLength":256},"ios":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"android":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"web":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"target":{"type":"string","enum":["self","blank","slideout"],"default":"self"}},"required":["type","uri"]},{"title":"Custom Action","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["custom"],"default":"custom","readonly":true},"data":{"type":"array","maxItems":10,"items":{"$ref":"keyValuePair.json"}}},"required":["type"]}]}
+module.exports = {"type":"object","additionalProperties":false,"properties":{"role":{"type":"string","maxLength":100},"tabindex":{"type":"string","maxLength":20},"aria-activedescendant":{"type":"string","maxLength":100},"aria-atomic":{"type":"string","maxLength":100},"aria-autocomplete":{"type":"string","maxLength":100},"aria-busy":{"type":"string","maxLength":100},"aria-checked":{"type":"string","maxLength":20},"aria-colcount":{"type":"string","maxLength":10},"aria-colindex":{"type":"string","maxLength":10},"aria-colspan":{"type":"string","maxLength":10},"aria-controls":{"type":"string","maxLength":100},"aria-current":{"type":"string","maxLength":100},"aria-describedby":{"type":"string","maxLength":100},"aria-details":{"type":"string","maxLength":100},"aria-disabled":{"type":"string","maxLength":100},"aria-errormessage":{"type":"string","maxLength":100},"aria-expanded":{"type":"string","maxLength":20},"aria-flowto":{"type":"string","maxLength":100},"aria-grabbed":{"type":"string","maxLength":1000},"aria-haspopup":{"type":"string","maxLength":20},"aria-hidden":{"type":"string","maxLength":20},"aria-invalid":{"type":"string","maxLength":100},"aria-keyshortcuts":{"type":"string","maxLength":1000},"aria-label":{"type":"string","maxLength":1000},"aria-labelledby":{"type":"string","maxLength":100},"aria-level":{"type":"string","maxLength":20},"aria-live":{"type":"string","maxLength":100},"aria-modal":{"type":"string","maxLength":100},"aria-multiline":{"type":"string","maxLength":20},"aria-multiselectable":{"type":"string","maxLength":20},"aria-orientation":{"type":"string","maxLength":100},"aria-owns":{"type":"string","maxLength":100},"aria-placeholder":{"type":"string","maxLength":1000},"aria-posinset":{"type":"string","maxLength":100},"aria-pressed":{"type":"string","maxLength":100},"aria-readonly":{"type":"string","maxLength":20},"aria-relevant":{"type":"string","maxLength":1000},"aria-required":{"type":"string","maxLength":20},"aria-roledescription":{"type":"string","maxLength":1000},"aria-rowcount":{"type":"string","maxLength":20},"aria-rowindex":{"type":"string","maxLength":20},"aria-rowspan":{"type":"string","maxLength":20},"aria-selected":{"type":"string","maxLength":100},"aria-setsize":{"type":"string","maxLength":100},"aria-sort":{"type":"string","maxLength":100},"aria-valuemax":{"type":"string","maxLength":100},"aria-valuemin":{"type":"string","maxLength":100},"aria-valuenow":{"type":"string","maxLength":100},"aria-valuetext":{"type":"string","maxLength":1000}}}
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"$ref":"text.json"},{"$ref":"image.json"},{"$ref":"button.json"},{"$ref":"map.json"},{"$ref":"linkPreview.json"},{"$ref":"template.json"}]}
+module.exports = {"oneOf":[{"title":"Publish Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["publishText"],"default":"publishText","readonly":true},"text":{"type":"string","maxLength":256}},"required":["type","text"]},{"title":"navigate","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["navigate"],"default":"navigate","readonly":true},"la":{"type":"number"},"lo":{"type":"number"},"name":{"type":"string","maxLength":256}},"required":["type","la","lo"]},{"title":"link","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["link"],"default":"link","readonly":true},"uri":{"type":"string","format":"uri","maxLength":1024},"name":{"type":"string","maxLength":256},"ios":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"android":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"web":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"target":{"type":"string","enum":["self","blank","slideout"],"default":"self"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","uri"]},{"title":"Custom Action","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["custom"],"default":"custom","readonly":true},"data":{"type":"array","maxItems":10,"items":{"$ref":"keyValuePair.json"}}},"required":["type"]}]}
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["title"]}
+module.exports = {"oneOf":[{"$ref":"text.json"},{"$ref":"image.json"},{"$ref":"button.json"},{"$ref":"map.json"},{"$ref":"linkPreview.json"},{"$ref":"template.json"}]}
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"buttonList","properties":{"type":{"type":"string","enum":["buttonList"],"default":"buttonList","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":1,"maxItems":2,"items":[{"$ref":"submitButton.json"},{"anyOf":[{"$ref":"button.json"}]}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["title"]}
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","additionalProperties":false,"title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]},{"type":"object","additionalProperties":false,"title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"}},"required":["type","elements"]}]}
+module.exports = {"type":"object","additionalProperties":false,"title":"buttonList","properties":{"type":{"type":"string","enum":["buttonList"],"default":"buttonList","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":1,"maxItems":2,"items":[{"$ref":"submitButton.json"},{"anyOf":[{"$ref":"button.json"}]}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"carousel","properties":{"type":{"type":"string","enum":["carousel"],"default":"carousel","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":10,"items":{"$ref":"card.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"}},"required":["type","elements"]}
+module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","additionalProperties":false,"title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]},{"type":"object","additionalProperties":false,"title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]}]}
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"checkbox","additionalProperties":false,"properties":{"type":{"type":"string","enum":["checkbox"],"default":"checkbox","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"borderLine":{"type":"boolean","default":true},"borderColor":{"type":"string","format":"color","maxLength":256},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"specialAction.json#/definitions/checked"}},"metadata":{"type":"array"}}}},"required":["type","text","click"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"carousel","properties":{"type":{"type":"string","enum":["carousel"],"default":"carousel","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":10,"items":{"$ref":"card.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]}
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"checklist","properties":{"type":{"type":"string","enum":["checklist"],"default":"checklist","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":256,"items":{"$ref":"checkbox.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
+module.exports = {"type":"object","title":"checkbox","additionalProperties":false,"properties":{"type":{"type":"string","enum":["checkbox"],"default":"checkbox","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"borderLine":{"type":"boolean","default":true},"borderColor":{"type":"string","format":"color","maxLength":256},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"specialAction.json#/definitions/checked"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","text","click"]}
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"properties":{"aspectRatio":{"type":"string","enum":["rectangle","square","horizontal"]},"size":{"type":"string","enum":["cover","contain","large","compact","tall","full"]}}}
+module.exports = {"type":"object","additionalProperties":false,"title":"checklist","properties":{"type":{"type":"string","enum":["checklist"],"default":"checklist","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":256,"items":{"$ref":"checkbox.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"image","additionalProperties":false,"properties":{"type":{"type":"string","enum":["image"],"default":"image","readonly":true},"caption":{"type":"string","maxLength":128},"url":{"type":"string","maxLength":2048},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["url"]}
+module.exports = {"type":"object","additionalProperties":false,"properties":{"aspectRatio":{"type":"string","enum":["rectangle","square","horizontal"]},"size":{"type":"string","enum":["cover","contain","large","compact","tall","full"]}}}
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"Key Value Pair","additionalProperties":false,"properties":{"key":{"type":"string","maxLength":128},"value":{"type":"string","maxLength":2048}},"required":["key"]}
+module.exports = {"type":"object","title":"image","additionalProperties":false,"properties":{"type":{"type":"string","enum":["image"],"default":"image","readonly":true},"caption":{"type":"string","maxLength":128},"url":{"type":"string","maxLength":2048},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["url"]}
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"linkPreview","additionalProperties":false,"properties":{"type":{"type":"string","enum":["linkPreview"],"default":"linkPreview","readonly":true},"url":{"type":"string","maxLength":2048},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["url"]}
+module.exports = {"type":"object","title":"Key Value Pair","additionalProperties":false,"properties":{"key":{"type":"string","maxLength":128},"value":{"type":"string","maxLength":2048}},"required":["key"]}
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"list","properties":{"type":{"type":"string","enum":["list"],"default":"list","readonly":true},"tooltip":{"type":"string","maxLength":256},"elements":{"type":"array","maxItems":3,"minItems":3,"items":[{"$ref":"text.json"},{"$ref":"sectionList.json"},{"$ref":"buttonList.json"}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
+module.exports = {"type":"object","title":"linkPreview","additionalProperties":false,"properties":{"type":{"type":"string","enum":["linkPreview"],"default":"linkPreview","readonly":true},"url":{"type":"string","maxLength":2048},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["url"]}
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"map","additionalProperties":false,"properties":{"type":{"type":"string","enum":["map"],"default":"map","readonly":true},"lo":{"type":"number"},"la":{"type":"number"},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["lo","la"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"list","properties":{"type":{"type":"string","enum":["list"],"default":"list","readonly":true},"tooltip":{"type":"string","maxLength":256},"elements":{"type":"array","maxItems":3,"minItems":3,"items":[{"$ref":"text.json"},{"$ref":"sectionList.json"},{"$ref":"buttonList.json"}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"card","$ref":"card.json"},{"title":"carousel","$ref":"carousel.json"},{"title":"list","$ref":"list.json"}]}
+module.exports = {"type":"object","title":"map","additionalProperties":false,"properties":{"type":{"type":"string","enum":["map"],"default":"map","readonly":true},"lo":{"type":"number"},"la":{"type":"number"},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["lo","la"]}
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"section","properties":{"type":{"type":"string","enum":["section"],"default":"section","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"sectionID":{"type":"string","maxLength":256},"elements":{"oneOf":[{"type":"array","minItems":1,"maxItems":1,"items":[{"$ref":"checklist.json"}]},{"type":"array","minItems":2,"maxItems":2,"items":[{"$ref":"text.json"},{"$ref":"checklist.json"}]}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements","sectionID"]}
+module.exports = {"oneOf":[{"title":"card","$ref":"card.json"},{"title":"carousel","$ref":"carousel.json"},{"title":"list","$ref":"list.json"}]}
 
 /***/ }),
 /* 33 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"sectionList","properties":{"type":{"type":"string","enum":["sectionList"],"default":"sectionList","readonly":true},"tooltip":{"type":"string","maxLength":256},"elements":{"type":"array","minItems":1,"maxItems":256,"items":{"$ref":"section.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"section","properties":{"type":{"type":"string","enum":["section"],"default":"section","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"sectionID":{"type":"string","maxLength":256},"elements":{"oneOf":[{"type":"array","minItems":1,"maxItems":1,"items":[{"$ref":"checklist.json"}]},{"type":"array","minItems":2,"maxItems":2,"items":[{"$ref":"text.json"},{"$ref":"checklist.json"}]}]},"alt":{"type":"string","maxLength":2000},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements","sectionID"]}
 
 /***/ }),
 /* 34 */
 /***/ (function(module, exports) {
 
-module.exports = {"definitions":{"submitAsText":{"title":"Submit As Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["submitAsText"],"default":"submitAsText","readonly":true},"submit":{"type":"boolean","default":false}},"required":["type","submit"]},"checked":{"title":"checked","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["checked"],"default":"checked","readonly":true},"publishText":{"type":"string","maxLength":250}},"required":["type","publishText"]}}}
+module.exports = {"type":"object","additionalProperties":false,"title":"sectionList","properties":{"type":{"type":"string","enum":["sectionList"],"default":"sectionList","readonly":true},"tooltip":{"type":"string","maxLength":256},"elements":{"type":"array","minItems":1,"maxItems":256,"items":{"$ref":"section.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
 
 /***/ }),
 /* 35 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"properties":{"background-color":{"type":"string","format":"color","maxLength":256},"border-color":{"type":"string","format":"color","maxLength":256},"border-radius":{"type":"number"},"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]}}}
+module.exports = {"definitions":{"submitAsText":{"title":"Submit As Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["submitAsText"],"default":"submitAsText","readonly":true},"submit":{"type":"boolean","default":false},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","submit"]},"checked":{"title":"checked","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["checked"],"default":"checked","readonly":true},"publishText":{"type":"string","maxLength":250},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","publishText"]}}}
 
 /***/ }),
 /* 36 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"submitButton","properties":{"type":{"type":"string","enum":["submitButton"],"default":"submitButton","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"disabled":{"type":"boolean","default":false},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"specialAction.json#/definitions/submitAsText"}},"metadata":{"type":"array"}}}},"required":["type","title","click"]}
+module.exports = {"type":"object","additionalProperties":false,"properties":{"background-color":{"type":"string","format":"color","maxLength":256},"border-color":{"type":"string","format":"color","maxLength":256},"border-radius":{"type":"number"},"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]}}}
 
 /***/ }),
 /* 37 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"template","additionalProperties":false,"properties":{"type":{"type":"string","enum":["template"],"default":"template","readonly":true},"templateType":{"type":"string","enum":["quickReply"],"default":"quickReply","readonly":true},"title":{"type":"string","maxLength":5000},"resp":{"type":"array","maxItems":32,"minItems":1,"items":{"type":"string","maxLength":128}},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["templateType","title","resp"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"submitButton","properties":{"type":{"type":"string","enum":["submitButton"],"default":"submitButton","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"disabled":{"type":"boolean","default":false},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"specialAction.json#/definitions/submitAsText"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","title","click"]}
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}}},"required":["text"]}
+module.exports = {"type":"object","title":"template","additionalProperties":false,"properties":{"type":{"type":"string","enum":["template"],"default":"template","readonly":true},"templateType":{"type":"string","enum":["quickReply"],"default":"quickReply","readonly":true},"title":{"type":"string","maxLength":5000},"resp":{"type":"array","maxItems":32,"minItems":1,"items":{"type":"string","maxLength":128}},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["templateType","title","resp"]}
 
 /***/ }),
 /* 39 */
+/***/ (function(module, exports) {
+
+module.exports = {"type":"object","additionalProperties":false,"title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["text"]}
+
+/***/ }),
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2610,21 +2627,21 @@ module.exports = function (metaSchema, keywordsJsonPointers) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var compileSchema = __webpack_require__(45)
+var compileSchema = __webpack_require__(46)
   , resolve = __webpack_require__(2)
-  , Cache = __webpack_require__(41)
+  , Cache = __webpack_require__(42)
   , SchemaObject = __webpack_require__(5)
   , stableStringify = __webpack_require__(13)
-  , formats = __webpack_require__(44)
-  , rules = __webpack_require__(46)
-  , $dataMetaSchema = __webpack_require__(39)
-  , patternGroups = __webpack_require__(67)
+  , formats = __webpack_require__(45)
+  , rules = __webpack_require__(47)
+  , $dataMetaSchema = __webpack_require__(40)
+  , patternGroups = __webpack_require__(68)
   , util = __webpack_require__(0)
   , co = __webpack_require__(12);
 
@@ -2643,8 +2660,8 @@ Ajv.prototype.errorsText = errorsText;
 Ajv.prototype._addSchema = _addSchema;
 Ajv.prototype._compile = _compile;
 
-Ajv.prototype.compileAsync = __webpack_require__(43);
-var customKeyword = __webpack_require__(66);
+Ajv.prototype.compileAsync = __webpack_require__(44);
+var customKeyword = __webpack_require__(67);
 Ajv.prototype.addKeyword = customKeyword.add;
 Ajv.prototype.getKeyword = customKeyword.get;
 Ajv.prototype.removeKeyword = customKeyword.remove;
@@ -3061,11 +3078,11 @@ function addFormat(name, format) {
 function addDraft6MetaSchema(self) {
   var $dataSchema;
   if (self._opts.$data) {
-    $dataSchema = __webpack_require__(68);
+    $dataSchema = __webpack_require__(69);
     self.addMetaSchema($dataSchema, $dataSchema.$id, true);
   }
   if (self._opts.meta === false) return;
-  var metaSchema = __webpack_require__(69);
+  var metaSchema = __webpack_require__(70);
   if (self._opts.$data) metaSchema = $dataMetaSchema(metaSchema, META_SUPPORT_DATA);
   self.addMetaSchema(metaSchema, META_SCHEMA_ID, true);
   self._refs['http://json-schema.org/schema'] = META_SCHEMA_ID;
@@ -3119,7 +3136,7 @@ function noop() {}
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3152,7 +3169,7 @@ Cache.prototype.clear = function Cache_clear() {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3160,15 +3177,15 @@ Cache.prototype.clear = function Cache_clear() {
 
 //all requires must be explicit because browserify won't work with dynamic requires
 module.exports = {
-  '$ref': __webpack_require__(63),
-  allOf: __webpack_require__(48),
-  anyOf: __webpack_require__(49),
-  const: __webpack_require__(50),
-  contains: __webpack_require__(51),
-  dependencies: __webpack_require__(53),
-  'enum': __webpack_require__(54),
-  format: __webpack_require__(55),
-  items: __webpack_require__(56),
+  '$ref': __webpack_require__(64),
+  allOf: __webpack_require__(49),
+  anyOf: __webpack_require__(50),
+  const: __webpack_require__(51),
+  contains: __webpack_require__(52),
+  dependencies: __webpack_require__(54),
+  'enum': __webpack_require__(55),
+  format: __webpack_require__(56),
+  items: __webpack_require__(57),
   maximum: __webpack_require__(6),
   minimum: __webpack_require__(6),
   maxItems: __webpack_require__(7),
@@ -3177,20 +3194,20 @@ module.exports = {
   minLength: __webpack_require__(8),
   maxProperties: __webpack_require__(9),
   minProperties: __webpack_require__(9),
-  multipleOf: __webpack_require__(57),
-  not: __webpack_require__(58),
-  oneOf: __webpack_require__(59),
-  pattern: __webpack_require__(60),
-  properties: __webpack_require__(61),
-  propertyNames: __webpack_require__(62),
-  required: __webpack_require__(64),
-  uniqueItems: __webpack_require__(65),
+  multipleOf: __webpack_require__(58),
+  not: __webpack_require__(59),
+  oneOf: __webpack_require__(60),
+  pattern: __webpack_require__(61),
+  properties: __webpack_require__(62),
+  propertyNames: __webpack_require__(63),
+  required: __webpack_require__(65),
+  uniqueItems: __webpack_require__(66),
   validate: __webpack_require__(10)
 };
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3287,7 +3304,7 @@ function compileAsync(schema, meta, callback) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3429,7 +3446,7 @@ function regex(str) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3816,13 +3833,13 @@ function vars(arr, statement) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var ruleModules = __webpack_require__(42)
+var ruleModules = __webpack_require__(43)
   , toHash = __webpack_require__(0).toHash;
 
 module.exports = function rules() {
@@ -3881,7 +3898,7 @@ module.exports = function rules() {
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3908,7 +3925,7 @@ module.exports = function ucs2length(str) {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3958,7 +3975,7 @@ module.exports = function generate_allOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4038,7 +4055,7 @@ module.exports = function generate_anyOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4100,7 +4117,7 @@ module.exports = function generate_const(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4188,7 +4205,7 @@ module.exports = function generate_contains(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4421,7 +4438,7 @@ module.exports = function generate_custom(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4595,7 +4612,7 @@ module.exports = function generate_dependencies(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4667,7 +4684,7 @@ module.exports = function generate_enum(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4823,7 +4840,7 @@ module.exports = function generate_format(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4970,7 +4987,7 @@ module.exports = function generate_items(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5053,7 +5070,7 @@ module.exports = function generate_multipleOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5143,7 +5160,7 @@ module.exports = function generate_not(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5220,7 +5237,7 @@ module.exports = function generate_oneOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5301,7 +5318,7 @@ module.exports = function generate_pattern(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5776,7 +5793,7 @@ module.exports = function generate_properties(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5864,7 +5881,7 @@ module.exports = function generate_propertyNames(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5994,7 +6011,7 @@ module.exports = function generate_ref(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6269,7 +6286,7 @@ module.exports = function generate_required(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6347,14 +6364,14 @@ module.exports = function generate_uniqueItems(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var IDENTIFIER = /^[a-z_$][a-z0-9_$-]*$/i;
-var customRuleCode = __webpack_require__(52);
+var customRuleCode = __webpack_require__(53);
 
 module.exports = {
   add: addKeyword,
@@ -6489,7 +6506,7 @@ function removeKeyword(keyword) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6532,19 +6549,19 @@ module.exports = function (ajv) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports) {
 
 module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#","description":"Meta-schema for $data reference (JSON-schema extension proposal)","type":"object","required":["$data"],"properties":{"$data":{"type":"string","anyOf":[{"format":"relative-json-pointer"},{"format":"json-pointer"}]}},"additionalProperties":false}
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports) {
 
 module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"http://json-schema.org/draft-06/schema#","title":"Core schema meta-schema","definitions":{"schemaArray":{"type":"array","minItems":1,"items":{"$ref":"#"}},"nonNegativeInteger":{"type":"integer","minimum":0},"nonNegativeIntegerDefault0":{"allOf":[{"$ref":"#/definitions/nonNegativeInteger"},{"default":0}]},"simpleTypes":{"enum":["array","boolean","integer","null","number","object","string"]},"stringArray":{"type":"array","items":{"type":"string"},"uniqueItems":true,"default":[]}},"type":["object","boolean"],"properties":{"$id":{"type":"string","format":"uri-reference"},"$schema":{"type":"string","format":"uri"},"$ref":{"type":"string","format":"uri-reference"},"title":{"type":"string"},"description":{"type":"string"},"default":{},"examples":{"type":"array","items":{}},"multipleOf":{"type":"number","exclusiveMinimum":0},"maximum":{"type":"number"},"exclusiveMaximum":{"type":"number"},"minimum":{"type":"number"},"exclusiveMinimum":{"type":"number"},"maxLength":{"$ref":"#/definitions/nonNegativeInteger"},"minLength":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"pattern":{"type":"string","format":"regex"},"additionalItems":{"$ref":"#"},"items":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/schemaArray"}],"default":{}},"maxItems":{"$ref":"#/definitions/nonNegativeInteger"},"minItems":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"uniqueItems":{"type":"boolean","default":false},"contains":{"$ref":"#"},"maxProperties":{"$ref":"#/definitions/nonNegativeInteger"},"minProperties":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"required":{"$ref":"#/definitions/stringArray"},"additionalProperties":{"$ref":"#"},"definitions":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"properties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"patternProperties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"dependencies":{"type":"object","additionalProperties":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/stringArray"}]}},"propertyNames":{"$ref":"#"},"const":{},"enum":{"type":"array","minItems":1,"uniqueItems":true},"type":{"anyOf":[{"$ref":"#/definitions/simpleTypes"},{"type":"array","items":{"$ref":"#/definitions/simpleTypes"},"minItems":1,"uniqueItems":true}]},"format":{"type":"string"},"allOf":{"$ref":"#/definitions/schemaArray"},"anyOf":{"$ref":"#/definitions/schemaArray"},"oneOf":{"$ref":"#/definitions/schemaArray"},"not":{"$ref":"#"}},"default":{}}
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6601,6 +6618,7 @@ var ElementRendererProvider = function () {
     */
     this.set(TYPES.TEXT, function (config) {
       var divEl = document.createElement('div');
+      var textEl = document.createElement('span');
       var tooltip = config.tooltip ? _Utils2.default.escapeHtml(config.tooltip) : '';
       divEl.className = 'lp-json-pollock-element-text';
       if (config.rtl) {
@@ -6610,7 +6628,16 @@ var ElementRendererProvider = function () {
       var style = _Utils2.default.styleToCss(config.style);
       var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
       divEl.setAttribute('style', splitedStyle.extractedStyle);
-      divEl.innerHTML = '<span style="' + splitedStyle.style + '" title="' + tooltip + '" aria-label="' + tooltip + '">' + _Utils2.default.normalizeHtmlText(config.text) + '</span>';
+      textEl.innerHTML = _Utils2.default.normalizeHtmlText(config.text);
+      textEl.setAttribute('style', splitedStyle.style);
+      textEl.setAttribute('title', tooltip);
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(textEl, config.accessibility.web);
+      } else {
+        // Backward compatibility
+        textEl.setAttribute('aria-label', tooltip);
+      }
+      divEl.appendChild(textEl);
       return divEl;
     });
 
@@ -6635,6 +6662,9 @@ var ElementRendererProvider = function () {
         var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
         divEl.setAttribute('style', splitedStyle.extractedStyle);
         btnEl.style.cssText = splitedStyle.style;
+      }
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
 
       if (config.click && config.click.actions) {
@@ -6672,6 +6702,9 @@ var ElementRendererProvider = function () {
         var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
         divEl.setAttribute('style', splitedStyle.extractedStyle);
         sbtEl.style.cssText = splitedStyle.style;
+      }
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(sbtEl, config.accessibility.web);
       }
 
       if (config.click && config.click.actions) {
@@ -6713,6 +6746,10 @@ var ElementRendererProvider = function () {
           borderEl.style.borderColor = config.borderColor;
         }
         divEl.appendChild(borderEl);
+      }
+
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(labelEl, config.accessibility.web);
       }
 
       var chkboxWrapdivEl = document.createElement('div');
@@ -6763,6 +6800,9 @@ var ElementRendererProvider = function () {
       }
       if (config.sectionID) {
         divEl.setAttribute(DATA_SECTION_ID_ATTR, config.sectionID);
+      }
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
       }
 
       return divEl;
@@ -6833,9 +6873,16 @@ var ElementRendererProvider = function () {
       if (config.style) {
         imgEl.style.cssText = _Utils2.default.styleToCss(config.style);
       }
+      if (config.alt) {
+        imgEl.setAttribute('alt', config.alt);
+      }
 
       if (config.caption) {
         divEl.innerHTML += '<span>' + config.caption + '</span>';
+      }
+
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(imgEl, config.accessibility.web);
       }
 
       imgEl.onload = function () {
@@ -6870,6 +6917,10 @@ var ElementRendererProvider = function () {
         divEl.style.cssText = _Utils2.default.styleToCss(config.style);
       }
 
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
+
       if (config.click && config.click.actions) {
         divEl.onclick = _this.wrapAction(config.click);
       } else {
@@ -6881,9 +6932,12 @@ var ElementRendererProvider = function () {
       return divEl;
     });
 
-    this.set(TYPES.VERTICAL, function () {
+    this.set(TYPES.VERTICAL, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
       return divEl;
     });
 
@@ -6904,6 +6958,9 @@ var ElementRendererProvider = function () {
       arrowRight.setAttribute('aria-label', 'Next');
       arrowLeft.setAttribute('role', 'button');
       arrowLeft.setAttribute('aria-label', 'Previous');
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
+      }
 
       function setShowingCard(event) {
         if (!cards || !cards[carouselItemIndex]) {
@@ -7020,9 +7077,12 @@ var ElementRendererProvider = function () {
       return divCarouselWrapper;
     });
 
-    this.set(TYPES.HORIZONTAL, function () {
+    this.set(TYPES.HORIZONTAL, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
       divEl.afterRender = function () {
         if (divEl.childNodes.length) {
           var percentage = 100 / divEl.childNodes.length;
@@ -7086,7 +7146,7 @@ ElementRendererProvider.TYPES = TYPES;
 exports.default = ElementRendererProvider;
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7174,7 +7234,7 @@ function escapeJsonPtr(str) {
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -7710,10 +7770,10 @@ function escapeJsonPtr(str) {
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(80)(module), __webpack_require__(79)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(81)(module), __webpack_require__(80)))
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7804,7 +7864,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7896,18 +7956,18 @@ var objectKeys = Object.keys || function (obj) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(73);
-exports.encode = exports.stringify = __webpack_require__(74);
+exports.decode = exports.parse = __webpack_require__(74);
+exports.encode = exports.stringify = __webpack_require__(75);
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7957,7 +8017,7 @@ exports.version = version;
 exports.TEMPLATE_TYPES = TEMPLATE_TYPES;
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7984,8 +8044,8 @@ exports.TEMPLATE_TYPES = TEMPLATE_TYPES;
 
 
 
-var punycode = __webpack_require__(72);
-var util = __webpack_require__(78);
+var punycode = __webpack_require__(73);
+var util = __webpack_require__(79);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -8060,7 +8120,7 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
       'gopher:': true,
       'file:': true
     },
-    querystring = __webpack_require__(75);
+    querystring = __webpack_require__(76);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
   if (url && util.isObject(url) && url instanceof Url) return url;
@@ -8696,7 +8756,7 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8719,7 +8779,7 @@ module.exports = {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports) {
 
 var g;
@@ -8746,7 +8806,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {

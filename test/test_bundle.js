@@ -17,6 +17,12 @@ describe('json-pollock tests', function () {
       "url": "assets/iphone-8-concept.jpg",
       "tooltip": "image tooltip",
       "caption": "this is a caption",
+      "alt": "Test image alt",
+      "accessibility": {
+        "web": {
+          "tabindex": "5"
+        }
+      },
       "click": {
         "actions": [{
           "type": "navigate",
@@ -208,7 +214,12 @@ describe('json-pollock tests', function () {
           }
         ]
       }
-    ]
+    ],
+    "accessibility": {
+      "web": {
+        "aria-label": "Carousel"
+      }
+    }
   };
 
   describe('render basic elements', function () {
@@ -295,6 +306,16 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[1].childNodes[0].localName).to.equal('span');
       chai.expect(layout.childNodes[1].childNodes[0].title).to.equal('text tooltip');
       chai.expect(layout.childNodes[1].childNodes[0].textContent).to.equal('product name (Title)');
+    });
+    it('An image element should contain appropriate alt attribute', function () {
+      var layout = rooEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[0].childNodes[1];
+      chai.expect(image.getAttribute('alt')).to.equal('Test image alt');
+    });
+    it('An image element should contain a11y tabindex attribute', function () {
+      var layout = rooEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[0].childNodes[1];
+      chai.expect(image.getAttribute('tabindex')).to.equal('5');
     });
 
     // special cases - we would like the onload and onerror callbacks to be called right after the load
@@ -521,6 +542,52 @@ describe('json-pollock tests', function () {
       chai.expect(textEl.className).to.contain('lp-json-pollock-element-text');
     });
 
+    it('Vertical should have the appropriate WCAG attribute', function () {
+
+      var conf = {
+        "type": "vertical",
+        "elements": [{
+          "type": "text",
+          "text": "Test text",
+          "tooltip": "text tooltip"
+        }],
+        "accessibility": {
+          "web": {
+            "aria-label": "Vertical"
+          }
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      var layout = rooEl.childNodes[0].childNodes[0];
+
+      chai.expect(layout.getAttribute('aria-label')).to.equal('Vertical');
+    });
+
+    it('Horizontal should have the appropriate WCAG attribute', function () {
+
+      var conf = {
+        "type": "horizontal",
+        "elements": [{
+          "type": "text",
+          "text": "Test text",
+          "tooltip": "text tooltip"
+        }],
+        "accessibility": {
+          "web": {
+            "aria-label": "Horizontal"
+          }
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      var layout = rooEl.childNodes[0].childNodes[0];
+
+      chai.expect(layout.getAttribute('aria-label')).to.equal('Horizontal');
+    });
+
     describe('massive content', function () {
 
       it('Horizontal layout with many elements - width must not exceeds parent layout', function () {
@@ -673,12 +740,12 @@ describe('json-pollock tests', function () {
 
   describe('render carousel', function(){
 
-    const conteiner = addToBody(JsonPollock.render(JSON.stringify(carouselConf)));
-    const carouselRoot = conteiner.children[0];
-    const carouselRootWrapper = conteiner.children[0].children[0];
-    const carouselRootLayout = conteiner.children[0].children[0];
-    const carouselRight = conteiner.children[0].children[0].children[1];
-    const carouselLeft = conteiner.children[0].children[0].children[2];
+    const container = addToBody(JsonPollock.render(JSON.stringify(carouselConf)));
+    const carouselRoot = container.children[0];
+    const carouselRootWrapper = container.children[0].children[0];
+    const carouselRootLayout = container.children[0].children[0];
+    const carouselRight = container.children[0].children[0].children[1];
+    const carouselLeft = container.children[0].children[0].children[2];
     const carouselListRoot =  carouselRootLayout.children[0];
     const card1 = carouselRootLayout.children[0].children[0];
     const card2 = carouselRootLayout.children[0].children[1];
@@ -738,11 +805,14 @@ describe('json-pollock tests', function () {
       chai.expect(card3.children[0].innerText).to.be.equal('3');
     });
 
-    it('carousel accessability attrbs', function () {
+    it('carousel accessibility attrbs', function () {
       chai.expect(carouselListRoot.getAttribute('role')).to.be.equal('list');
       chai.expect(card1.getAttribute('role')).to.be.equal('listitem');
       chai.expect(card2.getAttribute('role')).to.be.equal('listitem');
       chai.expect(card3.getAttribute('role')).to.be.equal('listitem');
+    });
+    it('carousel root should have appropriate WCAG attribute', function () {
+      chai.expect(carouselRootWrapper.getAttribute('aria-label')).to.be.equal('Carousel');
     });
 
   });
@@ -784,6 +854,11 @@ describe('json-pollock tests', function () {
                             "publishText": "apples"
                           }
                         ]
+                      },
+                      "accessibility": {
+                        "web": {
+                          "aria-label": "Checkbox1"
+                        }
                       }
                     },
                     {
@@ -804,6 +879,11 @@ describe('json-pollock tests', function () {
                             "publishText": "bananas"
                           }
                         ]
+                      },
+                      "accessibility": {
+                        "web": {
+                          "aria-label": "Checkbox2"
+                        }
                       }
                     },
                     {
@@ -824,6 +904,11 @@ describe('json-pollock tests', function () {
                             "publishText": "avocados"
                           }
                         ]
+                      },
+                      "accessibility": {
+                        "web": {
+                          "aria-label": "Checkbox3"
+                        }
                       }
                     }
                   ]
@@ -852,6 +937,11 @@ describe('json-pollock tests', function () {
                     "submit": true
                   }
                 ]
+              },
+              "accessibility": {
+                "web": {
+                  "tabindex": "0"
+                }
               }
             }
           ]
@@ -910,15 +1000,23 @@ describe('json-pollock tests', function () {
     it('a11y attributes exists within checklist', function () {
       var inputEl = checklistLayout.children[0].querySelector('.lp-json-pollock-element-checkbox-input');
       var labelEl = checklistLayout.children[0].querySelector('.lp-json-pollock-element-checkbox-label');
+      var labels = checklistLayout.querySelectorAll('.lp-json-pollock-element-checkbox-label');
       chai.expect(inputEl).to.exist;
       chai.expect(inputEl.id).to.exist;
       chai.expect(labelEl).to.exist;
       chai.expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
+      for (var i = 1; i <= labels.length; i++) {
+        chai.expect(labels[i - 1].getAttribute('aria-label')).to.equal('Checkbox' + i);
+      }
     });
 
     it('submitButton exist', function () {
       chai.expect(buttonListLayout.children[0].className).to.contains('lp-json-pollock-element-submit-button');
       chai.expect(buttonListLayout.children[0].children[0].disabled).to.equal(false);
+    });
+
+    it('submitButton should contain appropriate WCAG attribute', function () {
+      chai.expect(buttonListLayout.children[0].children[0].getAttribute('tabindex')).to.equal('0');
     });
   });
 
@@ -1533,6 +1631,35 @@ describe('json-pollock tests', function () {
         chai.expect(getStyle(simpleEl, 'borderBottom')).to.contain('none');
         chai.expect(getStyle(simpleEl, 'borderRight')).to.contain('none');
       });
+      it('horizontal with simple element (button) as first child should contain WCAG attributes', function () {
+        var conf = {
+          "type": "vertical",
+          "elements": [
+            {
+              "type": "button",
+              "tooltip": "button tooltip",
+              "title": "Add to cart",
+              "click": {
+                "actions": [{
+                  "type": "link",
+                  "name": "add to cart",
+                  "uri": "http://example.jpg"
+                }]
+              }
+            }
+          ],
+          "accessibility": {
+            "web": {
+              "role": "region",
+              "aria-label": "Horizontal layout"
+            }
+          }
+        };
+        var rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+        var contentWrapper = rooEl.querySelector('.lp-json-pollock-layout');
+        chai.expect(contentWrapper.getAttribute('role')).to.equal('region');
+        chai.expect(contentWrapper.getAttribute('aria-label')).to.equal('Horizontal layout');
+      });
     });
 
     describe('Vertical layout\'s child with is not the first child should have a top border only', function () {
@@ -1799,7 +1926,7 @@ describe('json-pollock tests', function () {
       rooEl = addToBody(JsonPollock.render(conf));
 
       childEl = rooEl.childNodes[0].childNodes[0].childNodes[0];
-      chai.expect(childEl.title).to.equal("and & lt < gt > quot \"\n sqout ' slash / ssqout ` eq =");
+      chai.expect(childEl.title).to.equal("and &amp; lt &lt; gt &gt; quot &quot;\n sqout &#39; slash &#x2F; ssqout &#x60; eq &#x3D;");
     });
 
     it('newline character on text content should be replaced with <br>', function () {

@@ -55,6 +55,15 @@
     "alt": {
       "type": "string",
       "maxLength": 2000
+    },
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "web": {
+          "$ref": "accessibilityWeb.json"
+        }
+      }
     }
   },
   "required": [
