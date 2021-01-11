@@ -90,7 +90,7 @@ ajv@^5.0.0, ajv@^5.2.0, ajv@^5.4.0:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
 
-ajv@^6.12.0, ajv@^6.12.3, ajv@^6.12.5:
+ajv@^6.12.0, ajv@^6.12.3, ajv@^6.12.6:
   version "6.12.6"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/ajv/-/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
   integrity sha1-uvWmLoArB9l3A0WG+MO69a3ybfQ=
@@ -230,12 +230,14 @@ array-flatten@1.1.1:
   integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
 
 array-includes@^3.1.1:
-  version "3.1.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/array-includes/-/array-includes-3.1.1.tgz#cdd67e6852bdf9c1215460786732255ed2459348"
-  integrity sha1-zdZ+aFK9+cEhVGB4ZzIlXtJFk0g=
+  version "3.1.2"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/array-includes/-/array-includes-3.1.2.tgz#a8db03e0b88c8c6aeddc49cb132f9bcab4ebf9c8"
+  integrity sha1-qNsD4LiMjGrt3EnLEy+byrTr+cg=
   dependencies:
+    call-bind "^1.0.0"
     define-properties "^1.1.3"
-    es-abstract "^1.17.0"
+    es-abstract "^1.18.0-next.1"
+    get-intrinsic "^1.0.1"
     is-string "^1.0.5"
 
 array-union@^1.0.1:
@@ -261,12 +263,13 @@ array-unique@^0.3.2:
   integrity sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=
 
 array.prototype.flat@^1.2.3:
-  version "1.2.3"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/array.prototype.flat/-/array.prototype.flat-1.2.3.tgz#0de82b426b0318dbfdb940089e38b043d37f6c7b"
-  integrity sha1-DegrQmsDGNv9uUAInjiwQ9N/bHs=
+  version "1.2.4"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/array.prototype.flat/-/array.prototype.flat-1.2.4.tgz#6ef638b43312bd401b4c6199fdec7e2dc9e9a123"
+  integrity sha1-bvY4tDMSvUAbTGGZ/ex+LcnpoSM=
   dependencies:
+    call-bind "^1.0.0"
     define-properties "^1.1.3"
-    es-abstract "^1.17.0-next.1"
+    es-abstract "^1.18.0-next.1"
 
 asn1.js@^5.2.0:
   version "5.4.1"
@@ -353,9 +356,9 @@ aws-sign2@~0.7.0:
   integrity sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=
 
 aws4@^1.8.0:
-  version "1.10.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/aws4/-/aws4-1.10.1.tgz#e1e82e4f3e999e2cfd61b161280d16a111f86428"
-  integrity sha1-4eguTz6Zniz9YbFhKA0WoRH4ZCg=
+  version "1.11.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
+  integrity sha1-1h9G2DslGSUOJ4Ta9bCUeai0HFk=
 
 babel-code-frame@^6.16.0, babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
@@ -1018,9 +1021,9 @@ balanced-match@^1.0.0:
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
 base64-js@^1.0.2:
-  version "1.3.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/base64-js/-/base64-js-1.3.1.tgz#58ece8cb75dd07e71ed08c736abc5fac4dbf8df1"
-  integrity sha1-WOzoy3XdB+ce0IxzarxfrE2/jfE=
+  version "1.5.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
+  integrity sha1-GxtEAWClv3rUC2UPCVljSBkDkwo=
 
 base@^0.11.1:
   version "0.11.2"
@@ -1067,9 +1070,9 @@ binary-extensions@^1.0.0:
   integrity sha1-WYr+VHVbKGilMw0q/51Ou1Mgm2U=
 
 binary-extensions@^2.0.0:
-  version "2.1.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/binary-extensions/-/binary-extensions-2.1.0.tgz#30fa40c9e7fe07dbc895678cd287024dea241dd9"
-  integrity sha1-MPpAyef+B9vIlWeM0ocCTeokHdk=
+  version "2.2.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
+  integrity sha1-dfUC7q+f/eQvyYgpZFvk6na9ni0=
 
 bindings@^1.5.0:
   version "1.5.0"
@@ -1095,7 +1098,7 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.4.0:
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/bn.js/-/bn.js-4.11.9.tgz#26d556829458f9d1e81fc48952493d0ba3507828"
   integrity sha1-JtVWgpRY+dHoH8SJUkk9C6NQeCg=
 
-bn.js@^5.1.1:
+bn.js@^5.0.0, bn.js@^5.1.1:
   version "5.1.3"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/bn.js/-/bn.js-5.1.3.tgz#beca005408f642ebebea80b042b4d18d2ac0ee6b"
   integrity sha1-vsoAVAj2Quvr6oCwQrTRjSrA7ms=
@@ -1116,7 +1119,7 @@ body-parser@1.19.0:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
-boolbase@~1.0.0:
+boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
@@ -1198,11 +1201,11 @@ browserify-des@^1.0.0:
     safe-buffer "^5.1.2"
 
 browserify-rsa@^4.0.0, browserify-rsa@^4.0.1:
-  version "4.0.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/browserify-rsa/-/browserify-rsa-4.0.1.tgz#21e0abfaf6f2029cf2fafb133567a701d4135524"
-  integrity sha1-IeCr+vbyApzy+vsTNWenAdQTVSQ=
+  version "4.1.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/browserify-rsa/-/browserify-rsa-4.1.0.tgz#b2fd06b5b75ae297f7ce2dc651f918f5be158c8d"
+  integrity sha1-sv0Gtbda4pf3zi3GUfkY9b4VjI0=
   dependencies:
-    bn.js "^4.1.0"
+    bn.js "^5.0.0"
     randombytes "^2.0.1"
 
 browserify-sign@^4.0.0:
@@ -1314,6 +1317,14 @@ cacherjs@~0.1.0:
     JSONStream "~1.3.1"
     event-stream "~3.3.4"
 
+call-bind@^1.0.0:
+  version "1.0.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/call-bind/-/call-bind-1.0.1.tgz#29aca9151f8ddcfd5b9b786898f005f425e88567"
+  integrity sha1-KaypFR+N3P1bm3homPAF9CXohWc=
+  dependencies:
+    function-bind "^1.1.1"
+    get-intrinsic "^1.0.2"
+
 caller-path@^0.1.0:
   version "0.1.0"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/caller-path/-/caller-path-0.1.0.tgz#94085ef63581ecd3daa92444a8fe94e82577751f"
@@ -1373,14 +1384,14 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30001151"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/caniuse-db/-/caniuse-db-1.0.30001151.tgz#f9816358ecbd430dcf2eb21293e6fa6b99fbae29"
-  integrity sha1-+YFjWOy9Qw3PLrISk+b6a5n7rik=
+  version "1.0.30001174"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/caniuse-db/-/caniuse-db-1.0.30001174.tgz#215ca43f6a915455bee54fa1cec4a8c681c6199d"
+  integrity sha1-IVykP2qRVFW+5U+hzsSoxoHGGZ0=
 
 caniuse-lite@^1.0.30000844:
-  version "1.0.30001151"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/caniuse-lite/-/caniuse-lite-1.0.30001151.tgz#1ddfde5e6fff02aad7940b4edb7d3ac76b0cb00b"
-  integrity sha1-Hd/eXm//AqrXlAtO2306x2sMsAs=
+  version "1.0.30001174"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/caniuse-lite/-/caniuse-lite-1.0.30001174.tgz#0f2aca2153fd88ceb07a2bb982fc2acb787623c4"
+  integrity sha1-DyrKIVP9iM6weiu5gvwqy3h2I8Q=
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -1440,9 +1451,9 @@ chokidar@^2.1.8:
     fsevents "^1.2.7"
 
 chokidar@^3.4.1:
-  version "3.4.3"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/chokidar/-/chokidar-3.4.3.tgz#c1df38231448e45ca4ac588e6c79573ba6a57d5b"
-  integrity sha1-wd84IxRI5FykrFiObHlXO6alfVs=
+  version "3.5.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/chokidar/-/chokidar-3.5.0.tgz#458a4816a415e9d3b3caa4faec2b96a6935a9e65"
+  integrity sha1-RYpIFqQV6dOzyqT67CuWppNanmU=
   dependencies:
     anymatch "~3.1.1"
     braces "~3.0.2"
@@ -1452,7 +1463,7 @@ chokidar@^3.4.1:
     normalize-path "~3.0.0"
     readdirp "~3.5.0"
   optionalDependencies:
-    fsevents "~2.1.2"
+    fsevents "~2.3.1"
 
 chownr@^1.0.1:
   version "1.1.4"
@@ -1795,9 +1806,9 @@ copy-webpack-plugin@^4.0.1:
     serialize-javascript "^1.4.0"
 
 core-js@^2.4.0, core-js@^2.5.0:
-  version "2.6.11"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
-  integrity sha1-OIMUafmSK97Y7iHJ3EaYXgOZMIw=
+  version "2.6.12"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
+  integrity sha1-2TM9+nsGXjR8xWgiGdb2kIWcwuw=
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -1898,15 +1909,15 @@ css-loader@^0.28.0:
     postcss-value-parser "^3.3.0"
     source-list-map "^2.0.0"
 
-css-select@^1.1.0:
-  version "1.2.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
-  integrity sha1-KzoRBTnFNV8c2NMUYj6HCxIeyFg=
+css-select@^2.0.2:
+  version "2.1.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/css-select/-/css-select-2.1.0.tgz#6a34653356635934a81baca68d0255432105dbef"
+  integrity sha1-ajRlM1ZjWTSoG6ymjQJVQyEF2+8=
   dependencies:
-    boolbase "~1.0.0"
-    css-what "2.1"
-    domutils "1.5.1"
-    nth-check "~1.0.1"
+    boolbase "^1.0.0"
+    css-what "^3.2.1"
+    domutils "^1.7.0"
+    nth-check "^1.0.2"
 
 css-selector-tokenizer@^0.7.0:
   version "0.7.3"
@@ -1916,10 +1927,10 @@ css-selector-tokenizer@^0.7.0:
     cssesc "^3.0.0"
     fastparse "^1.1.2"
 
-css-what@2.1:
-  version "2.1.3"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/css-what/-/css-what-2.1.3.tgz#a6d7604573365fe74686c3f311c56513d88285f2"
-  integrity sha1-ptdgRXM2X+dGhsPzEcVlE9iChfI=
+css-what@^3.2.1:
+  version "3.4.2"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/css-what/-/css-what-3.4.2.tgz#ea7026fcb01777edbde52124e21f327e7ae950e4"
+  integrity sha1-6nAm/LAXd+295SEk4h8yfnrpUOQ=
 
 cssesc@^3.0.0:
   version "3.0.0"
@@ -2152,9 +2163,9 @@ domelementtype@1, domelementtype@^1.3.1:
   integrity sha1-0EjESzew0Qp/Kj1f7j9DM9eQSB8=
 
 domelementtype@^2.0.1:
-  version "2.0.2"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/domelementtype/-/domelementtype-2.0.2.tgz#f3b6e549201e46f588b59463dd77187131fe6971"
-  integrity sha1-87blSSAeRvWItZRj3XcYcTH+aXE=
+  version "2.1.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/domelementtype/-/domelementtype-2.1.0.tgz#a851c080a6d1c3d94344aed151d99f669edf585e"
+  integrity sha1-qFHAgKbRw9lDRK7RUdmfZp7fWF4=
 
 domhandler@^2.3.0:
   version "2.4.2"
@@ -2163,15 +2174,7 @@ domhandler@^2.3.0:
   dependencies:
     domelementtype "1"
 
-domutils@1.5.1:
-  version "1.5.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/domutils/-/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
-  integrity sha1-3NhIiib1Y9YQeeSMn3t+Mjc2gs8=
-  dependencies:
-    dom-serializer "0"
-    domelementtype "1"
-
-domutils@^1.5.1:
+domutils@^1.5.1, domutils@^1.7.0:
   version "1.7.0"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/domutils/-/domutils-1.7.0.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"
   integrity sha1-Vuo0HoNOBuZ0ivehyyXaZ+qfjCo=
@@ -2223,9 +2226,9 @@ ejs@^2.5.7:
   integrity sha1-SGYSh1c9zFPjZsehrlLDoSDuybo=
 
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.47:
-  version "1.3.583"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/electron-to-chromium/-/electron-to-chromium-1.3.583.tgz#47a9fde74740b1205dba96db2e433132964ba3ee"
-  integrity sha1-R6n950dAsSBdupbbLkMxMpZLo+4=
+  version "1.3.635"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/electron-to-chromium/-/electron-to-chromium-1.3.635.tgz#8d1591eeca6b257d380061a2c04f0b3cc6c9e33b"
+  integrity sha1-jRWR7sprJX04AGGiwE8LPMbJ4zs=
 
 elliptic@^6.5.3:
   version "6.5.3"
@@ -2297,9 +2300,9 @@ entities@^2.0.0:
   integrity sha1-mS0xKc999ocLlsV4WMJJoSD4uLU=
 
 errno@^0.1.3:
-  version "0.1.7"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/errno/-/errno-0.1.7.tgz#4684d71779ad39af177e3f007996f7c67c852618"
-  integrity sha1-RoTXF3mtOa8Xfj8AeZb3xnyFJhg=
+  version "0.1.8"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/errno/-/errno-0.1.8.tgz#8bb3e9c7d463be4976ff888f76b4809ebc2e811f"
+  integrity sha1-i7Ppx9Rjvkl2/4iPdrSAnrwugR8=
   dependencies:
     prr "~1.0.1"
 
@@ -2317,24 +2320,7 @@ error-stack-parser@^2.0.0:
   dependencies:
     stackframe "^1.1.1"
 
-es-abstract@^1.17.0, es-abstract@^1.17.0-next.1:
-  version "1.17.7"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/es-abstract/-/es-abstract-1.17.7.tgz#a4de61b2f66989fc7421676c1cb9787573ace54c"
-  integrity sha1-pN5hsvZpifx0IWdsHLl4dXOs5Uw=
-  dependencies:
-    es-to-primitive "^1.2.1"
-    function-bind "^1.1.1"
-    has "^1.0.3"
-    has-symbols "^1.0.1"
-    is-callable "^1.2.2"
-    is-regex "^1.1.1"
-    object-inspect "^1.8.0"
-    object-keys "^1.1.1"
-    object.assign "^4.1.1"
-    string.prototype.trimend "^1.0.1"
-    string.prototype.trimstart "^1.0.1"
-
-es-abstract@^1.18.0-next.0, es-abstract@^1.18.0-next.1:
+es-abstract@^1.18.0-next.1:
   version "1.18.0-next.1"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/es-abstract/-/es-abstract-1.18.0-next.1.tgz#6e3a0a4bda717e5023ab3b8e90bec36108d22c68"
   integrity sha1-bjoKS9pxflAjqzuOkL7DYQjSLGg=
@@ -2986,9 +2972,9 @@ flush-write-stream@^1.0.0:
     readable-stream "^2.3.6"
 
 follow-redirects@^1.0.0:
-  version "1.13.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
-  integrity sha1-tC6Nk6Kn7qXtiGM2dtZZe8jjhNs=
+  version "1.13.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/follow-redirects/-/follow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
+  integrity sha1-X2m4Ezds7k/QR0o6uoNd8Eq3Y7c=
 
 for-in@^0.1.3:
   version "0.1.8"
@@ -3090,10 +3076,10 @@ fsevents@^1.2.7:
     bindings "^1.5.0"
     nan "^2.12.1"
 
-fsevents@~2.1.2:
-  version "2.1.3"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/fsevents/-/fsevents-2.1.3.tgz#fb738703ae8d2f9fe900c33836ddebee8b97f23e"
-  integrity sha1-+3OHA66NL5/pAMM4Nt3r7ouX8j4=
+fsevents@~2.3.1:
+  version "2.3.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/fsevents/-/fsevents-2.3.1.tgz#b209ab14c61012636c8863507edf7fb68cc54e9f"
+  integrity sha1-sgmrFMYQEmNsiGNQft9/tozFTp8=
 
 fstream@^1.0.0, fstream@^1.0.12:
   version "1.0.12"
@@ -3154,6 +3140,15 @@ get-caller-file@^2.0.1:
   version "2.0.5"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha1-T5RBKoLbMvNuOwuXQfipf+sDH34=
+
+get-intrinsic@^1.0.1, get-intrinsic@^1.0.2:
+  version "1.0.2"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/get-intrinsic/-/get-intrinsic-1.0.2.tgz#6820da226e50b24894e08859469dc68361545d49"
+  integrity sha1-aCDaIm5QskiU4IhZRp3Gg2FUXUk=
+  dependencies:
+    function-bind "^1.1.1"
+    has "^1.0.3"
+    has-symbols "^1.0.1"
 
 get-stdin@^4.0.1:
   version "4.0.1"
@@ -3386,9 +3381,9 @@ html-comment-regex@^1.1.0:
   integrity sha1-l9RoiutcgYhqNk+qDK0d2hTUM6c=
 
 html-entities@^1.2.0:
-  version "1.3.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/html-entities/-/html-entities-1.3.1.tgz#fb9a1a4b5b14c5daba82d3e34c6ae4fe701a0e44"
-  integrity sha1-+5oaS1sUxdq6gtPjTGrk/nAaDkQ=
+  version "1.4.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/html-entities/-/html-entities-1.4.0.tgz#cfbd1b01d2afaf9adca1b10ae7dffab98c71d2dc"
+  integrity sha1-z70bAdKvr5rcobEK59/6uYxx0tw=
 
 html-minifier@^3.2.3:
   version "3.5.21"
@@ -3415,7 +3410,7 @@ html-webpack-plugin@^2.28.0:
     pretty-error "^2.0.2"
     toposort "^1.0.0"
 
-htmlparser2@^3.3.0, htmlparser2@^3.8.2:
+htmlparser2@^3.10.1, htmlparser2@^3.8.2:
   version "3.10.1"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/htmlparser2/-/htmlparser2-3.10.1.tgz#bd679dc3f59897b6a34bb10749c855bb53a9392f"
   integrity sha1-vWedw/WYl7ajS7EHSchVu1OpOS8=
@@ -3502,9 +3497,9 @@ icss-utils@^2.1.0:
     postcss "^6.0.1"
 
 ieee754@^1.1.4:
-  version "1.1.13"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"
-  integrity sha1-7BaFWOlaoYH9h9N/VcMrvLZwi4Q=
+  version "1.2.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
+  integrity sha1-jrehCmP/8l0VpXsAFYbRd9Gw01I=
 
 iferr@^0.1.5:
   version "0.1.5"
@@ -3562,9 +3557,9 @@ inherits@2.0.3:
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
 ini@^1.3.4:
-  version "1.3.5"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
-  integrity sha1-7uJfVtscnsYIXgwid4CD9Zar+Sc=
+  version "1.3.8"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
+  integrity sha1-op2kJbSIBvNHZ6Tvzjlyaa8oQyw=
 
 inquirer@^0.12.0:
   version "0.12.0"
@@ -3663,10 +3658,10 @@ is-callable@^1.1.4, is-callable@^1.2.2:
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/is-callable/-/is-callable-1.2.2.tgz#c7c6715cd22d4ddb48d3e19970223aceabb080d9"
   integrity sha1-x8ZxXNItTdtI0+GZcCI6zquwgNk=
 
-is-core-module@^2.0.0:
-  version "2.0.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/is-core-module/-/is-core-module-2.0.0.tgz#58531b70aed1db7c0e8d4eb1a0a2d1ddd64bd12d"
-  integrity sha1-WFMbcK7R23wOjU6xoKLR3dZL0S0=
+is-core-module@^2.1.0:
+  version "2.2.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/is-core-module/-/is-core-module-2.2.0.tgz#97037ef3d52224d85163f5597b2b63d9afed981a"
+  integrity sha1-lwN+89UiJNhRY/VZeytj2a/tmBo=
   dependencies:
     has "^1.0.3"
 
@@ -3801,9 +3796,9 @@ is-my-json-valid@^2.10.0:
     xtend "^4.0.0"
 
 is-negative-zero@^2.0.0:
-  version "2.0.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/is-negative-zero/-/is-negative-zero-2.0.0.tgz#9553b121b0fac28869da9ed459e20c7543788461"
-  integrity sha1-lVOxIbD6wohp2p7UWeIMdUN4hGE=
+  version "2.0.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/is-negative-zero/-/is-negative-zero-2.0.1.tgz#3de746c18dda2319241a53675908d8f766f11c24"
+  integrity sha1-PedGwY3aIxkkGlNnWQjY92bxHCQ=
 
 is-number@^2.1.0:
   version "2.1.0"
@@ -3964,9 +3959,9 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   integrity sha1-9OaGxd4eofhn28rT1G2WlCjfmMQ=
 
 js-beautify@^1.6.3:
-  version "1.13.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/js-beautify/-/js-beautify-1.13.0.tgz#a056d5d3acfd4918549aae3ab039f9f3c51eebb2"
-  integrity sha1-oFbV06z9SRhUmq46sDn588Ue67I=
+  version "1.13.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/js-beautify/-/js-beautify-1.13.1.tgz#5b9879672beaaa26d0dc25b8fd9a52944e2985e8"
+  integrity sha1-W5h5ZyvqqibQ3CW4/ZpSlE4pheg=
   dependencies:
     config-chain "^1.1.12"
     editorconfig "^0.15.3"
@@ -3985,9 +3980,9 @@ js-tokens@^3.0.2:
   integrity sha1-mGbfOVECEw449/mWvOtlRDIJwls=
 
 js-yaml@^3.4.3, js-yaml@^3.5.1:
-  version "3.14.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/js-yaml/-/js-yaml-3.14.0.tgz#a7a34170f26a21bb162424d8adacb4113a69e482"
-  integrity sha1-p6NBcPJqIbsWJCTYray0ETpp5II=
+  version "3.14.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/js-yaml/-/js-yaml-3.14.1.tgz#dae812fdb3825fa306609a8717383c50c36a0537"
+  integrity sha1-2ugS/bOCX6MGYJqHFzg8UMNqBTc=
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
@@ -4021,9 +4016,9 @@ json-loader@^0.5.4:
   integrity sha1-3KFKcCNf+C8KyaOr62DTN6NlGF0=
 
 json-pollock@^1.0.22:
-  version "1.4.7"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.4.7.tgz#f30f50b5c570f4b82f81f64e0706a5069a7f6d71"
-  integrity sha1-8w9QtcVw9LgvgfZOBwalBpp/bXE=
+  version "1.5.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.5.0.tgz#c1393ba1957b846d0a693534a22d41212b44bc4b"
+  integrity sha1-wTk7oZV7hG0KaTU0oi1BIStEvEs=
   dependencies:
     ajv "^5.4.0"
     chronosjs "^0.0.23"
@@ -4078,18 +4073,19 @@ json5@^1.0.1:
     minimist "^1.2.0"
 
 jsoneditor@^9.0.3:
-  version "9.1.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/jsoneditor/-/jsoneditor-9.1.1.tgz#3f5654e6f8cdd8f239018f941fe6518b8ec3e68e"
-  integrity sha1-P1ZU5vjN2PI5AY+UH+ZRi47D5o4=
+  version "9.1.7"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/jsoneditor/-/jsoneditor-9.1.7.tgz#eda50d23bf5f83a8096f1c1a3afa33af93279e20"
+  integrity sha1-7aUNI79fg6gJbxwaOvozr5MnniA=
   dependencies:
     ace-builds "^1.4.12"
-    ajv "^6.12.5"
+    ajv "^6.12.6"
     javascript-natural-sort "^0.7.1"
     jmespath "^0.15.0"
     json-source-map "^0.6.1"
     mobius1-selectr "^2.4.13"
     picomodal "^3.0.0"
-    vanilla-picker "^2.10.1"
+    simple-json-repair "^1.1.0"
+    vanilla-picker "^2.11.0"
 
 jsonify@~0.0.0:
   version "0.0.0"
@@ -4372,9 +4368,9 @@ map-visit@^1.0.0:
     object-visit "^1.0.0"
 
 math-expression-evaluator@^1.2.14:
-  version "1.2.22"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/math-expression-evaluator/-/math-expression-evaluator-1.2.22.tgz#c14dcb3d8b4d150e5dcea9c68c8dad80309b0d5e"
-  integrity sha1-wU3LPYtNFQ5dzqnGjI2tgDCbDV4=
+  version "1.3.7"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/math-expression-evaluator/-/math-expression-evaluator-1.3.7.tgz#1b62225db86af06f7ea1fd9576a34af605a5b253"
+  integrity sha1-G2IiXbhq8G9+of2VdqNK9gWlslM=
 
 math-random@^1.0.1:
   version "1.0.4"
@@ -4480,17 +4476,17 @@ miller-rabin@^4.0.0:
     bn.js "^4.0.0"
     brorand "^1.0.1"
 
-mime-db@1.44.0:
-  version "1.44.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/mime-db/-/mime-db-1.44.0.tgz#fa11c5eb0aca1334b4233cb4d52f10c5a6272f92"
-  integrity sha1-+hHF6wrKEzS0Izy01S8QxaYnL5I=
+mime-db@1.45.0:
+  version "1.45.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/mime-db/-/mime-db-1.45.0.tgz#cceeda21ccd7c3a745eba2decd55d4b73e7879ea"
+  integrity sha1-zO7aIczXw6dF66LezVXUtz54eeo=
 
 mime-types@^2.1.12, mime-types@~2.1.19, mime-types@~2.1.24:
-  version "2.1.27"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/mime-types/-/mime-types-2.1.27.tgz#47949f98e279ea53119f5722e0f34e529bec009f"
-  integrity sha1-R5SfmOJ56lMRn1ci4PNOUpvsAJ8=
+  version "2.1.28"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/mime-types/-/mime-types-2.1.28.tgz#1160c4757eab2c5363888e005273ecf79d2a0ecd"
+  integrity sha1-EWDEdX6rLFNjiI4AUnPs950qDs0=
   dependencies:
-    mime-db "1.44.0"
+    mime-db "1.45.0"
 
 mime@1.3.x:
   version "1.3.6"
@@ -4785,7 +4781,7 @@ normalize-url@^1.4.0:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-nth-check@~1.0.1:
+nth-check@^1.0.2:
   version "1.0.2"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/nth-check/-/nth-check-1.0.2.tgz#b2bd295c37e3dd58a3bf0700376663ba4d9cf05c"
   integrity sha1-sr0pXDfj3VijvwcAN2Zjuk2c8Fw=
@@ -4827,9 +4823,9 @@ object-hash@^1.1.4:
   integrity sha1-/eRSCYqVHLFF8Dm7fUVUSd3BJt8=
 
 object-inspect@^1.8.0:
-  version "1.8.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/object-inspect/-/object-inspect-1.8.0.tgz#df807e5ecf53a609cc6bfe93eac3cc7be5b3a9d0"
-  integrity sha1-34B+Xs9TpgnMa/6T6sPMe+WzqdA=
+  version "1.9.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/object-inspect/-/object-inspect-1.9.0.tgz#c90521d74e1127b67266ded3394ad6116986533a"
+  integrity sha1-yQUh104RJ7ZyZt7TOUrWEWmGUzo=
 
 object-keys@^1.0.12, object-keys@^1.1.1:
   version "1.1.1"
@@ -4844,12 +4840,12 @@ object-visit@^1.0.0:
     isobject "^3.0.0"
 
 object.assign@^4.1.1:
-  version "4.1.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/object.assign/-/object.assign-4.1.1.tgz#303867a666cdd41936ecdedfb1f8f3e32a478cdd"
-  integrity sha1-MDhnpmbN1Bk27N7fsfjz4ypHjN0=
+  version "4.1.2"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/object.assign/-/object.assign-4.1.2.tgz#0ed54a342eceb37b38ff76eb831a0e788cb63940"
+  integrity sha1-DtVKNC7Os3s4/3brgxoOeIy2OUA=
   dependencies:
+    call-bind "^1.0.0"
     define-properties "^1.1.3"
-    es-abstract "^1.18.0-next.0"
     has-symbols "^1.0.1"
     object-keys "^1.1.1"
 
@@ -4869,13 +4865,13 @@ object.pick@^1.3.0:
     isobject "^3.0.1"
 
 object.values@^1.1.1:
-  version "1.1.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/object.values/-/object.values-1.1.1.tgz#68a99ecde356b7e9295a3c5e0ce31dc8c953de5e"
-  integrity sha1-aKmezeNWt+kpWjxeDOMdyMlT3l4=
+  version "1.1.2"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/object.values/-/object.values-1.1.2.tgz#7a2015e06fcb0f546bd652486ce8583a4731c731"
+  integrity sha1-eiAV4G/LD1Rr1lJIbOhYOkcxxzE=
   dependencies:
+    call-bind "^1.0.0"
     define-properties "^1.1.3"
-    es-abstract "^1.17.0-next.1"
-    function-bind "^1.1.1"
+    es-abstract "^1.18.0-next.1"
     has "^1.0.3"
 
 on-finished@~2.3.0:
@@ -5834,9 +5830,9 @@ reduce-function-call@^1.0.1:
     balanced-match "^1.0.0"
 
 regenerate@^1.2.1:
-  version "1.4.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/regenerate/-/regenerate-1.4.1.tgz#cad92ad8e6b591773485fbe05a485caf4f457e6f"
-  integrity sha1-ytkq2Oa1kXc0hfvgWkhcr09Ffm8=
+  version "1.4.2"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
+  integrity sha1-uTRtiCfo9aMve6KWN9OYtpAUhIo=
 
 regenerator-runtime@^0.10.5:
   version "0.10.5"
@@ -5904,13 +5900,13 @@ remove-trailing-separator@^1.0.1:
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
 
 renderkid@^2.0.4:
-  version "2.0.4"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/renderkid/-/renderkid-2.0.4.tgz#d325e532afb28d3f8796ffee306be8ffd6fc864c"
-  integrity sha1-0yXlMq+yjT+Hlv/uMGvo/9b8hkw=
+  version "2.0.5"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/renderkid/-/renderkid-2.0.5.tgz#483b1ac59c6601ab30a7a596a5965cabccfdd0a5"
+  integrity sha1-SDsaxZxmAaswp6WWpZZcq8z90KU=
   dependencies:
-    css-select "^1.1.0"
+    css-select "^2.0.2"
     dom-converter "^0.2"
-    htmlparser2 "^3.3.0"
+    htmlparser2 "^3.10.1"
     lodash "^4.17.20"
     strip-ansi "^3.0.0"
 
@@ -6001,11 +5997,11 @@ resolve-url@^0.2.1:
   integrity sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
 
 resolve@^1.1.6, resolve@^1.10.0, resolve@^1.13.1, resolve@^1.17.0, resolve@^1.2.0, resolve@^1.3.3:
-  version "1.18.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/resolve/-/resolve-1.18.1.tgz#018fcb2c5b207d2a6424aee361c5a266da8f4130"
-  integrity sha1-AY/LLFsgfSpkJK7jYcWiZtqPQTA=
+  version "1.19.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/resolve/-/resolve-1.19.0.tgz#1af5bf630409734a067cae29318aac7fa29a267c"
+  integrity sha1-GvW/YwQJc0oGfK4pMYqsf6KaJnw=
   dependencies:
-    is-core-module "^2.0.0"
+    is-core-module "^2.1.0"
     path-parse "^1.0.6"
 
 restore-cursor@^1.0.1:
@@ -6245,6 +6241,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw=
 
+simple-json-repair@^1.1.0:
+  version "1.1.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/simple-json-repair/-/simple-json-repair-1.1.0.tgz#87ab6fe0184687d32c2996bb822756da832287d4"
+  integrity sha1-h6tv4BhGh9MsKZa7gidW2oMih9Q=
+
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -6364,9 +6365,9 @@ spdx-expression-parse@^3.0.0:
     spdx-license-ids "^3.0.0"
 
 spdx-license-ids@^3.0.0:
-  version "3.0.6"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/spdx-license-ids/-/spdx-license-ids-3.0.6.tgz#c80757383c28abf7296744998cbc106ae8b854ce"
-  integrity sha1-yAdXODwoq/cpZ0SZjLwQaui4VM4=
+  version "3.0.7"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/spdx-license-ids/-/spdx-license-ids-3.0.7.tgz#e9c18a410e5ed7e12442a549fbd8afa767038d65"
+  integrity sha1-6cGKQQ5e1+EkQqVJ+9ivp2cDjWU=
 
 split-string@^3.0.1, split-string@^3.0.2:
   version "3.1.0"
@@ -6506,20 +6507,20 @@ string-width@^3.0.0, string-width@^3.1.0:
     strip-ansi "^5.1.0"
 
 string.prototype.trimend@^1.0.1:
-  version "1.0.2"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/string.prototype.trimend/-/string.prototype.trimend-1.0.2.tgz#6ddd9a8796bc714b489a3ae22246a208f37bfa46"
-  integrity sha1-bd2ah5a8cUtImjriIkaiCPN7+kY=
+  version "1.0.3"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/string.prototype.trimend/-/string.prototype.trimend-1.0.3.tgz#a22bd53cca5c7cf44d7c9d5c732118873d6cd18b"
+  integrity sha1-oivVPMpcfPRNfJ1ccyEYhz1s0Ys=
   dependencies:
+    call-bind "^1.0.0"
     define-properties "^1.1.3"
-    es-abstract "^1.18.0-next.1"
 
 string.prototype.trimstart@^1.0.1:
-  version "1.0.2"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/string.prototype.trimstart/-/string.prototype.trimstart-1.0.2.tgz#22d45da81015309cd0cdd79787e8919fc5c613e7"
-  integrity sha1-ItRdqBAVMJzQzdeXh+iRn8XGE+c=
+  version "1.0.3"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/string.prototype.trimstart/-/string.prototype.trimstart-1.0.3.tgz#9b4cb590e123bb36564401d59824298de50fd5aa"
+  integrity sha1-m0y1kOEjuzZWRAHVmCQpjeUP1ao=
   dependencies:
+    call-bind "^1.0.0"
     define-properties "^1.1.3"
-    es-abstract "^1.18.0-next.1"
 
 string_decoder@^1.0.0, string_decoder@^1.1.1:
   version "1.3.0"
@@ -6667,9 +6668,9 @@ time-stamp@^2.0.0:
   integrity sha1-kX4KZpBWiHkOx7u94EBGJZr4P1c=
 
 timers-browserify@^2.0.4:
-  version "2.0.11"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/timers-browserify/-/timers-browserify-2.0.11.tgz#800b1f3eee272e5bc53ee465a04d0e804c31211f"
-  integrity sha1-gAsfPu4nLlvFPuRloE0OgEwxIR8=
+  version "2.0.12"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/timers-browserify/-/timers-browserify-2.0.12.tgz#44a45c11fbf407f34f97bccd1577c652361b00ee"
+  integrity sha1-RKRcEfv0B/NPl7zNFXfGUjYbAO4=
   dependencies:
     setimmediate "^1.0.4"
 
@@ -6846,9 +6847,9 @@ unc-path-regex@^0.1.0:
   integrity sha1-5z3T17DXxe2G+6xrCufYxqadUPo=
 
 underscore@^1.8.3:
-  version "1.11.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/underscore/-/underscore-1.11.0.tgz#dd7c23a195db34267186044649870ff1bab5929e"
-  integrity sha1-3XwjoZXbNCZxhgRGSYcP8bq1kp4=
+  version "1.12.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/underscore/-/underscore-1.12.0.tgz#4814940551fc80587cef7840d1ebb0f16453be97"
+  integrity sha1-SBSUBVH8gFh873hA0euw8WRTvpc=
 
 union-value@^1.0.0:
   version "1.0.1"
@@ -6908,9 +6909,9 @@ upper-case@^1.1.1:
   integrity sha1-9rRQHC7EzdJrp4vnIilh3ndiFZg=
 
 uri-js@^4.2.2:
-  version "4.4.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/uri-js/-/uri-js-4.4.0.tgz#aa714261de793e8a82347a7bcc9ce74e86f28602"
-  integrity sha1-qnFCYd55PoqCNHp7zJznTobyhgI=
+  version "4.4.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/uri-js/-/uri-js-4.4.1.tgz#9b1a52595225859e55f669d928f88c6c57f2a77e"
+  integrity sha1-mxpSWVIlhZ5V9mnZKPiMbFfyp34=
   dependencies:
     punycode "^2.1.0"
 
@@ -6998,10 +6999,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vanilla-picker@^2.10.1:
-  version "2.10.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/vanilla-picker/-/vanilla-picker-2.10.1.tgz#b07d6df8e0c3655e39a7da11e68adc00affa2b12"
-  integrity sha1-sH1t+ODDZV45p9oR5orcAK/6KxI=
+vanilla-picker@^2.11.0:
+  version "2.11.0"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/vanilla-picker/-/vanilla-picker-2.11.0.tgz#a30d7174402d846b97c74f81e00be7837a140d64"
+  integrity sha1-ow1xdEAthGuXx0+B4Avng3oUDWQ=
   dependencies:
     "@sphinxxxx/color-conversion" "^2.2.2"
 
@@ -7099,23 +7100,23 @@ vuex@^2.3.1:
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/vuex/-/vuex-2.5.0.tgz#20f0265ade6c9a5ac6724a405d3ffdb4726c9741"
   integrity sha1-IPAmWt5smlrGckpAXT/9tHJsl0E=
 
-watchpack-chokidar2@^2.0.0:
-  version "2.0.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/watchpack-chokidar2/-/watchpack-chokidar2-2.0.0.tgz#9948a1866cbbd6cb824dea13a7ed691f6c8ddff0"
-  integrity sha1-mUihhmy71suCTeoTp+1pH2yN3/A=
+watchpack-chokidar2@^2.0.1:
+  version "2.0.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/watchpack-chokidar2/-/watchpack-chokidar2-2.0.1.tgz#38500072ee6ece66f3769936950ea1771be1c957"
+  integrity sha1-OFAAcu5uzmbzdpk2lQ6hdxvhyVc=
   dependencies:
     chokidar "^2.1.8"
 
 watchpack@^1.3.1:
-  version "1.7.4"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/watchpack/-/watchpack-1.7.4.tgz#6e9da53b3c80bb2d6508188f5b200410866cd30b"
-  integrity sha1-bp2lOzyAuy1lCBiPWyAEEIZs0ws=
+  version "1.7.5"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
+  integrity sha1-EmfmxV4Lm1vkTCAjrtVDeiwmxFM=
   dependencies:
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
   optionalDependencies:
     chokidar "^3.4.1"
-    watchpack-chokidar2 "^2.0.0"
+    watchpack-chokidar2 "^2.0.1"
 
 webpack-bundle-analyzer@^2.2.1:
   version "2.13.1"
@@ -7298,14 +7299,14 @@ xtend@^4.0.0, xtend@~4.0.1:
   integrity sha1-u3J3n1+kZRhrH0OPZ0+jR/2121Q=
 
 y18n@^3.2.1:
-  version "3.2.1"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
-  integrity sha1-bRX7qITAhnnA136I53WegR4H+kE=
+  version "3.2.2"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/y18n/-/y18n-3.2.2.tgz#85c901bd6470ce71fc4bb723ad209b70f7f28696"
+  integrity sha1-hckBvWRwznH8S7cjrSCbcPfyhpY=
 
 y18n@^4.0.0:
-  version "4.0.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/y18n/-/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
-  integrity sha1-le+U+F7MgdAHwmThkKEg8KPIVms=
+  version "4.0.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/y18n/-/y18n-4.0.1.tgz#8db2b83c31c5d75099bb890b23f3094891e247d4"
+  integrity sha1-jbK4PDHF11CZu4kLI/MJSJHiR9Q=
 
 yallist@^2.1.2:
   version "2.1.2"

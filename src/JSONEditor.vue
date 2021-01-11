@@ -34,6 +34,7 @@ import specialActionSchema from 'json-pollock/js/schema/specialAction.json';
 import buttonListSchema from 'json-pollock/js/schema/buttonList.json';
 import keyValuePairSchema from 'json-pollock/js/schema/keyValuePair.json';
 import displaySettingsSchema from 'json-pollock/js/schema/displaySettings.json';
+import accessibilityWebSchema from 'json-pollock/js/schema/accessibilityWeb.json';
 
 let editor;
 
@@ -83,6 +84,7 @@ export default {
         'buttonList.json': buttonListSchema,
         'keyValuePair.json': keyValuePairSchema,
         'displaySettings.json': displaySettingsSchema,
+        'accessibilityWeb.json': accessibilityWebSchema,
       },
       onChange: () => {
         try {
