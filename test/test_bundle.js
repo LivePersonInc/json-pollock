@@ -576,7 +576,7 @@ describe('json-pollock tests', function () {
         }],
         "accessibility": {
           "web": {
-            "aria-label": "Vertical"
+            "aria-label": "Horizontal"
           }
         }
       }
@@ -585,7 +585,7 @@ describe('json-pollock tests', function () {
 
       var layout = rooEl.childNodes[0].childNodes[0];
 
-      chai.expect(layout.getAttribute('aria-label')).to.equal('Vertical');
+      chai.expect(layout.getAttribute('aria-label')).to.equal('Horizontal');
     });
 
     describe('massive content', function () {
