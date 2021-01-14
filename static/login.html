@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8.1.3/dist/polyfill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js"></script>
+  <script>
+    /* eslint-disable */
+    // var PLAYGROUND_SERVICE_API = 'https://json-pollock-service.herokuapp.com/api/';
+    var PLAYGROUND_SERVICE_API = 'http://localhost:5000/api/';
+
+    function getUrlParam(paramName) {
+      var params = window.location.search.substring(1).split('&');
+      var param = params.filter(function(p){
+        return p && p.indexOf(paramName) === 0;
+      });
+
+      return param.length ? param[0].split('=')[1] : '';
+    }
+
+    var state = getUrlParam('state');
+    var code = getUrlParam('code');
+
+    fetch(PLAYGROUND_SERVICE_API + 'access_token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        code: code,
+        state: state
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      window.opener.postMessage(data.access_token, window.location);
+      window.close();
+    })
+    .catch((error) => {
+      document.querySelector('.primary').innerText = 'Login has failed';
+      document.querySelector('.primary').style.color = '#da2a2a'
+      document.querySelector('.secondary').innerText = 'Please close this window and try again';
+      console.error('Error:', error);
+    });
+  </script>
+  <link rel=icon type=image/png href=/json-pollock/src/assets/logo.png>
+  <title>JsonPollock Playground Login page</title>
+  <style>
+    .text-area {
+      position: absolute;
+      background: rgba(235,235,235, 0.9);
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      display: table;
+      color: #162036;
+      top: 0;
+      left: 0;
+    }
+
+    .text-area .text-warp {      
+      font-weight: bold;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .text-area .text-warp .primary {
+      font-size: 30px;
+    }
+
+    .text-area .text-warp .secondary {
+      font-size: 21px;
+    }
+  </style>
+</head>
+
+  <body>    
+    <div class="text-area">
+      <p class="text-warp">
+        <span class="primary">Logging in...</span><br><br>
+        <span class="secondary">You will be redirected back to the json-pollock playground when done</span>
+      </p>
+    </div>
+  </body>
+</html>
