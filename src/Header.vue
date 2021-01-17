@@ -17,10 +17,12 @@
         <a :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle"><span class="header-btn-title">View on Github</span></a>       
       </div>
       <div class="gistbtn header-btn weak" v-if="!loading">        
-        <span class="header-btn-title" v-tooltip.bottom="'Load Gist by ID'" @click="showLoadGistInput = true">Open</span>
+        <span class="header-btn-title" v-tooltip.bottom="'Open Gist from list or by ID'" @click="showLoadGistInput = true">Open</span>
         <popup class="gist-input gist-input-id" v-model="showLoadGistInput">
-          <input ref="gistNameInput" v-model="gistId" placeholder="Gist ID..."/>
-          <div v-if="gistId" class="action-btn gist-input-id-save" @click="loadGist">Go</div>
+          <my-gists-list v-if="userGists && userGists.length" :myGists="userGists"/>
+          <span v-if="userGists && userGists.length" class="gist-input-title">Load Gist by id</span>
+          <input ref="gistNameInput" v-model="newGistId" placeholder="Gist ID..."/>
+          <div v-if="newGistId" class="action-btn gist-input-id-save" @click="loadGist(newGistId)">Go</div>
         </popup>
       </div>
       <div class="savebtn header-btn weak" @click="showGistDialog" v-if="!loading" :class="{disabled: saveDisabled}">
@@ -79,6 +81,7 @@ import Popup from './Popup';
 import GitHubHelper from './GitHubHelper';
 import JsonTemplateList from './JsonTemplateList';
 import ChannelsValidation from './ChannelsValidation';
+import MyGistsList from './MyGistsList';
 
 export default {
   name: 'Header',
@@ -88,6 +91,7 @@ export default {
       newGistName: '',
       gistUrl: '',
       gistId: '',
+      newGistId: '',
       token: '',
       showDescription: false,
       saving: false,
@@ -102,6 +106,7 @@ export default {
     Popup,
     JsonTemplateList,
     ChannelsValidation,
+    MyGistsList,
   },
   computed: {
     ...mapGetters([
@@ -112,6 +117,7 @@ export default {
       'jsonValid',
       'edited',
       'schemaValid',
+      'userGists',
     ]),
     isGistOwner() {
       return !!(this.gist && this.user && this.gist.ownerId === this.user.id);
@@ -170,10 +176,11 @@ export default {
       GitHubHelper.deleteToken();
       this.showDescription = true;
     },
-    loadGist() {
-      if (this.gistId) {
-        this.ga(['Gist', 'Load', this.gistId]);
-        location.search = `?gist=${this.gistId}`;
+    loadGist(newGist) {
+      const gistToLoad = newGist || this.gistId;
+      if (gistToLoad) {
+        this.ga(['Gist', 'LoadById', gistToLoad]);
+        location.search = `?gist=${gistToLoad}`;
       }
     },
     saveGist() {
@@ -421,8 +428,8 @@ export default {
 
         .action-btn {
           position: absolute;
-          top: 10px;
-          right: 13px;
+          bottom: 10px;
+          right: 23px;
           font-size: 14px;
           font-weight: bold;
           background: #fff;
@@ -467,12 +474,12 @@ export default {
         top: 42px;
 
         input {
-          margin: 7px 10px 7px 10px;
-          max-width: 190px;
+          margin: 8px 20px;
+          width: 190px;
         }
 
         .gist-input-name-save {
-          color: #000;
+          color: #000;          
         }
 
         .login-to-save {
@@ -510,13 +517,18 @@ export default {
       .gist-input-id {
         top: 42px;
 
+        .gist-input-title {
+          color: #2c3e50;
+          margin: 0px 20px;
+        }
+
         input {
-          margin: 7px 10px 7px 10px;
-          max-width: 190px;
+          margin: 8px 20px;
+          width: 190px;
         }
 
         .gist-input-id-save {
-          color: #000;
+          color: #000;          
         }
       }
 
