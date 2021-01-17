@@ -57,7 +57,12 @@ export default {
     if (token) {
       this.$store.commit('setToken', token);
       GitHubHelper.getUserDetails()
-      .then(userDetails => userDetails && this.$store.commit('setUser', userDetails));
+      .then((userDetails) => {
+        if (userDetails) {
+          this.$store.commit('setUser', userDetails);
+          GitHubHelper.loadGists().then(gists => this.$store.commit('setUserGists', gists));
+        }
+      });
     }
     if (gistExpr) {
       this.$store.commit('setLoading', true);

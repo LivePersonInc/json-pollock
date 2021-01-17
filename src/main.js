@@ -27,6 +27,7 @@ const store = new Vuex.Store({
     jsonSelectionPath: '',
     token: '',
     user: '',
+    userGists: [],
     gist: {
       id: '',
       name: '',
@@ -76,10 +77,21 @@ const store = new Vuex.Store({
         state.token = token;
       }
     },
+    removeToken(state) {
+      state.token = '';
+    },
     setUser(state, user) {
       if (user) {
         state.user = user;
       }
+    },
+    setUserGists(state, userGists) {
+      if (userGists) {
+        state.userGists = userGists;
+      }
+    },
+    removeUser(state) {
+      state.user = '';
     },
     addAction(state, action) {
       if (action) {
@@ -97,6 +109,7 @@ const store = new Vuex.Store({
     token: state => state.token,
     message: state => state.message,
     user: state => state.user,
+    userGists: state => state.userGists,
     jsonValid: state => state.jsonValid,
     schemaValid: state => state.schemaValid,
     edited: state => state.edited,

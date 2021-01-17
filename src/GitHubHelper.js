@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import 'babel-polyfill';
-import { get, isString, isObject } from 'lodash';
+import { get, isString, isObject, startsWith, keys, find, chain } from 'lodash';
 
 const GITHUB_API = 'https://api.github.com';
 const PROXY_API = 'https://json-pollock-service.herokuapp.com/api';
@@ -11,8 +11,11 @@ const STORAGE_KEYS = {
   GIST_PREFIX: 'jsonPollockPlayground',
 };
 
+const FILENAME_PREFIX = 'Json_pollock_playground';
+
 class Gist {
-  constructor(name, content, url, ownerId) {
+  constructor(id, name, content, url, ownerId) {
+    this.id = id;
     this.name = name;
     this.content = content;
     this.url = url;
@@ -21,8 +24,27 @@ class Gist {
   }
 }
 
+const toGistObject = (gist, filename) => {
+  const files = keys(gist.files);
+  if (files && files.length) {
+    const queryFilename = startsWith(filename, FILENAME_PREFIX) ? filename : `${FILENAME_PREFIX}.${filename}`;
+    const file = filename && gist.files[queryFilename] ?
+      gist.files[queryFilename] :
+      gist.files[find(files, f => startsWith(f, FILENAME_PREFIX)) || files[0]];
+    const gistFilename = startsWith(file.filename, FILENAME_PREFIX) ?
+      file.filename.slice(FILENAME_PREFIX.length + 1) :
+      file.filename;
+    return new Gist(gist.id, gistFilename, file.content || undefined, gist.html_url, get(gist, 'owner.id'));
+  }
+  return undefined;
+};
+
 const saveToken = (token) => {
   localStorage.setItem(STORAGE_KEYS.GITHUB_TOKEN, token);
+};
+
+const deleteToken = () => {
+  localStorage.removeItem(STORAGE_KEYS.GITHUB_TOKEN);
 };
 
 const getToken = () => localStorage.getItem(STORAGE_KEYS.GITHUB_TOKEN);
@@ -81,15 +103,21 @@ const queryGitHubAPI = (path, storageKeyOrOptions, fallbackToProxy) => {
 
 const getUserDetails = () => queryGitHubAPI('user', STORAGE_KEYS.GITHUB_USER).then(res => (res.error ? '' : res));
 
+const loadGists = () =>
+  queryGitHubAPI('gists')
+    .then(gists =>
+      chain(gists).filter(gist => !!chain(gist.files)
+                .keys(gist.files)
+                .filter(file => startsWith(file, FILENAME_PREFIX))
+                .value().length)
+      .map(gist => toGistObject(gist)).value());
+
 const loadGist = (gistId, filename) =>
   queryGitHubAPI(`gists/${gistId}`, gistId, true)
     .then((gist) => {
-      const files = gist.files && Object.keys(gist.files);
-      if (files && files.length) {
-        const file = filename && gist.files[filename] ?
-          gist.files[filename] :
-          gist.files[files[0]];
-        return new Gist(file.filename, file.content, gist.html_url, get(gist, 'owner.id'));
+      const gistObj = toGistObject(gist, filename);
+      if (gistObj) {
+        return gistObj;
       }
       return gist;
     });
@@ -97,7 +125,7 @@ const loadGist = (gistId, filename) =>
 const saveGist = (gistId, filename, content) => queryGitHubAPI(`gists/${gistId}`, {
   method: 'PATCH',
   body: {
-    files: { [filename]: {
+    files: { [`${FILENAME_PREFIX}.${filename}`]: {
       content: JSON.stringify(content),
     } },
   },
@@ -115,7 +143,7 @@ const saveGist = (gistId, filename, content) => queryGitHubAPI(`gists/${gistId}`
 const createGist = (filename, content) => queryGitHubAPI('gists', {
   method: 'POST',
   body: {
-    files: { [filename]: {
+    files: { [`${FILENAME_PREFIX}.${filename}`]: {
       content: JSON.stringify(content),
     } },
   },
@@ -123,9 +151,11 @@ const createGist = (filename, content) => queryGitHubAPI('gists', {
 
 export default {
   loadGist,
+  loadGists,
   saveGist,
   createGist,
   saveToken,
+  deleteToken,
   getToken,
   getUserDetails,
 };
