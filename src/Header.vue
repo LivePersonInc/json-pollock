@@ -13,7 +13,7 @@
             <button class="btn-logout" @click="logout">Sign out</button>            
           </popup>
       </div>
-      <div class="gistbtn header-btn weak" v-if="!loading && gistName">
+      <div class="go-to-source header-btn weak" v-if="!loading && gistName">
         <a :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle"><span class="header-btn-title">View on Github</span></a>       
       </div>
       <div class="gistbtn header-btn weak" v-if="!loading">        
@@ -246,6 +246,7 @@ export default {
     logout() {
       this.$store.commit('removeToken');
       this.$store.commit('removeUser');
+      this.$store.commit('removeUserGists');
       this.deleteToken();
       this.$store.commit('setMessage', { text: 'you have been successfully logged out', type: 'success' });
     },
@@ -353,7 +354,7 @@ export default {
       }
     }
 
-    @media screen and (max-width: 1160px) {
+    @media screen and (max-width: 1475px) {
       .title {
         width: 30px;
         .title-text {
@@ -383,7 +384,7 @@ export default {
       }
 
       .docu {
-        @media screen and (max-width: 890px) {
+        @media screen and (max-width: 1215px) {
           display: none;
         }
       }
@@ -409,7 +410,7 @@ export default {
           cursor: default;
         }
 
-        @media screen and (max-width: 640px) {
+        @media screen and (max-width: 750px) {
           display: none;
         }
       }
@@ -449,7 +450,23 @@ export default {
       }
 
       .info {
-        @media screen and (max-width: 890px) {
+        @media screen and (max-width: 1215px) {
+          display: none;
+        }
+      }
+
+      .go-to-source {
+        position: relative;
+        a {
+          color: #ffffff;
+          text-decoration: none;
+        }
+
+        .gist-token-needed {
+          color: red;
+        }
+
+        @media screen and (max-width: 900px) {
           display: none;
         }
       }
@@ -465,7 +482,7 @@ export default {
           color: red;
         }
 
-        @media screen and (max-width: 640px) {
+        @media screen and (max-width: 750px) {
           display: none;
         }
       }
