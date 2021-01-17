@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Popup from './Popup';
 import GitHubHelper from './GitHubHelper';
 import JsonTemplateList from './JsonTemplateList';
@@ -154,6 +154,9 @@ export default {
 
   },
   methods: {
+    ...mapActions([
+      'loadUser',
+    ]),
     onLogoClick() {
       window.open('https://github.com/LivePersonInc/json-pollock', '_blank');
     },
@@ -254,13 +257,7 @@ export default {
       if (event.source.location.pathname === '/static/login.html') {
         this.$store.commit('setToken', event.data);
         this.saveToken(event.data);
-        GitHubHelper.getUserDetails()
-          .then((userDetails) => {
-            if (userDetails) {
-              this.$store.commit('setUser', userDetails);
-              this.$store.commit('setMessage', { text: `Hello ${userDetails.name || userDetails.login}`, type: 'success' });
-            }
-          });
+        this.loadUser().then(() => this.$store.commit('setMessage', { text: `Hello ${this.user.name || this.user.login}`, type: 'success' }));
         window.removeEventListener('message', this.waitForLoginResult);
       }
     },

@@ -22,6 +22,7 @@
 
 <script>
 import { get } from 'lodash';
+import { mapActions } from 'vuex';
 import splitPane from 'vue-splitpane';
 import Header from './Header';
 import JSONEditor from './JSONEditor';
@@ -56,13 +57,7 @@ export default {
     const token = GitHubHelper.getToken();
     if (token) {
       this.$store.commit('setToken', token);
-      GitHubHelper.getUserDetails()
-      .then((userDetails) => {
-        if (userDetails) {
-          this.$store.commit('setUser', userDetails);
-          GitHubHelper.loadGists().then(gists => this.$store.commit('setUserGists', gists));
-        }
-      });
+      this.loadUser();
     }
     if (gistExpr) {
       this.$store.commit('setLoading', true);
@@ -108,6 +103,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'loadUser',
+    ]),
     toggleActions() {
       this.actionsBarOpen = !this.actionsBarOpen;
       this.ga(['Actions', this.actionsBarOpen ? 'open' : 'close']);
