@@ -26,8 +26,8 @@
         </popup>
       </div>
       <div class="savebtn header-btn weak" @click="showGistDialog" v-if="!loading" :class="{disabled: saveDisabled}">
-        <img v-if="!saving" src='../assets/save.svg'>
-        <img v-if="saving" src='../assets/sync.svg' class="saving">
+        <img v-if="!creating" src='../assets/save.svg'>
+        <img v-if="creating" src='../assets/sync.svg' class="saving">
         <span class="header-btn-title" v-tooltip.bottom="'Save changes to a new Gist'">Save as</span>
         <popup class="gist-input gist-input-name" v-model="showNewGistInput">
           <div v-if="token">
@@ -95,6 +95,7 @@ export default {
       token: '',
       showDescription: false,
       saving: false,
+      creating: false,
       showNewGistInput: false,
       showLoadGistInput: false,
       showJsonTemplates: false,
@@ -214,17 +215,17 @@ export default {
       if (!name) return;
 
       this.ga(['Gist', 'Create', name]);
-      this.saving = true;
+      this.creating = true;
       this.showNewGistInput = false;
       GithubService.createGist(name, this.json)
         .then((gist) => {
-          this.saving = false;
+          this.creating = false;
           const gistId = gist && gist.id;
           if (gistId) {
             this.gistId = gistId;
             this.loadGist();
           } else {
-            this.saving = false;
+            this.creating = false;
             this.$store.commit('setMessage', { text: `Fail to save Gist :( - reason: ${gist.message}`, type: 'error' });
           }
         });
