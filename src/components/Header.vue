@@ -238,6 +238,7 @@ export default {
       window.open('https://developers.liveperson.com/getting-started-with-rich-messaging-introduction.html', '_blank');
     },
     redirectToLoginPage() {
+      this.ga(['Login', 'redirect']);
       const url = 'https://github.com/login/oauth/authorize';
       const clientIdParam = `client_id=${process.env.VUE_APP_CLIENT_ID}`;
       const scopeParam = 'scope=gist';
@@ -247,6 +248,7 @@ export default {
       window.addEventListener('message', this.waitForLoginResult, false);
     },
     logout() {
+      this.ga(['Login', 'logout']);
       this.$store.commit('removeToken');
       this.$store.commit('removeUser');
       this.$store.commit('removeUserGists');
@@ -255,6 +257,7 @@ export default {
     },
     waitForLoginResult(event) {
       if (event.source.location.pathname === '/static/login.html') {
+        this.ga(['Login', 'success']);
         this.$store.commit('setToken', event.data);
         this.saveToken(event.data);
         this.loadUser().then(() => this.$store.commit('setMessage', { text: `Hello ${this.user.name || this.user.login}`, type: 'success' }));

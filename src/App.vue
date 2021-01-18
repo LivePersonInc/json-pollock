@@ -59,6 +59,7 @@ export default {
       this.$store.commit('setToken', token);
       this.loadUser();
     }
+    this.ga(['App', 'load', token ? 'auth' : 'no-auth']);
     if (gistExpr) {
       this.$store.commit('setLoading', true);
       const gistId = gistExpr.slice(5);
