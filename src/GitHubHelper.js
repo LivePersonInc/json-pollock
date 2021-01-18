@@ -9,6 +9,7 @@ const STORAGE_KEYS = {
   GITHUB_TOKEN: 'jsonPollockPlaygroundGithubToken',
   GITHUB_USER: 'GithubUser',
   GIST_PREFIX: 'jsonPollockPlayground',
+  GITHUB_USER_GISTS: 'gists',
 };
 
 const FILENAME_PREFIX = 'Json_pollock_playground';
@@ -104,7 +105,7 @@ const queryGitHubAPI = (path, storageKeyOrOptions, fallbackToProxy) => {
 const getUserDetails = () => queryGitHubAPI('user', STORAGE_KEYS.GITHUB_USER).then(res => (res.error ? '' : res));
 
 const loadGists = () =>
-  queryGitHubAPI('gists')
+  queryGitHubAPI('gists', STORAGE_KEYS.GITHUB_USER_GISTS)
     .then(gists =>
       chain(gists).filter(gist => !!chain(gist.files)
                 .keys(gist.files)
