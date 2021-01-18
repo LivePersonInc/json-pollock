@@ -165,7 +165,7 @@ export default {
   .popup_pin {
     margin: 13px;
     float: right;
-    background: url('assets/16x16-sprite.png') no-repeat -841px 0;
+    background: url('../assets/16x16-sprite.png') no-repeat -841px 0;
     width: 16px;
     height: 16px;
 

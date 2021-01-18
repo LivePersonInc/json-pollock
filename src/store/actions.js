@@ -1,12 +1,12 @@
-import GitHubHelper from '../GitHubHelper';
+import GithubService from '@/services//GithubService';
 
 export default {
   loadUser({ commit }) {
-    return GitHubHelper.getUserDetails()
+    return GithubService.getUserDetails()
     .then((userDetails) => {
       if (userDetails) {
         commit('setUser', userDetails);
-        return GitHubHelper.loadGists().then(gists => commit('setUserGists', gists));
+        return GithubService.loadGists().then(gists => commit('setUserGists', gists));
       }
       return undefined;
     });

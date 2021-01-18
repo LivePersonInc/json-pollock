@@ -1,12 +1,12 @@
 <template>
   <div class='header'>
     <div class='title'>
-      <img src='./assets/logo.png' @click='onLogoClick'>
+      <img src='../assets/logo.png' @click='onLogoClick'>
       <h3 class="title-text">Json-Pollock Playground</h3>
     </div>
     <div class="buttons-bar">
       <div class="loginbtn">
-          <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Sign in with Github to save this JSON'" @click="redirectToLoginPage">
+          <img v-if="!loading && !user" src='../assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Sign in with Github to save this JSON'" @click="redirectToLoginPage">
           <img v-else :src='user.avatar_url' v-tooltip.bottom='user && (user.name || user.login)' @click="showDescription = true">
           <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="90" :autoPosition="false">
             <div class="user-name">{{user.name}}</div>
@@ -26,8 +26,8 @@
         </popup>
       </div>
       <div class="savebtn header-btn weak" @click="showGistDialog" v-if="!loading" :class="{disabled: saveDisabled}">
-        <img v-if="!saving" src='./assets/save.svg'>
-        <img v-if="saving" src='./assets/sync.svg' class="saving">
+        <img v-if="!saving" src='../assets/save.svg'>
+        <img v-if="saving" src='../assets/sync.svg' class="saving">
         <span class="header-btn-title" v-tooltip.bottom="'Save changes to a new Gist'">Save as</span>
         <popup class="gist-input gist-input-name" v-model="showNewGistInput">
           <div v-if="token">
@@ -37,7 +37,7 @@
           <div v-else class="login-to-save">
             You must be logged in to save
             <button class="btn-login" @click="redirectToLoginPage" v-tooltip.bottom="'Sign in with Github'">
-              <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png'>
+              <img v-if="!loading && !user" src='../assets/GitHub-Mark-32px.png'>
               Sign in
             </button>
           </div>
@@ -45,8 +45,8 @@
       </div>
       <div class="savebtn header-btn weak" @click="saveGist" v-if="!loading && isGistOwner && gist" :class="{disabled: saveDisabled}"
         v-tooltip.bottom="`Save changes to ${this.gistName}`">
-        <img v-if="!saving" src='./assets/save.svg'>
-        <img v-if="saving" src='./assets/sync.svg' class="saving">
+        <img v-if="!saving" src='../assets/save.svg'>
+        <img v-if="saving" src='../assets/sync.svg' class="saving">
         <span class="header-btn-title">Save</span>       
       </div>
       <div class="docu header-btn weak" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
@@ -77,8 +77,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import GithubService from '@/services//GithubService';
 import Popup from './Popup';
-import GitHubHelper from './GitHubHelper';
 import JsonTemplateList from './JsonTemplateList';
 import ChannelsValidation from './ChannelsValidation';
 import MyGistsList from './MyGistsList';
@@ -171,12 +171,12 @@ export default {
     },
     saveToken(token) {
       if (token) {
-        GitHubHelper.saveToken(token);
+        GithubService.saveToken(token);
         this.showDescription = false;
       }
     },
     deleteToken() {
-      GitHubHelper.deleteToken();
+      GithubService.deleteToken();
       this.showDescription = true;
     },
     loadGist(newGist) {
@@ -192,7 +192,7 @@ export default {
       if (this.gistId && this.isGistOwner) {
         this.ga(['Gist', 'Save', this.gistId]);
         this.saving = true;
-        GitHubHelper.saveGist(this.gistId, this.gistName, this.json)
+        GithubService.saveGist(this.gistId, this.gistName, this.json)
           .then((res) => {
             this.saving = false;
             if (res.isGist) {
@@ -216,7 +216,7 @@ export default {
       this.ga(['Gist', 'Create', name]);
       this.saving = true;
       this.showNewGistInput = false;
-      GitHubHelper.createGist(name, this.json)
+      GithubService.createGist(name, this.json)
         .then((gist) => {
           this.saving = false;
           const gistId = gist && gist.id;

@@ -9,7 +9,7 @@
           v-model="validate_abc"/>
         <span class="channel-icon abc"></span>
         <span class="channel-name" @click="validate_abc = !validate_abc">Apple Business Chat</span>
-        <img class="status-icon validating" v-if="validating_abc" src='./assets/sync.black.svg'>
+        <img class="status-icon validating" v-if="validating_abc" src='@/assets/sync.black.svg'>
         <span class="status-icon valid" v-if="results_abc && results_abc.valid" v-tooltip="'Validtion is OK'"></span>
         <span class="status-icon invalid" v-if="results_abc && !results_abc.valid" v-tooltip="'Validtion Failed'"></span>
         <span class="channel-show-link-error" v-if="results_abc && !results_abc.valid" @click="show_errors_abc = !show_errors_abc">errors</span>
@@ -24,7 +24,7 @@
           v-model="validate_fb"/>
         <span class="channel-icon fb"></span>
         <span class="channel-name" @click="validate_fb = !validate_fb">Facebook</span>
-        <img class="status-icon validating" v-if="validating_fb" src='./assets/sync.black.svg'>
+        <img class="status-icon validating" v-if="validating_fb" src='@/assets/sync.black.svg'>
         <span class="status-icon valid" v-if="results_fb && results_fb.valid" v-tooltip="'Validtion is OK'"></span>
         <span class="status-icon invalid" v-if="results_fb && !results_fb.valid" v-tooltip="'Validtion Failed'"></span>
         <span class="channel-show-link-error"  v-if="results_fb && !results_fb.valid" @click="show_errors_fb = !show_errors_fb">errors</span>
@@ -39,7 +39,7 @@
           v-model="validate_line"/>
         <span class="channel-icon line"></span>
         <span class="channel-name" @click="validate_line = !validate_line">LINE</span>
-        <img class="status-icon validating" v-if="validating_line" src='./assets/sync.black.svg'>
+        <img class="status-icon validating" v-if="validating_line" src='@/assets/sync.black.svg'>
         <span class="status-icon valid" v-if="results_line && results_line.valid" v-tooltip="'Validtion is OK'"></span>
         <span class="status-icon invalid" v-if="results_line && !results_line.valid" v-tooltip="'Validtion Failed'"></span>
         <span class="channel-show-link-error"  v-if="results_line && !results_line.valid" @click="show_errors_line = !show_errors_line">errors</span>
@@ -54,7 +54,7 @@
           v-model="validate_rcs"/>
         <span class="channel-icon rcs"></span>
         <span class="channel-name" @click="validate_rcs = !validate_rcs">RCS Business Messaging</span>
-        <img class="status-icon validating" v-if="validating_rcs" src='./assets/sync.black.svg'>
+        <img class="status-icon validating" v-if="validating_rcs" src='@/assets/sync.black.svg'>
         <span class="status-icon valid" v-if="results_rcs && results_rcs.valid" v-tooltip="'Validtion is OK'"></span>
         <span class="status-icon invalid" v-if="results_rcs && !results_rcs.valid" v-tooltip="'Validtion Failed'"></span>
         <span class="channel-show-link-error"  v-if="results_rcs && !results_rcs.valid" @click="show_errors_rcs = !show_errors_rcs">errors</span>
@@ -224,19 +224,19 @@ export default {
           height: 16px;
 
           &.abc {
-            background: url("assets/16x16-sprite.png") no-repeat -2280px 0;
+            background: url("../assets/16x16-sprite.png") no-repeat -2280px 0;
           }
           &.fb {
-            background: url("assets/16x16-sprite.png") no-repeat -2700px 0;
+            background: url("../assets/16x16-sprite.png") no-repeat -2700px 0;
           }
           &.line {
-            background: url("assets/16x16-sprite.png") no-repeat -2880px 0;
+            background: url("../assets/16x16-sprite.png") no-repeat -2880px 0;
           }
           &.rcs {
-            background: url("assets/16x16-sprite.png") no-repeat -2900px 0;
+            background: url("../assets/16x16-sprite.png") no-repeat -2900px 0;
           }
           &.web {
-            background: url("assets/16x16-sprite.png") no-repeat -1441px -1px;
+            background: url("../assets/16x16-sprite.png") no-repeat -1441px -1px;
           }
         }
         .channel-name {
@@ -261,14 +261,14 @@ export default {
             width: 18px;
             height: 18px;
             top: 6px;
-            background: url("assets/16x16-sprite.png") no-repeat -259px 1px;
+            background: url("../assets/16x16-sprite.png") no-repeat -259px 1px;
           }
 
           &.invalid {
             width: 18px;
             height: 18px;
             top: 6px;
-            background: url("assets/16x16-sprite.png") no-repeat -600px 1px;
+            background: url("../assets/16x16-sprite.png") no-repeat -600px 1px;
           }
         }
 

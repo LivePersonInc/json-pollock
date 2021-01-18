@@ -24,12 +24,12 @@
 import { get } from 'lodash';
 import { mapActions } from 'vuex';
 import splitPane from 'vue-splitpane';
-import Header from './Header';
-import JSONEditor from './JSONEditor';
-import JSONPollock from './JSONPollock';
-import ActionsViewer from './ActionsViewer';
-import Message from './Message';
-import GitHubHelper from './GitHubHelper';
+import Header from '@/components/Header';
+import JSONEditor from '@/components//JSONEditor';
+import JSONPollock from '@/components//JSONPollock';
+import ActionsViewer from '@/components//ActionsViewer';
+import Message from '@/components//Message';
+import GithubService from '@/services/GithubService';
 import { defaultTemplate } from './json-templates';
 
 export default {
@@ -54,7 +54,7 @@ export default {
     };
     const gistExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('gist=') === 0);
     const gistFileExpr = location.search.replace('?', '').split('&').find(str => str.indexOf('file=') === 0);
-    const token = GitHubHelper.getToken();
+    const token = GithubService.getToken();
     if (token) {
       this.$store.commit('setToken', token);
       this.loadUser();
@@ -75,7 +75,7 @@ export default {
         filename = gistFileExpr.slice(5);
       }
 
-      GitHubHelper.loadGist(gistId, filename)
+      GithubService.loadGist(gistId, filename)
       .then((gist) => {
         if (gist) {
           if (gist.isGist) {
