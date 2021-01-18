@@ -77,6 +77,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { endsWith } from 'lodash';
 import GithubService from '@/services//GithubService';
 import Popup from './Popup';
 import JsonTemplateList from './JsonTemplateList';
@@ -257,7 +258,7 @@ export default {
       this.$store.commit('setMessage', { text: 'you have been successfully logged out', type: 'success' });
     },
     waitForLoginResult(event) {
-      if (event.source.location.pathname === '/static/login.html') {
+      if (endsWith(event.source.location.pathname, '/static/login.html')) {
         this.ga(['Login', 'success']);
         this.$store.commit('setToken', event.data);
         this.saveToken(event.data);
