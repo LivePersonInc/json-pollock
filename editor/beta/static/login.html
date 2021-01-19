@@ -31,12 +31,12 @@
         state: state
       })
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
       window.opener.postMessage(data.access_token, window.location);
       window.close();
     })
-    .catch((error) => {
+    .catch(function(error) {
       document.querySelector('.primary').innerText = 'Login has failed';
       document.querySelector('.primary').style.color = '#da2a2a';
       document.querySelector('.secondary').innerText = 'Please close this window and try again';
