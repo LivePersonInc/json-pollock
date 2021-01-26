@@ -33,7 +33,10 @@
     })
     .then(function(response) { return response.json() })
     .then(function(data) {
-      window.opener.postMessage(data.access_token, window.location);
+      window.opener.postMessage({
+        state: state,
+        token: data.access_token}, 
+        window.location);
       window.close();
     })
     .catch(function(error) {
