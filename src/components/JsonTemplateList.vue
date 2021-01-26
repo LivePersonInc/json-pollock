@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import allTemplates from './json-templates';
+import allTemplates from '../json-templates';
 
 export default {
   name: 'json-template-list',
@@ -97,31 +97,31 @@ export default {
             float: right;
             width: 16px;
             height: 16px;
-            background: url("assets/16x16-sprite.png") no-repeat -1441px -1px;
+            background: url("../assets/16x16-sprite.png") no-repeat -1441px -1px;
           }
           &.fb {
             float: right;
             width: 16px;
             height: 16px;
-            background: url("assets/16x16-sprite.png") no-repeat -2700px 0;
+            background: url("../assets/16x16-sprite.png") no-repeat -2700px 0;
           }
           &.line {
             float: right;
             width: 16px;
             height: 16px;
-            background: url("assets/16x16-sprite.png") no-repeat -2880px 0;
+            background: url("../assets/16x16-sprite.png") no-repeat -2880px 0;
           }
           &.abc {
             float: right;
             width: 16px;
             height: 16px;
-            background: url("assets/16x16-sprite.png") no-repeat -2280px 0;
+            background: url("../assets/16x16-sprite.png") no-repeat -2280px 0;
           }
           &.rcs {
             float: right;
             width: 16px;
             height: 16px;
-            background: url("assets/16x16-sprite.png") no-repeat -2900px 0;
+            background: url("../assets/16x16-sprite.png") no-repeat -2900px 0;
           }
         }
       }

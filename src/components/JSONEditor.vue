@@ -133,7 +133,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../node_modules/jsoneditor/dist/jsoneditor.css';
+  @import '../../node_modules/jsoneditor/dist/jsoneditor.css';
   div.jsoneditor {
     border: thin solid #162036;
     div.jsoneditor-menu {

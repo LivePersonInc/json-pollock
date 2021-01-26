@@ -1,41 +1,53 @@
 <template>
   <div class='header'>
     <div class='title'>
-      <img src='./assets/logo.png' @click='onLogoClick'>
+      <img src='../assets/logo.png' @click='onLogoClick'>
       <h3 class="title-text">Json-Pollock Playground</h3>
     </div>
     <div class="buttons-bar">
       <div class="loginbtn">
-          <img v-if="!loading && !user" src='./assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Login to GitHub'" @click="showDescription = true">
+          <img v-if="!loading && !user" src='../assets/GitHub-Mark-32px.png' v-tooltip.bottom="'Sign in with Github to save this JSON'" @click="redirectToLoginPage">
           <img v-else :src='user.avatar_url' v-tooltip.bottom='user && (user.name || user.login)' @click="showDescription = true">
-          <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="248" :autoPosition="false">
-            In order to be able to load content from GitHub <a href="https://help.github.com/articles/about-gists/" target="_blank">Gists</a>  
-            you must provide a <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/" target="_blank">Personal Access Token</a>
-            - <b>make sure to check the 'gist' scope.</b><br>
-            Once you have generated a token please update it here:<br>
-            <input v-model="token"/>
-            <button class="btn-sml" @click="saveToken" :disabled="!token">Save</button>
-            <button class="btn-sml" @click="showDescription = false">Cancel</button>
+          <popup class='gist-token-explanation' v-model="showDescription" :arrowLeftOffset="90" :autoPosition="false">
+            <div class="user-name">{{user.name}}</div>
+            <button class="btn-logout" @click="logout">Sign out</button>            
           </popup>
       </div>
-      <div class="gistbtn header-btn weak" v-if="token && !loading">
-        <a v-if="gistName && token" :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle"><span class="header-btn-title">View on Github</span></a>
-        <span v-else-if="gistName && !token" class='header-btn-title gist-token-needed' @click="showDescription = true">Access token is required</span>
-        <span class="header-btn-title" v-else v-tooltip.bottom="'Load Gist by ID'" @click="showLoadGistInput = true">Load</span>
+      <div class="go-to-source header-btn weak" v-if="!loading && gistName">
+        <a :href='gistUrl' target="_blank" v-tooltip.bottom="gistTitle"><span class="header-btn-title">View on Github</span></a>       
+      </div>
+      <div class="gistbtn header-btn weak" v-if="!loading">        
+        <span class="header-btn-title" v-tooltip.bottom="'Open Gist from list or by ID'" @click="showLoadGistInput = true">Open</span>
         <popup class="gist-input gist-input-id" v-model="showLoadGistInput">
-          <input ref="gistNameInput" v-model="gistId" placeholder="Gist ID..."/>
-          <div v-if="gistId" class="gist-input-id-save" @click="loadGist">Go</div>
+          <my-gists-list v-if="userGists && userGists.length" :myGists="userGists"/>
+          <span v-if="userGists && userGists.length" class="gist-input-title">Load Gist by id</span>
+          <input ref="gistNameInput" v-model="newGistId" placeholder="Gist ID..."/>
+          <div v-if="newGistId" class="action-btn gist-input-id-save" @click="loadGist(newGistId)">Go</div>
         </popup>
       </div>
-      <div class="savebtn header-btn weak" @click="saveGist" v-if="token && !loading" :class="{disabled: saveDisabled}"
-        v-tooltip.bottom="isGistOwner && gist ? 'Save' : 'Save as a new Gist'">
-        <img v-if="!saving" src='./assets/save.svg'>
-        <img v-if="saving" src='./assets/sync.svg' class="saving">
-        <span class="header-btn-title">Save</span>
-        <popup class="gist-input gist-input-name" v-model="showNewGistInput" :leftOffset="8">
-          <input ref="gistNameInput" v-model="newGistName" placeholder="Gist Name..."/>
-          <div v-if="newGistName" class="gist-input-name-save" @click="createGist">Save</div>
+      <div class="savebtn header-btn weak" @click="showGistDialog" v-if="!loading" :class="{disabled: saveDisabled}">
+        <img v-if="!creating" src='../assets/save.svg'>
+        <img v-if="creating" src='../assets/sync.svg' class="saving">
+        <span class="header-btn-title" v-tooltip.bottom="'Save changes to a new Gist'">Save as</span>
+        <popup class="gist-input gist-input-name" v-model="showNewGistInput">
+          <div v-if="token">
+            <input ref="gistNameInput" v-model="newGistName" placeholder="Gist Name..."/>
+            <div v-if="newGistName" class="action-btn gist-input-name-save" @click="createGist">Save</div>
+          </div>
+          <div v-else class="login-to-save">
+            You must be logged in to save
+            <button class="btn-login" @click="redirectToLoginPage" v-tooltip.bottom="'Sign in with Github'">
+              <img v-if="!loading && !user" src='../assets/GitHub-Mark-32px.png'>
+              Sign in
+            </button>
+          </div>
         </popup>
+      </div>
+      <div class="savebtn header-btn weak" @click="saveGist" v-if="!loading && isGistOwner && gist" :class="{disabled: saveDisabled}"
+        v-tooltip.bottom="`Save changes to ${this.gistName}`">
+        <img v-if="!saving" src='../assets/save.svg'>
+        <img v-if="saving" src='../assets/sync.svg' class="saving">
+        <span class="header-btn-title">Save</span>       
       </div>
       <div class="docu header-btn weak" v-tooltip.bottom="'Rich Content Documentation'" @click="gotoDocu">
         <span class="header-btn-title">Documentation</span>
@@ -64,23 +76,26 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import GithubService from '@/services//GithubService';
 import Popup from './Popup';
-import GitHubHelper from './GitHubHelper';
 import JsonTemplateList from './JsonTemplateList';
 import ChannelsValidation from './ChannelsValidation';
+import MyGistsList from './MyGistsList';
 
 export default {
   name: 'Header',
   data() {
     return {
       gistName: '',
-      newGistName: 'StructuredContent.json',
+      newGistName: '',
       gistUrl: '',
       gistId: '',
+      newGistId: '',
       token: '',
       showDescription: false,
       saving: false,
+      creating: false,
       showNewGistInput: false,
       showLoadGistInput: false,
       showJsonTemplates: false,
@@ -92,6 +107,7 @@ export default {
     Popup,
     JsonTemplateList,
     ChannelsValidation,
+    MyGistsList,
   },
   computed: {
     ...mapGetters([
@@ -102,6 +118,7 @@ export default {
       'jsonValid',
       'edited',
       'schemaValid',
+      'userGists',
     ]),
     isGistOwner() {
       return !!(this.gist && this.user && this.gist.ownerId === this.user.id);
@@ -130,7 +147,7 @@ export default {
       return '';
     },
     saveDisabled() {
-      return !this.edited || !this.jsonValid;
+      return !this.jsonValid;
     },
     validateDisabled() {
       return !this.schemaValid;
@@ -138,6 +155,9 @@ export default {
 
   },
   methods: {
+    ...mapActions([
+      'loadUser',
+    ]),
     onLogoClick() {
       window.open('https://github.com/LivePersonInc/json-pollock', '_blank');
     },
@@ -150,17 +170,21 @@ export default {
       this.$emit('templateSelected', template);
       this.showJsonTemplates = false;
     },
-    saveToken() {
-      if (this.token) {
-        GitHubHelper.saveToken(this.token);
-        this.$store.commit('setMessage', { text: 'Token successfully saved! :) refresh the page to load content from Gist', type: 'success' });
+    saveToken(token) {
+      if (token) {
+        GithubService.saveToken(token);
         this.showDescription = false;
       }
     },
-    loadGist() {
-      if (this.gistId) {
-        this.ga(['Gist', 'Load', this.gistId]);
-        location.search = `?gist=${this.gistId}`;
+    deleteToken() {
+      GithubService.deleteToken();
+      this.showDescription = true;
+    },
+    loadGist(newGist) {
+      const gistToLoad = newGist || this.gistId;
+      if (gistToLoad) {
+        this.ga(['Gist', 'LoadById', gistToLoad]);
+        location.search = `?gist=${gistToLoad}`;
       }
     },
     saveGist() {
@@ -169,7 +193,7 @@ export default {
       if (this.gistId && this.isGistOwner) {
         this.ga(['Gist', 'Save', this.gistId]);
         this.saving = true;
-        GitHubHelper.saveGist(this.gistId, this.gistName, this.json)
+        GithubService.saveGist(this.gistId, this.gistName, this.json)
           .then((res) => {
             this.saving = false;
             if (res.isGist) {
@@ -178,29 +202,30 @@ export default {
               this.$store.commit('setMessage', { text: `Fail to save Gist :( - reason: ${res.message}`, type: 'error' });
             }
           });
-      } else {
-        this.showNewGistInput = true;
-        this.$nextTick(() => {
-          this.$refs.gistNameInput.focus();
-        });
       }
+    },
+    showGistDialog() {
+      this.showNewGistInput = true;
+      this.$nextTick(() => {
+        this.$refs.gistNameInput.focus();
+      });
     },
     createGist() {
       const name = this.newGistName || this.gistName;
       if (!name) return;
 
       this.ga(['Gist', 'Create', name]);
-      this.saving = true;
+      this.creating = true;
       this.showNewGistInput = false;
-      GitHubHelper.createGist(name, this.json)
+      GithubService.createGist(name, this.json)
         .then((gist) => {
-          this.saving = false;
+          this.creating = false;
           const gistId = gist && gist.id;
           if (gistId) {
             this.gistId = gistId;
             this.loadGist();
           } else {
-            this.saving = false;
+            this.creating = false;
             this.$store.commit('setMessage', { text: `Fail to save Gist :( - reason: ${gist.message}`, type: 'error' });
           }
         });
@@ -213,6 +238,34 @@ export default {
       this.ga(['Documentation', 'navigate']);
       window.open('https://developers.liveperson.com/getting-started-with-rich-messaging-introduction.html', '_blank');
     },
+    redirectToLoginPage() {
+      this.ga(['Login', 'redirect']);
+      const url = 'https://github.com/login/oauth/authorize';
+      const state = Math.random().toString(16).substr(2, 8);
+      const clientIdParam = `client_id=${process.env.VUE_APP_CLIENT_ID}`;
+      const scopeParam = 'scope=gist';
+      const stateParam = `state=${state}`;
+      window.open(`${url}?${clientIdParam}&${scopeParam}&${stateParam}`, '_blank');
+
+      window.addEventListener('message', this.waitForLoginResult.bind(this, state), false);
+    },
+    logout() {
+      this.ga(['Login', 'logout']);
+      this.$store.commit('removeToken');
+      this.$store.commit('removeUser');
+      this.$store.commit('removeUserGists');
+      this.deleteToken();
+      this.$store.commit('setMessage', { text: 'you have been successfully logged out', type: 'success' });
+    },
+    waitForLoginResult(state, event) {
+      if (event.data && event.data.state === state) {
+        this.ga(['Login', 'success']);
+        this.$store.commit('setToken', event.data.token);
+        this.saveToken(event.data.token);
+        this.loadUser().then(() => this.$store.commit('setMessage', { text: `Hello ${this.user.name || this.user.login}`, type: 'success' }));
+        window.removeEventListener('message', this.waitForLoginResult);
+      }
+    },
   },
   mounted() {
     this.$store.watch(
@@ -220,7 +273,6 @@ export default {
       (name) => {
         if (name) {
           this.gistName = name;
-          this.newGistName = name;
         }
       },
     );
@@ -304,7 +356,7 @@ export default {
       }
     }
 
-    @media screen and (max-width: 1160px) {
+    @media screen and (max-width: 1475px) {
       .title {
         width: 30px;
         .title-text {
@@ -324,6 +376,7 @@ export default {
         width: 34px;
         height: 34px;
         margin: 11px 15px 11px 0;
+        cursor: pointer;
 
         img {
           width: 34px;
@@ -333,7 +386,7 @@ export default {
       }
 
       .docu {
-        @media screen and (max-width: 890px) {
+        @media screen and (max-width: 1215px) {
           display: none;
         }
       }
@@ -359,7 +412,7 @@ export default {
           cursor: default;
         }
 
-        @media screen and (max-width: 640px) {
+        @media screen and (max-width: 750px) {
           display: none;
         }
       }
@@ -376,10 +429,10 @@ export default {
           }
         }
 
-        div {
+        .action-btn {
           position: absolute;
-          top: 10px;
-          right: 13px;
+          bottom: 10px;
+          right: 23px;
           font-size: 14px;
           font-weight: bold;
           background: #fff;
@@ -399,7 +452,23 @@ export default {
       }
 
       .info {
-        @media screen and (max-width: 890px) {
+        @media screen and (max-width: 1215px) {
+          display: none;
+        }
+      }
+
+      .go-to-source {
+        position: relative;
+        a {
+          color: #ffffff;
+          text-decoration: none;
+        }
+
+        .gist-token-needed {
+          color: red;
+        }
+
+        @media screen and (max-width: 900px) {
           display: none;
         }
       }
@@ -415,7 +484,7 @@ export default {
           color: red;
         }
 
-        @media screen and (max-width: 640px) {
+        @media screen and (max-width: 750px) {
           display: none;
         }
       }
@@ -424,33 +493,86 @@ export default {
         top: 42px;
 
         input {
-          margin: 7px 10px 7px 10px;
-          max-width: 190px;
+          margin: 8px 20px;
+          width: 190px;
         }
 
         .gist-input-name-save {
+          color: #000;          
+        }
+
+        .login-to-save {
+
           color: #000;
+          margin: 10px;
+          text-align: center;
+          width: 140px;
+
+          .btn-login {
+            position: relative;
+            height: 32px;
+            padding-left: 26px;
+            width: 100px;            
+            border: 1px solid #d3d3d3;
+            margin-top: 10px;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            margin: 5px;
+            background: #ebebeb;
+            font-size: 16px;
+            cursor: pointer;
+
+            img {
+              position: absolute;
+              top: 2px;
+              left: 3px;
+              height: 25px;
+            }
+          }
         }
       }
 
       .gist-input-id {
         top: 42px;
 
+        .gist-input-title {
+          color: #2c3e50;
+          margin: 0px 20px;
+        }
+
         input {
-          margin: 7px 10px 7px 10px;
-          max-width: 190px;
+          margin: 8px 20px;
+          width: 190px;
         }
 
         .gist-input-id-save {
-          color: #000;
+          color: #000;          
         }
       }
 
       .gist-token-explanation {
         top: 62px;
-        width: 266px;
+        width: 110px;
         padding: 5px 10px 5px 10px;
         right: 6px;
+
+        .user-name {
+          text-align: center;
+        }
+
+        .btn-logout {
+          width: 100px;
+          height: 30px;
+          border: 1px solid #d3d3d3;
+          border-radius: 8px;
+          color: #000;
+          font-weight: bold;
+          margin: 5px;
+          background: #ebebeb;
+          font-size: 16px;
+          cursor: pointer;
+        }
 
 
         input {
