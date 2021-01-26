@@ -2,8 +2,7 @@
   <div class='my-gists-list'>
     <div class="my-gists-title">My Gists</div>
     <div class="my-gists-wrapper">
-      <div v-for="(gist, index) in myGists" :key="index" class='my-gists-item' @click="onGistSelected(gist)"
-        v-tooltip.bottom="`Click to open ${gist.name}`">
+      <div v-for="(gist, index) in myGists" :key="index" class='my-gists-item' @click="onGistSelected(gist)">
         <span class="my-gists-item-name">{{ gist.name }}</span><br>
       </div>
     </div>

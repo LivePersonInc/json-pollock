@@ -77,7 +77,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { endsWith } from 'lodash';
 import GithubService from '@/services//GithubService';
 import Popup from './Popup';
 import JsonTemplateList from './JsonTemplateList';
@@ -242,12 +241,13 @@ export default {
     redirectToLoginPage() {
       this.ga(['Login', 'redirect']);
       const url = 'https://github.com/login/oauth/authorize';
+      const state = Math.random().toString(16).substr(2, 8);
       const clientIdParam = `client_id=${process.env.VUE_APP_CLIENT_ID}`;
       const scopeParam = 'scope=gist';
-      const stateParam = `state=${Math.random().toString(16).substr(2, 8)}`;
+      const stateParam = `state=${state}`;
       window.open(`${url}?${clientIdParam}&${scopeParam}&${stateParam}`, '_blank');
 
-      window.addEventListener('message', this.waitForLoginResult, false);
+      window.addEventListener('message', this.waitForLoginResult.bind(this, state), false);
     },
     logout() {
       this.ga(['Login', 'logout']);
@@ -257,11 +257,11 @@ export default {
       this.deleteToken();
       this.$store.commit('setMessage', { text: 'you have been successfully logged out', type: 'success' });
     },
-    waitForLoginResult(event) {
-      if (endsWith(event.source.location.pathname, '/static/login.html')) {
+    waitForLoginResult(state, event) {
+      if (event.data && event.data.state === state) {
         this.ga(['Login', 'success']);
-        this.$store.commit('setToken', event.data);
-        this.saveToken(event.data);
+        this.$store.commit('setToken', event.data.token);
+        this.saveToken(event.data.token);
         this.loadUser().then(() => this.$store.commit('setMessage', { text: `Hello ${this.user.name || this.user.login}`, type: 'success' }));
         window.removeEventListener('message', this.waitForLoginResult);
       }
