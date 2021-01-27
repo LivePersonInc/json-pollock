@@ -767,10 +767,6 @@ describe('json-pollock tests', function () {
       chai.expect(carouselRight.className).to.contain('lp-json-pollock-layout-carousel-arrow');
     });
 
-    it('carousel arrow right has role attribute', function () {
-      chai.expect(carouselRight.getAttribute('role')).to.be.equal('button');
-    });
-
     it('carousel arrow right has aria-label attribute', function () {
       chai.expect(carouselRight.getAttribute('aria-label')).to.be.equal('Next');
     });
@@ -781,10 +777,6 @@ describe('json-pollock tests', function () {
 
     it('carousel arrow left exist', function () {
       chai.expect(carouselLeft.className).to.contain('lp-json-pollock-layout-carousel-arrow left');
-    });
-
-    it('carousel arrow left has role attribute', function () {
-      chai.expect(carouselLeft.getAttribute('role')).to.be.equal('button');
     });
 
     it('carousel arrow left has aria-label attribute', function () {

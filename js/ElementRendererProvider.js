@@ -366,8 +366,8 @@ export default class ElementRendererProvider {
       const defaultPadding = 0;
       const padding = config.padding || defaultPadding;
       let nextLeft = 0;
-      const arrowRight = document.createElement('div');
-      const arrowLeft = document.createElement('div');
+      const arrowRight = document.createElement('button');
+      const arrowLeft = document.createElement('button');
       const divCarouselWrapper = document.createElement('div');
       const carousel = document.createElement('div');
       const carouselOffsetChangedEventName = 'carouselOffsetChange';
@@ -375,10 +375,12 @@ export default class ElementRendererProvider {
       let isRTLDirection = false;
       let cards;
 
-      arrowRight.setAttribute('role', 'button');
+      arrowRight.setAttribute('type', 'button');
       arrowRight.setAttribute('aria-label', 'Next');
-      arrowLeft.setAttribute('role', 'button');
+      arrowLeft.setAttribute('type', 'button');
       arrowLeft.setAttribute('aria-label', 'Previous');
+      arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 14"><path d="M0 0 L1 0 L8 7 L1 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      arrowLeft.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 14"><path d="M0 0 L1 0 L8 7 L1 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
       }
