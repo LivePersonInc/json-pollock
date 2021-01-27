@@ -204,6 +204,7 @@
                 left: 0px;
                 .lp-json-pollock-layout-carousel-arrow-icon {
                     transform: rotate(180deg);
+                    left: calc(50% - 5px);
                 }
             }
             &:active {
