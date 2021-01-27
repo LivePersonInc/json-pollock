@@ -6958,8 +6958,8 @@ var ElementRendererProvider = function () {
       arrowRight.setAttribute('aria-label', 'Next');
       arrowLeft.setAttribute('type', 'button');
       arrowLeft.setAttribute('aria-label', 'Previous');
-      arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 14"><path d="M0 0 L1 0 L8 7 L1 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
-      arrowLeft.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 14"><path d="M0 0 L1 0 L8 7 L1 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      arrowLeft.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
       }
