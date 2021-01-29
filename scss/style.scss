@@ -208,6 +208,7 @@
                 }
             }
             &:active {
+                outline: none;
                 border: $carousel-arrow-active-border;
             }
             &:hover {
