@@ -218,6 +218,7 @@
             }
             &:focus {
                 outline: none;
+                border: $carousel-arrow-active-border;
             }
 
             .lp-json-pollock-layout-carousel-arrow-icon {
