@@ -20,10 +20,6 @@
     },      "rtl": {
       "type": "boolean"
     },
-    "tooltip": {
-      "type": "string",
-      "maxLength": 256
-    },
     "tag": {
       "type": "string",
       "maxLength": 64
