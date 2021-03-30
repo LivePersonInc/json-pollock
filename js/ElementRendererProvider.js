@@ -297,7 +297,7 @@ export default class ElementRendererProvider {
       if (config.alt) {
         imgEl.setAttribute('alt', config.alt);
       }
-
+      imgEl.setAttribute('role', 'Presentation');
       if (config.caption) {
         divEl.innerHTML += `<span>${config.caption}</span>`;
       }
