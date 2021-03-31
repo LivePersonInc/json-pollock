@@ -287,21 +287,18 @@ export default class ElementRendererProvider {
       const imgEl = document.createElement('img');
 
       imgEl.src = config.url;
-      if (config.tooltip) {
+      if (config.tooltip.length) {
         imgEl.title = config.tooltip;
         imgEl.setAttribute('alt', config.tooltip);
-      }
-      if (config.tooltip === '') {
+      } else {
         imgEl.setAttribute('role', 'presentation');
       }
       if (config.style) {
         imgEl.style.cssText = Utils.styleToCss(config.style);
       }
-      imgEl.setAttribute('role', 'Presentation');
       if (config.caption) {
         divEl.innerHTML += `<span>${config.caption}</span>`;
       }
-
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(imgEl, config.accessibility.web);
       }
