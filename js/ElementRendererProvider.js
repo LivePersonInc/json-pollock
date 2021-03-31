@@ -289,13 +289,13 @@ export default class ElementRendererProvider {
       imgEl.src = config.url;
       if (config.tooltip) {
         imgEl.title = config.tooltip;
-        imgEl.setAttribute('aria-label', config.tooltip);
+        imgEl.setAttribute('alt', config.tooltip);
+      }
+      if (config.tooltip === '') {
+        imgEl.setAttribute('role', 'presentation');
       }
       if (config.style) {
         imgEl.style.cssText = Utils.styleToCss(config.style);
-      }
-      if (config.alt) {
-        imgEl.setAttribute('alt', '');
       }
       imgEl.setAttribute('role', 'Presentation');
       if (config.caption) {
@@ -305,8 +305,6 @@ export default class ElementRendererProvider {
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(imgEl, config.accessibility.web);
       }
-      imgEl.removeAttribute('aria-label');
-      imgEl.removeAttribute('title');
       imgEl.onload = () => {
         Utils.removeClass(divEl, 'loading');
       };
