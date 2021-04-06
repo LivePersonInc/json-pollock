@@ -6866,25 +6866,21 @@ var ElementRendererProvider = function () {
       var imgEl = document.createElement('img');
 
       imgEl.src = config.url;
-      if (config.tooltip) {
+      if (config.tooltip && config.tooltip.length) {
         imgEl.title = config.tooltip;
-        imgEl.setAttribute('aria-label', config.tooltip);
+        imgEl.setAttribute('alt', config.tooltip);
+      } else {
+        imgEl.setAttribute('role', 'presentation');
       }
       if (config.style) {
         imgEl.style.cssText = _Utils2.default.styleToCss(config.style);
       }
-      if (config.alt) {
-        imgEl.setAttribute('alt', config.alt);
-      }
-
       if (config.caption) {
         divEl.innerHTML += '<span>' + config.caption + '</span>';
       }
-
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(imgEl, config.accessibility.web);
       }
-
       imgEl.onload = function () {
         _Utils2.default.removeClass(divEl, 'loading');
       };
@@ -8006,7 +8002,7 @@ var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
 var validate = instance.validate.bind(instance);
-var version = '1.5.1';
+var version = '1.5.2';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
