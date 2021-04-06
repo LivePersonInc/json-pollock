@@ -16,8 +16,7 @@ describe('json-pollock tests', function () {
       "type": "image",
       "url": "assets/iphone-8-concept.jpg",
       "tooltip": "image tooltip",
-      "caption": "this is a caption",
-      "alt": "Test image alt",
+      "caption": "this is a caption",      
       "accessibility": {
         "web": {
           "tabindex": "5"
@@ -310,7 +309,7 @@ describe('json-pollock tests', function () {
     it('An image element should contain appropriate alt attribute', function () {
       var layout = rooEl.childNodes[0].childNodes[0];
       var image = layout.childNodes[0].childNodes[1];
-      chai.expect(image.getAttribute('alt')).to.equal('Test image alt');
+      chai.expect(image.getAttribute('alt')).to.equal('image tooltip');
     });
     it('An image element should contain a11y tabindex attribute', function () {
       var layout = rooEl.childNodes[0].childNodes[0];
@@ -343,8 +342,7 @@ describe('json-pollock tests', function () {
     it('Image with wrong url should be created with error class', function (done) {
       var errImg = {
         "type": "image",
-        "url": "http://example.jpg",
-        "tooltip": "image tooltip",
+        "url": "http://example.jpg",        
         "click": {
           "actions": [{
             "type": "navigate",
@@ -362,7 +360,7 @@ describe('json-pollock tests', function () {
       chai.expect(layout.className).to.equal('lp-json-pollock-element-image loading');
       chai.expect(layout.childNodes[0].localName).to.equal('img');
       chai.expect(layout.childNodes[0].src).to.contain('http://example.jpg/');
-      chai.expect(layout.childNodes[0].title).to.equal('image tooltip');
+      chai.expect(layout.childNodes[0].getAttribute('role')).to.equal('presentation');
       var origOnError = image.onerror;
       image.onerror = function() {
         origOnError.apply(this);
