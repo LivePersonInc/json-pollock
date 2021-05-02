@@ -6867,7 +6867,7 @@ var ElementRendererProvider = function () {
 
       imgEl.src = config.url;
       if (config.tooltip && config.tooltip.length) {
-        imgEl.title = config.tooltip;
+        divEl.title = config.tooltip;
         imgEl.setAttribute('alt', config.tooltip);
       } else {
         imgEl.setAttribute('role', 'presentation');
@@ -8002,7 +8002,7 @@ var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
 var validate = instance.validate.bind(instance);
-var version = '1.5.2';
+var version = '1.5.3';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
