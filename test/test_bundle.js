@@ -329,7 +329,7 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[0].childNodes[0].textContent).to.equal('this is a caption');
       chai.expect(layout.childNodes[0].childNodes[1].localName).to.equal('img');
       chai.expect(layout.childNodes[0].childNodes[1].src).to.contain('assets/iphone-8-concept.jpg');
-      chai.expect(layout.childNodes[0].childNodes[1].title).to.equal('image tooltip');
+      chai.expect(layout.childNodes[0].title).to.equal('image tooltip');
       var origOnload = image.onload;
       image.onload = function() {
         origOnload.apply(this);
@@ -2388,7 +2388,7 @@ describe('json-pollock tests', function () {
         chai.expect(layout.childNodes[0].className).to.contain('lp-json-pollock-element-image');  //it can also includes loading
         chai.expect(layout.childNodes[0].childNodes[1].localName).to.equal('img');
         chai.expect(layout.childNodes[0].childNodes[1].src).to.contain('assets/iphone-8-concept.jpg');
-        chai.expect(layout.childNodes[0].childNodes[1].title).to.equal('image tooltip');
+        chai.expect(layout.childNodes[0].title).to.equal('image tooltip');
       });
 
     });

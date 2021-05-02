@@ -288,7 +288,7 @@ export default class ElementRendererProvider {
 
       imgEl.src = config.url;
       if (config.tooltip && config.tooltip.length) {
-        imgEl.title = config.tooltip;
+        divEl.title = config.tooltip;
         imgEl.setAttribute('alt', config.tooltip);
       } else {
         imgEl.setAttribute('role', 'presentation');
