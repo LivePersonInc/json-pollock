@@ -330,7 +330,7 @@ describe('json-pollock tests', function () {
     });
     it('An image element should contain a11y tabindex attribute', function () {
       var layout = rooEl.childNodes[0].childNodes[0];
-      var image = layout.childNodes[4].childNodes[1];
+      var image = layout.childNodes[0].childNodes[1];
       chai.expect(image.getAttribute('tabindex')).to.equal('5');
     });
 
