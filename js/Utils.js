@@ -32,6 +32,18 @@ export default {
     return cssStr;
   },
 
+  styleToBorder(style: Object): string {
+    let cssStr = '';
+    if (style) {
+      if (style['border-color']) {
+        cssStr += `border-color: ${style['border-color']};`;
+      }
+      if (style['border-radius']) {
+        cssStr += `border-radius: ${style['border-radius']}px;`;
+      }
+    }
+    return cssStr;
+  },
   extractFromStyles(originalStyle: string, prop: string): Object {
     let style = originalStyle;
     const extractedStyleIndex = style.indexOf(prop);

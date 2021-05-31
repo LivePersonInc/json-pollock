@@ -1,0 +1,1267 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>SC Test</title>
+    <link rel="stylesheet" href="/dist/json-pollock.min.css">
+  <script src="/dist/json-pollock.js"></script>
+  <script>
+    window.onload = function () {
+
+      let card = {
+        "type": "vertical",
+        "border": "border",
+        "elements": [
+          {
+            "type": "image",
+            "url": "https://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all",
+            "tooltip": "image tooltip",
+            "click": {
+              "actions": [
+                {
+                  "type": "navigate",
+                  "name": "Navigate to store via image",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }
+              ]
+            },
+            "alt": "Test image alt",
+            "accessibility": {
+              "web": {
+                "tabindex": "5"
+              }
+            }
+          },
+          {
+            "type": "carousel",
+            "padding": 0,
+            "elements": [
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "SIM only plan",
+                    "tooltip": "SIM only plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large",
+                      "background-color": "#008000",
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Twelve month plan BYO mobile",
+                    "tooltip": "Twelve month plan BYO mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "style": {
+                      "bold": true,
+                      "italic": true,
+                      "background-color": "#f0f0f0",
+                    },
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_1"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "SIM only plan"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Swap plan",
+                    "tooltip": "Swap plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Two year plan leasing a mobile",
+                    "tooltip": "Two year plan leasing a mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_2"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "Two year plan leasing a mobile"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Mobiles on a plan",
+                    "tooltip": "Mobiles on a plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Two year plan with a mobile",
+                    "tooltip": "Two year plan with a mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "Mobiles on a plan"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip",
+            "style": {
+              "bold": true,
+              "size": "large"
+            },
+            "accessibility": {
+              "web": {
+                "aria-label": "text label product"
+              }
+            }
+          },
+          {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip"
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Add to cart",
+            "click": {
+              "actions": [
+                {
+                  "type": "link",
+                  "name": "Add to cart",
+                  "uri": "https://example.com"
+                }
+              ]
+            }
+          },
+          {
+            "type": "horizontal",
+            "elements": [
+              {
+                "type": "button",
+                "title": "Buy",
+                "tooltip": "Buy this broduct",
+                "click": {
+                  "actions": [
+                    {
+                      "type": "link",
+                      "name": "Buy",
+                      "uri": "https://example.com"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "button",
+                "title": "Find similar",
+                "tooltip": "store is the thing",
+                "click": {
+                  "actions": [
+                    {
+                      "type": "link",
+                      "name": "Buy",
+                      "uri": "https://search.com"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Publish text",
+            "click": {
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "my text"
+                }
+              ]
+            }
+          },
+          {
+            "type": "map",
+            "la": 64.128597,
+            "lo": -21.89611,
+            "tooltip": "map tooltip"
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Navigate",
+            "click": {
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "my text"
+                },
+                {
+                  "type": "navigate",
+                  "name": "Navigate to store via image",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }
+              ]
+            }
+          }
+        ]
+      }
+
+      let card2 = {
+        "type": "vertical",
+        "border": "borderLess",
+        "elements": [
+          {
+            "type": "image",
+            "url": "https://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all",
+            "tooltip": "image tooltip",
+            "click": {
+              "actions": [
+                {
+                  "type": "navigate",
+                  "name": "Navigate to store via image",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }
+              ]
+            },
+            "alt": "Test image alt",
+            "accessibility": {
+              "web": {
+                "tabindex": "5"
+              }
+            }
+          },
+          {
+            "type": "carousel",
+            "padding": 0,
+            "elements": [
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "SIM only plan",
+                    "tooltip": "SIM only plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large",
+                      "background-color": "#008000",
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Twelve month plan BYO mobile",
+                    "tooltip": "Twelve month plan BYO mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "style": {
+                      "bold": true,
+                      "italic": true,
+                      "background-color": "#f0f0f0",
+                    },
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_1"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "SIM only plan"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Swap plan",
+                    "tooltip": "Swap plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Two year plan leasing a mobile",
+                    "tooltip": "Two year plan leasing a mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_2"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "Two year plan leasing a mobile"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Mobiles on a plan",
+                    "tooltip": "Mobiles on a plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Two year plan with a mobile",
+                    "tooltip": "Two year plan with a mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "Mobiles on a plan"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip",
+            "style": {
+              "bold": true,
+              "size": "large"
+            },
+            "accessibility": {
+              "web": {
+                "aria-label": "text label product"
+              }
+            }
+          },
+          {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip"
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Add to cart",
+            "click": {
+              "actions": [
+                {
+                  "type": "link",
+                  "name": "Add to cart",
+                  "uri": "https://example.com"
+                }
+              ]
+            }
+          },
+          {
+            "type": "horizontal",
+            "elements": [
+              {
+                "type": "button",
+                "title": "Buy",
+                "tooltip": "Buy this broduct",
+                "click": {
+                  "actions": [
+                    {
+                      "type": "link",
+                      "name": "Buy",
+                      "uri": "https://example.com"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "button",
+                "title": "Find similar",
+                "tooltip": "store is the thing",
+                "click": {
+                  "actions": [
+                    {
+                      "type": "link",
+                      "name": "Buy",
+                      "uri": "https://search.com"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Publish text",
+            "click": {
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "my text"
+                }
+              ]
+            }
+          },
+          {
+            "type": "map",
+            "la": 64.128597,
+            "lo": -21.89611,
+            "tooltip": "map tooltip"
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Navigate",
+            "click": {
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "my text"
+                },
+                {
+                  "type": "navigate",
+                  "name": "Navigate to store via image",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }
+              ]
+            }
+          }
+        ]
+      }
+
+      let card3 = {
+        "type": "vertical",
+        "border": "dropShadow",
+        "elements": [
+          {
+            "type": "image",
+            "url": "https://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all",
+            "tooltip": "image tooltip",
+            "click": {
+              "actions": [
+                {
+                  "type": "navigate",
+                  "name": "Navigate to store via image",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }
+              ]
+            },
+            "alt": "Test image alt",
+            "accessibility": {
+              "web": {
+                "tabindex": "5"
+              }
+            }
+          },
+          {
+            "type": "carousel",
+            "padding": 0,
+            "elements": [
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "SIM only plan",
+                    "tooltip": "SIM only plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large",
+                      "background-color": "#008000",
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Twelve month plan BYO mobile",
+                    "tooltip": "Twelve month plan BYO mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "style": {
+                      "bold": true,
+                      "italic": true,
+                      "background-color": "#f0f0f0",
+                    },
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_1"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "SIM only plan"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Swap plan",
+                    "tooltip": "Swap plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Two year plan leasing a mobile",
+                    "tooltip": "Two year plan leasing a mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_2"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "Two year plan leasing a mobile"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "vertical",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Mobiles on a plan",
+                    "tooltip": "Mobiles on a plan",
+                    "rtl": false,
+                    "style": {
+                      "bold": false,
+                      "italic": false,
+                      "color": "#000000",
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Two year plan with a mobile",
+                    "tooltip": "Two year plan with a mobile",
+                    "rtl": false,
+                    "style": {
+                      "bold": true,
+                      "italic": false,
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "tooltip": "Choose a plan",
+                    "title": "Choose a plan",
+                    "click": {
+                      "metadata": [
+                        {
+                          "type": "ExternalId",
+                          "id": "ANOTHER_ONE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "publishText",
+                          "text": "Mobiles on a plan"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip",
+            "style": {
+              "bold": true,
+              "size": "large"
+            },
+            "accessibility": {
+              "web": {
+                "aria-label": "text label product"
+              }
+            }
+          },
+          {
+            "type": "text",
+            "text": "product name (Title)",
+            "tooltip": "text tooltip"
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Add to cart",
+            "click": {
+              "actions": [
+                {
+                  "type": "link",
+                  "name": "Add to cart",
+                  "uri": "https://example.com"
+                }
+              ]
+            }
+          },
+          {
+            "type": "horizontal",
+            "elements": [
+              {
+                "type": "button",
+                "title": "Buy",
+                "tooltip": "Buy this broduct",
+                "click": {
+                  "actions": [
+                    {
+                      "type": "link",
+                      "name": "Buy",
+                      "uri": "https://example.com"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "button",
+                "title": "Find similar",
+                "tooltip": "store is the thing",
+                "click": {
+                  "actions": [
+                    {
+                      "type": "link",
+                      "name": "Buy",
+                      "uri": "https://search.com"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Publish text",
+            "click": {
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "my text"
+                }
+              ]
+            }
+          },
+          {
+            "type": "map",
+            "la": 64.128597,
+            "lo": -21.89611,
+            "tooltip": "map tooltip"
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Navigate",
+            "click": {
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "my text"
+                },
+                {
+                  "type": "navigate",
+                  "name": "Navigate to store via image",
+                  "lo": 23423423,
+                  "la": 2423423423
+                }
+              ]
+            }
+          }
+        ]
+      }
+
+      let card4 = {
+        "type": "vertical",
+        "border": "border",
+        "elements": [
+          {
+            "type": "horizontal",
+            "percentages": [30,70],
+            "elements": [
+              {
+                "type": "image",
+                "url": "https://d29fhpw069ctt2.cloudfront.net/icon/image/84451/preview.svg",
+                "tooltip": "image tooltip"
+              },
+              {
+                "type": "vertical",
+                "border": "borderLess",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Appointment",
+                    "tooltip": "text tooltip",
+                    "style": {
+                      "bold": true,
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Select the datas for the Appointment",
+                    "tooltip": "text tooltip"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Select dates",
+            "class": "button",
+            "style": {
+              "background-color": "#3736A6",
+              "color": "#ffffff",
+              "size": "medium",
+              "bold": true
+            },
+            "click": {
+              "actions": [
+                {
+                  "type": "link",
+                  "name": "Add to cart",
+                  "uri": "https://example.com"
+                }
+              ]
+            }
+          }
+        ]
+      }
+
+      let card5 = {
+        "type": "vertical",
+        "border": "borderLess",
+        "elements": [
+          {
+            "type": "horizontal",
+            "borderLine": false,
+            "percentages": [30,70],
+            "elements": [
+              {
+                "type": "image",
+                "url": "https://d29fhpw069ctt2.cloudfront.net/icon/image/84451/preview.svg",
+                "tooltip": "image tooltip"
+              },
+              {
+                "type": "vertical",
+                "border": "borderLess",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Appointment",
+                    "tooltip": "text tooltip",
+                    "style": {
+                      "bold": true,
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Select the datas for the Appointment",
+                    "tooltip": "text tooltip"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "class": "button",
+            "title": "Select dates",
+            "style": {
+              "background-color": "#3736A6",
+              "color": "#ffffff",
+              "size": "medium",
+              "bold": true
+            },
+            "click": {
+              "actions": [
+                {
+                  "type": "link",
+                  "name": "Add to cart",
+                  "uri": "https://example.com"
+                }
+              ]
+            }
+          }
+        ]
+      }
+
+      let card6 = {
+        "type": "vertical",
+        "border": "dropShadow",
+        "elements": [
+          {
+            "type": "horizontal",
+            "borderLine": false,
+            "percentages": [30,70],
+            "elements": [
+              {
+                "type": "image",
+                "url": "https://d29fhpw069ctt2.cloudfront.net/icon/image/84451/preview.svg",
+                "tooltip": "image tooltip"
+              },
+              {
+                "type": "vertical",
+                "border": "borderLess",
+                "elements": [
+                  {
+                    "type": "text",
+                    "text": "Appointment",
+                    "tooltip": "text tooltip",
+                    "style": {
+                      "bold": true,
+                      "size": "large"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "Select the datas for the Appointment",
+                    "tooltip": "text tooltip"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "button",
+            "tooltip": "button tooltip",
+            "title": "Select dates",
+            "class": "button",
+            "style": {
+              "background-color": "#3736A6",
+              "color": "#ffffff",
+              "size": "medium",
+              "bold": true
+            },
+            "click": {
+              "actions": [
+                {
+                  "type": "link",
+                  "name": "Add to cart",
+                  "uri": "https://example.com"
+                }
+              ]
+            }
+          }
+        ]
+      }
+      let card6_5 = {
+        "type": "vertical",
+        "border": "dropShadow",
+        "elements": [
+          {
+            "type": "vertical",
+            "border": "borderLess",
+            "elements": [
+              {
+                "type": "horizontal",
+                "borderLine": false,
+                "percentages": [30],
+                "elements": [
+                  {
+                    "type": "image",
+                    "url": "https://d29fhpw069ctt2.cloudfront.net/icon/image/84451/preview.svg",
+                    "tooltip": "image tooltip"
+                  },
+                  {
+                    "type": "vertical",
+                    "border": "borderLess",
+                    "elements": [
+                      {
+                        "type": "text",
+                        "text": "Appointment",
+                        "tooltip": "text tooltip",
+                        "style": {
+                          "bold": true,
+                          "size": "large"
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "Select the datas for the Appointment",
+                        "tooltip": "text tooltip"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "button",
+                "tooltip": "button tooltip",
+                "title": "Select dates",
+                "class": "button",
+                "style": {
+                  "background-color": "#3736A6",
+                  "color": "#ffffff",
+                  "size": "medium",
+                  "bold": true
+                },
+                "click": {
+                  "actions": [
+                    {
+                      "type": "link",
+                      "name": "Add to cart",
+                      "uri": "https://example.com"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+      let card7 = {
+        "type": "vertical",
+        "border": "borderLess",
+        "elements": [
+          {
+            "type": "text",
+            "text": "horizontal borderLine = true",
+            "tooltip": "text tooltip"
+          },
+          {
+            "type": "horizontal",
+            "borderLine": true,
+            "elements": [
+            {
+              "type": "text",
+              "text": "Text that we can play with",
+              "tooltip": "text tooltip"
+            },{
+              "type": "vertical",
+              "border": "borderLess",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "Text that we can play with",
+                  "tooltip": "text tooltip"
+                },
+                {
+                  "type": "text",
+                  "text": "Text that we can play with",
+                  "tooltip": "text tooltip"
+                }
+              ]
+            },
+                {
+                  "type": "text",
+                  "text": "Text that we can play with",
+                  "tooltip": "text tooltip"
+                }
+          ]
+          },
+          {
+            "type": "text",
+            "text": "horizontal borderLine = false",
+            "tooltip": "text tooltip"
+          },
+          {
+            "type": "horizontal",
+            "borderLine": false,
+            "elements": [
+            {
+              "type": "text",
+              "text": "Text that we can play with",
+              "tooltip": "text tooltip"
+            },{
+              "type": "vertical",
+              "border": "borderLess",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "Text that we can play with",
+                  "tooltip": "text tooltip"
+                },
+                {
+                  "type": "text",
+                  "text": "Text that we can play with",
+                  "tooltip": "text tooltip"
+                }
+              ]
+            },
+                {
+                  "type": "text",
+                  "text": "Text that we can play with",
+                  "tooltip": "text tooltip"
+                }
+          ]
+          },
+          
+        ]
+      }
+      
+      const card8 = {
+        "type": "horizontal",
+          "elements": [
+            {
+              "type": "vertical",
+              "elements": [{
+                "type": "text",
+                "text": "foo"
+              }]
+            }
+          ]
+      }
+
+      JsonPollock.registerAction('navigate', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('link', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      JsonPollock.registerAction('publishText', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      const el = JsonPollock.render(JSON.stringify(card));
+      document.getElementById('content1').appendChild(el);
+      
+      const el2 = JsonPollock.render(JSON.stringify(card2));
+      document.getElementById('content2').appendChild(el2);
+      
+      const el3 = JsonPollock.render(JSON.stringify(card3));
+      document.getElementById('content3').appendChild(el3);
+      
+      document.getElementById('content4').appendChild(document.createTextNode("Border + borderLine"));
+      const el4 = JsonPollock.render(JSON.stringify(card4));
+      document.getElementById('content4').appendChild(el4);
+      document.getElementById('content4').appendChild(document.createElement("br"));
+      document.getElementById('content4').appendChild(document.createTextNode("BorderLess + no borderLine"));
+      const el5 = JsonPollock.render(JSON.stringify(card5));
+      document.getElementById('content4').appendChild(el5);
+      document.getElementById('content4').appendChild(document.createElement("br"));
+      document.getElementById('content4').appendChild(document.createTextNode("DropShadow + borderLine"));
+      const el6 = JsonPollock.render(JSON.stringify(card6));
+      document.getElementById('content4').appendChild(el6);      
+      document.getElementById('content4').appendChild(document.createElement("br"));
+      document.getElementById('content4').appendChild(document.createTextNode("DropShadow + BorderLess + no borderLine"));
+      const el6_5 = JsonPollock.render(JSON.stringify(card6_5));
+      document.getElementById('content4').appendChild(el6_5);
+      
+      const el7 = JsonPollock.render(JSON.stringify(card7));
+      document.getElementById('content5').appendChild(el7);
+      
+      const el8 = JsonPollock.render(JSON.stringify(card8));
+      document.getElementById('content6').appendChild(el8);
+    }
+  </script>
+</head>
+
+<body>
+  <div id='content1'  style="float: left; padding: 10px;">Border<br>
+  </div>
+  <div id='content2' style="float: left; padding: 10px;">BorderLess<br>
+  </div>
+  <div id='content3' style="float: left; padding: 10px;">DropShadow<br>
+  </div>
+  <div id='content5' style="float: left; padding: 10px;">
+  </div>
+  <div id='content4' style="float: left; padding: 10px;">
+  </div>
+  <div id='content6' style="float: left; padding: 10px;">
+  </div>
+  
+</body>
+
+</html>
