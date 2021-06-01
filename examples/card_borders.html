@@ -1188,19 +1188,6 @@
           
         ]
       }
-      
-      const card8 = {
-        "type": "horizontal",
-          "elements": [
-            {
-              "type": "vertical",
-              "elements": [{
-                "type": "text",
-                "text": "foo"
-              }]
-            }
-          ]
-      }
 
       JsonPollock.registerAction('navigate', (data) => {
         alert(JSON.stringify(data));
@@ -1241,9 +1228,6 @@
       
       const el7 = JsonPollock.render(JSON.stringify(card7));
       document.getElementById('content5').appendChild(el7);
-      
-      const el8 = JsonPollock.render(JSON.stringify(card8));
-      document.getElementById('content6').appendChild(el8);
     }
   </script>
 </head>
@@ -1258,8 +1242,6 @@
   <div id='content5' style="float: left; padding: 10px;">
   </div>
   <div id='content4' style="float: left; padding: 10px;">
-  </div>
-  <div id='content6' style="float: left; padding: 10px;">
   </div>
   
 </body>

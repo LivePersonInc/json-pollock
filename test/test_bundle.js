@@ -378,7 +378,7 @@ describe('json-pollock tests', function () {
         "type": "image",
         "url": "assets/iphone-8-concept.jpg",
         "tooltip": "image tooltip",
-        "caption": "איזה יופי של תמונה",
+        "caption": "first image",
         "rtl": true,
         "click": {
           "actions": [{
@@ -392,7 +392,7 @@ describe('json-pollock tests', function () {
         "type": "image",
         "url": "/wrong_url",
         "tooltip": "image tooltip",
-        "caption": "איזה חרא של תמונה",
+        "caption": "secund image",
         "rtl": true,
         "click": {
           "actions": [{
@@ -1489,6 +1489,7 @@ describe('json-pollock tests', function () {
     var firstLayout = null;
     var secondLayout = null;
     var simpleEl = null;
+    var secundButton = null;
 
     function getStyle(elem, style) {
       return window.getComputedStyle(elem)[style];
@@ -1522,6 +1523,76 @@ describe('json-pollock tests', function () {
       chai.expect(getStyle(firstLayout, 'border')).to.contain('1px solid');
     });
 
+    it('Vertical with borderLess should have no borders', function () {
+
+      var conf = {
+        "type": "vertical",
+        "border": "borderLess",
+        "elements": [{
+          "type": "button",
+          "title": "Back",
+        }, {
+          "type": "button",
+          "title": "Back",
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(getStyle(firstLayout, 'border')).to.contain('none');
+
+      secundButton = firstLayout.childNodes[1];
+      chai.expect(getStyle(secundButton, 'border-top')).to.contain('none');
+    });
+    
+    it('Vertical with dropShadow should have shadow with no outline borders', function () {
+
+      var conf = {
+        "type": "vertical",
+        "border": "dropShadow",
+        "elements": [{
+          "type": "button",
+          "title": "Back",
+        }, {
+          "type": "button",
+          "title": "Back",
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(getStyle(firstLayout, 'border')).to.contain('none');
+      // chai.expect(getStyle(firstLayout, 'filter')).to.contain('drop-shadow(rgb(170, 170, 170) 0px 5px 5px'); not running on test old browser
+
+      secundButton = firstLayout.childNodes[1];
+      chai.expect(getStyle(secundButton, 'border-top')).to.contain('1px solid');
+    });
+    
+    it('horizontal with borderLine = false should have no borders', function () {
+
+      var conf = {
+        "type": "horizontal",
+        "borderLine": false,
+        "elements": [{
+          "type": "button",
+          "title": "Back",
+        }, {
+          "type": "button",
+          "title": "Back",
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(getStyle(firstLayout, 'border')).to.contain('none');
+
+      secundButton = firstLayout.childNodes[1];
+      chai.expect(getStyle(secundButton, 'border-left')).to.contain('none');
+    });
+    
     describe('First vertical and horizontal layout child should have no border', function () {
 
       it('horizontal with vertical as first child', function () {
@@ -1839,6 +1910,130 @@ describe('json-pollock tests', function () {
 
   });
 
+  describe('render button element by class', function () {
+    var rooEl = null;
+    var buttonLayout = null;
+    var innerButton = null;
+    var buttonEl = null;
+
+    function getStyle(elem, style) {
+      return window.getComputedStyle(elem)[style];
+    }
+
+    it('button with class text', function () {
+
+      var conf = {
+        "type": "vertical",
+        "elements": [{
+          "type": "button",
+          "tooltip": "button tooltip",
+          "title": "Add to cart",
+          "click": {
+            "actions": [{
+              "type": "link",
+              "name": "add to cart",
+              "uri": "http://example.jpg"
+            }]
+          },
+          "class": "text"
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      buttonLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
+      chai.expect(buttonLayout.className).to.contains('lp-json-pollock-element-button');
+      buttonEl = buttonLayout.childNodes[0];
+      chai.expect(buttonEl.nodeName).to.equal('BUTTON');
+      chai.expect(getStyle(buttonEl, 'border')).to.contain('none');
+      chai.expect(buttonEl.localName).to.equal('button');
+      chai.expect(buttonEl.title).to.equal('button tooltip');
+      chai.expect(buttonEl.textContent).to.equal('Add to cart');
+
+    });
+
+    it('button with class button', function () {
+
+      var conf = {
+        "type": "vertical",
+        "elements": [{
+          "type": "button",
+          "tooltip": "button tooltip",
+          "title": "Add to cart",
+          "click": {
+            "actions": [{
+              "type": "link",
+              "name": "add to cart",
+              "uri": "http://example.jpg"
+            }]
+          },
+          "class": "button"
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      buttonLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
+      chai.expect(buttonLayout.className).to.contains('lp-json-pollock-element-button');
+      innerButton = buttonLayout.childNodes[0];
+      chai.expect(innerButton.className).to.contains('class-button');
+      chai.expect(innerButton.className).to.contains('lp-json-pollock-element-button-button');
+      chai.expect(getStyle(innerButton, 'border')).to.contain('1px solid');
+      chai.expect(getStyle(innerButton, 'border-radius')).to.contain('50px');
+      buttonEl = innerButton.childNodes[0];
+      chai.expect(buttonEl.nodeName).to.equal('BUTTON');
+      chai.expect(getStyle(buttonEl, 'border')).to.contain('none');
+      chai.expect(buttonEl.localName).to.equal('button');
+      chai.expect(buttonEl.title).to.equal('button tooltip');
+      chai.expect(buttonEl.textContent).to.equal('Add to cart');
+    });
+    
+    it('button with class button and style', function () {
+
+      var conf = {
+        "type": "vertical",
+        "elements": [{
+          "type": "button",
+          "tooltip": "button tooltip",
+          "title": "Add to cart",
+          "style": {
+						"background-color": "red",
+						"color": "#fff",
+						"border-radius": 10,
+            "border-color": "#0000ff"
+					},
+          "click": {
+            "actions": [{
+              "type": "link",
+              "name": "add to cart",
+              "uri": "http://example.jpg"
+            }]
+          },
+          "class": "button"
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      buttonLayout = rooEl.childNodes[0].childNodes[0].childNodes[0];
+      chai.expect(buttonLayout.className).to.contains('lp-json-pollock-element-button');
+      innerButton = buttonLayout.childNodes[0];
+      chai.expect(innerButton.className).to.contains('class-button');
+      chai.expect(innerButton.className).to.contains('lp-json-pollock-element-button-button');
+      chai.expect(getStyle(innerButton, 'border')).to.contain('1px solid');
+      chai.expect(getStyle(innerButton, 'border-radius')).to.contain('10px');
+      chai.expect(getStyle(innerButton, 'border-color')).to.contain('rgb(0, 0, 255)');
+      chai.expect(getStyle(innerButton, 'background-color')).to.contain('rgb(255, 0, 0)');
+      buttonEl = innerButton.childNodes[0];
+      chai.expect(buttonEl.nodeName).to.equal('BUTTON');
+      chai.expect(getStyle(buttonEl, 'border')).to.contain('none');
+      chai.expect(buttonEl.localName).to.equal('button');
+      chai.expect(buttonEl.title).to.equal('button tooltip');
+      chai.expect(buttonEl.textContent).to.equal('Add to cart');
+      chai.expect(getStyle(buttonEl, 'color')).to.contain('rgb(255, 255, 255)');
+    });
+
+  });
   describe('render single element (no layout)', function () {
 
     var rooEl = null;
