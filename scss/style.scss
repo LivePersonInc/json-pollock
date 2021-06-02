@@ -311,6 +311,7 @@
             color: $color-blue;
             padding: 10px;
             white-space: pre-wrap;
+            cursor: pointer;
             &:active {
                 background: $gray7;
             }
