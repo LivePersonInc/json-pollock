@@ -1592,6 +1592,53 @@ describe('json-pollock tests', function () {
       secundButton = firstLayout.childNodes[1];
       chai.expect(getStyle(secundButton, 'border-left')).to.contain('none');
     });
+
+    it('horizontal with border = borderLess should have no borders', function () {
+
+      var conf = {
+        "type": "horizontal",
+        "border": "borderLess",
+        "elements": [{
+          "type": "button",
+          "title": "Back",
+        }, {
+          "type": "button",
+          "title": "Back",
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(getStyle(firstLayout, 'border')).to.contain('none');
+
+      secundButton = firstLayout.childNodes[1];
+      chai.expect(getStyle(secundButton, 'border-left')).to.contain('none');
+    });
+    
+    it('horizontal with border = dropShadow should have no borders', function () {
+
+      var conf = {
+        "type": "horizontal",
+        "border": "dropShadow",
+        "elements": [{
+          "type": "button",
+          "title": "Back",
+        }, {
+          "type": "button",
+          "title": "Back",
+        }]
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      firstLayout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(getStyle(firstLayout, 'border')).to.contain('none');
+      // chai.expect(getStyle(firstLayout, 'filter')).to.contain('drop-shadow(rgb(170, 170, 170) 0px 5px 5px'); not running on test old browser
+
+      secundButton = firstLayout.childNodes[1];
+      chai.expect(getStyle(secundButton, 'border-left')).to.contain('1px solid');
+    });
     
     describe('First vertical and horizontal layout child should have no border', function () {
 
