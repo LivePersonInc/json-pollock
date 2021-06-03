@@ -527,7 +527,11 @@ export default class ElementRendererProvider {
     this.set(TYPES.HORIZONTAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
-      if (config.borderLine !== undefined && config.borderLine === false) {
+      if (config.border === 'borderLess') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-horizontal-borderLess');
+      } else if (config.border === 'dropShadow') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-horizontal-dropShadow');
+      } else if ((config.borderLine !== undefined && config.borderLine === false) && config.border !== 'border') {
         Utils.addClass(divEl, 'lp-json-pollock-layout-horizontal-borderLess');
       }
       if (config.accessibility && config.accessibility.web) {
