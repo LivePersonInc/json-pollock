@@ -185,7 +185,7 @@
             }
         };
         >.lp-json-pollock-layout-carousel-arrow {
-            opacity: 0.5;
+            opacity: 0.8;
             z-index: 1;
             right: 0px;
             cursor: pointer;
@@ -198,7 +198,7 @@
             background-color: $color-white;
             text-align: center;
             padding: 0;
-            fill: $color-blue;
+            fill: $color-dark-blue;
             &.left {
                 visibility: hidden;
                 left: 0px;
