@@ -35,7 +35,7 @@
 
         >.lp-json-pollock-layout {
             border: none;
-            &:not(.lp-json-pollock-layout-horizontal-borderLess):not(.lp-json-pollock-layout-horizontal-dropShadow ){
+            &:not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-borderLess):not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-dropShadow ){
                 &:not(:first-child) {
                     border-top: $default-border;
                 }
@@ -43,7 +43,7 @@
         }
         &.lp-json-pollock-layout-borderLess {
             >.lp-json-pollock-layout {
-                &:not(.lp-json-pollock-layout-horizontal-borderLess ):not(.lp-json-pollock-layout-horizontal-dropShadow ){
+                &:not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-borderLess ):not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-dropShadow ){
                     border: $default-border;
                 }
             }
@@ -71,7 +71,7 @@
     .lp-json-pollock-layout-horizontal {
         display: table;
 
-        &:not(.lp-json-pollock-layout-horizontal-borderLess){
+        &:not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-borderLess){
             >.lp-json-pollock-layout {
                 border: none;
                 &:not(:first-child) {
@@ -95,12 +95,8 @@
             border-left: none;
         }
     }
-    .lp-json-pollock-layout-horizontal-borderLess {
+    .lp-json-pollock-layout-horizontal.lp-json-pollock-layout-borderLess {
         border: none;
-    }
-    .lp-json-pollock-layout-horizontal-dropShadow {
-        border: none;
-        filter: drop-shadow(0px 5px 5px #aaa);
     }
     .lp-json-pollock-layout-form {
         border: none;
