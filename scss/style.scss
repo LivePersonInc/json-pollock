@@ -23,15 +23,40 @@
         max-width: 200px;
         background: white;
     }
-
+    .lp-json-pollock-layout-borderLess {
+        border: none;
+    }
+    .lp-json-pollock-layout-dropShadow {
+        border: none;
+        filter: drop-shadow(0px 5px 5px #aaa);
+    }
     .lp-json-pollock-layout-vertical {
+        display: grid;
+
         >.lp-json-pollock-layout {
             border: none;
-            border-top: $default-border;
+            &:not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-borderLess):not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-dropShadow ){
+                &:not(:first-child) {
+                    border-top: $default-border;
+                }
+            }
         }
-
-        >.lp-json-pollock-element-button, >.lp-json-pollock-element-image, >.lp-json-pollock-element-map, >.lp-json-pollock-element-text {
-            border-top: $default-border;
+        &.lp-json-pollock-layout-borderLess {
+            >.lp-json-pollock-layout {
+                &:not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-borderLess ):not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-dropShadow ){
+                    border: $default-border;
+                }
+            }
+        }
+        &:not(.lp-json-pollock-layout-borderLess) {
+            >.lp-json-pollock-element-button, >.lp-json-pollock-element-image, >.lp-json-pollock-element-map, >.lp-json-pollock-element-text {
+                &:not(:first-child) {
+                    border-top: $default-border;
+                }
+            }
+            .lp-json-pollock-element-text + .lp-json-pollock-element-text {
+                border-top: none;
+            }
         }
 
         .lp-json-pollock-element-text + .lp-json-pollock-element-text {
@@ -46,15 +71,20 @@
     .lp-json-pollock-layout-horizontal {
         display: table;
 
-        >.lp-json-pollock-layout {
-            border: none;
-            border-left: $default-border;
-        }
+        &:not(.lp-json-pollock-layout-horizontal.lp-json-pollock-layout-borderLess){
+            >.lp-json-pollock-layout {
+                border: none;
+                &:not(:first-child) {
+                    border-left: $default-border;
+                }
+            }
 
-        >.lp-json-pollock-element-button, >.lp-json-pollock-element-text, >.lp-json-pollock-element-image, >.lp-json-pollock-element-map {
-            border-left: $default-border;
+            >.lp-json-pollock-element-button, >.lp-json-pollock-element-text, >.lp-json-pollock-element-image, >.lp-json-pollock-element-map {
+                &:not(:first-child) {
+                    border-left: $default-border;
+                }
+            }
         }
-
         > * {
             display: table-cell;
             table-layout: fixed;
@@ -65,7 +95,9 @@
             border-left: none;
         }
     }
-
+    .lp-json-pollock-layout-horizontal.lp-json-pollock-layout-borderLess {
+        border: none;
+    }
     .lp-json-pollock-layout-form {
         border: none;
         border-collapse: collapse;
@@ -263,6 +295,12 @@
         width: 100%;
         word-break: break-word;
         word-wrap: break-word;
+        .lp-json-pollock-element-button-button.class-button {
+            border-radius: 50px;
+            border: $default-border;
+            width: calc(100% - 20px);
+            margin: 10px auto;
+        }
         button {
             border: none;
             background: none;
@@ -273,6 +311,7 @@
             color: $color-blue;
             padding: 10px;
             white-space: pre-wrap;
+            cursor: pointer;
             &:active {
                 background: $gray7;
             }

@@ -10,6 +10,12 @@
       "default": "button",
       "readonly": true
     },
+    "class": {
+      "type": "string",
+      "enum": ["text", "button"],
+      "default": "text",
+      "readonly": true
+    },
     "title": {
       "type": "string",
       "maxLength": 128

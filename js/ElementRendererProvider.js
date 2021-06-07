@@ -79,12 +79,7 @@ export default class ElementRendererProvider {
         btnEl.title = config.tooltip;
         btnEl.setAttribute('aria-label', config.tooltip);
       }
-      if (config.style) {
-        const style = Utils.styleToCss(config.style);
-        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
-        divEl.setAttribute('style', splitedStyle.extractedStyle);
-        btnEl.style.cssText = splitedStyle.style;
-      }
+
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
@@ -93,7 +88,33 @@ export default class ElementRendererProvider {
         btnEl.onclick = this.wrapAction(config.click);
       }
 
-      divEl.appendChild(btnEl);
+      if (config.class !== 'button') {
+        if (config.style) {
+          const style = Utils.styleToCss(config.style);
+          const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+          btnEl.style.cssText = splitedStyle.style;
+          divEl.setAttribute('style', splitedStyle.extractedStyle);
+        }
+
+        divEl.appendChild(btnEl);
+      } else {
+        const divBt = document.createElement('div');
+        divBt.className = 'lp-json-pollock-element-button-button';
+        Utils.addClass(divBt, 'class-button');
+        if (config.style) {
+          const style = Utils.styleToCss(config.style);
+          const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+          btnEl.style.cssText = splitedStyle.style;
+          divBt.setAttribute('style', splitedStyle.extractedStyle);
+          const borderStyle = Utils.styleToBorder(config.style);
+          if (borderStyle !== '') {
+            divBt.setAttribute('style', `${splitedStyle.extractedStyle} ${borderStyle}`);
+          }
+        }
+
+        divBt.appendChild(btnEl);
+        divEl.appendChild(divBt);
+      }
 
       return divEl;
     });
@@ -355,6 +376,11 @@ export default class ElementRendererProvider {
     this.set(TYPES.VERTICAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      if (config.border === 'borderLess') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-borderLess');
+      } else if (config.border === 'dropShadow') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
+      }
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
@@ -504,15 +530,31 @@ export default class ElementRendererProvider {
     this.set(TYPES.HORIZONTAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      if (config.border === 'borderLess') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-borderLess');
+      } else if (config.border === 'dropShadow') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
+      } else if ((config.borderLine !== undefined && config.borderLine === false) && config.border !== 'border') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-borderLess');
+      }
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
       (divEl: any).afterRender = () => {
         if (divEl.childNodes.length) {
-          const percentage = 100 / divEl.childNodes.length;
-          Array.prototype.forEach.call(divEl.childNodes, (node) => {
+          const percentages = config.percentages;
+          let percentage = 100 / divEl.childNodes.length;
+          // If percentages array not cover all nodes, calculate the rest of the nodes percentage
+          if (percentages && percentages.length > 0
+              && percentages.length < divEl.childNodes.length) {
+            const totalPercentagesInArray = percentages.reduce((a, b) => a + b, 0);
+            percentage = (100 - totalPercentagesInArray) /
+              (divEl.childNodes.length - percentages.length);
+          }
+          Array.prototype.forEach.call(divEl.childNodes, (node, index) => {
             const n = node;
-            (n: any).style.width = `${percentage}%`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            const nodePercentage = (percentages && percentages[index]) || percentage;
+            (n: any).style.width = `${nodePercentage}%`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           });
         }
       };

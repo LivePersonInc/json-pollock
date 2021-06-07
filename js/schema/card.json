@@ -23,6 +23,23 @@
           "type": "string",
           "maxLength": 64
         },
+        "borderLine": {
+          "type": "boolean",
+          "default": true
+        },
+        "border": {
+          "type": "string",
+          "enum": ["border", "borderLess", "dropShadow"],
+          "default": "border",
+          "readonly": true
+        },
+        "percentages": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "number"
+          }
+        },
         "elements": {
           "type": "array",
           "maxItems": 256,
@@ -64,6 +81,12 @@
         "tagVersion": {
           "type": "string",
           "maxLength": 64
+        },
+        "border": {
+          "type": "string",
+          "enum": ["border", "borderLess", "dropShadow"],
+          "default": "border",
+          "readonly": true
         },
         "elements": {
           "type": "array",
