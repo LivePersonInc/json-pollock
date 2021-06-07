@@ -300,6 +300,7 @@
             border: $default-border;
             width: calc(100% - 20px);
             margin: 10px auto;
+            overflow: hidden;
         }
         button {
             border: none;
