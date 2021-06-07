@@ -4044,9 +4044,9 @@ json-parse-better-errors@^1.0.1:
   integrity sha1-u4Z8+zRQ5pEHwTHRxRS6s9yLyqk=
 
 json-pollock@^1.0.22:
-  version "1.6.0"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.6.0.tgz#5eaaf0520e76db98c629ff2a22f769dd611242e9"
-  integrity sha1-XqrwUg5225jGKf8qIvdp3WESQuk=
+  version "1.6.1"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.6.1.tgz#bed17bc49c123bd4cfa9626a8f79ff304a158429"
+  integrity sha1-vtF7xJwSO9TPqWJqj3n/MEoVhCk=
   dependencies:
     ajv "^5.4.0"
     chronosjs "^0.0.23"
@@ -7133,9 +7133,9 @@ vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
     loader-utils "^1.0.2"
 
 vue-template-compiler@^2.3.3:
-  version "2.6.13"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/vue-template-compiler/-/vue-template-compiler-2.6.13.tgz#a735b8974e013ce829e7f77e08e4ee5aecbd3005"
-  integrity sha1-pzW4l04BPOgp5/d+COTuWuy9MAU=
+  version "2.6.14"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/vue-template-compiler/-/vue-template-compiler-2.6.14.tgz#a2f0e7d985670d42c9c9ee0d044fed7690f4f763"
+  integrity sha1-ovDn2YVnDULJye4NBE/tdpD092M=
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
@@ -7146,9 +7146,9 @@ vue-template-es2015-compiler@^1.2.2:
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
 vue@^2.3.3:
-  version "2.6.13"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/vue/-/vue-2.6.13.tgz#94b2c1b31fddf1dfcc34f28ec848ba8f01ea4c5b"
-  integrity sha1-lLLBsx/d8d/MNPKOyEi6jwHqTFs=
+  version "2.6.14"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
+  integrity sha1-5RqlJQJQ1Wmj+606ilpofWA24jU=
 
 vuex@^2.3.1:
   version "2.5.0"
