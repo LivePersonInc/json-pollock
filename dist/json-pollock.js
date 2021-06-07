@@ -1672,6 +1672,18 @@ exports.default = {
 
     return cssStr;
   },
+  styleToBorder: function styleToBorder(style) {
+    var cssStr = '';
+    if (style) {
+      if (style['border-color']) {
+        cssStr += 'border-color: ' + style['border-color'] + ';';
+      }
+      if (style['border-radius']) {
+        cssStr += 'border-radius: ' + style['border-radius'] + 'px;';
+      }
+    }
+    return cssStr;
+  },
   extractFromStyles: function extractFromStyles(originalStyle, prop) {
     var style = originalStyle;
     var extractedStyleIndex = style.indexOf(prop);
@@ -2454,7 +2466,7 @@ module.exports = {"oneOf":[{"$ref":"text.json"},{"$ref":"image.json"},{"$ref":"b
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["title"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"class":{"type":"string","enum":["text","button"],"default":"text","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["title"]}
 
 /***/ }),
 /* 21 */
@@ -2466,7 +2478,7 @@ module.exports = {"type":"object","additionalProperties":false,"title":"buttonLi
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","additionalProperties":false,"title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]},{"type":"object","additionalProperties":false,"title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]}]}
+module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","additionalProperties":false,"title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"borderLine":{"type":"boolean","default":true},"border":{"type":"string","enum":["border","borderLess","dropShadow"],"default":"border","readonly":true},"percentages":{"type":"array","maxItems":256,"items":{"type":"number"}},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]},{"type":"object","additionalProperties":false,"title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"border":{"type":"string","enum":["border","borderLess","dropShadow"],"default":"border","readonly":true},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]}]}
 
 /***/ }),
 /* 23 */
@@ -6657,12 +6669,7 @@ var ElementRendererProvider = function () {
         btnEl.title = config.tooltip;
         btnEl.setAttribute('aria-label', config.tooltip);
       }
-      if (config.style) {
-        var style = _Utils2.default.styleToCss(config.style);
-        var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
-        divEl.setAttribute('style', splitedStyle.extractedStyle);
-        btnEl.style.cssText = splitedStyle.style;
-      }
+
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
@@ -6671,7 +6678,33 @@ var ElementRendererProvider = function () {
         btnEl.onclick = _this.wrapAction(config.click);
       }
 
-      divEl.appendChild(btnEl);
+      if (config.class !== 'button') {
+        if (config.style) {
+          var style = _Utils2.default.styleToCss(config.style);
+          var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
+          btnEl.style.cssText = splitedStyle.style;
+          divEl.setAttribute('style', splitedStyle.extractedStyle);
+        }
+
+        divEl.appendChild(btnEl);
+      } else {
+        var divBt = document.createElement('div');
+        divBt.className = 'lp-json-pollock-element-button-button';
+        _Utils2.default.addClass(divBt, 'class-button');
+        if (config.style) {
+          var _style = _Utils2.default.styleToCss(config.style);
+          var _splitedStyle = _Utils2.default.extractFromStyles(_style, 'background-color');
+          btnEl.style.cssText = _splitedStyle.style;
+          divBt.setAttribute('style', _splitedStyle.extractedStyle);
+          var borderStyle = _Utils2.default.styleToBorder(config.style);
+          if (borderStyle !== '') {
+            divBt.setAttribute('style', _splitedStyle.extractedStyle + ' ' + borderStyle);
+          }
+        }
+
+        divBt.appendChild(btnEl);
+        divEl.appendChild(divBt);
+      }
 
       return divEl;
     });
@@ -6934,6 +6967,11 @@ var ElementRendererProvider = function () {
     this.set(TYPES.VERTICAL, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-vertical';
+      if (config.border === 'borderLess') {
+        _Utils2.default.addClass(divEl, 'lp-json-pollock-layout-borderLess');
+      } else if (config.border === 'dropShadow') {
+        _Utils2.default.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
+      }
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
       }
@@ -7081,15 +7119,31 @@ var ElementRendererProvider = function () {
     this.set(TYPES.HORIZONTAL, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
+      if (config.border === 'borderLess') {
+        _Utils2.default.addClass(divEl, 'lp-json-pollock-layout-borderLess');
+      } else if (config.border === 'dropShadow') {
+        _Utils2.default.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
+      } else if (config.borderLine !== undefined && config.borderLine === false && config.border !== 'border') {
+        _Utils2.default.addClass(divEl, 'lp-json-pollock-layout-borderLess');
+      }
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
       }
       divEl.afterRender = function () {
         if (divEl.childNodes.length) {
+          var percentages = config.percentages;
           var percentage = 100 / divEl.childNodes.length;
-          Array.prototype.forEach.call(divEl.childNodes, function (node) {
+          // If percentages array not cover all nodes, calculate the rest of the nodes percentage
+          if (percentages && percentages.length > 0 && percentages.length < divEl.childNodes.length) {
+            var totalPercentagesInArray = percentages.reduce(function (a, b) {
+              return a + b;
+            }, 0);
+            percentage = (100 - totalPercentagesInArray) / (divEl.childNodes.length - percentages.length);
+          }
+          Array.prototype.forEach.call(divEl.childNodes, function (node, index) {
             var n = node;
-            n.style.width = percentage + '%'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            var nodePercentage = percentages && percentages[index] || percentage;
+            n.style.width = nodePercentage + '%'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
           });
         }
       };
@@ -8005,7 +8059,7 @@ var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
 var validate = instance.validate.bind(instance);
-var version = '1.5.5';
+var version = '1.6.0';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
