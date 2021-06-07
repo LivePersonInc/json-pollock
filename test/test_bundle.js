@@ -16,6 +16,7 @@ describe('json-pollock tests', function () {
       "type": "image",
       "url": "assets/iphone-8-concept.jpg",
       "tooltip": "image tooltip",
+      "alt": "image alt",
       "caption": "this is a caption",      
       "accessibility": {
         "web": {
@@ -65,7 +66,18 @@ describe('json-pollock tests', function () {
       "lo": 64.128597,
       "la": -21.896110,
       "tooltip": "map tooltip"
-    },]
+    },{
+      "type": "image",
+      "url": "assets/iphone-8-concept.jpg",
+      "tooltip": "image tooltip",
+      "alt": "",
+      "caption": "this is a caption",      
+      "accessibility": {
+        "web": {
+          "tabindex": "5"
+        }
+      }
+    }]
   };
 
   var carouselConf = {
@@ -257,7 +269,7 @@ describe('json-pollock tests', function () {
       chai.expect(wrapdiv.childNodes.length).to.equal(1);
       chai.expect(wrapdiv.childNodes[0].localName).to.equal('div');
       chai.expect(wrapdiv.childNodes[0].className).to.equal('lp-json-pollock-layout lp-json-pollock-layout-vertical');
-      chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(4);
+      chai.expect(wrapdiv.childNodes[0].childNodes.length).to.equal(5);
     });
 
     it('An element of type button should be created', function () {
@@ -309,7 +321,12 @@ describe('json-pollock tests', function () {
     it('An image element should contain appropriate alt attribute', function () {
       var layout = rooEl.childNodes[0].childNodes[0];
       var image = layout.childNodes[0].childNodes[1];
-      chai.expect(image.getAttribute('alt')).to.equal('image tooltip');
+      chai.expect(image.getAttribute('alt')).to.equal('image alt');
+    });
+    it('An image element without an alt should contain presentation role attribute', function () {
+      var layout = rooEl.childNodes[0].childNodes[0];
+      var image = layout.childNodes[4].childNodes[1];
+      chai.expect(image.getAttribute('role')).to.equal('presentation');
     });
     it('An image element should contain a11y tabindex attribute', function () {
       var layout = rooEl.childNodes[0].childNodes[0];
@@ -329,6 +346,7 @@ describe('json-pollock tests', function () {
       chai.expect(layout.childNodes[0].childNodes[0].textContent).to.equal('this is a caption');
       chai.expect(layout.childNodes[0].childNodes[1].localName).to.equal('img');
       chai.expect(layout.childNodes[0].childNodes[1].src).to.contain('assets/iphone-8-concept.jpg');
+      chai.expect(layout.childNodes[0].childNodes[1].alt).to.equal('image alt');
       chai.expect(layout.childNodes[0].title).to.equal('image tooltip');
       var origOnload = image.onload;
       image.onload = function() {
@@ -378,6 +396,7 @@ describe('json-pollock tests', function () {
         "type": "image",
         "url": "assets/iphone-8-concept.jpg",
         "tooltip": "image tooltip",
+        "alt": "image alt",
         "caption": "first image",
         "rtl": true,
         "click": {
@@ -392,6 +411,7 @@ describe('json-pollock tests', function () {
         "type": "image",
         "url": "/wrong_url",
         "tooltip": "image tooltip",
+        "alt": "image alt",
         "caption": "secund image",
         "rtl": true,
         "click": {
@@ -641,6 +661,7 @@ describe('json-pollock tests', function () {
                 "type": "image",
                 "url": "http://example.jpg",
                 "tooltip": "image tooltip",
+                "alt": "image alt",
                 "click": {
                   "actions": [{
                     "type": "navigate",
@@ -654,6 +675,7 @@ describe('json-pollock tests', function () {
                 "type": "image",
                 "url": "http://example.jpg",
                 "tooltip": "image tooltip",
+                "alt": "image alt",
                 "click": {
                   "actions": [{
                     "type": "navigate",
@@ -2133,6 +2155,7 @@ describe('json-pollock tests', function () {
       "type": "image",
       "url": "http://example.jpg",
       "tooltip": "image tooltip",
+      "alt": "image alt",
       "click": {
         "actions": [{
           "type": "navigate",
@@ -2208,6 +2231,7 @@ describe('json-pollock tests', function () {
           "type": "image",
           "url": "http://example.jpg",
           "tooltip": "image tooltip",
+          "alt": "image alt",
           "click": {
             "actions": [{
               "type": "navigate",
@@ -2503,6 +2527,7 @@ describe('json-pollock tests', function () {
           "type": "image",
           "url": "http://example.jpg",
           "tooltip": "image tooltip",
+          "alt": "image alt",
           "click": {
             "actions": [{
               "type": "navigate",
@@ -3178,7 +3203,7 @@ describe('json-pollock tests', function () {
       JsonPollock.init({onAfterElementRendered: spy});
       JsonPollock.render(card);
 
-      chai.expect(spy).to.have.been.callCount(5);
+      chai.expect(spy).to.have.been.callCount(6);
     });
 
     it('expect onAfterElementRendered callback to provide the given template type', function () {
