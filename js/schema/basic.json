@@ -17,6 +17,9 @@
     },
     {
       "$ref": "template.json"
+    },
+    {
+      "$ref": "keyValuePairList.json"
     }
   ]
 }

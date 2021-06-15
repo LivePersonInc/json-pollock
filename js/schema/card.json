@@ -27,12 +27,6 @@
           "type": "boolean",
           "default": true
         },
-        "border": {
-          "type": "string",
-          "enum": ["border", "borderLess", "dropShadow"],
-          "default": "border",
-          "readonly": true
-        },
         "percentages": {
           "type": "array",
           "maxItems": 256,

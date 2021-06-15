@@ -20,8 +20,10 @@ import sectionListSchema from './schema/sectionList.json';
 import specialActionSchema from './schema/specialAction.json';
 import buttonListSchema from './schema/buttonList.json';
 import keyValuePairSchema from './schema/keyValuePair.json';
+import keyValuePairListSchema from './schema/keyValuePairList.json';
 import displaySettingsSchema from './schema/displaySettings.json';
 import accessibilityWeb from './schema/accessibilityWeb.json';
+import scheduleSlot from './schema/scheduleSlot.json';
 
 export default class SchemaValidator {
 
@@ -50,8 +52,10 @@ export default class SchemaValidator {
     ajv.addSchema(buttonListSchema, 'buttonList.json');
     ajv.addSchema(specialActionSchema, 'specialAction.json');
     ajv.addSchema(keyValuePairSchema, 'keyValuePair.json');
+    ajv.addSchema(keyValuePairListSchema, 'keyValuePairList.json');
     ajv.addSchema(displaySettingsSchema, 'displaySettings.json');
     ajv.addSchema(accessibilityWeb, 'accessibilityWeb.json');
+    ajv.addSchema(scheduleSlot, 'scheduleSlot.json');
 
     this.jsonValidator = ajv.compile(richContentSchema);
   }
