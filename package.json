@@ -1,13 +1,13 @@
 
 {
   "name": "json-pollock",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Renders live DOM elements out of JSON according to the Structured Messaging Templates spec",
   "repository": "LivePersonInc/json-pollock",
   "main": "index.js",
   "scripts": {
     "pack": "webpack --config webpack.pack.conf",
-    "bundle": "webpack --config webpack.bundle.conf",    
+    "bundle": "webpack --config webpack.bundle.conf",
     "pack_noumd": "webpack --config webpack.pack.no.umd.conf",
     "pack_noumd_no_validation": "webpack --config webpack.pack.no.umd.no.validation.conf",
     "build": "webpack --config webpack.pack.conf; webpack --config webpack.bundle.conf; webpack --config webpack.pack.no.umd.conf; webpack --config webpack.pack.no.umd.no.validation.conf;",
