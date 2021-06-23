@@ -128,6 +128,69 @@
       }
     },
     "required": ["type"]
+  }, {
+    "title": "Date Picker",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["datePicker"],
+        "default": "datePicker",
+        "readonly": true
+      },
+      "class": {
+        "type": "string",
+        "enum": ["single", "range"],
+        "default": "single",
+        "readonly": true
+      },
+      "title": {
+        "type": "string",
+        "maxLength": 40
+      },
+      "minDate": {
+        "type": "integer"
+      },
+      "maxDate": {
+        "type": "integer"
+      },
+      "dateFormat": {
+        "type": "string", 
+        "maxLength": 100
+      }
+    },
+    "required": ["type", "class"]
+  },{
+  "title": "Schedule Slot List",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["scheduleSlotList"],
+        "default": "scheduleSlotList",
+        "readonly": true
+      },
+      "title": {
+        "type": "string",
+        "maxLength": 40
+      },
+      "slots": {
+        "type": "array",
+        "maxItems": 256,
+        "items": {
+          "$ref": "scheduleSlot.json"
+        }
+      },
+      "firstDayOfTheWeek":{
+        "type": "string",
+        "enum": ["sun", "mon"],
+        "default": "mon",
+        "readonly": true
+      }
+    },
+    "required": ["type"]
   }
   ]
 }

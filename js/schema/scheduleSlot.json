@@ -1,0 +1,42 @@
+{
+	"title": "Schedule slot",
+	"description": "Object of an schedule slot",
+	"type": "object",
+	"additionalProperties" : false,
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": ["scheduleSlot"],
+			"default": "scheduleSlot",
+			"readonly": true
+		},
+		"id": {
+			"type": "string",
+			"maxLength": 256
+		},
+		"start": {
+			"type": "integer"
+		},
+		"end": {
+			"type": "integer"
+		},
+		"title": {
+			"type": "string",
+			"maxLength": 40
+		},
+		"description": {
+			"type": "string",
+			"maxLength": 40
+		},
+		"imageUrl": {
+			"type": "string",
+			"format": "uri",
+			"maxLength": 1024
+		}
+	},
+	"required": [
+		"type",
+		"id",
+		"start"
+	]
+}
