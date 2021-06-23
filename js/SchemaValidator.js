@@ -22,6 +22,8 @@ import buttonListSchema from './schema/buttonList.json';
 import keyValuePairSchema from './schema/keyValuePair.json';
 import displaySettingsSchema from './schema/displaySettings.json';
 import accessibilityWeb from './schema/accessibilityWeb.json';
+import scheduleSlot from './schema/scheduleSlot.json';
+import keyValuePairList from './schema/keyValuePairList.json';
 
 export default class SchemaValidator {
 
@@ -52,6 +54,8 @@ export default class SchemaValidator {
     ajv.addSchema(keyValuePairSchema, 'keyValuePair.json');
     ajv.addSchema(displaySettingsSchema, 'displaySettings.json');
     ajv.addSchema(accessibilityWeb, 'accessibilityWeb.json');
+    ajv.addSchema(scheduleSlot, 'scheduleSlot.json');
+    ajv.addSchema(keyValuePairList, 'keyValuePairList.json');
 
     this.jsonValidator = ajv.compile(richContentSchema);
   }
