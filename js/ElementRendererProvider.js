@@ -1,6 +1,5 @@
 // @flow
 
-import { config } from 'chai';
 import Utils from './Utils';
 /*eslint-disable */
 const Events = require('Chronosjs/dist/min/Events');
