@@ -1,5 +1,6 @@
 // @flow
 
+import { config } from 'chai';
 import Utils from './Utils';
 /*eslint-disable */
 const Events = require('Chronosjs/dist/min/Events');
@@ -490,7 +491,9 @@ export default class ElementRendererProvider {
 
           divCarouselWrapper.appendChild(carousel);
           carousel.className = 'lp-json-pollock-layout-carousel';
-          carousel.setAttribute('aria-label', config.tooltip);
+          if (config.tooltip) {
+            carousel.setAttribute('aria-label', config.tooltip);
+          }
           divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
           (carousel: any).setAttribute('role', 'list');
           divCarouselWrapper.appendChild(carousel);
