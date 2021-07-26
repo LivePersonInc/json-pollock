@@ -783,6 +783,10 @@ describe('json-pollock tests', function () {
       chai.expect(carouselRootLayout.className).to.contain('lp-json-pollock-layout-carousel');
     });
 
+    it('carousel has aria-label', function(){
+      chai.expect(carouselRootLayout.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
+    });
+
     it('carousel arrow right exist', function () {
       chai.expect(carouselRight.className).to.contain('lp-json-pollock-layout-carousel-arrow');
     });
