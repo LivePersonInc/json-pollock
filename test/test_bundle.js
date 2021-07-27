@@ -784,7 +784,7 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel has aria-label', function(){
-      chai.expect(carouselRootLayout.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
+      chai.expect(carouselListRoot.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
     });
 
     it('carousel arrow right exist', function () {

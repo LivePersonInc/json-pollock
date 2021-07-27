@@ -491,9 +491,6 @@ export default class ElementRendererProvider {
           divCarouselWrapper.appendChild(carousel);
           carousel.className = 'lp-json-pollock-layout-carousel';
           carousel.setAttribute('aria-label', 'Carousel with buttons');
-          // if (config.tooltip) {
-          //   carousel.setAttribute('aria-label', config.tooltip);
-          // }
           divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
           (carousel: any).setAttribute('role', 'list');
           divCarouselWrapper.appendChild(carousel);
