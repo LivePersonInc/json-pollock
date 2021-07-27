@@ -7101,6 +7101,7 @@ var ElementRendererProvider = function () {
 
           divCarouselWrapper.appendChild(carousel);
           carousel.className = 'lp-json-pollock-layout-carousel';
+          carousel.setAttribute('aria-label', 'Carousel with buttons');
           divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
           carousel.setAttribute('role', 'list');
           divCarouselWrapper.appendChild(carousel);
@@ -8081,7 +8082,7 @@ var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
 var validate = instance.validate.bind(instance);
-var version = '1.6.2';
+var version = '1.6.3';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
