@@ -2,7 +2,7 @@
 
 Json-Pollock
 ============
-[![Build Status](https://travis-ci.org/LivePersonInc/json-pollock.svg?branch=master)](https://travis-ci.org/LivePersonInc/json-pollock)
+[![Build Status](https://travis-ci.com/LivePersonInc/json-pollock.svg?branch=master)](https://app.travis-ci.com/github/LivePersonInc/json-pollock)
 [![GitHub license](https://img.shields.io/github/license/LivePersonInc/json-pollock.svg)](https://github.com/LivePersonInc/json-pollock/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/npm/dt/json-pollock.svg)](https://www.npmjs.com/package/json-pollock)
 [![Version](https://img.shields.io/github/package-json/v/LivePersonInc/json-pollock.svg)](https://github.com/LivePersonInc/json-pollock/blob/master/package.json)
