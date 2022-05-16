@@ -1,7 +1,7 @@
 
 {
   "name": "json-pollock",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "description": "Renders live DOM elements out of JSON according to the Structured Messaging Templates spec",
   "repository": "LivePersonInc/json-pollock",
   "main": "index.js",
