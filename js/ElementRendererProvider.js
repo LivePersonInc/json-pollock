@@ -2,7 +2,7 @@
 
 import Utils from './Utils';
 /*eslint-disable */
-const Events = require('Chronosjs/dist/min/Events');
+const Events = require('chronosjs/dist/min/Events');
 /*eslint-enable */
 
 const TYPES = {

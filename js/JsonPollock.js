@@ -3,7 +3,7 @@ import ElementRendererProvider from './ElementRendererProvider';
 import Utils from './Utils';
 
 /*eslint-disable */
-const Events = require('Chronosjs/dist/min/Events');
+const Events = require('chronosjs/dist/min/Events');
 /*eslint-enable */
 
 class JsonPollockError extends Error {
