@@ -20,6 +20,10 @@
       "type": "string",
       "maxLength": 128
     },
+    "subtitle": {
+      "type": "string",
+      "maxLength": 128
+    },
     "rtl": {
       "type": "boolean"
     },
