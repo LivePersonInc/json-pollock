@@ -381,6 +381,13 @@ export default class ElementRendererProvider {
       } else if (config.border === 'dropShadow') {
         Utils.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
       }
+      if (config.scroll === 'enable') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-vertical-scroll');
+      }
+      const style = Utils.styleToCss(config.style);
+      const splitedStyle = Utils.extractFromStyles(style, 'height');
+      divEl.setAttribute('style', splitedStyle.extractedStyle);
+
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }

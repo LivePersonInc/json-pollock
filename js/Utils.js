@@ -27,6 +27,13 @@ export default {
       if (style.size) {
         cssStr += `font-size:${this.sizeToPx(style.size)}px;`;
       }
+
+      if (style.height) {
+        const heightMatch = style.height.match(/[0-9]+[' ']*(cm|mm|Q|in|pc|pt|px|em|ex|ch|rem|lh|vw|vh|vb|vi|%)/);
+        if (heightMatch && heightMatch[0]) {
+          cssStr += `height:${heightMatch[0].split(' ').join('')};`;
+        }
+      }
     }
 
     return cssStr;

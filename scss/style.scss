@@ -30,6 +30,9 @@
         border: none;
         filter: drop-shadow(0px 5px 5px #aaa);
     }
+    .lp-json-pollock-layout-vertical-scroll {
+        overflow-y: scroll;
+    }
     .lp-json-pollock-layout-vertical {
         display: grid;
 
@@ -281,6 +284,12 @@
         .lp-json-pollock-element-text{
             white-space: normal;
         }
+    }
+
+    .lp-json-pollock-element-textarea {
+        @extend .lp-json-pollock-element-text;
+        overflow-y: scroll;
+        height: 30px;
     }
 
     .lp-json-pollock-element-text {
