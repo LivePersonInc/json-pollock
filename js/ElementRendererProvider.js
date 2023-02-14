@@ -7,7 +7,6 @@ const Events = require('chronosjs/dist/min/Events');
 
 const TYPES = {
   TEXT: 'text',
-  TEXTAREA: 'textarea',
   BUTTON: 'button',
   IMAGE: 'image',
   MAP: 'map',
@@ -44,31 +43,6 @@ export default class ElementRendererProvider {
       const textEl = document.createElement('span');
       const tooltip = config.tooltip ? Utils.escapeHtml(config.tooltip) : '';
       divEl.className = 'lp-json-pollock-element-text';
-      if (config.rtl) {
-        divEl.dir = 'rtl';
-        Utils.addClass(divEl, 'direction-rtl');
-      }
-      const style = Utils.styleToCss(config.style);
-      const splitedStyle = Utils.extractFromStyles(style, 'background-color');
-      divEl.setAttribute('style', splitedStyle.extractedStyle);
-      textEl.innerHTML = Utils.normalizeHtmlText(config.text);
-      textEl.setAttribute('style', splitedStyle.style);
-      textEl.setAttribute('title', tooltip);
-      if (config.accessibility && config.accessibility.web) {
-        Utils.appendAttributesFromObject(textEl, config.accessibility.web);
-      } else {
-        // Backward compatibility
-        textEl.setAttribute('aria-label', tooltip);
-      }
-      divEl.appendChild(textEl);
-      return divEl;
-    });
-
-    this.set(TYPES.TEXTAREA, (config): HTMLElement => {
-      const divEl = document.createElement('div');
-      const textEl = document.createElement('span');
-      const tooltip = config.tooltip ? Utils.escapeHtml(config.tooltip) : '';
-      divEl.className = 'lp-json-pollock-element-textarea';
       if (config.rtl) {
         divEl.dir = 'rtl';
         Utils.addClass(divEl, 'direction-rtl');
@@ -407,6 +381,13 @@ export default class ElementRendererProvider {
       } else if (config.border === 'dropShadow') {
         Utils.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
       }
+      if (config.scroll === 'enable') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-vertical-scroll');
+      }
+      const style = Utils.styleToCss(config.style);
+      const splitedStyle = Utils.extractFromStyles(style, 'height');
+      divEl.setAttribute('style', splitedStyle.extractedStyle);
+
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
