@@ -29,6 +29,17 @@
     "size": {
       "type": "string",
       "enum": ["small", "medium", "large"]
+    },
+    "fill": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "button-width": {
+      "type": "number"
+    },
+    "button-height": {
+      "type": "number"
     }
   }
 }

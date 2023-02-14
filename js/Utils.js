@@ -27,6 +27,9 @@ export default {
       if (style.size) {
         cssStr += `font-size:${this.sizeToPx(style.size)}px;`;
       }
+      if (style.fill) { // change color for svg's
+        cssStr += `fill:${style.fill};`;
+      }
     }
 
     return cssStr;
@@ -40,6 +43,18 @@ export default {
       }
       if (style['border-radius']) {
         cssStr += `border-radius: ${style['border-radius']}px;`;
+      }
+    }
+    return cssStr;
+  },
+  styleToButton(style: Object): string {
+    let cssStr = '';
+    if (style) {
+      if (style['button-width']) {
+        cssStr += `width: ${style['button-width']}px;`;
+      }
+      if (style['button-height']) {
+        cssStr += `height: ${style['button-height']}px;`;
       }
     }
     return cssStr;
