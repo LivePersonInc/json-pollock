@@ -413,22 +413,21 @@ export default class ElementRendererProvider {
       if (config.style) {
         const style = Utils.styleToCss(config.style);
         const splitedStyle = Utils.extractFromStyles(style, 'background-color');
-        // Set all defined style attributes on the button itself
-        // Set extractedStyle (in this case background-color) specifically on the button itself
-        arrowRight.setAttribute('style', splitedStyle.extractedStyle);
-        arrowLeft.setAttribute('style', splitedStyle.extractedStyle);
+        let arrowBtnStyle = `${splitedStyle.extractedStyle}`;
         // Change color to border:
         const borderStyle = Utils.styleToBorder(config.style);
         if (borderStyle !== '') {
-          arrowRight.setAttribute('style', `${splitedStyle.extractedStyle} ${borderStyle}`);
-          arrowLeft.setAttribute('style', `${splitedStyle.extractedStyle} ${borderStyle}`);
+          arrowBtnStyle += ` ${borderStyle}`;
         }
         // Change size to button:
         const buttonSize = Utils.styleToButton(config.style);
         if (buttonSize !== '') {
-          arrowRight.setAttribute('style', `${splitedStyle.extractedStyle} ${buttonSize}`);
-          arrowLeft.setAttribute('style', `${splitedStyle.extractedStyle} ${buttonSize}`);
+          arrowBtnStyle += ` ${buttonSize}`;
         }
+        // Set all defined style attributes on the button itself
+        // Set extractedStyle (in this case background-color) specifically on the button itself
+        arrowRight.setAttribute('style', `${arrowBtnStyle}`);
+        arrowLeft.setAttribute('style', `${arrowBtnStyle}`);
         // Add style to image directly:
         const svgChildArrowRight = arrowRight.querySelector('.lp-json-pollock-layout-carousel-arrow-icon');
         const svgChildArrowLeft = arrowLeft.querySelector('.lp-json-pollock-layout-carousel-arrow-icon');
