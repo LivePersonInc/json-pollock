@@ -46,6 +46,9 @@
       "type": "string",
       "maxLength": 2000
     },
+    "ref": {
+
+    },
     "click": {
       "type": "object",
       "additionalProperties" : false,
