@@ -281,6 +281,10 @@
         .lp-json-pollock-element-text{
             white-space: normal;
         }
+
+        .lp-json-pollock-layout.lp-json-pollock-layout-selected {
+            border-color: $color-green;
+        }
     }
 
     .lp-json-pollock-element-text {

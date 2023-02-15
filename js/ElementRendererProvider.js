@@ -13,6 +13,7 @@ const TYPES = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
   CAROUSEL: 'carousel',
+  CAROUSELSELECT: 'carouselSelect',
   SUBMITBUTTON: 'submitButton',
   CHECKBOX: 'checkbox',
   CHECKLIST: 'checklist',
@@ -475,6 +476,189 @@ export default class ElementRendererProvider {
             const node = divCarouselWrapper.childNodes[itemCounter];
             // add card focus event
             (node: any).addEventListener('focus', cardFocus.bind(this), true);
+            (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            (node: any).setAttribute('data-carousel-index', itemCounter);   // Add an index reference for faster lookup on focus changes
+            (node: any).setAttribute('role', 'listitem');
+          }
+
+          arrowRight.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow';
+          arrowLeft.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow left';
+
+          /* create carousel wrapper */
+          while ((divCarouselWrapper: any).hasChildNodes()) {
+            (carousel: any).insertBefore(divCarouselWrapper.lastChild, carousel.firstChild);
+          }
+
+          divCarouselWrapper.appendChild(carousel);
+          carousel.className = 'lp-json-pollock-layout-carousel';
+          carousel.setAttribute('aria-label', 'Carousel with buttons');
+          divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
+          (carousel: any).setAttribute('role', 'list');
+          divCarouselWrapper.appendChild(carousel);
+          divCarouselWrapper.appendChild(arrowRight);
+          divCarouselWrapper.appendChild(arrowLeft);
+          /* TODO: find other trigger. */
+          setTimeout(() => {
+            /* check if the viewport width is bigger then the carousel div
+             * => remove the arrows */
+            if (divCarouselWrapper.offsetWidth > carousel.offsetWidth) {
+              (arrowLeft: any).style.visibility = 'hidden';
+              (arrowRight: any).style.visibility = 'hidden';
+            }
+            // Set up card reference for carousel
+            cards = carousel.children;
+            isRTLDirection = window.getComputedStyle(arrowRight).direction === 'rtl';
+
+            if (isRTLDirection) {
+              arrowLeft.style.visibility = 'visible';
+              arrowRight.style.visibility = 'hidden';
+              carouselItemIndex = cards.length - 1;
+              cards = [].slice.call(cards, 0).reverse();
+              nextLeft = `${-1 * (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth))}px`;
+              (carousel: any).style.left = nextLeft;
+            }
+          }, 0);
+          arrowRight.onclick = (event) => {
+            rightArrowClicked.call(this, event);
+          };
+          arrowLeft.onclick = (event) => {
+            leftArrowClicked.call(this, event);
+          };
+        }
+      };
+      return divCarouselWrapper;
+    });
+
+    this.set(TYPES.CAROUSELSELECT, (config): HTMLElement => {
+      const defaultPadding = 0;
+      const padding = config.padding || defaultPadding;
+      let nextLeft = 0;
+      const arrowRight = document.createElement('button');
+      const arrowLeft = document.createElement('button');
+      const divCarouselWrapper = document.createElement('div');
+      const carousel = document.createElement('div');
+      const carouselOffsetChangedEventName = 'carouselOffsetChange';
+      let carouselItemIndex = 0;
+      let isRTLDirection = false;
+      let cards;
+
+      arrowRight.setAttribute('type', 'button');
+      arrowRight.setAttribute('aria-label', 'Next');
+      arrowLeft.setAttribute('type', 'button');
+      arrowLeft.setAttribute('aria-label', 'Previous');
+      arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      arrowLeft.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
+      }
+
+      function setShowingCard(event) {
+        if (!cards || !cards[carouselItemIndex]) {
+          return;
+        }
+        nextLeft = `${-1 * cards[carouselItemIndex].offsetLeft}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+
+        // Right align the last card in the carousel
+        if (carouselItemIndex === cards.length - 1) {
+          nextLeft = `${-1 * (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth))}px`;
+        }
+
+        if (this && this.events) {
+          this.events.trigger({
+            eventName: carouselOffsetChangedEventName,
+            data: {
+              offset: nextLeft,
+              prevOffset: (carousel: any).style.left,
+              uiEvent: event,
+            },
+          });
+        }
+
+        (carousel: any).style.left = nextLeft;
+        (arrowRight: any).style.visibility = carouselItemIndex >= cards.length - 1 ? 'hidden' : 'visible';
+        (arrowLeft: any).style.visibility = carouselItemIndex <= 0 ? 'hidden' : 'visible';
+      }
+
+      function rightArrowClicked(event) {
+        carouselItemIndex += 1;
+        setShowingCard.call(this, event);
+      }
+
+      function leftArrowClicked(event) {
+        carouselItemIndex -= 1;
+        setShowingCard.call(this, event);
+      }
+
+      function findCardIndex(element) {
+        if (!element) return undefined;
+        const index = element.getAttribute('data-carousel-index');
+        if (index) {
+          return index;
+        }
+        return findCardIndex(element.parentNode);
+      }
+
+      function findCardParent(element: any): HTMLDivElement | typeof undefined {
+        if (!element) return undefined;
+        const index = element.getAttribute('data-carousel-index');
+        console.log({ element, index });
+        if (index !== null) {
+          return element;
+        }
+        return findCardParent(element.parentNode);
+      }
+
+      /**
+       * @param {MouseEvent} event
+       * */
+      function cardClick(event: MouseEvent) {
+        const element = event.target;
+        const cardParent = findCardParent(element);
+
+        if (cardParent) {
+          if (config.selectMode.type === 'single' && cardParent.parentNode) {
+            Array.from((cardParent.parentNode: any).querySelectorAll('[data-carousel-index][selected]')).forEach((carouselElement: HTMLDivElement) => {
+              console.log(carouselElement, cardParent, cardParent === carouselElement);
+              if (carouselElement !== cardParent) {
+                carouselElement.removeAttribute('data-selected');
+              }
+            });
+          }
+
+          if (cardParent.dataset.selected === 'true') {
+            cardParent.removeAttribute('data-selected');
+            cardParent.classList.remove('lp-json-pollock-layout-selected');
+          } else {
+            cardParent.setAttribute('data-selected', 'true');
+            cardParent.classList.add('lp-json-pollock-layout-selected');
+          }
+        }
+      }
+
+      function cardFocus(event) {
+        const element = event.target;
+        const cardIndex = findCardIndex(element);
+
+        if (!cardIndex) {
+          return;
+        }
+
+        divCarouselWrapper.scrollLeft = 0;
+        // if the currently focused card is not the carouselItem being shown, show the focused card
+        if (cardIndex && carouselItemIndex !== parseInt(cardIndex, 10)) {
+          carouselItemIndex = parseInt(cardIndex, 10);
+          setShowingCard.call(this, event);
+        }
+      }
+      (divCarouselWrapper: any).afterRender = () => {
+        if (divCarouselWrapper.childNodes.length) {
+          for (let itemCounter = 0;
+               itemCounter < divCarouselWrapper.childNodes.length;
+               itemCounter += 1) {
+            const node = divCarouselWrapper.childNodes[itemCounter];
+            // add card focus event
+            (node: any).addEventListener('focus', cardFocus.bind(this), true);
+            (node: any).addEventListener('click', cardClick.bind(this), true);
             (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
             (node: any).setAttribute('data-carousel-index', itemCounter);   // Add an index reference for faster lookup on focus changes
             (node: any).setAttribute('role', 'listitem');
