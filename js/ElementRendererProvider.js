@@ -601,11 +601,20 @@ export default class ElementRendererProvider {
       function findCardParent(element: any): HTMLDivElement | typeof undefined {
         if (!element) return undefined;
         const index = element.getAttribute('data-carousel-index');
-        console.log({ element, index });
         if (index !== null) {
           return element;
         }
         return findCardParent(element.parentNode);
+      }
+
+      function toggleCardSelect(element: HTMLDivElement, selected: boolean) {
+        if (selected) {
+          element.setAttribute('data-selected', 'true');
+          element.classList.add('lp-json-pollock-layout-selected');
+        } else {
+          element.removeAttribute('data-selected');
+          element.classList.remove('lp-json-pollock-layout-selected');
+        }
       }
 
       /**
@@ -617,20 +626,18 @@ export default class ElementRendererProvider {
 
         if (cardParent) {
           if (config.selectMode.type === 'single' && cardParent.parentNode) {
-            Array.from((cardParent.parentNode: any).querySelectorAll('[data-carousel-index][selected]')).forEach((carouselElement: HTMLDivElement) => {
-              console.log(carouselElement, cardParent, cardParent === carouselElement);
-              if (carouselElement !== cardParent) {
-                carouselElement.removeAttribute('data-selected');
-              }
-            });
+            Array
+              .from((cardParent.parentNode: any).querySelectorAll('[data-carousel-index][data-selected]'))
+              .filter((carouselElement: HTMLDivElement) => carouselElement !== cardParent)
+              .forEach((carouselElement: HTMLDivElement) => {
+                toggleCardSelect(carouselElement, false);
+              });
           }
 
           if (cardParent.dataset.selected === 'true') {
-            cardParent.removeAttribute('data-selected');
-            cardParent.classList.remove('lp-json-pollock-layout-selected');
+            toggleCardSelect(cardParent, false);
           } else {
-            cardParent.setAttribute('data-selected', 'true');
-            cardParent.classList.add('lp-json-pollock-layout-selected');
+            toggleCardSelect(cardParent, true);
           }
         }
       }
