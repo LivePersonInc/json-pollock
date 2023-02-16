@@ -36,6 +36,9 @@
     "display": {
       "$ref": "displaySettings.json"
     },
+    "style": {
+      "$ref": "style.json"
+    },
     "accessibility": {
       "type": "object",
       "additionalProperties": false,
