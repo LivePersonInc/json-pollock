@@ -532,19 +532,24 @@ export default class ElementRendererProvider {
     this.set(TYPES.CAROUSELSELECT, (config): HTMLElement => {
       const defaultPadding = 0;
       const padding = config.padding || defaultPadding;
-      const divCarouselWrapper = document.createElement('div');
+
+      const carouselWrapper = document.createElement('div');
       const carousel = document.createElement('div');
 
       if (config.accessibility && config.accessibility.web) {
-        Utils.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
+        Utils.appendAttributesFromObject(carouselWrapper, config.accessibility.web);
       }
 
       function findCardParent(element: any): HTMLDivElement | typeof undefined {
-        if (!element || element.tagName === 'BUTTON') return undefined;
+        if (!element || element.tagName === 'BUTTON') {
+          return undefined;
+        }
+
         const index = element.getAttribute('data-carousel-index');
         if (index !== null) {
           return element;
         }
+
         return findCardParent(element.parentNode);
       }
 
@@ -575,40 +580,44 @@ export default class ElementRendererProvider {
               });
           }
 
-          if (cardParent.dataset.selected === 'true') {
-            toggleCardSelect(cardParent, false);
-          } else {
-            toggleCardSelect(cardParent, true);
-          }
+          toggleCardSelect(cardParent, cardParent.dataset.selected !== 'true');
         }
       }
 
-      (divCarouselWrapper: any).afterRender = () => {
-        if (divCarouselWrapper.childNodes.length) {
+      /**
+       * Render logic
+       * */
+      (carouselWrapper: any).afterRender = () => {
+        const carouselItemsCount = carouselWrapper.childNodes.length;
+
+        if (carouselItemsCount) {
           for (let itemCounter = 0;
-               itemCounter < divCarouselWrapper.childNodes.length;
+               itemCounter < carouselItemsCount;
                itemCounter += 1) {
-            const node = divCarouselWrapper.childNodes[itemCounter];
-            (node: any).addEventListener('click', cardClick.bind(this), true);
-            (node: any).style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
-            (node: any).setAttribute('data-carousel-index', itemCounter);   // Add an index reference for faster lookup on focus changes
-            (node: any).setAttribute('role', 'listitem');
+            const carouselElement: HTMLDivElement =
+              (carouselWrapper.childNodes[itemCounter]: any);
+
+            carouselElement.addEventListener('click', cardClick.bind(this), true);
+            carouselElement.style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            carouselElement.setAttribute('data-carousel-index', itemCounter.toString());   // Add an index reference for faster lookup on focus changes
+            carouselElement.setAttribute('role', 'listitem');
           }
 
           /* create carousel wrapper */
-          while ((divCarouselWrapper: any).hasChildNodes()) {
-            (carousel: any).insertBefore(divCarouselWrapper.lastChild, carousel.firstChild);
+          while (carouselWrapper.hasChildNodes() && carouselWrapper.lastChild) {
+            carousel.insertBefore(carouselWrapper.lastChild, carousel.firstChild);
           }
 
-          divCarouselWrapper.appendChild(carousel);
           carousel.className = 'lp-json-pollock-layout-carousel lp-json-pollock-layout-carousel-select';
           carousel.setAttribute('aria-label', 'Carousel with buttons');
-          divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
-          (carousel: any).setAttribute('role', 'list');
-          divCarouselWrapper.appendChild(carousel);
+          carousel.setAttribute('role', 'list');
+
+          carouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
+          carouselWrapper.appendChild(carousel);
         }
       };
-      return divCarouselWrapper;
+
+      return carouselWrapper;
     });
 
     this.set(TYPES.HORIZONTAL, (config): HTMLElement => {
