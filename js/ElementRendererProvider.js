@@ -540,7 +540,7 @@ export default class ElementRendererProvider {
       }
 
       function findCardParent(element: any): HTMLDivElement | typeof undefined {
-        if (!element) return undefined;
+        if (!element || element.tagName === 'BUTTON') return undefined;
         const index = element.getAttribute('data-carousel-index');
         if (index !== null) {
           return element;
