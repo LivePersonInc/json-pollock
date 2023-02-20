@@ -29,9 +29,6 @@
     "size": {
       "type": "string",
       "enum": ["small", "medium", "large"]
-    },
-    "height": {
-      "type": "string"
     }
   }
 }
