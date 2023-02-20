@@ -16,6 +16,7 @@
           type: "carouselSelect",
           padding: 10,
           selectMode: {
+            name: "test-carousel-multi-select",
             type: "multiple", // "single" // selected items - which user has been selected
           },
           elements: [
@@ -159,6 +160,14 @@
                 },
               ],
             },
+            {
+              type: "button",
+              title: "Submit selected",
+              ref: {
+                type: "carouselSelect",
+                name: "test-carousel-multi-select",
+              },
+            },
           ],
         };
 
@@ -166,7 +175,10 @@
           JSON.stringify(carouselMultiSelect)
         );
 
+        carouselSingleSelect.selectMode.name = "test-carousel-single-select";
         carouselSingleSelect.selectMode.type = "single";
+        carouselSingleSelect.elements[3].ref.name =
+          carouselSingleSelect.selectMode.name;
 
         /**
          * Json Pollock Actions

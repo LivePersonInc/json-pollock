@@ -89,6 +89,22 @@ export default class ElementRendererProvider {
         btnEl.onclick = this.wrapAction(config.click);
       }
 
+      if (config.ref) {
+        btnEl.addEventListener('click', () => {
+          switch (config.ref.type) {
+            case 'carouselSelect': {
+              const parentNode = document.querySelector(`[data-carousel-name=${config.ref.name}]`);
+              console.log(parentNode);
+              break;
+            }
+
+            default: {
+              throw new Error(`Unknown type: ${config.ref.type}`);
+            }
+          }
+        });
+      }
+
       if (config.class !== 'button') {
         if (config.style) {
           const style = Utils.styleToCss(config.style);
@@ -614,6 +630,7 @@ export default class ElementRendererProvider {
 
           carouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
           carouselWrapper.appendChild(carousel);
+          carouselWrapper.setAttribute('data-carousel-name', config.selectMode.name);
         }
       };
 
