@@ -5,7 +5,7 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["text", "textarea"],
+      "enum": ["text"],
       "default": "text",
       "readonly": true
     },

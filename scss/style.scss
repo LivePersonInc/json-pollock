@@ -286,12 +286,6 @@
         }
     }
 
-    .lp-json-pollock-element-textarea {
-        @extend .lp-json-pollock-element-text;
-        overflow-y: scroll;
-        height: 30px;
-    }
-
     .lp-json-pollock-element-text {
         padding: 5px 10px;
         color: $color-black;
