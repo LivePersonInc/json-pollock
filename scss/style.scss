@@ -364,4 +364,28 @@
         float: none;
         text-align: right;
     }
+
+    .lp-json-pollock-element-tab {
+        overflow: hidden;
+    }
+
+    .lp-json-pollock-element-tab-button {
+        background-color: inherit;
+        color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0.4rem 0.4rem;
+        font-size: 0.7rem;
+    }
+
+    .lp-json-pollock-element-tab-button:hover {
+        background-color: #ddd;
+    }
+      
+    .lp-json-pollock-element-tab-button.active {
+        background-color: #ccc;
+        border-bottom: 1px solid #555;
+    }
 }

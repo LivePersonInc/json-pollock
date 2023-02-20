@@ -20,6 +20,7 @@ const TYPES = {
   SECTION: 'section',
   SECTIONLIST: 'sectionList',
   BUTTONLIST: 'buttonList',
+  TABS: 'tabs',
 };
 
 const DATA_SECTION_ID_ATTR = 'data-section-id';
@@ -384,6 +385,76 @@ export default class ElementRendererProvider {
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
+      return divEl;
+    });
+
+    this.set(TYPES.TABS, (config): HTMLElement => {
+      const { elements } = config;
+      const divEl = document.createElement('div');
+      const headerEl = document.createElement('div');
+      divEl.appendChild(headerEl);
+
+      const openTab = (evt) => {
+        const children = divEl.children;
+        const buttons = [...children[0].children];
+
+        const pannels = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 1; i < children.length; i++) {
+          pannels.push(children[i]);
+        }
+
+        if (pannels.length) {
+          pannels.forEach((pannel) => {
+            // eslint-disable-next-line no-param-reassign
+            pannel.style.display = 'none';
+          });
+        }
+
+        if (!evt) {
+          buttons[0].className += ' active';
+          pannels[0].style.display = 'block';
+          return;
+        }
+
+        if (buttons.length) {
+          buttons.forEach((button) => {
+            // eslint-disable-next-line no-param-reassign
+            button.className = button.className.replace(' active', '');
+          });
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        evt.currentTarget.className += ' active';
+
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < buttons.length; i++) {
+          if (buttons[i].className.includes('active')) {
+            pannels[i].style.display = 'block';
+          }
+        }
+      };
+
+      headerEl.className = 'lp-json-pollock-element-tab';
+      elements.forEach((card) => {
+        const { tag } = card;
+        const btnEl = document.createElement('button');
+        btnEl.className = 'lp-json-pollock-element-tab-button';
+        if (config.style) {
+          btnEl.style.cssText = Utils.styleToCss(config.style);
+        }
+        btnEl.id = tag;
+        btnEl.textContent = tag;
+        btnEl.onclick = (event) => {
+          openTab.call(this, event);
+        };
+        headerEl.appendChild(btnEl);
+      });
+
+      (divEl: any).afterRender = () => {
+        openTab();
+      };
+
       return divEl;
     });
 
