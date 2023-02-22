@@ -1661,13 +1661,6 @@ exports.default = {
       if (style.size) {
         cssStr += 'font-size:' + this.sizeToPx(style.size) + 'px;';
       }
-
-      if (style.height) {
-        var heightMatch = style.height.match(/[0-9]+[' ']*(cm|mm|Q|in|pc|pt|px|em|ex|ch|rem|lh|vw|vh|vb|vi|%)/);
-        if (heightMatch && heightMatch[0]) {
-          cssStr += 'height:' + heightMatch[0].split(' ').join('') + ';';
-        }
-      }
     }
 
     return cssStr;
@@ -2591,7 +2584,7 @@ module.exports = {"definitions":{"submitAsText":{"title":"Submit As Text","type"
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"properties":{"background-color":{"type":"string","format":"color","maxLength":256},"border-color":{"type":"string","format":"color","maxLength":256},"border-radius":{"type":"number"},"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]},"height":{"type":"string"}}}
+module.exports = {"type":"object","additionalProperties":false,"properties":{"background-color":{"type":"string","format":"color","maxLength":256},"border-color":{"type":"string","format":"color","maxLength":256},"border-radius":{"type":"number"},"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]}}}
 
 /***/ }),
 /* 39 */
@@ -2609,7 +2602,7 @@ module.exports = {"type":"object","title":"template","additionalProperties":fals
 /* 41 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"text","properties":{"type":{"type":"string","enum":["text","textarea"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["text"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["text"]}
 
 /***/ }),
 /* 42 */
@@ -7003,10 +6996,25 @@ var ElementRendererProvider = function () {
       }
       if (config.scroll === 'enable') {
         _Utils2.default.addClass(divEl, 'lp-json-pollock-layout-vertical-scroll');
+
+        if (config.style && config.style.size) {
+          var size = config.style.size;
+
+          var height = 100;
+
+          if (size === 'medium') {
+            height = 300;
+          } else if (size === 'large') {
+            height = 500;
+          } else {
+            height = 100;
+          }
+
+          divEl.setAttribute('style', 'height: ' + height + 'px');
+        } else {
+          divEl.setAttribute('style', 'height: ' + 100 + 'px');
+        }
       }
-      var style = _Utils2.default.styleToCss(config.style);
-      var splitedStyle = _Utils2.default.extractFromStyles(style, 'height');
-      divEl.setAttribute('style', splitedStyle.extractedStyle);
 
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);

@@ -392,9 +392,13 @@ export default class ElementRendererProvider {
             height = 300;
           } else if (size === 'large') {
             height = 500;
+          } else {
+            height = 100;
           }
 
           divEl.setAttribute('style', `height: ${height}px`);
+        } else {
+          divEl.setAttribute('style', `height: ${100}px`);
         }
       }
 
