@@ -93,8 +93,15 @@ export default class ElementRendererProvider {
         btnEl.addEventListener('click', () => {
           switch (config.ref.type) {
             case 'carouselSelect': {
-              const parentNode = document.querySelector(`[data-carousel-name=${config.ref.name}]`);
-              console.log(parentNode);
+              const selectedNodes = Array.from(document.querySelectorAll(`[data-carousel-name=${config.ref.name}] [data-selected]`));
+
+              if (selectedNodes.length === 0) {
+                throw new Error('No items has selected!');
+              }
+
+              const selectedMetas = selectedNodes.map(node => JSON.parse(node.getAttribute('data-meta') || 'null'));
+
+              alert(JSON.stringify(selectedMetas));
               break;
             }
 
