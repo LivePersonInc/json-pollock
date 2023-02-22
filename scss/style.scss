@@ -377,7 +377,18 @@
         outline: none;
         cursor: pointer;
         padding: 0.4rem 0.4rem;
-        font-size: 0.7rem;
+    }
+
+    .lp-json-pollock-element-tab-button-size-small {
+        font-size: 11px;
+    }
+
+    .lp-json-pollock-element-tab-button-size-medium {
+        font-size: 13px;
+    }
+
+    .lp-json-pollock-element-tab-button-size-large {
+        font-size: 14px;
     }
 
     .lp-json-pollock-element-tab-button:hover {

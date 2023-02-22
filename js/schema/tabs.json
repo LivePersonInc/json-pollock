@@ -10,7 +10,40 @@
       "readonly": true
     },
     "style": {
-      "$ref": "style.json"
+      "background-color": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "color": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "background-color-active": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "color-active": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "background-color-hover": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "color-hover": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "size": {
+        "type": "string",
+        "enum": ["small", "medium", "large"]
+      }
     },
     "elements": {
       "type": "array",

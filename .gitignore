@@ -3,3 +3,4 @@ node_modules/
 .idea/
 .yarn
 dist
+.DC_Store
