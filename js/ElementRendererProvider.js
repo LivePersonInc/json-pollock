@@ -401,6 +401,9 @@ export default class ElementRendererProvider {
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
+      if (config.meta) {
+        divEl.setAttribute('data-meta', JSON.stringify(config.meta));
+      }
       return divEl;
     });
 
@@ -649,6 +652,9 @@ export default class ElementRendererProvider {
       }
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
+      if (config.meta) {
+        divEl.setAttribute('data-meta', JSON.stringify(config.meta));
       }
       (divEl: any).afterRender = () => {
         if (divEl.childNodes.length) {
