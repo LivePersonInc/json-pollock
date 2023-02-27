@@ -636,7 +636,7 @@ describe('json-pollock tests', function () {
         "type": "vertical",
         "scroll": "enable",
         "style": {
-          "size": "large"
+          "size": "medium"
         },
         "elements": [{
           "type": "text",
