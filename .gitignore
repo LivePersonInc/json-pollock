@@ -2,5 +2,4 @@
 node_modules/
 .idea/
 dist/
-yarn/
 .DS_Store
