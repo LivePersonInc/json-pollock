@@ -381,6 +381,27 @@ export default class ElementRendererProvider {
       } else if (config.border === 'dropShadow') {
         Utils.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
       }
+      if (config.scroll === 'enable') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-vertical-scroll');
+
+        if (config.style && config.style.size) {
+          const { size } = config.style;
+          let height = 100;
+
+          if (size === 'medium') {
+            height = 300;
+          } else if (size === 'large') {
+            height = 500;
+          } else {
+            height = 100;
+          }
+
+          divEl.setAttribute('style', `height: ${height}px`);
+        } else {
+          divEl.setAttribute('style', `height: ${100}px`);
+        }
+      }
+
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
