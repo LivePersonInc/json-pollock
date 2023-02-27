@@ -85,31 +85,31 @@ export default class ElementRendererProvider {
         Utils.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
 
-      if (config.click && config.click.actions) {
-        btnEl.onclick = this.wrapAction(config.click);
-      }
+      const clickData = config.click;
 
-      if (config.ref) {
-        btnEl.addEventListener('click', () => {
-          switch (config.ref.type) {
-            case 'carouselSelect': {
-              const selectedNodes = Array.from(document.querySelectorAll(`[data-carousel-name=${config.ref.name}] [data-selected]`));
+      if (clickData && clickData.actions) {
+        const { metadata } = clickData;
 
-              if (selectedNodes.length === 0) {
-                throw new Error('No items has selected!');
-              }
+        btnEl.onclick = (event, formEl) => {
+          const newMetadata = [...(metadata || [])];
 
-              const selectedMetas = selectedNodes.map(node => JSON.parse(node.getAttribute('data-meta') || 'null'));
+          if (config.ref) {
+            const selectedNodes = Array.from(document.querySelectorAll(`[data-carousel-name=${config.ref.name}] [data-selected]`));
 
-              alert(JSON.stringify(selectedMetas));
-              break;
+            if (selectedNodes.length === 0) {
+              throw new Error('No items has selected!');
             }
 
-            default: {
-              throw new Error(`Unknown type: ${config.ref.type}`);
-            }
+            newMetadata.push({ selectedCards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-meta') || 'null')) });
           }
-        });
+
+          console.log({
+            baseConfig: clickData,
+            newConfig: { ...clickData, metadata: newMetadata },
+          });
+
+          return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
+        };
       }
 
       if (config.class !== 'button') {
