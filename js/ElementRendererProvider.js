@@ -20,6 +20,7 @@ const TYPES = {
   SECTION: 'section',
   SECTIONLIST: 'sectionList',
   BUTTONLIST: 'buttonList',
+  TABS: 'tabs',
 };
 
 const DATA_SECTION_ID_ATTR = 'data-section-id';
@@ -384,6 +385,151 @@ export default class ElementRendererProvider {
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
+      return divEl;
+    });
+
+    this.set(TYPES.TABS, (config): HTMLElement => {
+      const { elements } = config;
+      const divEl = document.createElement('div');
+      const headerEl = document.createElement('div');
+      divEl.appendChild(headerEl);
+
+      let custom = '';
+      let customActive = '';
+      let customHover = '';
+      let currentStyle = '';
+
+      if (config.style) {
+        const color = config.style.color;
+        const bgColor = config.style['background-color'];
+        const colorActive = config.style['color-active'];
+        const bgColorActive = config.style['background-color-active'];
+        const colorHover = config.style['color-hover'];
+        const bgColorHover = config.style['background-color-hover'];
+        let borderWidth = 1;
+
+        if (config.style.size) {
+          if (config.style.size === 'small') {
+            borderWidth = 1;
+          } else if (config.style.size === 'medium') {
+            borderWidth = 2;
+          } else if (config.style.size === 'large') {
+            borderWidth = 3;
+          }
+        }
+
+        custom += color ? `color: ${color}; ` : '';
+        custom += color ? `border-bottom: ${borderWidth}px solid ${color}; ` : '';
+        custom += bgColor ? `background-color: ${bgColor}; ` : '';
+
+        customActive += colorActive ? `color: ${colorActive}; ` : '';
+        customActive += colorActive ? `border-bottom: ${borderWidth}px solid ${colorActive}; ` : '';
+        customActive += bgColorActive ? `background-color: ${bgColorActive}; ` : '';
+
+        customHover += colorHover ? `color: ${colorHover}; ` : '';
+        customHover += colorHover ? `border-bottom: ${borderWidth}px solid ${colorHover}; ` : '';
+        customHover += bgColorHover ? `background-color: ${bgColorHover}; ` : '';
+      }
+
+      const openTab = (evt) => {
+        const children = divEl.children;
+        const buttons = children[0].children;
+
+        const pannels = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 1; i < children.length; i++) {
+          pannels.push(children[i]);
+        }
+
+        if (pannels.length) {
+          pannels.forEach((pannel) => {
+            // eslint-disable-next-line no-param-reassign
+            pannel.style.display = 'none';
+          });
+        }
+
+        if (!evt) {
+          if (custom && customActive) {
+            buttons[0].style.cssText = customActive;
+            currentStyle = customActive;
+          } else {
+            buttons[0].className += ' active';
+          }
+          pannels[0].style.display = 'block';
+          return;
+        }
+
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < buttons.length; i++) {
+          const button = buttons[i];
+          if (custom && customActive) {
+            // eslint-disable-next-line no-param-reassign
+            button.style.cssText = custom;
+          } else {
+            // eslint-disable-next-line no-param-reassign
+            button.className = button.className.replace(' active', '');
+          }
+        }
+
+        if (custom && customActive) {
+          // eslint-disable-next-line no-param-reassign
+          evt.currentTarget.style.cssText = customActive;
+          currentStyle = customActive;
+        } else {
+          // eslint-disable-next-line no-param-reassign
+          evt.currentTarget.className += ' active';
+        }
+
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < buttons.length; i++) {
+          if (buttons[i].style.cssText.trim().toLowerCase() === customActive.trim().toLowerCase()
+            && customActive) {
+            pannels[i].style.display = 'block';
+          } else if (buttons[i].className.includes('active')) {
+            pannels[i].style.display = 'block';
+          }
+        }
+      };
+
+      headerEl.className = 'lp-json-pollock-element-tab';
+      elements.forEach((card) => {
+        const { tag } = card;
+        const btnEl = document.createElement('button');
+        btnEl.className = 'lp-json-pollock-element-tab-button';
+        if (config.style && config.style.size) {
+          btnEl.className += ` lp-json-pollock-element-tab-button-size-${config.style.size}`;
+        } else {
+          btnEl.className += ' lp-json-pollock-element-tab-button-size-small';
+        }
+
+        if (custom) {
+          btnEl.style.cssText = custom;
+        }
+
+        if (customHover) {
+          currentStyle = btnEl.style.cssText;
+          btnEl.addEventListener('mouseover', () => {
+            currentStyle = btnEl.style.cssText;
+            btnEl.style.cssText = customHover;
+          }, false);
+
+          btnEl.addEventListener('mouseout', () => {
+            btnEl.style.cssText = currentStyle;
+          }, false);
+        }
+
+        btnEl.id = tag;
+        btnEl.textContent = tag;
+        btnEl.onclick = (event) => {
+          openTab.call(this, event);
+        };
+        headerEl.appendChild(btnEl);
+      });
+
+      (divEl: any).afterRender = () => {
+        openTab();
+      };
+
       return divEl;
     });
 

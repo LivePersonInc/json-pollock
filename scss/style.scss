@@ -364,4 +364,39 @@
         float: none;
         text-align: right;
     }
+
+    .lp-json-pollock-element-tab {
+        overflow: hidden;
+    }
+
+    .lp-json-pollock-element-tab-button {
+        background-color: inherit;
+        color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0.4rem 0.4rem;
+    }
+
+    .lp-json-pollock-element-tab-button-size-small {
+        font-size: 11px;
+    }
+
+    .lp-json-pollock-element-tab-button-size-medium {
+        font-size: 13px;
+    }
+
+    .lp-json-pollock-element-tab-button-size-large {
+        font-size: 14px;
+    }
+
+    .lp-json-pollock-element-tab-button:hover {
+        background-color: #ddd;
+    }
+      
+    .lp-json-pollock-element-tab-button.active {
+        background-color: #ccc;
+        border-bottom: 1px solid #555;
+    }
 }

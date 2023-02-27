@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "additionalProperties" : false,
+  "title": "tabs",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["tabs"],
+      "default": "tabs",
+      "readonly": true
+    },
+    "style": {
+      "background-color": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "color": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "background-color-active": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "color-active": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "background-color-hover": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "color-hover": {
+        "type": "string",
+        "format": "color",
+        "maxLength": 256
+      },
+      "size": {
+        "type": "string",
+        "enum": ["small", "medium", "large"]
+      }
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "$ref": "card.json"
+      }
+    }
+  },
+  "required": [
+    "type",
+    "elements"
+  ]
+}
