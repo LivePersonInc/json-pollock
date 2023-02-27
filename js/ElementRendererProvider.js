@@ -103,11 +103,6 @@ export default class ElementRendererProvider {
             newMetadata.push({ selectedCards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-meta') || 'null')) });
           }
 
-          console.log({
-            baseConfig: clickData,
-            newConfig: { ...clickData, metadata: newMetadata },
-          });
-
           return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
         };
       }
