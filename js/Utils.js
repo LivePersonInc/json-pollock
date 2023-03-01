@@ -50,8 +50,8 @@ export default {
   styleToButton(style: Object): string {
     let cssStr = '';
     if (style) {
-      if (style['button-size']) {
-        cssStr += `width: ${this.buttonSizeToPx(style['button-size'])}px; height: ${this.buttonSizeToPx(style['button-size'])}px;`;
+      if (style.size) {
+        cssStr += `width: ${this.buttonSizeToPx(style.size)}px; height: ${this.buttonSizeToPx(style.size)}px;`;
       }
     }
     return cssStr;

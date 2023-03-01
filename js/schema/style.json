@@ -34,10 +34,6 @@
       "type": "string",
       "format": "color",
       "maxLength": 256
-    },
-    "button-size": {
-      "type": "string",
-      "enum": ["small", "medium", "large"]
     }
   }
 }
