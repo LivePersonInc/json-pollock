@@ -29,6 +29,9 @@
         "$ref": "card.json"
       }
     },
+    "style": {
+      "$ref": "style.json"
+    },
     "alt": {
       "type": "string",
       "maxLength": 2000

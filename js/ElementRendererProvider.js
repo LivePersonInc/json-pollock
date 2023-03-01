@@ -578,9 +578,16 @@ export default class ElementRendererProvider {
         if (selected) {
           element.setAttribute('data-selected', 'true');
           element.classList.add('lp-json-pollock-layout-selected');
+
+          if (config.style && config.style['border-color-selected']) {
+            // eslint-disable-next-line no-param-reassign
+            element.style.borderColor = config.style['border-color-selected'];
+          }
         } else {
           element.removeAttribute('data-selected');
           element.classList.remove('lp-json-pollock-layout-selected');
+          // eslint-disable-next-line no-param-reassign
+          element.style.borderColor = '';
         }
       }
 
@@ -603,6 +610,14 @@ export default class ElementRendererProvider {
 
           toggleCardSelect(cardParent, cardParent.dataset.selected !== 'true');
         }
+      }
+
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+
+        carousel.style.cssText = splitedStyle.style;
+        carousel.setAttribute('style', splitedStyle.extractedStyle);
       }
 
       /**

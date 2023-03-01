@@ -12,6 +12,11 @@
       "format": "color",
       "maxLength": 256
     },
+    "border-color-selected": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
     "border-radius": {
       "type": "number"
     },
