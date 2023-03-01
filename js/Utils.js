@@ -50,11 +50,8 @@ export default {
   styleToButton(style: Object): string {
     let cssStr = '';
     if (style) {
-      if (style['button-width']) {
-        cssStr += `width: ${style['button-width']}px;`;
-      }
-      if (style['button-height']) {
-        cssStr += `height: ${style['button-height']}px;`;
+      if (style['button-size']) {
+        cssStr += `width: ${this.buttonSizeToPx(style['button-size'])}px; height: ${this.buttonSizeToPx(style['button-size'])}px;`;
       }
     }
     return cssStr;
@@ -83,6 +80,19 @@ export default {
         return 17;
       default:
         return 13;
+    }
+  },
+
+  buttonSizeToPx(size: string): number {
+    switch (size) {
+      case 'small':
+        return 27;
+      case 'medium':
+        return 36;
+      case 'large':
+        return 45;
+      default:
+        return 36;
     }
   },
 
