@@ -435,16 +435,16 @@ export default class ElementRendererProvider {
         const children = divEl.children;
         const buttons = children[0].children;
 
-        const pannels = [];
+        const panels = [];
         // eslint-disable-next-line no-plusplus
         for (let i = 1; i < children.length; i++) {
-          pannels.push(children[i]);
+          panels.push(children[i]);
         }
 
-        if (pannels.length) {
-          pannels.forEach((pannel) => {
+        if (panels.length) {
+          panels.forEach((panel) => {
             // eslint-disable-next-line no-param-reassign
-            pannel.style.display = 'none';
+            panel.style.display = 'none';
           });
         }
 
@@ -455,7 +455,7 @@ export default class ElementRendererProvider {
           } else {
             buttons[0].className += ' active';
           }
-          pannels[0].style.display = 'block';
+          panels[0].style.display = 'block';
           return;
         }
 
@@ -484,9 +484,9 @@ export default class ElementRendererProvider {
         for (let i = 0; i < buttons.length; i++) {
           if (buttons[i].style.cssText.trim().toLowerCase() === customActive.trim().toLowerCase()
             && customActive) {
-            pannels[i].style.display = 'block';
+            panels[i].style.display = 'block';
           } else if (buttons[i].className.includes('active')) {
-            pannels[i].style.display = 'block';
+            panels[i].style.display = 'block';
           }
         }
       };
