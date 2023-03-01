@@ -624,14 +624,14 @@ export default class ElementRendererProvider {
        * Render logic
        * */
       (carouselWrapper: any).afterRender = () => {
-        const carouselItemsCount = carouselWrapper.childNodes.length;
+        const carouselItemsCount = carouselWrapper.children.length;
 
         if (carouselItemsCount) {
           for (let itemCounter = 0;
                itemCounter < carouselItemsCount;
                itemCounter += 1) {
             const carouselElement: HTMLDivElement =
-              (carouselWrapper.childNodes[itemCounter]: any);
+              (carouselWrapper.children[itemCounter]: any);
 
             carouselElement.addEventListener('click', cardClick.bind(this), true);
             carouselElement.style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
