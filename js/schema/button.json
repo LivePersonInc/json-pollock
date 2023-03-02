@@ -48,9 +48,11 @@
     },
     "ref": {
       "type": "object",
+      "additionalProperties": "false",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "maxLength": 200
         },
         "type": {
           "type": "string",
