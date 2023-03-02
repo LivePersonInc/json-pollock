@@ -100,7 +100,7 @@ export default class ElementRendererProvider {
               throw new Error('No items has selected!');
             }
 
-            newMetadata.push({ selectedCards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-meta') || 'null')) });
+            newMetadata.push({ selectedCards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-metadata') || 'null')) });
           }
 
           return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
@@ -403,8 +403,8 @@ export default class ElementRendererProvider {
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
-      if (config.meta) {
-        divEl.setAttribute('data-meta', JSON.stringify(config.meta));
+      if (config.metadata) {
+        divEl.setAttribute('data-metadata', JSON.stringify(config.metadata));
       }
       return divEl;
     });
@@ -668,8 +668,8 @@ export default class ElementRendererProvider {
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
-      if (config.meta) {
-        divEl.setAttribute('data-meta', JSON.stringify(config.meta));
+      if (config.metadata) {
+        divEl.setAttribute('data-metadata', JSON.stringify(config.metadata));
       }
       (divEl: any).afterRender = () => {
         if (divEl.childNodes.length) {

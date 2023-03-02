@@ -60,9 +60,8 @@
             }
           }
         },
-        "meta": {
-          "type": "object",
-          "additionalProperties": false
+        "metadata": {
+          "type": "array"
         }
       },
       "required": ["type", "elements"]
@@ -115,9 +114,8 @@
             }
           }
         },
-        "meta": {
-          "type": "object",
-          "additionalProperties": false
+        "metadata": {
+          "type": "array"
         }
       },
       "required": ["type", "elements"]

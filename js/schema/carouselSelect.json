@@ -50,7 +50,7 @@
     },
     "selectMode": {
       "type": "object",
-      "additionalProperties": "false",
+      "additionalProperties": false,
       "properties": {
         "name": {
           "type": "string",
