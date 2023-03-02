@@ -645,8 +645,6 @@ export default class ElementRendererProvider {
           }
 
           carousel.className = 'lp-json-pollock-layout-carousel lp-json-pollock-layout-carousel-select';
-          carousel.setAttribute('aria-label', 'Carousel with buttons');
-          carousel.setAttribute('role', 'list');
 
           carouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
           carouselWrapper.appendChild(carousel);
