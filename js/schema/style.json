@@ -7,6 +7,16 @@
       "format": "color",
       "maxLength": 256
     },
+    "background-color-active": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "background-color-hover": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
     "border-color": {
       "type": "string",
       "format": "color",
@@ -26,9 +36,24 @@
       "format": "color",
       "maxLength": 256
     },
+    "color-hover": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "color-active": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
     "size": {
       "type": "string",
       "enum": ["small", "medium", "large"]
+    },
+    "fill": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
     }
   }
 }
