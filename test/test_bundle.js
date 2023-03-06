@@ -246,10 +246,12 @@ describe('json-pollock tests', function () {
     elements: [
       {
         type: "vertical",
-        meta: {
-          id: 10,
-          product: "Test",
-        },
+        metadata: [
+          {
+            type: "ExternalCardId",
+            id: "ANOTHER_ONE_1",
+          },
+        ],
         elements: [
           {
             type: "text",
@@ -296,10 +298,12 @@ describe('json-pollock tests', function () {
       },
       {
         type: "vertical",
-        meta: {
-          id: 20,
-          product: "Test 2",
-        },
+        metadata: [
+          {
+            type: "ExternalCardId",
+            id: "ANOTHER_ONE_2",
+          },
+        ],
         elements: [
           {
             type: "text",
@@ -347,10 +351,12 @@ describe('json-pollock tests', function () {
       },
       {
         type: "vertical",
-        meta: {
-          id: 30,
-          product: "Test 3",
-        },
+        metadata: [
+          {
+            type: "ExternalCardId",
+            id: "ANOTHER_ONE_3",
+          },
+        ],
         elements: [
           {
             type: "text",
