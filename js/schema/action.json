@@ -16,7 +16,7 @@
         "maxLength": 256
       }
     },
-    "required": ["type", "text"]
+    "required": ["type", "text", "test"]
   }, {
     "title": "navigate",
     "type": "object",
