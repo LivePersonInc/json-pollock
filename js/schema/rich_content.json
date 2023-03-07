@@ -13,6 +13,10 @@
       "$ref": "carouselSelect.json"
     },
     {
+      "title": "accordionSelect",
+      "$ref": "accordionSelect.json"
+    },
+    {
       "title": "list",
       "$ref": "list.json"
     },

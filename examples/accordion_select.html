@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>SC Test - Accordion Select</title>
+    <link rel="stylesheet" href="/dist/json-pollock.min.css" />
+    <script src="/dist/json-pollock.js"></script>
+    <script>
+      window.onload = function () {
+        /**
+         * Schema
+         * */
+        const accordionMultiSelect = {
+          type: "accordionSelect",
+          padding: 10,
+          selectMode: {
+            name: "test-accordion-multi-select",
+            type: "multiple", // "single" // selected items - which user has been selected
+          },
+          titles: [
+            {
+              name: "First accordion tab",
+              additional: "Additional info",
+            },
+            {
+              name: "Second accordion tab",
+              additional: "$0.01",
+            },
+            {
+              name: "Third accordion tab",
+              additional: "Limited time offer",
+            },
+          ],
+          elements: [
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_1",
+                },
+              ],
+              elements: [
+                {
+                  type: "text",
+                  text: "a",
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: "#000000",
+                    size: "large",
+                  },
+                },
+                {
+                  type: "text",
+                  text: "Twelve month plan BYO mobile",
+                  tooltip: "Twelve month plan BYO mobile",
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: "#000000",
+                  },
+                },
+                {
+                  type: "button",
+                  tooltip: "Choose a plan",
+                  title: "Choose a plan",
+                  click: {
+                    metadata: [
+                      {
+                        type: "ExternalId",
+                        id: "ANOTHER_ONE_1",
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: "publishText",
+                        text: "SIM only plan",
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_2",
+                },
+              ],
+              elements: [
+                {
+                  type: "text",
+                  text: "b",
+                  tooltip: "Swap plan",
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: "#000000",
+                    size: "large",
+                  },
+                },
+                {
+                  type: "text",
+                  text: "Two year plan leasing a mobile",
+                  tooltip: "Two year plan leasing a mobile",
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: "#000000",
+                  },
+                },
+                {
+                  type: "button",
+                  tooltip: "Choose a plan",
+                  title: "Choose a plan",
+                  click: {
+                    metadata: [
+                      {
+                        type: "ExternalId",
+                        id: "ANOTHER_ONE_2",
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: "publishText",
+                        text: "Two year plan leasing a mobile",
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_3",
+                },
+              ],
+              elements: [
+                {
+                  type: "text",
+                  text: "c",
+                  tooltip: "Mobiles on a plan",
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: "#000000",
+                    size: "large",
+                  },
+                },
+                {
+                  type: "text",
+                  text: "Two year plan with a mobile",
+                  tooltip: "Two year plan with a mobile",
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: "#000000",
+                  },
+                },
+                {
+                  type: "button",
+                  tooltip: "Choose a plan",
+                  title: "Choose a plan",
+                  click: {
+                    metadata: [
+                      {
+                        type: "ExternalId",
+                        id: "ANOTHER_ONE_3",
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: "publishText",
+                        text: "Mobiles on a plan",
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+        };
+
+        const accordionSingleSelect = JSON.parse(
+          JSON.stringify(accordionMultiSelect)
+        );
+
+        accordionSingleSelect.selectMode.name = "test-accordion-single-select";
+        accordionSingleSelect.selectMode.type = "single";
+
+        const multiCard = {
+          type: "vertical",
+          elements: [
+            accordionMultiSelect,
+            {
+              type: "button",
+              title: "Submit selected",
+              ref: {
+                type: "accordionSelect",
+                name: accordionMultiSelect.selectMode.name,
+              },
+              click: {
+                metadata: [
+                  {
+                    type: "ExternalId",
+                    id: "ANOTHER_ONE_3",
+                  },
+                ],
+                actions: [
+                  {
+                    type: "publishText",
+                    text: "Mobiles on a plan",
+                  },
+                ],
+              },
+            },
+          ],
+        };
+
+        const singleCard = {
+          type: "vertical",
+          elements: [
+            accordionSingleSelect,
+            {
+              type: "button",
+              title: "Submit selected",
+              ref: {
+                type: "accordionSelect",
+                name: accordionSingleSelect.selectMode.name,
+              },
+              click: {
+                metadata: [
+                  {
+                    type: "ExternalId",
+                    id: "ANOTHER_ONE_3",
+                  },
+                ],
+                actions: [
+                  {
+                    type: "publishText",
+                    text: "Mobiles on a plan",
+                  },
+                ],
+              },
+            },
+          ],
+        };
+
+        /**
+         * Json Pollock Actions
+         * */
+        JsonPollock.registerAction("navigate", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        JsonPollock.registerAction("link", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        JsonPollock.registerAction("publishText", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        /**
+         * Rendering logic
+         * */
+        const elMultiple = JsonPollock.render(JSON.stringify(multiCard));
+        const elSingle = JsonPollock.render(JSON.stringify(singleCard));
+
+        document.getElementById("content-multi").appendChild(elMultiple);
+        document.getElementById("content-single").appendChild(elSingle);
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Accordion multi select example</h1>
+    <div id="content-multi" style="max-width: 1000px"></div>
+    <h1>Accordion single select example</h1>
+    <div id="content-single" style="max-width: 300px"></div>
+  </body>
+</html>
