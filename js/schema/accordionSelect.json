@@ -55,15 +55,10 @@
         "name": {
           "type": "string",
           "maxLength": 200
-        },
-        "type": {
-          "type": "string",
-          "enum": ["single", "multiple"]
         }
       },
       "required": [
-        "name",
-        "type"
+        "name"
       ]
     },
     "titles": {
