@@ -104,7 +104,7 @@ export default class ElementRendererProvider {
                 break;
 
               case 'accordionSelect':
-                selector = `[data-accordion-name=${config.ref.name}] [data-selected]`;
+                selector = `[data-accordion-name=${config.ref.name}] [data-accordion-body][data-selected]`;
                 break;
 
               default:
