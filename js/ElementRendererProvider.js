@@ -894,55 +894,50 @@ export default class ElementRendererProvider {
         Utils.appendAttributesFromObject(accordionWrapper, config.accessibility.web);
       }
 
-      function findCardParent(element: any): HTMLDivElement | typeof undefined {
-        if (!element || element.tagName === 'BUTTON') {
+      function findTabParent(element: any): HTMLDivElement | typeof undefined {
+        if (!element || element.tagName === 'INPUT') {
           return undefined;
         }
 
-        const index = element.getAttribute('data-carousel-index');
+        const index = element.getAttribute('data-accordion-index');
         if (index !== null) {
           return element;
         }
 
-        return findCardParent(element.parentNode);
+        return findTabParent(element.parentNode);
       }
 
-      function toggleCardSelect(element: HTMLDivElement, selected: boolean) {
+      function toggleBodySelect(element: HTMLDivElement, selected: boolean) {
         if (selected) {
-          element.setAttribute('data-selected', 'true');
-          element.classList.add('lp-json-pollock-layout-selected');
-
-          if (config.style && config.style['border-color-selected']) {
-          // eslint-disable-next-line no-param-reassign
-            element.style.borderColor = config.style['border-color-selected'];
-          }
+          element.setAttribute('data-open', 'true');
+          element.classList.remove('lp-json-pollock-layout-accordion-folded');
         } else {
-          element.removeAttribute('data-selected');
-          element.classList.remove('lp-json-pollock-layout-selected');
-        // eslint-disable-next-line no-param-reassign
-          element.style.borderColor = '';
+          element.setAttribute('data-open', 'false');
+          element.classList.add('lp-json-pollock-layout-accordion-folded');
         }
       }
 
-    /**
-     * @param {MouseEvent} event
-     * */
+      /**
+       * @param {MouseEvent} event
+       * */
       function accordionClick(event: MouseEvent) {
         const element = event.target;
-        const cardParent = findCardParent(element);
+        const tabParent = findTabParent(element);
 
-        if (cardParent) {
-          if (config.selectMode.type === 'single' && cardParent.parentNode) {
-            Array
-            .from((cardParent.parentNode: any).querySelectorAll('[data-carousel-index][data-selected]'))
-            .filter((carouselElement: HTMLDivElement) => carouselElement !== cardParent)
-            .forEach((carouselElement: HTMLDivElement) => {
-              toggleCardSelect(carouselElement, false);
-            });
-          }
-
-          toggleCardSelect(cardParent, cardParent.dataset.selected !== 'true');
+        if (!tabParent) {
+          return;
         }
+
+        const headerElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-header'): any);
+        const bodyElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion'): any);
+
+        if (!headerElement || !bodyElement) {
+          return;
+        }
+
+        const isOpen = bodyElement.dataset.open === 'true';
+
+        toggleBodySelect(bodyElement, !isOpen);
       }
 
       if (config.style) {
@@ -980,6 +975,7 @@ export default class ElementRendererProvider {
             accordionAdditionalElement.classList.add('lp-json-pollock-layout-accordion-additional');
 
             accordionElement.classList.add('lp-json-pollock-layout-accordion-folded');
+            accordionElement.classList.add('lp-json-pollock-layout-accordion');
             accordionElement.setAttribute('data-open', 'false');
 
             accordionCheckboxElement.type = 'checkbox';
