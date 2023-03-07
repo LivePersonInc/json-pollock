@@ -683,10 +683,6 @@ export default class ElementRendererProvider {
       }
 
       function findTabParent(element: any): HTMLDivElement | typeof undefined {
-        if (!element || element.tagName === 'INPUT') {
-          return undefined;
-        }
-
         const index = element.getAttribute('data-accordion-index');
         if (index !== null) {
           return element;
@@ -695,7 +691,27 @@ export default class ElementRendererProvider {
         return findTabParent(element.parentNode);
       }
 
+      function toggleTabSelect(element: HTMLInputElement, selected: boolean) {
+        if (selected) {
+          element.removeAttribute('data-selected');
+          // eslint-disable-next-line no-param-reassign
+          element.checked = false;
+        } else {
+          element.setAttribute('data-selected', 'true');
+          // eslint-disable-next-line no-param-reassign
+          element.checked = true;
+        }
+      }
+
       function toggleBodySelect(element: HTMLDivElement, selected: boolean) {
+        if (selected) {
+          element.removeAttribute('data-selected');
+        } else {
+          element.setAttribute('data-selected', 'true');
+        }
+      }
+
+      function toggleBodyOpen(element: HTMLDivElement, selected: boolean) {
         if (selected) {
           element.setAttribute('data-open', 'true');
           element.classList.remove('lp-json-pollock-layout-accordion-folded');
@@ -709,15 +725,30 @@ export default class ElementRendererProvider {
        * @param {MouseEvent} event
        * */
       function accordionClick(event: MouseEvent) {
-        const element = event.target;
+        const element: HTMLElement = (event.target: any);
+        const isCheckboxClicked = element.tagName === 'INPUT';
         const tabParent = findTabParent(element);
 
         if (!tabParent) {
           return;
         }
 
+        const checkboxElement: HTMLInputElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-checkbox'): any);
         const headerElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-header'): any);
         const bodyElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion'): any);
+
+
+        if (isCheckboxClicked) {
+          if (!checkboxElement || !bodyElement) {
+            return;
+          }
+
+          const selected = checkboxElement.dataset.selected === 'true';
+
+          toggleTabSelect(checkboxElement, selected);
+          toggleBodySelect(bodyElement, selected);
+          return;
+        }
 
         if (!headerElement || !bodyElement) {
           return;
@@ -725,7 +756,7 @@ export default class ElementRendererProvider {
 
         const isOpen = bodyElement.dataset.open === 'true';
 
-        toggleBodySelect(bodyElement, !isOpen);
+        toggleBodyOpen(bodyElement, !isOpen);
       }
 
       if (config.style) {
@@ -765,6 +796,7 @@ export default class ElementRendererProvider {
             accordionElement.classList.add('lp-json-pollock-layout-accordion-folded');
             accordionElement.classList.add('lp-json-pollock-layout-accordion');
             accordionElement.setAttribute('data-open', 'false');
+            accordionElement.setAttribute('data-accordion-body', '');
 
             accordionCheckboxElement.type = 'checkbox';
             accordionTitleElement.innerText = accordionTitleConfig.name;
