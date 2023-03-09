@@ -391,21 +391,24 @@ export default class ElementRendererProvider {
       const defaultPadding = 0;
       const padding = config.padding || defaultPadding;
       let nextLeft = 0;
-      const arrowRight = document.createElement('button');
       const arrowLeft = document.createElement('button');
+      const arrowRight = document.createElement('button');
       const divCarouselWrapper = document.createElement('div');
+      const a11yDiv = document.createElement('div');
       const carousel = document.createElement('div');
       const carouselOffsetChangedEventName = 'carouselOffsetChange';
       let carouselItemIndex = 0;
       let isRTLDirection = false;
       let cards;
 
-      arrowRight.setAttribute('type', 'button');
-      arrowRight.setAttribute('aria-label', 'Next');
       arrowLeft.setAttribute('type', 'button');
       arrowLeft.setAttribute('aria-label', 'Previous');
-      arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      arrowRight.setAttribute('type', 'button');
+      arrowRight.setAttribute('aria-label', 'Next');
+      a11yDiv.setAttribute('aria-live', 'polite');
+      a11yDiv.setAttribute('aria-atomic', 'true');
       arrowLeft.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
       }
@@ -433,15 +436,29 @@ export default class ElementRendererProvider {
         }
 
         (carousel: any).style.left = nextLeft;
-        (arrowRight: any).style.visibility = carouselItemIndex >= cards.length - 1 ? 'hidden' : 'visible';
-        (arrowLeft: any).style.visibility = carouselItemIndex <= 0 ? 'hidden' : 'visible';
       }
+
+      function addA11yLabel() {
+        const arrowLabel = `Item ${carouselItemIndex + 1} of ${cards.length}`;
+        a11yDiv.setAttribute('aria-label', arrowLabel);
+      }
+
       function rightArrowClicked(event) {
-        carouselItemIndex += 1;
+        if (carouselItemIndex === cards.length - 1) {
+          carouselItemIndex = 0;
+        } else {
+          carouselItemIndex += 1;
+        }
+        addA11yLabel();
         setShowingCard.call(this, event);
       }
       function leftArrowClicked(event) {
-        carouselItemIndex -= 1;
+        if (carouselItemIndex === 0) {
+          carouselItemIndex = cards.length - 1;
+        } else {
+          carouselItemIndex -= 1;
+        }
+        addA11yLabel();
         setShowingCard.call(this, event);
       }
       function findCardIndex(element) {
@@ -490,12 +507,13 @@ export default class ElementRendererProvider {
 
           divCarouselWrapper.appendChild(carousel);
           carousel.className = 'lp-json-pollock-layout-carousel';
-          carousel.setAttribute('aria-label', 'Carousel with buttons');
+          divCarouselWrapper.setAttribute('aria-label', 'Carousel with buttons');
           divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
           (carousel: any).setAttribute('role', 'list');
-          divCarouselWrapper.appendChild(carousel);
-          divCarouselWrapper.appendChild(arrowRight);
           divCarouselWrapper.appendChild(arrowLeft);
+          divCarouselWrapper.appendChild(arrowRight);
+          divCarouselWrapper.appendChild(carousel);
+          divCarouselWrapper.appendChild(a11yDiv);
           /* TODO: find other trigger. */
           setTimeout(() => {
             /* check if the viewport width is bigger then the carousel div
@@ -510,7 +528,7 @@ export default class ElementRendererProvider {
 
             if (isRTLDirection) {
               arrowLeft.style.visibility = 'visible';
-              arrowRight.style.visibility = 'hidden';
+              arrowRight.style.visibility = 'visible';
               carouselItemIndex = cards.length - 1;
               cards = [].slice.call(cards, 0).reverse();
               nextLeft = `${-1 * (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth))}px`;
