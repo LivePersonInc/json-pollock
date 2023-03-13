@@ -321,6 +321,20 @@
         .lp-json-pollock-layout-accordion-folded {
             display: none;
         }
+
+        .lp-json-pollock-layout-accordion-arrow {
+            width: 12px;
+            height: 12px;
+            margin-left: 8px;
+
+            &.close {
+                transform: rotate(90deg);
+            }
+
+            &.open {
+                transform: rotate(270deg);
+            }
+        }
     }
 
     .lp-json-pollock-element-text {
