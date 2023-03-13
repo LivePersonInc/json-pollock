@@ -364,11 +364,6 @@ export default class ElementRendererProvider {
 
       if (config.click && config.click.actions) {
         divEl.onclick = this.wrapAction(config.click);
-      } else {
-        // navigate to the location
-        divEl.onclick = () => {
-          window.open(`https://www.google.com/maps/search/?api=1&query=${config.la},${config.lo}`, '_blank');
-        };
       }
       return divEl;
     });
