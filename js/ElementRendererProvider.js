@@ -678,6 +678,8 @@ export default class ElementRendererProvider {
       const accordionWrapper = document.createElement('div');
       const accordion = document.createElement('div');
 
+      const arrowElement = Utils.htmlToElement('<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>');
+
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(accordionWrapper, config.accessibility.web);
       }
@@ -721,6 +723,16 @@ export default class ElementRendererProvider {
         }
       }
 
+      function toggleArrowOpen(element: HTMLElement, selected: boolean) {
+        if (selected) {
+          element.classList.add('open');
+          element.classList.remove('close');
+        } else {
+          element.classList.add('close');
+          element.classList.remove('open');
+        }
+      }
+
       /**
        * @param {MouseEvent} event
        * */
@@ -736,7 +748,7 @@ export default class ElementRendererProvider {
         const checkboxElement: HTMLInputElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-checkbox'): any);
         const headerElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-header'): any);
         const bodyElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion'): any);
-
+        const headerArrowElement: HTMLElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-arrow'): any);
 
         if (isCheckboxClicked) {
           if (!checkboxElement || !bodyElement) {
@@ -757,6 +769,7 @@ export default class ElementRendererProvider {
         const isOpen = bodyElement.dataset.open === 'true';
 
         toggleBodyOpen(bodyElement, !isOpen);
+        toggleArrowOpen(headerArrowElement, !isOpen);
       }
 
       if (config.style) {
@@ -786,12 +799,14 @@ export default class ElementRendererProvider {
             const accordionCheckboxElement = document.createElement('input');
             const accordionTitleElement = document.createElement('h3');
             const accordionAdditionalElement = document.createElement('span');
+            const accordionArrowElement = arrowElement.cloneNode(true);
 
             accordionTabElement.classList.add('lp-json-pollock-layout-accordion-tab');
             accordionHeaderElement.classList.add('lp-json-pollock-layout-accordion-header');
             accordionCheckboxElement.classList.add('lp-json-pollock-layout-accordion-checkbox');
             accordionTitleElement.classList.add('lp-json-pollock-layout-accordion-title');
             accordionAdditionalElement.classList.add('lp-json-pollock-layout-accordion-additional');
+            accordionArrowElement.classList.add('lp-json-pollock-layout-accordion-arrow', 'close');
 
             accordionElement.classList.add('lp-json-pollock-layout-accordion-folded');
             accordionElement.classList.add('lp-json-pollock-layout-accordion');
@@ -814,6 +829,7 @@ export default class ElementRendererProvider {
             accordionHeaderElement.appendChild(accordionCheckboxElement);
             accordionHeaderElement.appendChild(accordionTitleElement);
             accordionHeaderElement.appendChild(accordionAdditionalElement);
+            accordionHeaderElement.appendChild(accordionArrowElement);
 
             accordionTabElement.appendChild(accordionHeaderElement);
             accordionTabElement.appendChild(accordionElement);

@@ -118,6 +118,17 @@ export default {
     return text.replace(/[&<>"'`=/]/g, s => map[s]);
   },
 
+  /**
+   * @param {string} html - representing a single element
+   * @return {Element}
+   */
+  htmlToElement(html: string): HTMLElement {
+    const template = document.createElement('template');
+    template.innerHTML = html.trim();
+
+    return (template.content.firstChild: any);
+  },
+
   hasClass(el: HTMLElement, className: string) {
     if (el.classList && el.classList.contains) {
       return el.classList.contains(className);
