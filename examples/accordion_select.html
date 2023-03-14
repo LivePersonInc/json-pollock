@@ -90,12 +90,6 @@
           ],
         };
 
-        const accordionSingleSelect = JSON.parse(
-          JSON.stringify(accordionMultiSelect)
-        );
-
-        accordionSingleSelect.selectMode.name = "test-accordion-single-select";
-
         const multiCard = {
           type: "vertical",
           border: "borderLess",
@@ -107,35 +101,6 @@
               ref: {
                 type: "accordionSelect",
                 name: accordionMultiSelect.selectMode.name,
-              },
-              click: {
-                metadata: [
-                  {
-                    type: "ExternalId",
-                    id: "ANOTHER_ONE_3",
-                  },
-                ],
-                actions: [
-                  {
-                    type: "publishText",
-                    text: "Mobiles on a plan",
-                  },
-                ],
-              },
-            },
-          ],
-        };
-
-        const singleCard = {
-          type: "vertical",
-          elements: [
-            accordionSingleSelect,
-            {
-              type: "button",
-              title: "Submit selected",
-              ref: {
-                type: "accordionSelect",
-                name: accordionSingleSelect.selectMode.name,
               },
               click: {
                 metadata: [
@@ -174,10 +139,8 @@
          * Rendering logic
          * */
         const elMultiple = JsonPollock.render(JSON.stringify(multiCard));
-        const elSingle = JsonPollock.render(JSON.stringify(singleCard));
 
         document.getElementById("content-multi").appendChild(elMultiple);
-        document.getElementById("content-single").appendChild(elSingle);
       };
     </script>
   </head>
@@ -185,7 +148,5 @@
   <body>
     <h1>Accordion multi select example</h1>
     <div id="content-multi" style="max-width: 1000px"></div>
-    <h1>Accordion single select example</h1>
-    <div id="content-single" style="max-width: 300px"></div>
   </body>
 </html>
