@@ -20,9 +20,6 @@
     },
     {
       "$ref": "keyValuePairList.json"
-    },
-    {
-      "$ref": "tabs.json"
     }
   ]
 }
