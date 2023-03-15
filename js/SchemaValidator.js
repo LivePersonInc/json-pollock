@@ -5,6 +5,7 @@ import styleSchema from './schema/style.json';
 import buttonSchema from './schema/button.json';
 import cardSchema from './schema/card.json';
 import carouselSchema from './schema/carousel.json';
+import carouselSelectSchema from './schema/carouselSelect.json';
 import imagelSchema from './schema/image.json';
 import linkPreviewSchema from './schema/linkPreview.json';
 import mapSchema from './schema/map.json';
@@ -38,6 +39,7 @@ export default class SchemaValidator {
     ajv.addSchema(checkBoxSchema, 'checkbox.json');
     ajv.addSchema(cardSchema, 'card.json');
     ajv.addSchema(carouselSchema, 'carousel.json');
+    ajv.addSchema(carouselSelectSchema, 'carouselSelect.json');
     ajv.addSchema(imagelSchema, 'image.json');
     ajv.addSchema(linkPreviewSchema, 'linkPreview.json');
     ajv.addSchema(mapSchema, 'map.json');

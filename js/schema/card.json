@@ -59,6 +59,9 @@
               "$ref": "accessibilityWeb.json"
             }
           }
+        },
+        "metadata": {
+          "type": "array"
         }
       },
       "required": ["type", "elements"]
@@ -110,6 +113,9 @@
               "$ref": "accessibilityWeb.json"
             }
           }
+        },
+        "metadata": {
+          "type": "array"
         }
       },
       "required": ["type", "elements"]

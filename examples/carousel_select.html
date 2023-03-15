@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>SC Test - Carousel Select</title>
+    <link rel="stylesheet" href="/dist/json-pollock.min.css" />
+    <script src="/dist/json-pollock.js"></script>
+    <script>
+      window.onload = function () {
+        /**
+         * Schema
+         * */
+        const carouselMultiSelect = {
+          type: "carouselSelect",
+          padding: 10,
+          selectMode: {
+            name: "test-carousel-multi-select",
+            type: "multiple", // "single" // selected items - which user has been selected
+          },
+          style: {
+            "border-color-selected": "red",
+          },
+          elements: [
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_1",
+                },
+              ],
+              elements: [
+                {
+                  type: "text",
+                  text: "a",
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: "#000000",
+                    size: "large",
+                  },
+                },
+                {
+                  type: "text",
+                  text: "Twelve month plan BYO mobile",
+                  tooltip: "Twelve month plan BYO mobile",
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: "#000000",
+                  },
+                },
+                {
+                  type: "button",
+                  tooltip: "Choose a plan",
+                  title: "Choose a plan",
+                  click: {
+                    metadata: [
+                      {
+                        type: "ExternalId",
+                        id: "ANOTHER_ONE_1",
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: "publishText",
+                        text: "SIM only plan",
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_2",
+                },
+              ],
+              elements: [
+                {
+                  type: "text",
+                  text: "b",
+                  tooltip: "Swap plan",
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: "#000000",
+                    size: "large",
+                  },
+                },
+                {
+                  type: "text",
+                  text: "Two year plan leasing a mobile",
+                  tooltip: "Two year plan leasing a mobile",
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: "#000000",
+                  },
+                },
+                {
+                  type: "button",
+                  tooltip: "Choose a plan",
+                  title: "Choose a plan",
+                  click: {
+                    metadata: [
+                      {
+                        type: "ExternalId",
+                        id: "ANOTHER_ONE_2",
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: "publishText",
+                        text: "Two year plan leasing a mobile",
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_3",
+                },
+              ],
+              elements: [
+                {
+                  type: "text",
+                  text: "c",
+                  tooltip: "Mobiles on a plan",
+                  rtl: false,
+                  style: {
+                    bold: false,
+                    italic: false,
+                    color: "#000000",
+                    size: "large",
+                  },
+                },
+                {
+                  type: "text",
+                  text: "Two year plan with a mobile",
+                  tooltip: "Two year plan with a mobile",
+                  rtl: false,
+                  style: {
+                    bold: true,
+                    italic: false,
+                    color: "#000000",
+                  },
+                },
+                {
+                  type: "button",
+                  tooltip: "Choose a plan",
+                  title: "Choose a plan",
+                  click: {
+                    metadata: [
+                      {
+                        type: "ExternalId",
+                        id: "ANOTHER_ONE_3",
+                      },
+                    ],
+                    actions: [
+                      {
+                        type: "publishText",
+                        text: "Mobiles on a plan",
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            {
+              type: "button",
+              title: "Submit selected",
+              ref: {
+                type: "carouselSelect",
+                name: "test-carousel-multi-select",
+              },
+              click: {
+                metadata: [
+                  {
+                    type: "ExternalId",
+                    id: "ANOTHER_ONE_3",
+                  },
+                ],
+                actions: [
+                  {
+                    type: "publishText",
+                    text: "Mobiles on a plan",
+                  },
+                ],
+              },
+            },
+          ],
+        };
+
+        const carouselSingleSelect = JSON.parse(
+          JSON.stringify(carouselMultiSelect)
+        );
+
+        carouselSingleSelect.selectMode.name = "test-carousel-single-select";
+        carouselSingleSelect.selectMode.type = "single";
+        carouselSingleSelect.elements[3].ref.name =
+          carouselSingleSelect.selectMode.name;
+
+        /**
+         * Json Pollock Actions
+         * */
+        JsonPollock.registerAction("navigate", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        JsonPollock.registerAction("link", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        JsonPollock.registerAction("publishText", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        /**
+         * Rendering logic
+         * */
+        const elMultiple = JsonPollock.render(
+          JSON.stringify(carouselMultiSelect)
+        );
+
+        document.getElementById("content-multi").appendChild(elMultiple);
+
+        const elSingle = JsonPollock.render(
+          JSON.stringify(carouselSingleSelect)
+        );
+
+        document.getElementById("content-single").appendChild(elSingle);
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Multi select example</h1>
+    <div id="content-multi" style="max-width: 300px"></div>
+    <h1>Single select example</h1>
+    <div id="content-single" style="max-width: 300px"></div>
+  </body>
+</html>

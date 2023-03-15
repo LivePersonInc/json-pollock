@@ -13,6 +13,7 @@ const TYPES = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
   CAROUSEL: 'carousel',
+  CAROUSELSELECT: 'carouselSelect',
   SUBMITBUTTON: 'submitButton',
   CHECKBOX: 'checkbox',
   CHECKLIST: 'checklist',
@@ -84,8 +85,26 @@ export default class ElementRendererProvider {
         Utils.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
 
-      if (config.click && config.click.actions) {
-        btnEl.onclick = this.wrapAction(config.click);
+      const clickData = config.click;
+
+      if (clickData && clickData.actions) {
+        const { metadata } = clickData;
+
+        btnEl.onclick = (event, formEl) => {
+          const newMetadata = [...(metadata || [])];
+
+          if (config.ref) {
+            const selectedNodes = Array.from(document.querySelectorAll(`[data-carousel-name=${config.ref.name}] [data-selected]`));
+
+            if (selectedNodes.length === 0) {
+              throw new Error('No items has selected!');
+            }
+
+            newMetadata.push({ selectedCards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-metadata') || 'null')) });
+          }
+
+          return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
+        };
       }
 
       if (config.class !== 'button') {
@@ -384,6 +403,9 @@ export default class ElementRendererProvider {
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
+      if (config.metadata) {
+        divEl.setAttribute('data-metadata', JSON.stringify(config.metadata));
+      }
       return divEl;
     });
 
@@ -575,6 +597,111 @@ export default class ElementRendererProvider {
       return divCarouselWrapper;
     });
 
+    this.set(TYPES.CAROUSELSELECT, (config): HTMLElement => {
+      const defaultPadding = 0;
+      const padding = config.padding || defaultPadding;
+
+      const carouselWrapper = document.createElement('div');
+      const carousel = document.createElement('div');
+
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(carouselWrapper, config.accessibility.web);
+      }
+
+      function findCardParent(element: any): HTMLDivElement | typeof undefined {
+        if (!element || element.tagName === 'BUTTON') {
+          return undefined;
+        }
+
+        const index = element.getAttribute('data-carousel-index');
+        if (index !== null) {
+          return element;
+        }
+
+        return findCardParent(element.parentNode);
+      }
+
+      function toggleCardSelect(element: HTMLDivElement, selected: boolean) {
+        if (selected) {
+          element.setAttribute('data-selected', 'true');
+          element.classList.add('lp-json-pollock-layout-selected');
+
+          if (config.style && config.style['border-color-selected']) {
+            // eslint-disable-next-line no-param-reassign
+            element.style.borderColor = config.style['border-color-selected'];
+          }
+        } else {
+          element.removeAttribute('data-selected');
+          element.classList.remove('lp-json-pollock-layout-selected');
+          // eslint-disable-next-line no-param-reassign
+          element.style.borderColor = '';
+        }
+      }
+
+      /**
+       * @param {MouseEvent} event
+       * */
+      function cardClick(event: MouseEvent) {
+        const element = event.target;
+        const cardParent = findCardParent(element);
+
+        if (cardParent) {
+          if (config.selectMode.type === 'single' && cardParent.parentNode) {
+            Array
+              .from((cardParent.parentNode: any).querySelectorAll('[data-carousel-index][data-selected]'))
+              .filter((carouselElement: HTMLDivElement) => carouselElement !== cardParent)
+              .forEach((carouselElement: HTMLDivElement) => {
+                toggleCardSelect(carouselElement, false);
+              });
+          }
+
+          toggleCardSelect(cardParent, cardParent.dataset.selected !== 'true');
+        }
+      }
+
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+
+        carousel.style.cssText = splitedStyle.style;
+        carousel.setAttribute('style', splitedStyle.extractedStyle);
+      }
+
+      /**
+       * Render logic
+       * */
+      (carouselWrapper: any).afterRender = () => {
+        const carouselItemsCount = carouselWrapper.children.length;
+
+        if (carouselItemsCount) {
+          for (let itemCounter = 0;
+               itemCounter < carouselItemsCount;
+               itemCounter += 1) {
+            const carouselElement: HTMLDivElement =
+              (carouselWrapper.children[itemCounter]: any);
+
+            carouselElement.addEventListener('click', cardClick.bind(this), true);
+            carouselElement.style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            carouselElement.setAttribute('data-carousel-index', itemCounter.toString());   // Add an index reference for faster lookup on focus changes
+            carouselElement.setAttribute('role', 'listitem');
+          }
+
+          /* create carousel wrapper */
+          while (carouselWrapper.hasChildNodes() && carouselWrapper.lastChild) {
+            carousel.insertBefore(carouselWrapper.lastChild, carousel.firstChild);
+          }
+
+          carousel.className = 'lp-json-pollock-layout-carousel lp-json-pollock-layout-carousel-select';
+
+          carouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
+          carouselWrapper.appendChild(carousel);
+          carouselWrapper.setAttribute('data-carousel-name', config.selectMode.name);
+        }
+      };
+
+      return carouselWrapper;
+    });
+
     this.set(TYPES.HORIZONTAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
@@ -587,6 +714,9 @@ export default class ElementRendererProvider {
       }
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
+      if (config.metadata) {
+        divEl.setAttribute('data-metadata', JSON.stringify(config.metadata));
       }
       (divEl: any).afterRender = () => {
         if (divEl.childNodes.length) {

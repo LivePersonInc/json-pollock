@@ -9,6 +9,10 @@
       "$ref": "carousel.json"
     },
     {
+      "title": "carouselSelect",
+      "$ref": "carouselSelect.json"
+    },
+    {
       "title": "list",
       "$ref": "list.json"
     }
