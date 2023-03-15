@@ -800,6 +800,84 @@ describe('json-pollock tests', function () {
       chai.expect(layout.getAttribute('aria-label')).to.equal('Horizontal');
     });
 
+    it('Vertical should have the scroll with default size', function () {
+
+      var conf = {
+        "type": "vertical",
+        "scroll": "enable",
+        "elements": [{
+          "type": "text",
+          "text": "Test text",
+          "tooltip": "text tooltip"
+        }],
+        "accessibility": {
+          "web": {
+            "aria-label": "Vertical"
+          }
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.style.cssText).to.equal('height: 100px;');
+      chai.expect(layout.className).to.contain('lp-json-pollock-layout-vertical-scroll');
+    });
+
+    it('Vertical should have the scroll with medium size', function () {
+
+      var conf = {
+        "type": "vertical",
+        "scroll": "enable",
+        "style": {
+          "size": "medium"
+        },
+        "elements": [{
+          "type": "text",
+          "text": "Test text",
+          "tooltip": "text tooltip"
+        }],
+        "accessibility": {
+          "web": {
+            "aria-label": "Vertical"
+          }
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.style.cssText).to.equal('height: 300px;');
+      chai.expect(layout.className).to.contain('lp-json-pollock-layout-vertical-scroll');
+    });
+
+    it('Vertical should have the scroll with large size', function () {
+
+      var conf = {
+        "type": "vertical",
+        "scroll": "enable",
+        "style": {
+          "size": "large"
+        },
+        "elements": [{
+          "type": "text",
+          "text": "Test text",
+          "tooltip": "text tooltip"
+        }],
+        "accessibility": {
+          "web": {
+            "aria-label": "Vertical"
+          }
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.style.cssText).to.equal('height: 500px;');
+      chai.expect(layout.className).to.contain('lp-json-pollock-layout-vertical-scroll');
+    });
+
     describe('massive content', function () {
 
       it('Horizontal layout with many elements - width must not exceeds parent layout', function () {
