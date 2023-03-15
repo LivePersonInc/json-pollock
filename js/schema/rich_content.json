@@ -15,6 +15,10 @@
     {
       "title": "list",
       "$ref": "list.json"
+    },
+    {
+      "title": "tabs",
+      "$ref": "tabs.json"
     }
   ]
 }

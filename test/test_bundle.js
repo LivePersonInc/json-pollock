@@ -1030,6 +1030,78 @@ describe('json-pollock tests', function () {
 
   });
 
+  describe('render tabs elements', function() {
+    var conf = {
+      "type":"vertical",
+      "elements":[
+         {
+            "type":"tabs",
+            "elements":[
+               {
+                  "type":"vertical",
+                  "tag":"Tab1",
+                  "elements":[
+                     {
+                        "type":"text",
+                        "text":"1"
+                     }
+                  ]
+               },
+               {
+                  "type":"vertical",
+                  "tag":"Tab2",
+                  "elements":[
+                     {
+                        "type":"text",
+                        "text":"2"
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   };
+
+   const container = addToBody(JsonPollock.render(JSON.stringify(conf)));
+   const rootEl = container.children[0];
+   const verticalEl = rootEl.children[0];
+   const rootTabEl = verticalEl.children[0];
+   const tabButtonsEl = rootTabEl.children[0];
+   const tabButton1 = tabButtonsEl.children[0];
+   const tabButton2 = tabButtonsEl.children[1];
+   const tabPannelEl1 = rootTabEl.children[1];
+   const tabPannelEl2 = rootTabEl.children[2];
+
+    it('tabs root exist', function () {
+      chai.expect(rootEl.className).to.contain('lp-json-pollock');
+    });
+
+    it('tabs wrapper root exist', function () {
+      chai.expect(rootTabEl.className).to.be.empty;
+    });
+
+    it('button wrapper root exist', function () {
+      chai.expect(tabButtonsEl.className).to.contain('lp-json-pollock-element-tab');
+    });
+
+    it('button 1 must be active', function () {
+      chai.expect(tabButton1.className).to.contain('active');
+    });
+
+    it('button 2 must not be active', function () {
+      chai.expect(tabButton2.className).to.not.contain('active');
+    });
+
+    it('pannel 1 must be visible', function () {
+      chai.expect(tabPannelEl1.style.cssText).to.be.equal('display: block;');
+    });
+
+    it('pannel 2 must be visible', function () {
+      chai.expect(tabPannelEl2.style.cssText).to.be.equal('display: none;');
+    });
+
+  });
+
   describe('render carousel', function(){
 
     const container = addToBody(JsonPollock.render(JSON.stringify(carouselConf)));
