@@ -29,6 +29,11 @@
     "size": {
       "type": "string",
       "enum": ["small", "medium", "large"]
+    },
+    "fill": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
     }
   }
 }
