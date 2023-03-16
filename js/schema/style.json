@@ -27,8 +27,22 @@
       "format": "color",
       "maxLength": 256
     },
+    "border-color-hover": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
     "border-radius": {
       "type": "number"
+    },
+    "font-family": {
+      "type": "string",
+      "format": "text",
+      "maxLength": 256
+    },
+    "font-size": {
+      "type": "number",
+      "default": "14"
     },
     "bold": {
       "type": "boolean"
