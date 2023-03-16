@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>SC Test - Accordion Select</title>
+    <link rel="stylesheet" href="/dist/json-pollock.min.css" />
+    <script src="/dist/json-pollock.js"></script>
+    <script>
+      window.onload = function () {
+        /**
+         * Schema
+         * */
+        const accordionMultiSelect = {
+          type: "accordionSelect",
+          padding: 10,
+          selectMode: {
+            name: "test-accordion-multi-select",
+          },
+          titles: [
+            {
+              name: "First accordion tab",
+              additional: "Additional info",
+            },
+            {
+              name: "Second accordion tab",
+              additional: "$0.01",
+            },
+            {
+              name: "Third accordion tab",
+              additional: "Limited time offer",
+            },
+          ],
+          elements: [
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_1",
+                },
+              ],
+              border: "borderLess",
+              elements: [
+                {
+                  type: "text",
+                  text: "Twelve month plan BYO mobile",
+                  tooltip: "Twelve month plan BYO mobile",
+                  rtl: false,
+                },
+              ],
+            },
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_2",
+                },
+              ],
+              border: "borderLess",
+              elements: [
+                {
+                  type: "text",
+                  text: "Two year plan leasing a mobile",
+                  tooltip: "Two year plan leasing a mobile",
+                  rtl: false,
+                },
+              ],
+            },
+            {
+              type: "vertical",
+              metadata: [
+                {
+                  type: "ExternalCardId",
+                  id: "ANOTHER_ONE_3",
+                },
+              ],
+              border: "borderLess",
+              elements: [
+                {
+                  type: "text",
+                  text: "Two year plan with a mobile",
+                  tooltip: "Two year plan with a mobile",
+                  rtl: false,
+                },
+              ],
+            },
+          ],
+        };
+
+        const multiCard = {
+          type: "vertical",
+          border: "borderLess",
+          elements: [
+            accordionMultiSelect,
+            {
+              type: "button",
+              title: "Submit selected",
+              ref: {
+                type: "accordionSelect",
+                name: accordionMultiSelect.selectMode.name,
+              },
+              click: {
+                metadata: [
+                  {
+                    type: "ExternalId",
+                    id: "ANOTHER_ONE_3",
+                  },
+                ],
+                actions: [
+                  {
+                    type: "publishText",
+                    text: "Mobiles on a plan",
+                  },
+                ],
+              },
+            },
+          ],
+        };
+
+        /**
+         * Json Pollock Actions
+         * */
+        JsonPollock.registerAction("navigate", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        JsonPollock.registerAction("link", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        JsonPollock.registerAction("publishText", (data) => {
+          alert(JSON.stringify(data));
+        });
+
+        /**
+         * Rendering logic
+         * */
+        const elMultiple = JsonPollock.render(JSON.stringify(multiCard));
+
+        document.getElementById("content-multi").appendChild(elMultiple);
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Accordion multi select example</h1>
+    <div id="content-multi" style="max-width: 1000px"></div>
+  </body>
+</html>

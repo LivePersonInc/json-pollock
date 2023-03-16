@@ -291,6 +291,47 @@
         }
     }
 
+    .lp-json-pollock-layout-accordion-wrapper {
+        .lp-json-pollock-layout-accordion-tab {
+            border-bottom: 1px solid $default-border;
+        }
+
+        .lp-json-pollock-layout-accordion-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .lp-json-pollock-layout-accordion-checkbox {
+            margin-right: 8px;
+        }
+
+        .lp-json-pollock-layout-accordion-title {
+            font-weight: bold;
+        }
+
+        .lp-json-pollock-layout-accordion-additional {
+            margin-left: auto;
+        }
+
+        .lp-json-pollock-layout-accordion-folded {
+            display: none;
+        }
+
+        .lp-json-pollock-layout-accordion-arrow {
+            width: 12px;
+            height: 12px;
+            margin-left: 8px;
+
+            &.close {
+                transform: rotate(90deg);
+            }
+
+            &.open {
+                transform: rotate(270deg);
+            }
+        }
+    }
+
     .lp-json-pollock-element-text {
         padding: 5px 10px;
         color: $color-black;
