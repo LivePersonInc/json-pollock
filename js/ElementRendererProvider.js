@@ -360,13 +360,19 @@ export default class ElementRendererProvider {
 
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
-      } else {
+      } else if (!config.accessibility.web.tabindex) {
         divEl.setAttribute("tabindex", "0");
+        divEl.addEventListener("keyup", function(event) {
+          event.preventDefault();
+          if (event.keyCode === 13 || event.keyCode === 32) {
+            window.open(`https://www.google.com/maps/search/?api=1&query=${config.la},${config.lo}`, '_blank');
+          }
+        })
       }
 
       if (config.click && config.click.actions) {
         divEl.onclick = this.wrapAction(config.click);
-      } else {
+      } else{
         // navigate to the location
         divEl.onclick = () => {
           window.open(`https://www.google.com/maps/search/?api=1&query=${config.la},${config.lo}`, '_blank');
