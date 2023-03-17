@@ -346,9 +346,10 @@ export default class ElementRendererProvider {
     });
 
     this.set(TYPES.MAP, (config): HTMLElement => {
+      const accessibilityWeb = config.accessibility && config.accessibility.web;
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-map';
-
+      
       if (config.tooltip) {
         divEl.title = config.tooltip;
         divEl.setAttribute('aria-label', config.tooltip);
@@ -357,10 +358,10 @@ export default class ElementRendererProvider {
       if (config.style) {
         divEl.style.cssText = Utils.styleToCss(config.style);
       }
-
-      if (config.accessibility && config.accessibility.web) {
+  
+      if (accessibilityWeb) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
-      } else if (!config.accessibility.web.tabindex) {
+      } else if ((accessibilityWeb && !config.accessibility.web.tabindex) || !config.accessibility) {
         divEl.setAttribute("tabindex", "0");
         divEl.addEventListener("keyup", function(event) {
           event.preventDefault();
