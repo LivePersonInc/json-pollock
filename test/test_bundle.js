@@ -2712,7 +2712,7 @@ describe('json-pollock tests', function () {
       var event = createClickEvent();
       JsonPollock.registerAction('link', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(event);
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0], uiEvent: event});
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0], uiEvent: event, metadata:[]});
     });
 
     it('Click on element with publishText action should trigger its registered callbacks', function () {
