@@ -27,17 +27,23 @@
         "default": "addToCart",
         "readonly": true
       },
-      "items": [
-        {
-          "productId": {
-            "type": "string",
-            "maxLength": 256
-          },
-          "quantity": {
-            "type": "integer"
+      "items": {
+        "type": "array",
+        "maxItems": 10,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "productId": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "quantity": {
+              "type": "integer"
+            }
           }
         }
-      ]
+      }
     },
     "required": ["type", "items"]
   }, {
