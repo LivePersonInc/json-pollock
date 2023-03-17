@@ -1108,12 +1108,13 @@ describe('json-pollock tests', function () {
     const carouselRoot = container.children[0];
     const carouselRootWrapper = container.children[0].children[0];
     const carouselRootLayout = container.children[0].children[0];
-    const carouselRight = container.children[0].children[0].children[1];
-    const carouselLeft = container.children[0].children[0].children[2];
-    const carouselListRoot =  carouselRootLayout.children[0];
-    const card1 = carouselRootLayout.children[0].children[0];
-    const card2 = carouselRootLayout.children[0].children[1];
-    const card3 = carouselRootLayout.children[0].children[2];
+    const carouselRight = carouselRootLayout.children[1];
+    const carouselLeft = carouselRootLayout.children[0];
+    const carouselListRoot =  carouselRootLayout.children[2];
+
+    const card1 = carouselRootLayout.children[2].children[0];
+    const card2 = carouselRootLayout.children[2].children[1];
+    const card3 = carouselRootLayout.children[2].children[2];
 
     it('carousel root exist', function () {
       chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
@@ -1128,7 +1129,7 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel has aria-label', function(){
-      chai.expect(carouselListRoot.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
+      chai.expect(carouselRootLayout.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
     });
 
     it('carousel arrow right exist', function () {
@@ -1164,7 +1165,7 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel elements length equal to conf element length', function () {
-      chai.expect(carouselRootLayout.children.length).to.be.equal(carouselConf.elements.length);
+      chai.expect(carouselRootLayout.children[2].children.length).to.be.equal(carouselConf.elements.length);
     });
 
     it('carousel elements are in the right order', function () {
@@ -1179,10 +1180,6 @@ describe('json-pollock tests', function () {
       chai.expect(card2.getAttribute('role')).to.be.equal('listitem');
       chai.expect(card3.getAttribute('role')).to.be.equal('listitem');
     });
-    it('carousel root should have appropriate WCAG attribute', function () {
-      chai.expect(carouselRootWrapper.getAttribute('aria-label')).to.be.equal('Carousel');
-    });
-
   });
 
   describe('render carousel select', function () {
