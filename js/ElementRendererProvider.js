@@ -360,8 +360,6 @@ export default class ElementRendererProvider {
 
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
-      } else {
-        divEl.setAttribute("tabindex", "0");
       }
 
       if (config.click && config.click.actions) {
@@ -371,8 +369,8 @@ export default class ElementRendererProvider {
         divEl.onclick = () => {
           window.open(`https://www.google.com/maps/search/?api=1&query=${config.la},${config.lo}`, '_blank');
         };
-        return divEl;
       }
+      return divEl;
     });
 
     this.set(TYPES.VERTICAL, (config): HTMLElement => {
