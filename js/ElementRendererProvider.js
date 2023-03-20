@@ -14,6 +14,7 @@ const TYPES = {
   HORIZONTAL: 'horizontal',
   CAROUSEL: 'carousel',
   CAROUSELSELECT: 'carouselSelect',
+  ACCORDIONSELECT: 'accordionSelect',
   SUBMITBUTTON: 'submitButton',
   CHECKBOX: 'checkbox',
   CHECKLIST: 'checklist',
@@ -95,7 +96,22 @@ export default class ElementRendererProvider {
           const newMetadata = [...(metadata || [])];
 
           if (config.ref) {
-            const selectedNodes = Array.from(document.querySelectorAll(`[data-carousel-name=${config.ref.name}] [data-selected]`));
+            let selector;
+
+            switch (config.ref.type) {
+              case 'carouselSelect':
+                selector = `[data-carousel-name=${config.ref.name}] [data-selected]`;
+                break;
+
+              case 'accordionSelect':
+                selector = `[data-accordion-name=${config.ref.name}] [data-accordion-body][data-selected]`;
+                break;
+
+              default:
+                throw new Error(`Invalid config ref type is used for the button! Type: ${config.ref.type}`);
+            }
+
+            const selectedNodes = Array.from(document.querySelectorAll(selector));
 
             if (selectedNodes.length === 0) {
               throw new Error('No items has selected!');
@@ -865,6 +881,187 @@ export default class ElementRendererProvider {
       };
 
       return carouselWrapper;
+    });
+
+    this.set(TYPES.ACCORDIONSELECT, (config): HTMLElement => {
+      const defaultPadding = 0;
+      const padding = config.padding || defaultPadding;
+
+      const accordionWrapper = document.createElement('div');
+      const accordion = document.createElement('div');
+
+      const arrowElement = Utils.htmlToElement('<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>');
+
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(accordionWrapper, config.accessibility.web);
+      }
+
+      function findTabParent(element: any): HTMLDivElement | typeof undefined {
+        const index = element.getAttribute('data-accordion-index');
+        if (index !== null) {
+          return element;
+        }
+
+        return findTabParent(element.parentNode);
+      }
+
+      function toggleTabSelect(element: HTMLInputElement, selected: boolean) {
+        if (selected) {
+          element.removeAttribute('data-selected');
+          // eslint-disable-next-line no-param-reassign
+          element.checked = false;
+        } else {
+          element.setAttribute('data-selected', 'true');
+          // eslint-disable-next-line no-param-reassign
+          element.checked = true;
+        }
+      }
+
+      function toggleBodySelect(element: HTMLDivElement, selected: boolean) {
+        if (selected) {
+          element.removeAttribute('data-selected');
+        } else {
+          element.setAttribute('data-selected', 'true');
+        }
+      }
+
+      function toggleBodyOpen(element: HTMLDivElement, selected: boolean) {
+        if (selected) {
+          element.setAttribute('data-open', 'true');
+          element.classList.remove('lp-json-pollock-layout-accordion-folded');
+        } else {
+          element.setAttribute('data-open', 'false');
+          element.classList.add('lp-json-pollock-layout-accordion-folded');
+        }
+      }
+
+      function toggleArrowOpen(element: HTMLElement, selected: boolean) {
+        if (selected) {
+          element.classList.add('open');
+          element.classList.remove('close');
+        } else {
+          element.classList.add('close');
+          element.classList.remove('open');
+        }
+      }
+
+      /**
+       * @param {MouseEvent} event
+       * */
+      function accordionClick(event: MouseEvent) {
+        const element: HTMLElement = (event.target: any);
+        const isCheckboxClicked = element.tagName === 'INPUT';
+        const tabParent = findTabParent(element);
+
+        if (!tabParent) {
+          return;
+        }
+
+        const checkboxElement: HTMLInputElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-checkbox'): any);
+        const headerElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-header'): any);
+        const bodyElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion'): any);
+        const headerArrowElement: HTMLElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-arrow'): any);
+
+        if (isCheckboxClicked) {
+          if (!checkboxElement || !bodyElement) {
+            return;
+          }
+
+          const selected = checkboxElement.dataset.selected === 'true';
+
+          toggleTabSelect(checkboxElement, selected);
+          toggleBodySelect(bodyElement, selected);
+          return;
+        }
+
+        if (!headerElement || !bodyElement) {
+          return;
+        }
+
+        const isOpen = bodyElement.dataset.open === 'true';
+
+        toggleBodyOpen(bodyElement, !isOpen);
+        toggleArrowOpen(headerArrowElement, !isOpen);
+      }
+
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+
+        accordion.style.cssText = splitedStyle.style;
+        accordion.setAttribute('style', splitedStyle.extractedStyle);
+      }
+
+    /**
+     * Render logic
+     * */
+      (accordionWrapper: any).afterRender = () => {
+        const accordionItemsCount = accordionWrapper.children.length;
+
+        if (accordionItemsCount) {
+          for (let itemCounter = 0;
+             itemCounter < accordionItemsCount;
+             itemCounter += 1) {
+            const accordionElement: HTMLDivElement =
+            (accordionWrapper.children[0]: any);
+            const accordionTitleConfig = config.titles[itemCounter];
+
+            const accordionTabElement = document.createElement('section');
+            const accordionHeaderElement = document.createElement('div');
+            const accordionCheckboxElement = document.createElement('input');
+            const accordionTitleElement = document.createElement('h3');
+            const accordionAdditionalElement = document.createElement('span');
+            const accordionArrowElement = arrowElement.cloneNode(true);
+
+            accordionTabElement.classList.add('lp-json-pollock-layout-accordion-tab');
+            accordionHeaderElement.classList.add('lp-json-pollock-layout-accordion-header');
+            accordionCheckboxElement.classList.add('lp-json-pollock-layout-accordion-checkbox');
+            accordionTitleElement.classList.add('lp-json-pollock-layout-accordion-title');
+            accordionAdditionalElement.classList.add('lp-json-pollock-layout-accordion-additional');
+            accordionArrowElement.classList.add('lp-json-pollock-layout-accordion-arrow', 'close');
+
+            accordionElement.classList.add('lp-json-pollock-layout-accordion-folded');
+            accordionElement.classList.add('lp-json-pollock-layout-accordion');
+            accordionElement.setAttribute('data-open', 'false');
+            accordionElement.setAttribute('data-accordion-body', '');
+
+            accordionCheckboxElement.type = 'checkbox';
+            accordionTitleElement.innerText = accordionTitleConfig.name;
+
+            if (accordionTitleConfig.additional) {
+              accordionAdditionalElement.innerText = accordionTitleConfig.additional;
+            }
+
+            accordionHeaderElement.addEventListener('click', accordionClick.bind(this), true);
+
+            accordionTabElement.style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            accordionTabElement.setAttribute('data-accordion-index', itemCounter.toString());   // Add an index reference for faster lookup on focus changes
+            accordionTabElement.setAttribute('role', 'listitem');
+
+            accordionHeaderElement.appendChild(accordionCheckboxElement);
+            accordionHeaderElement.appendChild(accordionTitleElement);
+            accordionHeaderElement.appendChild(accordionAdditionalElement);
+            accordionHeaderElement.appendChild(accordionArrowElement);
+
+            accordionTabElement.appendChild(accordionHeaderElement);
+            accordionTabElement.appendChild(accordionElement);
+            accordionWrapper.appendChild(accordionTabElement);
+          }
+
+          /* create accordion wrapper */
+          while (accordionWrapper.hasChildNodes() && accordionWrapper.lastChild) {
+            accordion.insertBefore(accordionWrapper.lastChild, accordion.firstChild);
+          }
+
+          accordion.className = 'lp-json-pollock-layout-accordion lp-json-pollock-layout-accordion-select';
+
+          accordionWrapper.className = 'lp-json-pollock-layout-accordion-wrapper';
+          accordionWrapper.appendChild(accordion);
+          accordionWrapper.setAttribute('data-accordion-name', config.selectMode.name);
+        }
+      };
+
+      return accordionWrapper;
     });
 
     this.set(TYPES.HORIZONTAL, (config): HTMLElement => {

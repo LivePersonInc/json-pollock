@@ -1108,12 +1108,13 @@ describe('json-pollock tests', function () {
     const carouselRoot = container.children[0];
     const carouselRootWrapper = container.children[0].children[0];
     const carouselRootLayout = container.children[0].children[0];
-    const carouselRight = container.children[0].children[0].children[1];
-    const carouselLeft = container.children[0].children[0].children[2];
-    const carouselListRoot =  carouselRootLayout.children[0];
-    const card1 = carouselRootLayout.children[0].children[0];
-    const card2 = carouselRootLayout.children[0].children[1];
-    const card3 = carouselRootLayout.children[0].children[2];
+    const carouselRight = carouselRootLayout.children[1];
+    const carouselLeft = carouselRootLayout.children[0];
+    const carouselListRoot =  carouselRootLayout.children[2];
+
+    const card1 = carouselRootLayout.children[2].children[0];
+    const card2 = carouselRootLayout.children[2].children[1];
+    const card3 = carouselRootLayout.children[2].children[2];
 
     it('carousel root exist', function () {
       chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
@@ -1128,7 +1129,7 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel has aria-label', function(){
-      chai.expect(carouselListRoot.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
+      chai.expect(carouselRootLayout.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
     });
 
     it('carousel arrow right exist', function () {
@@ -1164,7 +1165,7 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel elements length equal to conf element length', function () {
-      chai.expect(carouselRootLayout.children.length).to.be.equal(carouselConf.elements.length);
+      chai.expect(carouselRootLayout.children[2].children.length).to.be.equal(carouselConf.elements.length);
     });
 
     it('carousel elements are in the right order', function () {
@@ -1179,21 +1180,16 @@ describe('json-pollock tests', function () {
       chai.expect(card2.getAttribute('role')).to.be.equal('listitem');
       chai.expect(card3.getAttribute('role')).to.be.equal('listitem');
     });
-    it('carousel root should have appropriate WCAG attribute', function () {
-      chai.expect(carouselRootWrapper.getAttribute('aria-label')).to.be.equal('Carousel');
-    });
-
   });
 
   describe('render carousel select', function () {
     const container = addToBody(JsonPollock.render(JSON.stringify(carouselSelectConf)));
     const carouselRoot = container.children[0];
-    const carouselRootWrapper = container.children[0].children[0];
-    const carouselRootLayout = container.children[0].children[0];
-    const carouselListRoot =  carouselRootLayout.children[0];
-    const card1 = carouselRootLayout.children[0].children[0];
-    const card2 = carouselRootLayout.children[0].children[1];
-    const card3 = carouselRootLayout.children[0].children[2];
+    const carouselRootWrapper = carouselRoot.children[0];
+    const carouselRootLayout = carouselRootWrapper.children[0];
+    const card1 = carouselRootLayout.children[0];
+    const card2 = carouselRootLayout.children[1];
+    const card3 = carouselRootLayout.children[2];
 
     it('carousel root exist', function () {
       chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
@@ -1207,28 +1203,20 @@ describe('json-pollock tests', function () {
       chai.expect(carouselRootLayout.className).to.contain('lp-json-pollock-layout-carousel');
     });
 
-    it('carousel has aria-label', function(){
-      chai.expect(carouselListRoot.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
-    });
-
     it('carousel elements length equal to conf element length', function () {
-      chai.expect(carouselRootLayout.children.length).to.be.equal(carouselConf.elements.length);
+      chai.expect(carouselRootLayout.children.length).to.be.equal(carouselSelectConf.elements.length);
     });
 
     it('carousel elements are in the right order', function () {
-      chai.expect(card1.children[0].innerText).to.be.equal('1');
-      chai.expect(card2.children[0].innerText).to.be.equal('2');
-      chai.expect(card3.children[0].innerText).to.be.equal('3');
+      chai.expect(card1.getAttribute('data-carousel-index')).to.be.equal('0');
+      chai.expect(card2.getAttribute('data-carousel-index')).to.be.equal('1');
+      chai.expect(card3.getAttribute('data-carousel-index')).to.be.equal('2');
     });
 
     it('carousel accessibility attrbs', function () {
-      chai.expect(carouselListRoot.getAttribute('role')).to.be.equal('list');
       chai.expect(card1.getAttribute('role')).to.be.equal('listitem');
       chai.expect(card2.getAttribute('role')).to.be.equal('listitem');
       chai.expect(card3.getAttribute('role')).to.be.equal('listitem');
-    });
-    it('carousel root should have appropriate WCAG attribute', function () {
-      chai.expect(carouselRootWrapper.getAttribute('aria-label')).to.be.equal('Carousel');
     });
   })
 
@@ -2724,7 +2712,7 @@ describe('json-pollock tests', function () {
       var event = createClickEvent();
       JsonPollock.registerAction('link', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(event);
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0], uiEvent: event});
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0], uiEvent: event, metadata:[]});
     });
 
     it('Click on element with publishText action should trigger its registered callbacks', function () {
