@@ -40,10 +40,6 @@
       "format": "text",
       "maxLength": 256
     },
-    "font-size": {
-      "type": "number",
-      "default": "14"
-    },
     "bold": {
       "type": "boolean"
     },
