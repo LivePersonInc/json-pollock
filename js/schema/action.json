@@ -17,6 +17,23 @@
     },
     "required": ["type", "text"]
   }, {
+    "title": "Select Event",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["select"],
+        "default": "select",
+        "readonly": true
+      },
+      "text": {
+        "type": "string",
+        "maxLength": 256
+      }
+    },
+    "required": ["type", "text"]
+  },{
     "title": "Add to Cart",
     "type": "object",
     "additionalProperties" : false,
