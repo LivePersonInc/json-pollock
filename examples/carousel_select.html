@@ -181,12 +181,19 @@
                 },
               ],
             },
+          ],
+        };
+
+        const multiCard = {
+          type: "vertical",
+          elements: [
+            carouselMultiSelect,
             {
               type: "button",
               title: "Submit selected",
               ref: {
                 type: "carouselSelect",
-                name: "test-carousel-multi-select",
+                name: carouselMultiSelect.selectMode.name,
               },
               click: {
                 metadata: [
@@ -197,8 +204,8 @@
                 ],
                 actions: [
                   {
-                    type: "publishText",
-                    text: "Mobiles on a plan",
+                    type: "select",
+                    text: "Carousel select",
                   },
                 ],
               },
@@ -210,10 +217,13 @@
           JSON.stringify(carouselMultiSelect)
         );
 
+        const singleCard = JSON.parse(JSON.stringify(multiCard));
+
         carouselSingleSelect.selectMode.name = "test-carousel-single-select";
         carouselSingleSelect.selectMode.type = "single";
-        carouselSingleSelect.elements[3].ref.name =
-          carouselSingleSelect.selectMode.name;
+
+        singleCard.elements[0] = carouselSingleSelect;
+        singleCard.elements[1].ref.name = carouselSingleSelect.selectMode.name;
 
         /**
          * Json Pollock Actions
@@ -230,18 +240,18 @@
           alert(JSON.stringify(data));
         });
 
+        JsonPollock.registerAction("select", (data) => {
+          alert(JSON.stringify(data));
+        });
+
         /**
          * Rendering logic
          * */
-        const elMultiple = JsonPollock.render(
-          JSON.stringify(carouselMultiSelect)
-        );
+        const elMultiple = JsonPollock.render(JSON.stringify(multiCard));
 
         document.getElementById("content-multi").appendChild(elMultiple);
 
-        const elSingle = JsonPollock.render(
-          JSON.stringify(carouselSingleSelect)
-        );
+        const elSingle = JsonPollock.render(JSON.stringify(singleCard));
 
         document.getElementById("content-single").appendChild(elSingle);
       };
