@@ -117,7 +117,7 @@ export default class ElementRendererProvider {
               throw new Error('No items has selected!');
             }
 
-            newMetadata.push({ selectedCards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-metadata') || 'null')) });
+            newMetadata.push({ type: 'selectedCards', cards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-metadata') || 'null')) });
           }
 
           return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
