@@ -361,7 +361,7 @@ export default class ElementRendererProvider {
 
       if (accessibilityWeb) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
-      } 
+      }
       if ((accessibilityWeb && !config.accessibility.web.tabindex) || !config.accessibility) {
         divEl.setAttribute('tabindex', '0');
         divEl.onkeydown = (event) => {
