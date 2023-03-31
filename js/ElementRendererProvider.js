@@ -402,8 +402,8 @@ export default class ElementRendererProvider {
         divEl.setAttribute('tabindex', '0');
       }
       divEl.onkeydown = (event) => {
-        event.preventDefault();
         if (event.keyCode === 13 || event.keyCode === 32) {
+          event.preventDefault();
           window.open(`https://www.google.com/maps/search/?api=1&query=${config.la},${config.lo}`, '_blank');
         }
       };
