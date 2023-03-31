@@ -17,6 +17,36 @@
     },
     "required": ["type", "text"]
   }, {
+    "title": "Add to Cart",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["addToCart"],
+        "default": "addToCart",
+        "readonly": true
+      },
+      "items": {
+        "type": "array",
+        "maxItems": 10,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "productId": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "quantity": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "required": ["type", "items"]
+  }, {
     "title": "navigate",
     "type": "object",
     "additionalProperties" : false,
@@ -156,7 +186,7 @@
         "type": "integer"
       },
       "dateFormat": {
-        "type": "string", 
+        "type": "string",
         "maxLength": 100
       }
     },

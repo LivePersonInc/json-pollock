@@ -59,6 +59,9 @@
               "$ref": "accessibilityWeb.json"
             }
           }
+        },
+        "metadata": {
+          "type": "array"
         }
       },
       "required": ["type", "elements"]
@@ -88,6 +91,12 @@
           "default": "border",
           "readonly": true
         },
+        "scroll": {
+          "type": "string",
+          "enum": ["disable", "enable"],
+          "default": "disable",
+          "readonly": true
+        },
         "elements": {
           "type": "array",
           "maxItems": 256,
@@ -102,6 +111,9 @@
         "display": {
           "$ref": "displaySettings.json"
         },
+        "style": {
+          "$ref": "style.json"
+        },
         "accessibility": {
           "type": "object",
           "additionalProperties": false,
@@ -110,6 +122,9 @@
               "$ref": "accessibilityWeb.json"
             }
           }
+        },
+        "metadata": {
+          "type": "array"
         }
       },
       "required": ["type", "elements"]

@@ -233,6 +233,200 @@ describe('json-pollock tests', function () {
     }
   };
 
+  var carouselSelectConf = {
+    type: "carouselSelect",
+    padding: 10,
+    selectMode: {
+      name: "test-carousel-multi-select",
+      type: "multiple", // "single" // selected items - which user has been selected
+    },
+    style: {
+      "border-color-selected": "red",
+    },
+    elements: [
+      {
+        type: "vertical",
+        metadata: [
+          {
+            type: "ExternalCardId",
+            id: "ANOTHER_ONE_1",
+          },
+        ],
+        elements: [
+          {
+            type: "text",
+            text: "a",
+            rtl: false,
+            style: {
+              bold: false,
+              italic: false,
+              color: "#000000",
+              size: "large",
+            },
+          },
+          {
+            type: "text",
+            text: "Twelve month plan BYO mobile",
+            tooltip: "Twelve month plan BYO mobile",
+            rtl: false,
+            style: {
+              bold: true,
+              italic: false,
+              color: "#000000",
+            },
+          },
+          {
+            type: "button",
+            tooltip: "Choose a plan",
+            title: "Choose a plan",
+            click: {
+              metadata: [
+                {
+                  type: "ExternalId",
+                  id: "ANOTHER_ONE_1",
+                },
+              ],
+              actions: [
+                {
+                  type: "publishText",
+                  text: "SIM only plan",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        type: "vertical",
+        metadata: [
+          {
+            type: "ExternalCardId",
+            id: "ANOTHER_ONE_2",
+          },
+        ],
+        elements: [
+          {
+            type: "text",
+            text: "b",
+            tooltip: "Swap plan",
+            rtl: false,
+            style: {
+              bold: false,
+              italic: false,
+              color: "#000000",
+              size: "large",
+            },
+          },
+          {
+            type: "text",
+            text: "Two year plan leasing a mobile",
+            tooltip: "Two year plan leasing a mobile",
+            rtl: false,
+            style: {
+              bold: true,
+              italic: false,
+              color: "#000000",
+            },
+          },
+          {
+            type: "button",
+            tooltip: "Choose a plan",
+            title: "Choose a plan",
+            click: {
+              metadata: [
+                {
+                  type: "ExternalId",
+                  id: "ANOTHER_ONE_2",
+                },
+              ],
+              actions: [
+                {
+                  type: "publishText",
+                  text: "Two year plan leasing a mobile",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        type: "vertical",
+        metadata: [
+          {
+            type: "ExternalCardId",
+            id: "ANOTHER_ONE_3",
+          },
+        ],
+        elements: [
+          {
+            type: "text",
+            text: "c",
+            tooltip: "Mobiles on a plan",
+            rtl: false,
+            style: {
+              bold: false,
+              italic: false,
+              color: "#000000",
+              size: "large",
+            },
+          },
+          {
+            type: "text",
+            text: "Two year plan with a mobile",
+            tooltip: "Two year plan with a mobile",
+            rtl: false,
+            style: {
+              bold: true,
+              italic: false,
+              color: "#000000",
+            },
+          },
+          {
+            type: "button",
+            tooltip: "Choose a plan",
+            title: "Choose a plan",
+            click: {
+              metadata: [
+                {
+                  type: "ExternalId",
+                  id: "ANOTHER_ONE_3",
+                },
+              ],
+              actions: [
+                {
+                  type: "publishText",
+                  text: "Mobiles on a plan",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        type: "button",
+        title: "Submit selected",
+        ref: {
+          type: "carouselSelect",
+          name: "test-carousel-multi-select",
+        },
+        click: {
+          metadata: [
+            {
+              type: "ExternalId",
+              id: "ANOTHER_ONE_3",
+            },
+          ],
+          actions: [
+            {
+              type: "publishText",
+              text: "Mobiles on a plan",
+            },
+          ],
+        },
+      },
+    ],
+  }
+
   describe('render basic elements', function () {
 
     var fragEl = null;
@@ -606,6 +800,84 @@ describe('json-pollock tests', function () {
       chai.expect(layout.getAttribute('aria-label')).to.equal('Horizontal');
     });
 
+    it('Vertical should have the scroll with default size', function () {
+
+      var conf = {
+        "type": "vertical",
+        "scroll": "enable",
+        "elements": [{
+          "type": "text",
+          "text": "Test text",
+          "tooltip": "text tooltip"
+        }],
+        "accessibility": {
+          "web": {
+            "aria-label": "Vertical"
+          }
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.style.cssText).to.equal('height: 100px;');
+      chai.expect(layout.className).to.contain('lp-json-pollock-layout-vertical-scroll');
+    });
+
+    it('Vertical should have the scroll with medium size', function () {
+
+      var conf = {
+        "type": "vertical",
+        "scroll": "enable",
+        "style": {
+          "size": "medium"
+        },
+        "elements": [{
+          "type": "text",
+          "text": "Test text",
+          "tooltip": "text tooltip"
+        }],
+        "accessibility": {
+          "web": {
+            "aria-label": "Vertical"
+          }
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.style.cssText).to.equal('height: 300px;');
+      chai.expect(layout.className).to.contain('lp-json-pollock-layout-vertical-scroll');
+    });
+
+    it('Vertical should have the scroll with large size', function () {
+
+      var conf = {
+        "type": "vertical",
+        "scroll": "enable",
+        "style": {
+          "size": "large"
+        },
+        "elements": [{
+          "type": "text",
+          "text": "Test text",
+          "tooltip": "text tooltip"
+        }],
+        "accessibility": {
+          "web": {
+            "aria-label": "Vertical"
+          }
+        }
+      }
+
+      rooEl = addToBody(JsonPollock.render(JSON.stringify(conf)));
+
+      var layout = rooEl.childNodes[0].childNodes[0];
+      chai.expect(layout.style.cssText).to.equal('height: 500px;');
+      chai.expect(layout.className).to.contain('lp-json-pollock-layout-vertical-scroll');
+    });
+
     describe('massive content', function () {
 
       it('Horizontal layout with many elements - width must not exceeds parent layout', function () {
@@ -758,18 +1030,91 @@ describe('json-pollock tests', function () {
 
   });
 
+  describe('render tabs elements', function() {
+    var conf = {
+      "type":"vertical",
+      "elements":[
+         {
+            "type":"tabs",
+            "elements":[
+               {
+                  "type":"vertical",
+                  "tag":"Tab1",
+                  "elements":[
+                     {
+                        "type":"text",
+                        "text":"1"
+                     }
+                  ]
+               },
+               {
+                  "type":"vertical",
+                  "tag":"Tab2",
+                  "elements":[
+                     {
+                        "type":"text",
+                        "text":"2"
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   };
+
+   const container = addToBody(JsonPollock.render(JSON.stringify(conf)));
+   const rootEl = container.children[0];
+   const verticalEl = rootEl.children[0];
+   const rootTabEl = verticalEl.children[0];
+   const tabButtonsEl = rootTabEl.children[0];
+   const tabButton1 = tabButtonsEl.children[0];
+   const tabButton2 = tabButtonsEl.children[1];
+   const tabPannelEl1 = rootTabEl.children[1];
+   const tabPannelEl2 = rootTabEl.children[2];
+
+    it('tabs root exist', function () {
+      chai.expect(rootEl.className).to.contain('lp-json-pollock');
+    });
+
+    it('tabs wrapper root exist', function () {
+      chai.expect(rootTabEl.className).to.be.empty;
+    });
+
+    it('button wrapper root exist', function () {
+      chai.expect(tabButtonsEl.className).to.contain('lp-json-pollock-element-tab');
+    });
+
+    it('button 1 must be active', function () {
+      chai.expect(tabButton1.className).to.contain('active');
+    });
+
+    it('button 2 must not be active', function () {
+      chai.expect(tabButton2.className).to.not.contain('active');
+    });
+
+    it('pannel 1 must be visible', function () {
+      chai.expect(tabPannelEl1.style.cssText).to.be.equal('display: block;');
+    });
+
+    it('pannel 2 must be visible', function () {
+      chai.expect(tabPannelEl2.style.cssText).to.be.equal('display: none;');
+    });
+
+  });
+
   describe('render carousel', function(){
 
     const container = addToBody(JsonPollock.render(JSON.stringify(carouselConf)));
     const carouselRoot = container.children[0];
     const carouselRootWrapper = container.children[0].children[0];
     const carouselRootLayout = container.children[0].children[0];
-    const carouselRight = container.children[0].children[0].children[1];
-    const carouselLeft = container.children[0].children[0].children[2];
-    const carouselListRoot =  carouselRootLayout.children[0];
-    const card1 = carouselRootLayout.children[0].children[0];
-    const card2 = carouselRootLayout.children[0].children[1];
-    const card3 = carouselRootLayout.children[0].children[2];
+    const carouselRight = carouselRootLayout.children[1];
+    const carouselLeft = carouselRootLayout.children[0];
+    const carouselListRoot =  carouselRootLayout.children[2];
+
+    const card1 = carouselRootLayout.children[2].children[0];
+    const card2 = carouselRootLayout.children[2].children[1];
+    const card3 = carouselRootLayout.children[2].children[2];
 
     it('carousel root exist', function () {
       chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
@@ -784,7 +1129,7 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel has aria-label', function(){
-      chai.expect(carouselListRoot.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
+      chai.expect(carouselRootLayout.getAttribute('aria-label')).to.be.equal('Carousel with buttons');
     });
 
     it('carousel arrow right exist', function () {
@@ -820,7 +1165,7 @@ describe('json-pollock tests', function () {
     });
 
     it('carousel elements length equal to conf element length', function () {
-      chai.expect(carouselRootLayout.children.length).to.be.equal(carouselConf.elements.length);
+      chai.expect(carouselRootLayout.children[2].children.length).to.be.equal(carouselConf.elements.length);
     });
 
     it('carousel elements are in the right order', function () {
@@ -835,11 +1180,45 @@ describe('json-pollock tests', function () {
       chai.expect(card2.getAttribute('role')).to.be.equal('listitem');
       chai.expect(card3.getAttribute('role')).to.be.equal('listitem');
     });
-    it('carousel root should have appropriate WCAG attribute', function () {
-      chai.expect(carouselRootWrapper.getAttribute('aria-label')).to.be.equal('Carousel');
+  });
+
+  describe('render carousel select', function () {
+    const container = addToBody(JsonPollock.render(JSON.stringify(carouselSelectConf)));
+    const carouselRoot = container.children[0];
+    const carouselRootWrapper = carouselRoot.children[0];
+    const carouselRootLayout = carouselRootWrapper.children[0];
+    const card1 = carouselRootLayout.children[0];
+    const card2 = carouselRootLayout.children[1];
+    const card3 = carouselRootLayout.children[2];
+
+    it('carousel root exist', function () {
+      chai.expect(carouselRoot.className).to.contain('lp-json-pollock');
     });
 
-  });
+    it('carousel wrapper root exist', function () {
+      chai.expect(carouselRootWrapper.className).to.contain('lp-json-pollock-layout-carousel-wrapper');
+    });
+
+    it('carousel root layout exist', function () {
+      chai.expect(carouselRootLayout.className).to.contain('lp-json-pollock-layout-carousel');
+    });
+
+    it('carousel elements length equal to conf element length', function () {
+      chai.expect(carouselRootLayout.children.length).to.be.equal(carouselSelectConf.elements.length);
+    });
+
+    it('carousel elements are in the right order', function () {
+      chai.expect(card1.getAttribute('data-carousel-index')).to.be.equal('0');
+      chai.expect(card2.getAttribute('data-carousel-index')).to.be.equal('1');
+      chai.expect(card3.getAttribute('data-carousel-index')).to.be.equal('2');
+    });
+
+    it('carousel accessibility attrbs', function () {
+      chai.expect(card1.getAttribute('role')).to.be.equal('listitem');
+      chai.expect(card2.getAttribute('role')).to.be.equal('listitem');
+      chai.expect(card3.getAttribute('role')).to.be.equal('listitem');
+    });
+  })
 
   describe('render list', function () {
 
@@ -2333,7 +2712,7 @@ describe('json-pollock tests', function () {
       var event = createClickEvent();
       JsonPollock.registerAction('link', spy);
       rooEl.childNodes[0].childNodes[0].childNodes[1].childNodes[0].dispatchEvent(event);
-      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0], uiEvent: event});
+      chai.expect(spy).to.have.been.calledWith({actionData: conf.elements[1].click.actions[0], uiEvent: event, metadata:[]});
     });
 
     it('Click on element with publishText action should trigger its registered callbacks', function () {

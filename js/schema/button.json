@@ -46,6 +46,20 @@
       "type": "string",
       "maxLength": 2000
     },
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "type": {
+          "type": "string",
+          "enum": ["carouselSelect", "accordionSelect"]
+        }
+      }
+    },
     "click": {
       "type": "object",
       "additionalProperties" : false,

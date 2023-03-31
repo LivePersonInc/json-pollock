@@ -13,6 +13,8 @@ const TYPES = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
   CAROUSEL: 'carousel',
+  CAROUSELSELECT: 'carouselSelect',
+  ACCORDIONSELECT: 'accordionSelect',
   SUBMITBUTTON: 'submitButton',
   CHECKBOX: 'checkbox',
   CHECKLIST: 'checklist',
@@ -20,6 +22,7 @@ const TYPES = {
   SECTION: 'section',
   SECTIONLIST: 'sectionList',
   BUTTONLIST: 'buttonList',
+  TABS: 'tabs',
 };
 
 const DATA_SECTION_ID_ATTR = 'data-section-id';
@@ -84,8 +87,41 @@ export default class ElementRendererProvider {
         Utils.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
 
-      if (config.click && config.click.actions) {
-        btnEl.onclick = this.wrapAction(config.click);
+      const clickData = config.click;
+
+      if (clickData && clickData.actions) {
+        const { metadata } = clickData;
+
+        btnEl.onclick = (event, formEl) => {
+          const newMetadata = [...(metadata || [])];
+
+          if (config.ref) {
+            let selector;
+
+            switch (config.ref.type) {
+              case 'carouselSelect':
+                selector = `[data-carousel-name=${config.ref.name}] [data-selected]`;
+                break;
+
+              case 'accordionSelect':
+                selector = `[data-accordion-name=${config.ref.name}] [data-accordion-body][data-selected]`;
+                break;
+
+              default:
+                throw new Error(`Invalid config ref type is used for the button! Type: ${config.ref.type}`);
+            }
+
+            const selectedNodes = Array.from(document.querySelectorAll(selector));
+
+            if (selectedNodes.length === 0) {
+              throw new Error('No items has selected!');
+            }
+
+            newMetadata.push({ type: 'selectedCards', cards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-metadata') || 'null')) });
+          }
+
+          return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
+        };
       }
 
       if (config.class !== 'button') {
@@ -391,9 +427,176 @@ export default class ElementRendererProvider {
       } else if (config.border === 'dropShadow') {
         Utils.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
       }
+      if (config.scroll === 'enable') {
+        Utils.addClass(divEl, 'lp-json-pollock-layout-vertical-scroll');
+
+        if (config.style && config.style.size) {
+          const { size } = config.style;
+          let height = 100;
+
+          if (size === 'medium') {
+            height = 300;
+          } else if (size === 'large') {
+            height = 500;
+          }
+
+          divEl.setAttribute('style', `height: ${height}px`);
+        } else {
+          divEl.setAttribute('style', `height: ${100}px`);
+        }
+      }
+
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
+      if (config.metadata) {
+        divEl.setAttribute('data-metadata', JSON.stringify(config.metadata));
+      }
+      return divEl;
+    });
+
+    this.set(TYPES.TABS, (config): HTMLElement => {
+      const { elements } = config;
+      const divEl = document.createElement('div');
+      const headerEl = document.createElement('div');
+      divEl.appendChild(headerEl);
+
+      let custom = '';
+      let customActive = '';
+      let customHover = '';
+      let currentStyle = '';
+
+      if (config.style) {
+        const color = config.style.color;
+        const bgColor = config.style['background-color'];
+        const colorActive = config.style['color-active'];
+        const bgColorActive = config.style['background-color-active'];
+        const colorHover = config.style['color-hover'];
+        const bgColorHover = config.style['background-color-hover'];
+        let borderWidth = 1;
+
+        if (config.style.size) {
+          if (config.style.size === 'small') {
+            borderWidth = 1;
+          } else if (config.style.size === 'medium') {
+            borderWidth = 2;
+          } else if (config.style.size === 'large') {
+            borderWidth = 3;
+          }
+        }
+
+        custom += color ? `color: ${color}; ` : '';
+        custom += color ? `border-bottom: ${borderWidth}px solid ${color}; ` : '';
+        custom += bgColor ? `background-color: ${bgColor}; ` : '';
+
+        customActive += colorActive ? `color: ${colorActive}; ` : '';
+        customActive += colorActive ? `border-bottom: ${borderWidth}px solid ${colorActive}; ` : '';
+        customActive += bgColorActive ? `background-color: ${bgColorActive}; ` : '';
+
+        customHover += colorHover ? `color: ${colorHover}; ` : '';
+        customHover += colorHover ? `border-bottom: ${borderWidth}px solid ${colorHover}; ` : '';
+        customHover += bgColorHover ? `background-color: ${bgColorHover}; ` : '';
+      }
+
+      const openTab = (evt) => {
+        const children = divEl.children;
+        const buttons = children[0].children;
+
+        const panels = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 1; i < children.length; i++) {
+          panels.push(children[i]);
+        }
+
+        if (panels.length) {
+          panels.forEach((panel) => {
+            // eslint-disable-next-line no-param-reassign
+            panel.style.display = 'none';
+          });
+        }
+
+        if (!evt) {
+          if (custom && customActive) {
+            buttons[0].style.cssText = customActive;
+            currentStyle = customActive;
+          } else {
+            buttons[0].className += ' active';
+          }
+          panels[0].style.display = 'block';
+          return;
+        }
+
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < buttons.length; i++) {
+          const button = buttons[i];
+          if (custom && customActive) {
+            // eslint-disable-next-line no-param-reassign
+            button.style.cssText = custom;
+          } else {
+            // eslint-disable-next-line no-param-reassign
+            button.className = button.className.replace(' active', '');
+          }
+        }
+
+        if (custom && customActive) {
+          // eslint-disable-next-line no-param-reassign
+          evt.currentTarget.style.cssText = customActive;
+          currentStyle = customActive;
+        } else {
+          // eslint-disable-next-line no-param-reassign
+          evt.currentTarget.className += ' active';
+        }
+
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < buttons.length; i++) {
+          if (buttons[i].style.cssText.trim().toLowerCase() === customActive.trim().toLowerCase()
+            && customActive) {
+            panels[i].style.display = 'block';
+          } else if (buttons[i].className.includes('active')) {
+            panels[i].style.display = 'block';
+          }
+        }
+      };
+
+      headerEl.className = 'lp-json-pollock-element-tab';
+      elements.forEach((card) => {
+        const { tag } = card;
+        const btnEl = document.createElement('button');
+        btnEl.className = 'lp-json-pollock-element-tab-button';
+        if (config.style && config.style.size) {
+          btnEl.className += ` lp-json-pollock-element-tab-button-size-${config.style.size}`;
+        } else {
+          btnEl.className += ' lp-json-pollock-element-tab-button-size-small';
+        }
+
+        if (custom) {
+          btnEl.style.cssText = custom;
+        }
+
+        if (customHover) {
+          currentStyle = btnEl.style.cssText;
+          btnEl.addEventListener('mouseover', () => {
+            currentStyle = btnEl.style.cssText;
+            btnEl.style.cssText = customHover;
+          }, false);
+
+          btnEl.addEventListener('mouseout', () => {
+            btnEl.style.cssText = currentStyle;
+          }, false);
+        }
+
+        btnEl.id = tag;
+        btnEl.textContent = tag;
+        btnEl.onclick = (event) => {
+          openTab.call(this, event);
+        };
+        headerEl.appendChild(btnEl);
+      });
+
+      (divEl: any).afterRender = () => {
+        openTab();
+      };
+
       return divEl;
     });
 
@@ -421,6 +624,35 @@ export default class ElementRendererProvider {
       arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
+      }
+
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+        let arrowBtnStyle = `${splitedStyle.extractedStyle}`;
+        // Change color to border:
+        const borderStyle = Utils.styleToBorder(config.style);
+        if (borderStyle !== '') {
+          arrowBtnStyle += ` ${borderStyle}`;
+        }
+        // Change size to button:
+        const buttonSize = Utils.styleToButton(config.style);
+        if (buttonSize !== '') {
+          arrowBtnStyle += ` ${buttonSize}`;
+        }
+        // Set all defined style attributes on the button itself
+        // Set extractedStyle (in this case background-color) specifically on the button itself
+        arrowRight.setAttribute('style', `${arrowBtnStyle}`);
+        arrowLeft.setAttribute('style', `${arrowBtnStyle}`);
+        // Add style to image directly:
+        const svgChildArrowRight = arrowRight.querySelector('.lp-json-pollock-layout-carousel-arrow-icon');
+        const svgChildArrowLeft = arrowLeft.querySelector('.lp-json-pollock-layout-carousel-arrow-icon');
+        if (svgChildArrowRight) { // right arrow image
+          svgChildArrowRight.setAttribute('style', splitedStyle.style);
+        }
+        if (svgChildArrowLeft) { // left arrow image
+          svgChildArrowLeft.setAttribute('style', splitedStyle.style);
+        }
       }
 
       function setShowingCard(event) {
@@ -556,6 +788,292 @@ export default class ElementRendererProvider {
       return divCarouselWrapper;
     });
 
+    this.set(TYPES.CAROUSELSELECT, (config): HTMLElement => {
+      const defaultPadding = 0;
+      const padding = config.padding || defaultPadding;
+
+      const carouselWrapper = document.createElement('div');
+      const carousel = document.createElement('div');
+
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(carouselWrapper, config.accessibility.web);
+      }
+
+      function findCardParent(element: any): HTMLDivElement | typeof undefined {
+        if (!element || element.tagName === 'BUTTON') {
+          return undefined;
+        }
+
+        const index = element.getAttribute('data-carousel-index');
+        if (index !== null) {
+          return element;
+        }
+
+        return findCardParent(element.parentNode);
+      }
+
+      function toggleCardSelect(element: HTMLDivElement, selected: boolean) {
+        if (selected) {
+          element.setAttribute('data-selected', 'true');
+          element.classList.add('lp-json-pollock-layout-selected');
+
+          if (config.style && config.style['border-color-selected']) {
+            // eslint-disable-next-line no-param-reassign
+            element.style.borderColor = config.style['border-color-selected'];
+          }
+        } else {
+          element.removeAttribute('data-selected');
+          element.classList.remove('lp-json-pollock-layout-selected');
+          // eslint-disable-next-line no-param-reassign
+          element.style.borderColor = '';
+        }
+      }
+
+      /**
+       * @param {MouseEvent} event
+       * */
+      function cardClick(event: MouseEvent) {
+        const element = event.target;
+        const cardParent = findCardParent(element);
+
+        if (cardParent) {
+          if (config.selectMode.type === 'single' && cardParent.parentNode) {
+            Array
+              .from((cardParent.parentNode: any).querySelectorAll('[data-carousel-index][data-selected]'))
+              .filter((carouselElement: HTMLDivElement) => carouselElement !== cardParent)
+              .forEach((carouselElement: HTMLDivElement) => {
+                toggleCardSelect(carouselElement, false);
+              });
+          }
+
+          toggleCardSelect(cardParent, cardParent.dataset.selected !== 'true');
+        }
+      }
+
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+
+        carousel.style.cssText = splitedStyle.style;
+        carousel.setAttribute('style', splitedStyle.extractedStyle);
+      }
+
+      /**
+       * Render logic
+       * */
+      (carouselWrapper: any).afterRender = () => {
+        const carouselItemsCount = carouselWrapper.children.length;
+
+        if (carouselItemsCount) {
+          for (let itemCounter = 0;
+               itemCounter < carouselItemsCount;
+               itemCounter += 1) {
+            const carouselElement: HTMLDivElement =
+              (carouselWrapper.children[itemCounter]: any);
+
+            carouselElement.addEventListener('click', cardClick.bind(this), true);
+            carouselElement.style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            carouselElement.setAttribute('data-carousel-index', itemCounter.toString());   // Add an index reference for faster lookup on focus changes
+            carouselElement.setAttribute('role', 'listitem');
+          }
+
+          /* create carousel wrapper */
+          while (carouselWrapper.hasChildNodes() && carouselWrapper.lastChild) {
+            carousel.insertBefore(carouselWrapper.lastChild, carousel.firstChild);
+          }
+
+          carousel.className = 'lp-json-pollock-layout-carousel lp-json-pollock-layout-carousel-select';
+
+          carouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
+          carouselWrapper.appendChild(carousel);
+          carouselWrapper.setAttribute('data-carousel-name', config.selectMode.name);
+        }
+      };
+
+      return carouselWrapper;
+    });
+
+    this.set(TYPES.ACCORDIONSELECT, (config): HTMLElement => {
+      const defaultPadding = 0;
+      const padding = config.padding || defaultPadding;
+
+      const accordionWrapper = document.createElement('div');
+      const accordion = document.createElement('div');
+
+      const arrowElement = Utils.htmlToElement('<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>');
+
+      if (config.accessibility && config.accessibility.web) {
+        Utils.appendAttributesFromObject(accordionWrapper, config.accessibility.web);
+      }
+
+      function findTabParent(element: any): HTMLDivElement | typeof undefined {
+        const index = element.getAttribute('data-accordion-index');
+        if (index !== null) {
+          return element;
+        }
+
+        return findTabParent(element.parentNode);
+      }
+
+      function toggleTabSelect(element: HTMLInputElement, selected: boolean) {
+        if (selected) {
+          element.removeAttribute('data-selected');
+          // eslint-disable-next-line no-param-reassign
+          element.checked = false;
+        } else {
+          element.setAttribute('data-selected', 'true');
+          // eslint-disable-next-line no-param-reassign
+          element.checked = true;
+        }
+      }
+
+      function toggleBodySelect(element: HTMLDivElement, selected: boolean) {
+        if (selected) {
+          element.removeAttribute('data-selected');
+        } else {
+          element.setAttribute('data-selected', 'true');
+        }
+      }
+
+      function toggleBodyOpen(element: HTMLDivElement, selected: boolean) {
+        if (selected) {
+          element.setAttribute('data-open', 'true');
+          element.classList.remove('lp-json-pollock-layout-accordion-folded');
+        } else {
+          element.setAttribute('data-open', 'false');
+          element.classList.add('lp-json-pollock-layout-accordion-folded');
+        }
+      }
+
+      function toggleArrowOpen(element: HTMLElement, selected: boolean) {
+        if (selected) {
+          element.classList.add('open');
+          element.classList.remove('close');
+        } else {
+          element.classList.add('close');
+          element.classList.remove('open');
+        }
+      }
+
+      /**
+       * @param {MouseEvent} event
+       * */
+      function accordionClick(event: MouseEvent) {
+        const element: HTMLElement = (event.target: any);
+        const isCheckboxClicked = element.tagName === 'INPUT';
+        const tabParent = findTabParent(element);
+
+        if (!tabParent) {
+          return;
+        }
+
+        const checkboxElement: HTMLInputElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-checkbox'): any);
+        const headerElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-header'): any);
+        const bodyElement: HTMLDivElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion'): any);
+        const headerArrowElement: HTMLElement = (tabParent.querySelector('.lp-json-pollock-layout-accordion-arrow'): any);
+
+        if (isCheckboxClicked) {
+          if (!checkboxElement || !bodyElement) {
+            return;
+          }
+
+          const selected = checkboxElement.dataset.selected === 'true';
+
+          toggleTabSelect(checkboxElement, selected);
+          toggleBodySelect(bodyElement, selected);
+          return;
+        }
+
+        if (!headerElement || !bodyElement) {
+          return;
+        }
+
+        const isOpen = bodyElement.dataset.open === 'true';
+
+        toggleBodyOpen(bodyElement, !isOpen);
+        toggleArrowOpen(headerArrowElement, !isOpen);
+      }
+
+      if (config.style) {
+        const style = Utils.styleToCss(config.style);
+        const splitedStyle = Utils.extractFromStyles(style, 'background-color');
+
+        accordion.style.cssText = splitedStyle.style;
+        accordion.setAttribute('style', splitedStyle.extractedStyle);
+      }
+
+    /**
+     * Render logic
+     * */
+      (accordionWrapper: any).afterRender = () => {
+        const accordionItemsCount = accordionWrapper.children.length;
+
+        if (accordionItemsCount) {
+          for (let itemCounter = 0;
+             itemCounter < accordionItemsCount;
+             itemCounter += 1) {
+            const accordionElement: HTMLDivElement =
+            (accordionWrapper.children[0]: any);
+            const accordionTitleConfig = config.titles[itemCounter];
+
+            const accordionTabElement = document.createElement('section');
+            const accordionHeaderElement = document.createElement('div');
+            const accordionCheckboxElement = document.createElement('input');
+            const accordionTitleElement = document.createElement('h3');
+            const accordionAdditionalElement = document.createElement('span');
+            const accordionArrowElement = arrowElement.cloneNode(true);
+
+            accordionTabElement.classList.add('lp-json-pollock-layout-accordion-tab');
+            accordionHeaderElement.classList.add('lp-json-pollock-layout-accordion-header');
+            accordionCheckboxElement.classList.add('lp-json-pollock-layout-accordion-checkbox');
+            accordionTitleElement.classList.add('lp-json-pollock-layout-accordion-title');
+            accordionAdditionalElement.classList.add('lp-json-pollock-layout-accordion-additional');
+            accordionArrowElement.classList.add('lp-json-pollock-layout-accordion-arrow', 'close');
+
+            accordionElement.classList.add('lp-json-pollock-layout-accordion-folded');
+            accordionElement.classList.add('lp-json-pollock-layout-accordion');
+            accordionElement.setAttribute('data-open', 'false');
+            accordionElement.setAttribute('data-accordion-body', '');
+
+            accordionCheckboxElement.type = 'checkbox';
+            accordionTitleElement.innerText = accordionTitleConfig.name;
+
+            if (accordionTitleConfig.additional) {
+              accordionAdditionalElement.innerText = accordionTitleConfig.additional;
+            }
+
+            accordionHeaderElement.addEventListener('click', accordionClick.bind(this), true);
+
+            accordionTabElement.style.margin = `0 ${padding / 2}px`; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            accordionTabElement.setAttribute('data-accordion-index', itemCounter.toString());   // Add an index reference for faster lookup on focus changes
+            accordionTabElement.setAttribute('role', 'listitem');
+
+            accordionHeaderElement.appendChild(accordionCheckboxElement);
+            accordionHeaderElement.appendChild(accordionTitleElement);
+            accordionHeaderElement.appendChild(accordionAdditionalElement);
+            accordionHeaderElement.appendChild(accordionArrowElement);
+
+            accordionTabElement.appendChild(accordionHeaderElement);
+            accordionTabElement.appendChild(accordionElement);
+            accordionWrapper.appendChild(accordionTabElement);
+          }
+
+          /* create accordion wrapper */
+          while (accordionWrapper.hasChildNodes() && accordionWrapper.lastChild) {
+            accordion.insertBefore(accordionWrapper.lastChild, accordion.firstChild);
+          }
+
+          accordion.className = 'lp-json-pollock-layout-accordion lp-json-pollock-layout-accordion-select';
+
+          accordionWrapper.className = 'lp-json-pollock-layout-accordion-wrapper';
+          accordionWrapper.appendChild(accordion);
+          accordionWrapper.setAttribute('data-accordion-name', config.selectMode.name);
+        }
+      };
+
+      return accordionWrapper;
+    });
+
     this.set(TYPES.HORIZONTAL, (config): HTMLElement => {
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
@@ -568,6 +1086,9 @@ export default class ElementRendererProvider {
       }
       if (config.accessibility && config.accessibility.web) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
+      if (config.metadata) {
+        divEl.setAttribute('data-metadata', JSON.stringify(config.metadata));
       }
       (divEl: any).afterRender = () => {
         if (divEl.childNodes.length) {
