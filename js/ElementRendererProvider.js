@@ -382,6 +382,7 @@ export default class ElementRendererProvider {
     });
 
     this.set(TYPES.MAP, (config): HTMLElement => {
+      const accessibilityWeb = config.accessibility && config.accessibility.web;
       const divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-map';
 
@@ -394,9 +395,18 @@ export default class ElementRendererProvider {
         divEl.style.cssText = Utils.styleToCss(config.style);
       }
 
-      if (config.accessibility && config.accessibility.web) {
+      if (accessibilityWeb) {
         Utils.appendAttributesFromObject(divEl, config.accessibility.web);
       }
+      if (!accessibilityWeb || !accessibilityWeb.tabindex) {
+        divEl.setAttribute('tabindex', '0');
+      }
+      divEl.onkeydown = (event) => {
+        event.preventDefault();
+        if (event.keyCode === 13 || event.keyCode === 32) {
+          window.open(`https://www.google.com/maps/search/?api=1&query=${config.la},${config.lo}`, '_blank');
+        }
+      };
 
       if (config.click && config.click.actions) {
         divEl.onclick = this.wrapAction(config.click);
