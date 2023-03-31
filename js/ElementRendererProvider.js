@@ -364,13 +364,13 @@ export default class ElementRendererProvider {
       }
       if ((accessibilityWeb && !accessibilityWeb.tabindex) || !config.accessibility) {
         divEl.setAttribute('tabindex', '0');
-        divEl.onkeydown = (event) => {
-          event.preventDefault();
-          if (event.keyCode === 13 || event.keyCode === 32) {
-            window.open(`https://www.google.com/maps/search/?api=1&query=${config.la},${config.lo}`, '_blank');
-          }
-        };
       }
+      divEl.onkeydown = (event) => {
+        event.preventDefault();
+        if (event.keyCode === 13 || event.keyCode === 32) {
+          window.open(`https://www.google.com/maps/search/?api=1&query=${config.la},${config.lo}`, '_blank');
+        }
+      };
 
       if (config.click && config.click.actions) {
         divEl.onclick = this.wrapAction(config.click);
