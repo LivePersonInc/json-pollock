@@ -376,6 +376,13 @@
             &:active {
                 background: $gray7;
             }
+
+            .lp-json-pollock-element-button-subtitle {
+                font-style: italic;
+                clear: both;
+                display: inline-block;
+                width: 100%;
+            }
         }
     }
 
