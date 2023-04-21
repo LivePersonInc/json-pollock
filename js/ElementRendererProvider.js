@@ -78,6 +78,14 @@ export default class ElementRendererProvider {
       const btnEl = document.createElement('button');
       btnEl.innerHTML = Utils.normalizeHtmlText(config.title);
 
+      if (config.subtitle) {
+        const btnElSubtitle = document.createElement('span');
+        btnElSubtitle.className = 'lp-json-pollock-element-button-subtitle';
+        btnElSubtitle.innerHTML = Utils.normalizeHtmlText(config.subtitle);
+        btnEl.appendChild(btnElSubtitle);
+      }
+
+
       if (config.tooltip) {
         btnEl.title = config.tooltip;
         btnEl.setAttribute('aria-label', config.tooltip);

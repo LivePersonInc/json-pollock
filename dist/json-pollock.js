@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 80);
+/******/ 	return __webpack_require__(__webpack_require__.s = 82);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -93,7 +93,7 @@ module.exports = {
   getProperty: getProperty,
   escapeQuotes: escapeQuotes,
   equal: __webpack_require__(3),
-  ucs2length: __webpack_require__(51),
+  ucs2length: __webpack_require__(53),
   varOccurences: varOccurences,
   varReplace: varReplace,
   cleanUpCode: cleanUpCode,
@@ -398,11 +398,11 @@ function errorSubclass(Subclass) {
 "use strict";
 
 
-var url = __webpack_require__(81)
+var url = __webpack_require__(83)
   , equal = __webpack_require__(3)
   , util = __webpack_require__(0)
   , SchemaObject = __webpack_require__(4)
-  , traverse = __webpack_require__(75);
+  , traverse = __webpack_require__(77);
 
 module.exports = resolve;
 
@@ -1661,6 +1661,10 @@ exports.default = {
       if (style.size) {
         cssStr += 'font-size:' + this.sizeToPx(style.size) + 'px;';
       }
+      if (style.fill) {
+        // change color for svg's
+        cssStr += 'fill:' + style.fill + ';';
+      }
     }
 
     return cssStr;
@@ -1673,6 +1677,15 @@ exports.default = {
       }
       if (style['border-radius']) {
         cssStr += 'border-radius: ' + style['border-radius'] + 'px;';
+      }
+    }
+    return cssStr;
+  },
+  styleToButton: function styleToButton(style) {
+    var cssStr = '';
+    if (style) {
+      if (style.size) {
+        cssStr += 'width: ' + this.buttonSizeToPx(style.size) + 'px; height: ' + this.buttonSizeToPx(style.size) + 'px;';
       }
     }
     return cssStr;
@@ -1700,6 +1713,18 @@ exports.default = {
         return 17;
       default:
         return 13;
+    }
+  },
+  buttonSizeToPx: function buttonSizeToPx(size) {
+    switch (size) {
+      case 'small':
+        return 27;
+      case 'medium':
+        return 36;
+      case 'large':
+        return 45;
+      default:
+        return 36;
     }
   },
   validateParameters: function validateParameters(config) {
@@ -1748,6 +1773,18 @@ exports.default = {
     return text.replace(/[&<>"'`=/]/g, function (s) {
       return map[s];
     });
+  },
+
+
+  /**
+   * @param {string} html - representing a single element
+   * @return {Element}
+   */
+  htmlToElement: function htmlToElement(html) {
+    var template = document.createElement('template');
+    template.innerHTML = html.trim();
+
+    return template.content.firstChild;
   },
   hasClass: function hasClass(el, className) {
     if (el.classList && el.classList.contains) {
@@ -2110,7 +2147,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _ElementRendererProvider = __webpack_require__(74);
+var _ElementRendererProvider = __webpack_require__(76);
 
 var _ElementRendererProvider2 = _interopRequireDefault(_ElementRendererProvider);
 
@@ -2289,95 +2326,99 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _ajv = __webpack_require__(44);
+var _ajv = __webpack_require__(46);
 
 var _ajv2 = _interopRequireDefault(_ajv);
 
-var _action = __webpack_require__(18);
+var _action = __webpack_require__(19);
 
 var _action2 = _interopRequireDefault(_action);
 
-var _basic = __webpack_require__(19);
+var _basic = __webpack_require__(20);
 
 var _basic2 = _interopRequireDefault(_basic);
 
-var _style = __webpack_require__(38);
+var _style = __webpack_require__(40);
 
 var _style2 = _interopRequireDefault(_style);
 
-var _button = __webpack_require__(20);
+var _button = __webpack_require__(21);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _card = __webpack_require__(22);
+var _card = __webpack_require__(23);
 
 var _card2 = _interopRequireDefault(_card);
 
-var _carousel = __webpack_require__(23);
+var _carousel = __webpack_require__(24);
 
 var _carousel2 = _interopRequireDefault(_carousel);
 
-var _image = __webpack_require__(27);
+var _carouselSelect = __webpack_require__(25);
+
+var _carouselSelect2 = _interopRequireDefault(_carouselSelect);
+
+var _image = __webpack_require__(29);
 
 var _image2 = _interopRequireDefault(_image);
 
-var _linkPreview = __webpack_require__(30);
+var _linkPreview = __webpack_require__(32);
 
 var _linkPreview2 = _interopRequireDefault(_linkPreview);
 
-var _map = __webpack_require__(32);
+var _map = __webpack_require__(34);
 
 var _map2 = _interopRequireDefault(_map);
 
-var _rich_content = __webpack_require__(33);
+var _rich_content = __webpack_require__(35);
 
 var _rich_content2 = _interopRequireDefault(_rich_content);
 
-var _template = __webpack_require__(41);
+var _template = __webpack_require__(43);
 
 var _template2 = _interopRequireDefault(_template);
 
-var _text = __webpack_require__(42);
+var _text = __webpack_require__(44);
 
 var _text2 = _interopRequireDefault(_text);
 
-var _checkbox = __webpack_require__(24);
+var _checkbox = __webpack_require__(26);
 
 var _checkbox2 = _interopRequireDefault(_checkbox);
 
-var _list = __webpack_require__(31);
+var _list = __webpack_require__(33);
 
 var _list2 = _interopRequireDefault(_list);
 
-var _checklist = __webpack_require__(25);
+var _checklist = __webpack_require__(27);
 
 var _checklist2 = _interopRequireDefault(_checklist);
 
-var _submitButton = __webpack_require__(39);
+var _submitButton = __webpack_require__(41);
 
 var _submitButton2 = _interopRequireDefault(_submitButton);
 
-var _section = __webpack_require__(35);
+var _section = __webpack_require__(37);
 
 var _section2 = _interopRequireDefault(_section);
 
-var _sectionList = __webpack_require__(36);
+var _sectionList = __webpack_require__(38);
 
 var _sectionList2 = _interopRequireDefault(_sectionList);
 
-var _specialAction = __webpack_require__(37);
+var _specialAction = __webpack_require__(39);
 
 var _specialAction2 = _interopRequireDefault(_specialAction);
 
-var _buttonList = __webpack_require__(21);
+var _buttonList = __webpack_require__(22);
 
 var _buttonList2 = _interopRequireDefault(_buttonList);
 
-var _keyValuePair = __webpack_require__(28);
+var _keyValuePair = __webpack_require__(30);
 
 var _keyValuePair2 = _interopRequireDefault(_keyValuePair);
 
-var _displaySettings = __webpack_require__(26);
+var _displaySettings = __webpack_require__(28);
 
 var _displaySettings2 = _interopRequireDefault(_displaySettings);
 
@@ -2385,15 +2426,19 @@ var _accessibilityWeb = __webpack_require__(17);
 
 var _accessibilityWeb2 = _interopRequireDefault(_accessibilityWeb);
 
-var _scheduleSlot = __webpack_require__(34);
+var _scheduleSlot = __webpack_require__(36);
 
 var _scheduleSlot2 = _interopRequireDefault(_scheduleSlot);
 
-var _keyValuePairList = __webpack_require__(29);
+var _keyValuePairList = __webpack_require__(31);
 
 var _keyValuePairList2 = _interopRequireDefault(_keyValuePairList);
 
-var _tabs = __webpack_require__(40);
+var _accordionSelect = __webpack_require__(18);
+
+var _accordionSelect2 = _interopRequireDefault(_accordionSelect);
+
+var _tabs = __webpack_require__(42);
 
 var _tabs2 = _interopRequireDefault(_tabs);
 
@@ -2413,6 +2458,7 @@ var SchemaValidator = function () {
     ajv.addSchema(_checkbox2.default, 'checkbox.json');
     ajv.addSchema(_card2.default, 'card.json');
     ajv.addSchema(_carousel2.default, 'carousel.json');
+    ajv.addSchema(_carouselSelect2.default, 'carouselSelect.json');
     ajv.addSchema(_image2.default, 'image.json');
     ajv.addSchema(_linkPreview2.default, 'linkPreview.json');
     ajv.addSchema(_map2.default, 'map.json');
@@ -2431,6 +2477,7 @@ var SchemaValidator = function () {
     ajv.addSchema(_accessibilityWeb2.default, 'accessibilityWeb.json');
     ajv.addSchema(_scheduleSlot2.default, 'scheduleSlot.json');
     ajv.addSchema(_keyValuePairList2.default, 'keyValuePairList.json');
+    ajv.addSchema(_accordionSelect2.default, 'accordionSelect.json');
     ajv.addSchema(_tabs2.default, 'tabs.json');
 
     this.jsonValidator = ajv.compile(_rich_content2.default);
@@ -2469,154 +2516,166 @@ module.exports = {"type":"object","additionalProperties":false,"properties":{"ro
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"Publish Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["publishText"],"default":"publishText","readonly":true},"text":{"type":"string","maxLength":256}},"required":["type","text"]},{"title":"navigate","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["navigate"],"default":"navigate","readonly":true},"la":{"type":"number"},"lo":{"type":"number"},"name":{"type":"string","maxLength":256}},"required":["type","la","lo"]},{"title":"link","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["link"],"default":"link","readonly":true},"uri":{"type":"string","format":"uri","maxLength":1024},"name":{"type":"string","maxLength":256},"ios":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"android":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"web":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"target":{"type":"string","enum":["self","blank","slideout"],"default":"self"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","uri"]},{"title":"Custom Action","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["custom"],"default":"custom","readonly":true},"data":{"type":"array","maxItems":10,"items":{"$ref":"keyValuePair.json"}}},"required":["type"]},{"title":"Date Picker","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["datePicker"],"default":"datePicker","readonly":true},"class":{"type":"string","enum":["single","range"],"default":"single","readonly":true},"title":{"type":"string","maxLength":40},"minDate":{"type":"integer"},"maxDate":{"type":"integer"},"dateFormat":{"type":"string","maxLength":100}},"required":["type","class"]},{"title":"Schedule Slot List","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["scheduleSlotList"],"default":"scheduleSlotList","readonly":true},"title":{"type":"string","maxLength":40},"slots":{"type":"array","maxItems":256,"items":{"$ref":"scheduleSlot.json"}},"firstDayOfTheWeek":{"type":"string","enum":["sun","mon"],"default":"mon","readonly":true}},"required":["type"]}]}
+module.exports = {"type":"object","additionalProperties":false,"title":"accordionSelect","properties":{"type":{"type":"string","enum":["accordionSelect"],"default":"accordionSelect","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":1,"maxItems":20,"items":{"$ref":"card.json"}},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}},"selectMode":{"type":"object","additionalProperties":false,"properties":{"name":{"type":"string","maxLength":200}},"required":["name"]},"titles":{"type":"array","minItems":1,"maxItems":20,"items":{"type":"object","additionalProperties":false,"properties":{"name":{"type":"string","maxLength":200},"additional":{"type":"string","maxLength":200}},"required":["name"]}}},"required":["type","selectMode","titles","elements"]}
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"$ref":"text.json"},{"$ref":"image.json"},{"$ref":"button.json"},{"$ref":"map.json"},{"$ref":"linkPreview.json"},{"$ref":"template.json"},{"$ref":"keyValuePairList.json"},{"$ref":"tabs.json"}]}
+module.exports = {"oneOf":[{"title":"Publish Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["publishText"],"default":"publishText","readonly":true},"text":{"type":"string","maxLength":256}},"required":["type","text"]},{"title":"Add to Cart","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["addToCart"],"default":"addToCart","readonly":true},"items":{"type":"array","maxItems":10,"items":{"type":"object","additionalProperties":false,"properties":{"productId":{"type":"string","maxLength":256},"quantity":{"type":"integer"}}}}},"required":["type","items"]},{"title":"navigate","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["navigate"],"default":"navigate","readonly":true},"la":{"type":"number"},"lo":{"type":"number"},"name":{"type":"string","maxLength":256}},"required":["type","la","lo"]},{"title":"link","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["link"],"default":"link","readonly":true},"uri":{"type":"string","format":"uri","maxLength":1024},"name":{"type":"string","maxLength":256},"ios":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"android":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"web":{"type":"object","additionalProperties":false,"properties":{"uri":{"type":"string","format":"uri","maxLength":1024}}},"target":{"type":"string","enum":["self","blank","slideout"],"default":"self"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","uri"]},{"title":"Custom Action","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["custom"],"default":"custom","readonly":true},"data":{"type":"array","maxItems":10,"items":{"$ref":"keyValuePair.json"}}},"required":["type"]},{"title":"Date Picker","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["datePicker"],"default":"datePicker","readonly":true},"class":{"type":"string","enum":["single","range"],"default":"single","readonly":true},"title":{"type":"string","maxLength":40},"minDate":{"type":"integer"},"maxDate":{"type":"integer"},"dateFormat":{"type":"string","maxLength":100}},"required":["type","class"]},{"title":"Schedule Slot List","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["scheduleSlotList"],"default":"scheduleSlotList","readonly":true},"title":{"type":"string","maxLength":40},"slots":{"type":"array","maxItems":256,"items":{"$ref":"scheduleSlot.json"}},"firstDayOfTheWeek":{"type":"string","enum":["sun","mon"],"default":"mon","readonly":true}},"required":["type"]}]}
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"class":{"type":"string","enum":["text","button"],"default":"text","readonly":true},"title":{"type":"string","maxLength":128},"subtitle":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["title"]}
+module.exports = {"oneOf":[{"$ref":"text.json"},{"$ref":"image.json"},{"$ref":"button.json"},{"$ref":"map.json"},{"$ref":"linkPreview.json"},{"$ref":"template.json"},{"$ref":"keyValuePairList.json"}]}
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"buttonList","properties":{"type":{"type":"string","enum":["buttonList"],"default":"buttonList","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":1,"maxItems":2,"items":[{"$ref":"submitButton.json"},{"anyOf":[{"$ref":"button.json"}]}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"button","properties":{"type":{"type":"string","enum":["button"],"default":"button","readonly":true},"class":{"type":"string","enum":["text","button"],"default":"text","readonly":true},"title":{"type":"string","maxLength":128},"subtitle":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"ref":{"type":"object","additionalProperties":false,"properties":{"name":{"type":"string","maxLength":200},"type":{"type":"string","enum":["carouselSelect","accordionSelect"]}}},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["title"]}
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","additionalProperties":false,"title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"borderLine":{"type":"boolean","default":true},"border":{"type":"string","enum":["border","borderLess","dropShadow"],"default":"border","readonly":true},"percentages":{"type":"array","maxItems":256,"items":{"type":"number"}},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]},{"type":"object","additionalProperties":false,"title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"border":{"type":"string","enum":["border","borderLess","dropShadow"],"default":"border","readonly":true},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]}]}
+module.exports = {"type":"object","additionalProperties":false,"title":"buttonList","properties":{"type":{"type":"string","enum":["buttonList"],"default":"buttonList","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":1,"maxItems":2,"items":[{"$ref":"submitButton.json"},{"anyOf":[{"$ref":"button.json"}]}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"carousel","properties":{"type":{"type":"string","enum":["carousel"],"default":"carousel","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":10,"items":{"$ref":"card.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]}
+module.exports = {"oneOf":[{"title":"basic","$ref":"basic.json"},{"type":"object","additionalProperties":false,"title":"horizontal","properties":{"type":{"type":"string","enum":["horizontal"],"default":"horizontal","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"borderLine":{"type":"boolean","default":true},"border":{"type":"string","enum":["border","borderLess","dropShadow"],"default":"border","readonly":true},"percentages":{"type":"array","maxItems":256,"items":{"type":"number"}},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}},"metadata":{"type":"array"}},"required":["type","elements"]},{"type":"object","additionalProperties":false,"title":"vertical","properties":{"type":{"type":"string","enum":["vertical"],"default":"vertical","readonly":true},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"border":{"type":"string","enum":["border","borderLess","dropShadow"],"default":"border","readonly":true},"scroll":{"type":"string","enum":["disable","enable"],"default":"disable","readonly":true},"elements":{"type":"array","maxItems":256,"items":{"$ref":"rich_content.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"style":{"$ref":"style.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}},"metadata":{"type":"array"}},"required":["type","elements"]}]}
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"checkbox","additionalProperties":false,"properties":{"type":{"type":"string","enum":["checkbox"],"default":"checkbox","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"borderLine":{"type":"boolean","default":true},"borderColor":{"type":"string","format":"color","maxLength":256},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"specialAction.json#/definitions/checked"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","text","click"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"carousel","properties":{"type":{"type":"string","enum":["carousel"],"default":"carousel","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":10,"items":{"$ref":"card.json"}},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"style":{"$ref":"style.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements"]}
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"checklist","properties":{"type":{"type":"string","enum":["checklist"],"default":"checklist","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":256,"items":{"$ref":"checkbox.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"carouselSelect","properties":{"type":{"type":"string","enum":["carouselSelect"],"default":"carouselSelect","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":1,"maxItems":20,"items":{"$ref":"card.json"}},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"display":{"$ref":"displaySettings.json"},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}},"selectMode":{"type":"object","additionalProperties":false,"properties":{"name":{"type":"string","maxLength":200},"type":{"type":"string","enum":["single","multiple"]}},"required":["name","type"]}},"required":["type","selectMode","elements"]}
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"properties":{"aspectRatio":{"type":"string","enum":["rectangle","square","horizontal"]},"size":{"type":"string","enum":["cover","contain","large","compact","tall","full"]}}}
+module.exports = {"type":"object","title":"checkbox","additionalProperties":false,"properties":{"type":{"type":"string","enum":["checkbox"],"default":"checkbox","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"borderLine":{"type":"boolean","default":true},"borderColor":{"type":"string","format":"color","maxLength":256},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"specialAction.json#/definitions/checked"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","text","click"]}
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"image","additionalProperties":false,"properties":{"type":{"type":"string","enum":["image"],"default":"image","readonly":true},"caption":{"type":"string","maxLength":128},"url":{"type":"string","maxLength":2048},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["url"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"checklist","properties":{"type":{"type":"string","enum":["checklist"],"default":"checklist","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"elements":{"type":"array","minItems":2,"maxItems":256,"items":{"$ref":"checkbox.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"Key Value Pair","additionalProperties":false,"properties":{"key":{"type":"string","maxLength":128},"value":{"type":"string","maxLength":2048}},"required":["key"]}
+module.exports = {"type":"object","additionalProperties":false,"properties":{"aspectRatio":{"type":"string","enum":["rectangle","square","horizontal"]},"size":{"type":"string","enum":["cover","contain","large","compact","tall","full"]}}}
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"keyValuePairList","properties":{"type":{"type":"string","enum":["keyValuePairList"],"default":"keyValuePairList","readonly":true},"elements":{"type":"array","minItems":1,"maxItems":50,"items":{"$ref":"keyValuePair.json"}}},"required":["type","elements"]}
+module.exports = {"type":"object","title":"image","additionalProperties":false,"properties":{"type":{"type":"string","enum":["image"],"default":"image","readonly":true},"caption":{"type":"string","maxLength":128},"url":{"type":"string","maxLength":2048},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["url"]}
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"linkPreview","additionalProperties":false,"properties":{"type":{"type":"string","enum":["linkPreview"],"default":"linkPreview","readonly":true},"url":{"type":"string","maxLength":2048},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["url"]}
+module.exports = {"type":"object","title":"Key Value Pair","additionalProperties":false,"properties":{"key":{"type":"string","maxLength":128},"value":{"type":"string","maxLength":2048}},"required":["key"]}
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"list","properties":{"type":{"type":"string","enum":["list"],"default":"list","readonly":true},"tooltip":{"type":"string","maxLength":256},"elements":{"type":"array","maxItems":3,"minItems":3,"items":[{"$ref":"text.json"},{"$ref":"sectionList.json"},{"$ref":"buttonList.json"}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"keyValuePairList","properties":{"type":{"type":"string","enum":["keyValuePairList"],"default":"keyValuePairList","readonly":true},"elements":{"type":"array","minItems":1,"maxItems":50,"items":{"$ref":"keyValuePair.json"}}},"required":["type","elements"]}
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"map","additionalProperties":false,"properties":{"type":{"type":"string","enum":["map"],"default":"map","readonly":true},"lo":{"type":"number"},"la":{"type":"number"},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["lo","la"]}
+module.exports = {"type":"object","title":"linkPreview","additionalProperties":false,"properties":{"type":{"type":"string","enum":["linkPreview"],"default":"linkPreview","readonly":true},"url":{"type":"string","maxLength":2048},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["url"]}
 
 /***/ }),
 /* 33 */
 /***/ (function(module, exports) {
 
-module.exports = {"oneOf":[{"title":"card","$ref":"card.json"},{"title":"carousel","$ref":"carousel.json"},{"title":"list","$ref":"list.json"}]}
+module.exports = {"type":"object","additionalProperties":false,"title":"list","properties":{"type":{"type":"string","enum":["list"],"default":"list","readonly":true},"tooltip":{"type":"string","maxLength":256},"elements":{"type":"array","maxItems":3,"minItems":3,"items":[{"$ref":"text.json"},{"$ref":"sectionList.json"},{"$ref":"buttonList.json"}]},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
 
 /***/ }),
 /* 34 */
 /***/ (function(module, exports) {
 
-module.exports = {"title":"Schedule slot","description":"Object of an schedule slot","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["scheduleSlot"],"default":"scheduleSlot","readonly":true},"id":{"type":"string","maxLength":256},"start":{"type":"integer"},"end":{"type":"integer"},"title":{"type":"string","maxLength":40},"description":{"type":"string","maxLength":40},"imageUrl":{"type":"string","format":"uri","maxLength":1024}},"required":["type","id","start"]}
+module.exports = {"type":"object","title":"map","additionalProperties":false,"properties":{"type":{"type":"string","enum":["map"],"default":"map","readonly":true},"lo":{"type":"number"},"la":{"type":"number"},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["lo","la"]}
 
 /***/ }),
 /* 35 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"section","properties":{"type":{"type":"string","enum":["section"],"default":"section","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"sectionID":{"type":"string","maxLength":256},"elements":{"oneOf":[{"type":"array","minItems":1,"maxItems":1,"items":[{"$ref":"checklist.json"}]},{"type":"array","minItems":2,"maxItems":2,"items":[{"$ref":"text.json"},{"$ref":"checklist.json"}]}]},"alt":{"type":"string","maxLength":2000},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements","sectionID"]}
+module.exports = {"oneOf":[{"title":"card","$ref":"card.json"},{"title":"carousel","$ref":"carousel.json"},{"title":"carouselSelect","$ref":"carouselSelect.json"},{"title":"accordionSelect","$ref":"accordionSelect.json"},{"title":"list","$ref":"list.json"},{"title":"tabs","$ref":"tabs.json"}]}
 
 /***/ }),
 /* 36 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"sectionList","properties":{"type":{"type":"string","enum":["sectionList"],"default":"sectionList","readonly":true},"tooltip":{"type":"string","maxLength":256},"elements":{"type":"array","minItems":1,"maxItems":256,"items":{"$ref":"section.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
+module.exports = {"title":"Schedule slot","description":"Object of an schedule slot","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["scheduleSlot"],"default":"scheduleSlot","readonly":true},"id":{"type":"string","maxLength":256},"start":{"type":"integer"},"end":{"type":"integer"},"title":{"type":"string","maxLength":40},"description":{"type":"string","maxLength":40},"imageUrl":{"type":"string","format":"uri","maxLength":1024}},"required":["type","id","start"]}
 
 /***/ }),
 /* 37 */
 /***/ (function(module, exports) {
 
-module.exports = {"definitions":{"submitAsText":{"title":"Submit As Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["submitAsText"],"default":"submitAsText","readonly":true},"submit":{"type":"boolean","default":false},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","submit"]},"checked":{"title":"checked","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["checked"],"default":"checked","readonly":true},"publishText":{"type":"string","maxLength":250},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","publishText"]}}}
+module.exports = {"type":"object","additionalProperties":false,"title":"section","properties":{"type":{"type":"string","enum":["section"],"default":"section","readonly":true},"tooltip":{"type":"string","maxLength":256},"padding":{"type":"number","default":0,"minimum":0,"maximum":10},"sectionID":{"type":"string","maxLength":256},"elements":{"oneOf":[{"type":"array","minItems":1,"maxItems":1,"items":[{"$ref":"checklist.json"}]},{"type":"array","minItems":2,"maxItems":2,"items":[{"$ref":"text.json"},{"$ref":"checklist.json"}]}]},"alt":{"type":"string","maxLength":2000},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","elements","sectionID"]}
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"properties":{"background-color":{"type":"string","format":"color","maxLength":256},"border-color":{"type":"string","format":"color","maxLength":256},"border-radius":{"type":"number"},"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]}}}
+module.exports = {"type":"object","additionalProperties":false,"title":"sectionList","properties":{"type":{"type":"string","enum":["sectionList"],"default":"sectionList","readonly":true},"tooltip":{"type":"string","maxLength":256},"elements":{"type":"array","minItems":1,"maxItems":256,"items":{"$ref":"section.json"}},"alt":{"type":"string","maxLength":2000}},"required":["type","elements"]}
 
 /***/ }),
 /* 39 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"submitButton","properties":{"type":{"type":"string","enum":["submitButton"],"default":"submitButton","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"disabled":{"type":"boolean","default":false},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"specialAction.json#/definitions/submitAsText"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","title","click"]}
+module.exports = {"definitions":{"submitAsText":{"title":"Submit As Text","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["submitAsText"],"default":"submitAsText","readonly":true},"submit":{"type":"boolean","default":false},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","submit"]},"checked":{"title":"checked","type":"object","additionalProperties":false,"properties":{"type":{"type":"string","enum":["checked"],"default":"checked","readonly":true},"publishText":{"type":"string","maxLength":250},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","publishText"]}}}
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"tabs","properties":{"type":{"type":"string","enum":["tabs"],"default":"tabs","readonly":true},"style":{"background-color":{"type":"string","format":"color","maxLength":256},"color":{"type":"string","format":"color","maxLength":256},"background-color-active":{"type":"string","format":"color","maxLength":256},"color-active":{"type":"string","format":"color","maxLength":256},"background-color-hover":{"type":"string","format":"color","maxLength":256},"color-hover":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]}},"elements":{"type":"array","minItems":1,"maxItems":10,"items":{"$ref":"card.json"}}},"required":["type","elements"]}
+module.exports = {"type":"object","additionalProperties":false,"properties":{"background-color":{"type":"string","format":"color","maxLength":256},"background-color-active":{"type":"string","format":"color","maxLength":256},"background-color-hover":{"type":"string","format":"color","maxLength":256},"border-color":{"type":"string","format":"color","maxLength":256},"border-color-selected":{"type":"string","format":"color","maxLength":256},"border-color-hover":{"type":"string","format":"color","maxLength":256},"border-radius":{"type":"number"},"font-family":{"type":"string","format":"text","maxLength":256},"bold":{"type":"boolean"},"italic":{"type":"boolean"},"color":{"type":"string","format":"color","maxLength":256},"color-hover":{"type":"string","format":"color","maxLength":256},"color-active":{"type":"string","format":"color","maxLength":256},"size":{"type":"string","enum":["small","medium","large"]},"fill":{"type":"string","format":"color","maxLength":256}}}
 
 /***/ }),
 /* 41 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","title":"template","additionalProperties":false,"properties":{"type":{"type":"string","enum":["template"],"default":"template","readonly":true},"templateType":{"type":"string","enum":["quickReply"],"default":"quickReply","readonly":true},"title":{"type":"string","maxLength":5000},"resp":{"type":"array","maxItems":32,"minItems":1,"items":{"type":"string","maxLength":128}},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["templateType","title","resp"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"submitButton","properties":{"type":{"type":"string","enum":["submitButton"],"default":"submitButton","readonly":true},"title":{"type":"string","maxLength":128},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"disabled":{"type":"boolean","default":false},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"specialAction.json#/definitions/submitAsText"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["type","title","click"]}
 
 /***/ }),
 /* 42 */
 /***/ (function(module, exports) {
 
-module.exports = {"type":"object","additionalProperties":false,"title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["text"]}
+module.exports = {"type":"object","additionalProperties":false,"title":"tabs","properties":{"type":{"type":"string","enum":["tabs"],"default":"tabs","readonly":true},"style":{"$ref":"style.json"},"elements":{"type":"array","minItems":1,"maxItems":10,"items":{"$ref":"card.json"}}},"required":["type","elements"]}
 
 /***/ }),
 /* 43 */
+/***/ (function(module, exports) {
+
+module.exports = {"type":"object","title":"template","additionalProperties":false,"properties":{"type":{"type":"string","enum":["template"],"default":"template","readonly":true},"templateType":{"type":"string","enum":["quickReply"],"default":"quickReply","readonly":true},"title":{"type":"string","maxLength":5000},"resp":{"type":"array","maxItems":32,"minItems":1,"items":{"type":"string","maxLength":128}},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["templateType","title","resp"]}
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports) {
+
+module.exports = {"type":"object","additionalProperties":false,"title":"text","properties":{"type":{"type":"string","enum":["text"],"default":"text","readonly":true},"text":{"type":"string","maxLength":5000},"rtl":{"type":"boolean"},"tooltip":{"type":"string","maxLength":256},"tag":{"type":"string","maxLength":64},"tagVersion":{"type":"string","maxLength":64},"style":{"$ref":"style.json"},"alt":{"type":"string","maxLength":2000},"click":{"type":"object","additionalProperties":false,"properties":{"actions":{"type":"array","maxItems":4,"items":{"$ref":"action.json"}},"metadata":{"type":"array"}}},"accessibility":{"type":"object","additionalProperties":false,"properties":{"web":{"$ref":"accessibilityWeb.json"}}}},"required":["text"]}
+
+/***/ }),
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2672,21 +2731,21 @@ module.exports = function (metaSchema, keywordsJsonPointers) {
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var compileSchema = __webpack_require__(49)
+var compileSchema = __webpack_require__(51)
   , resolve = __webpack_require__(2)
-  , Cache = __webpack_require__(45)
+  , Cache = __webpack_require__(47)
   , SchemaObject = __webpack_require__(4)
   , stableStringify = __webpack_require__(13)
-  , formats = __webpack_require__(48)
-  , rules = __webpack_require__(50)
-  , $dataMetaSchema = __webpack_require__(43)
-  , patternGroups = __webpack_require__(71)
+  , formats = __webpack_require__(50)
+  , rules = __webpack_require__(52)
+  , $dataMetaSchema = __webpack_require__(45)
+  , patternGroups = __webpack_require__(73)
   , util = __webpack_require__(0)
   , co = __webpack_require__(12);
 
@@ -2705,8 +2764,8 @@ Ajv.prototype.errorsText = errorsText;
 Ajv.prototype._addSchema = _addSchema;
 Ajv.prototype._compile = _compile;
 
-Ajv.prototype.compileAsync = __webpack_require__(47);
-var customKeyword = __webpack_require__(70);
+Ajv.prototype.compileAsync = __webpack_require__(49);
+var customKeyword = __webpack_require__(72);
 Ajv.prototype.addKeyword = customKeyword.add;
 Ajv.prototype.getKeyword = customKeyword.get;
 Ajv.prototype.removeKeyword = customKeyword.remove;
@@ -3123,11 +3182,11 @@ function addFormat(name, format) {
 function addDraft6MetaSchema(self) {
   var $dataSchema;
   if (self._opts.$data) {
-    $dataSchema = __webpack_require__(72);
+    $dataSchema = __webpack_require__(74);
     self.addMetaSchema($dataSchema, $dataSchema.$id, true);
   }
   if (self._opts.meta === false) return;
-  var metaSchema = __webpack_require__(73);
+  var metaSchema = __webpack_require__(75);
   if (self._opts.$data) metaSchema = $dataMetaSchema(metaSchema, META_SUPPORT_DATA);
   self.addMetaSchema(metaSchema, META_SCHEMA_ID, true);
   self._refs['http://json-schema.org/schema'] = META_SCHEMA_ID;
@@ -3181,7 +3240,7 @@ function noop() {}
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3214,7 +3273,7 @@ Cache.prototype.clear = function Cache_clear() {
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3222,15 +3281,15 @@ Cache.prototype.clear = function Cache_clear() {
 
 //all requires must be explicit because browserify won't work with dynamic requires
 module.exports = {
-  '$ref': __webpack_require__(67),
-  allOf: __webpack_require__(52),
-  anyOf: __webpack_require__(53),
-  const: __webpack_require__(54),
-  contains: __webpack_require__(55),
-  dependencies: __webpack_require__(57),
-  'enum': __webpack_require__(58),
-  format: __webpack_require__(59),
-  items: __webpack_require__(60),
+  '$ref': __webpack_require__(69),
+  allOf: __webpack_require__(54),
+  anyOf: __webpack_require__(55),
+  const: __webpack_require__(56),
+  contains: __webpack_require__(57),
+  dependencies: __webpack_require__(59),
+  'enum': __webpack_require__(60),
+  format: __webpack_require__(61),
+  items: __webpack_require__(62),
   maximum: __webpack_require__(5),
   minimum: __webpack_require__(5),
   maxItems: __webpack_require__(6),
@@ -3239,20 +3298,20 @@ module.exports = {
   minLength: __webpack_require__(7),
   maxProperties: __webpack_require__(8),
   minProperties: __webpack_require__(8),
-  multipleOf: __webpack_require__(61),
-  not: __webpack_require__(62),
-  oneOf: __webpack_require__(63),
-  pattern: __webpack_require__(64),
-  properties: __webpack_require__(65),
-  propertyNames: __webpack_require__(66),
-  required: __webpack_require__(68),
-  uniqueItems: __webpack_require__(69),
+  multipleOf: __webpack_require__(63),
+  not: __webpack_require__(64),
+  oneOf: __webpack_require__(65),
+  pattern: __webpack_require__(66),
+  properties: __webpack_require__(67),
+  propertyNames: __webpack_require__(68),
+  required: __webpack_require__(70),
+  uniqueItems: __webpack_require__(71),
   validate: __webpack_require__(9)
 };
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3349,7 +3408,7 @@ function compileAsync(schema, meta, callback) {
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3491,7 +3550,7 @@ function regex(str) {
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3878,13 +3937,13 @@ function vars(arr, statement) {
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var ruleModules = __webpack_require__(46)
+var ruleModules = __webpack_require__(48)
   , toHash = __webpack_require__(0).toHash;
 
 module.exports = function rules() {
@@ -3943,7 +4002,7 @@ module.exports = function rules() {
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3970,7 +4029,7 @@ module.exports = function ucs2length(str) {
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4020,7 +4079,7 @@ module.exports = function generate_allOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4100,7 +4159,7 @@ module.exports = function generate_anyOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4162,7 +4221,7 @@ module.exports = function generate_const(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4250,7 +4309,7 @@ module.exports = function generate_contains(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4483,7 +4542,7 @@ module.exports = function generate_custom(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4657,7 +4716,7 @@ module.exports = function generate_dependencies(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4729,7 +4788,7 @@ module.exports = function generate_enum(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4885,7 +4944,7 @@ module.exports = function generate_format(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5032,7 +5091,7 @@ module.exports = function generate_items(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5115,7 +5174,7 @@ module.exports = function generate_multipleOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5205,7 +5264,7 @@ module.exports = function generate_not(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5282,7 +5341,7 @@ module.exports = function generate_oneOf(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5363,7 +5422,7 @@ module.exports = function generate_pattern(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5838,7 +5897,7 @@ module.exports = function generate_properties(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5926,7 +5985,7 @@ module.exports = function generate_propertyNames(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6056,7 +6115,7 @@ module.exports = function generate_ref(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6331,7 +6390,7 @@ module.exports = function generate_required(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6409,14 +6468,14 @@ module.exports = function generate_uniqueItems(it, $keyword, $ruleType) {
 
 
 /***/ }),
-/* 70 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var IDENTIFIER = /^[a-z_$][a-z0-9_$-]*$/i;
-var customRuleCode = __webpack_require__(56);
+var customRuleCode = __webpack_require__(58);
 
 module.exports = {
   add: addKeyword,
@@ -6551,7 +6610,7 @@ function removeKeyword(keyword) {
 
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6594,19 +6653,19 @@ module.exports = function (ajv) {
 
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports) {
 
 module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/$data.json#","description":"Meta-schema for $data reference (JSON-schema extension proposal)","type":"object","required":["$data"],"properties":{"$data":{"type":"string","anyOf":[{"format":"relative-json-pointer"},{"format":"json-pointer"}]}},"additionalProperties":false}
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports) {
 
 module.exports = {"$schema":"http://json-schema.org/draft-06/schema#","$id":"http://json-schema.org/draft-06/schema#","title":"Core schema meta-schema","definitions":{"schemaArray":{"type":"array","minItems":1,"items":{"$ref":"#"}},"nonNegativeInteger":{"type":"integer","minimum":0},"nonNegativeIntegerDefault0":{"allOf":[{"$ref":"#/definitions/nonNegativeInteger"},{"default":0}]},"simpleTypes":{"enum":["array","boolean","integer","null","number","object","string"]},"stringArray":{"type":"array","items":{"type":"string"},"uniqueItems":true,"default":[]}},"type":["object","boolean"],"properties":{"$id":{"type":"string","format":"uri-reference"},"$schema":{"type":"string","format":"uri"},"$ref":{"type":"string","format":"uri-reference"},"title":{"type":"string"},"description":{"type":"string"},"default":{},"examples":{"type":"array","items":{}},"multipleOf":{"type":"number","exclusiveMinimum":0},"maximum":{"type":"number"},"exclusiveMaximum":{"type":"number"},"minimum":{"type":"number"},"exclusiveMinimum":{"type":"number"},"maxLength":{"$ref":"#/definitions/nonNegativeInteger"},"minLength":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"pattern":{"type":"string","format":"regex"},"additionalItems":{"$ref":"#"},"items":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/schemaArray"}],"default":{}},"maxItems":{"$ref":"#/definitions/nonNegativeInteger"},"minItems":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"uniqueItems":{"type":"boolean","default":false},"contains":{"$ref":"#"},"maxProperties":{"$ref":"#/definitions/nonNegativeInteger"},"minProperties":{"$ref":"#/definitions/nonNegativeIntegerDefault0"},"required":{"$ref":"#/definitions/stringArray"},"additionalProperties":{"$ref":"#"},"definitions":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"properties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"patternProperties":{"type":"object","additionalProperties":{"$ref":"#"},"default":{}},"dependencies":{"type":"object","additionalProperties":{"anyOf":[{"$ref":"#"},{"$ref":"#/definitions/stringArray"}]}},"propertyNames":{"$ref":"#"},"const":{},"enum":{"type":"array","minItems":1,"uniqueItems":true},"type":{"anyOf":[{"$ref":"#/definitions/simpleTypes"},{"type":"array","items":{"$ref":"#/definitions/simpleTypes"},"minItems":1,"uniqueItems":true}]},"format":{"type":"string"},"allOf":{"$ref":"#/definitions/schemaArray"},"anyOf":{"$ref":"#/definitions/schemaArray"},"oneOf":{"$ref":"#/definitions/schemaArray"},"not":{"$ref":"#"}},"default":{}}
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6616,6 +6675,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _Utils = __webpack_require__(10);
@@ -6623,6 +6684,8 @@ var _Utils = __webpack_require__(10);
 var _Utils2 = _interopRequireDefault(_Utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6638,6 +6701,8 @@ var TYPES = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
   CAROUSEL: 'carousel',
+  CAROUSELSELECT: 'carouselSelect',
+  ACCORDIONSELECT: 'accordionSelect',
   SUBMITBUTTON: 'submitButton',
   CHECKBOX: 'checkbox',
   CHECKLIST: 'checklist',
@@ -6699,6 +6764,13 @@ var ElementRendererProvider = function () {
       var btnEl = document.createElement('button');
       btnEl.innerHTML = _Utils2.default.normalizeHtmlText(config.title);
 
+      if (config.subtitle) {
+        var btnElSubtitle = document.createElement('span');
+        btnElSubtitle.className = 'lp-json-pollock-element-button-subtitle';
+        btnElSubtitle.innerHTML = _Utils2.default.normalizeHtmlText(config.subtitle);
+        btnEl.appendChild(btnElSubtitle);
+      }
+
       if (config.tooltip) {
         btnEl.title = config.tooltip;
         btnEl.setAttribute('aria-label', config.tooltip);
@@ -6708,8 +6780,44 @@ var ElementRendererProvider = function () {
         _Utils2.default.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
 
-      if (config.click && config.click.actions) {
-        btnEl.onclick = _this.wrapAction(config.click);
+      var clickData = config.click;
+
+      if (clickData && clickData.actions) {
+        var metadata = clickData.metadata;
+
+
+        btnEl.onclick = function (event, formEl) {
+          var newMetadata = [].concat(_toConsumableArray(metadata || []));
+
+          if (config.ref) {
+            var selector = void 0;
+
+            switch (config.ref.type) {
+              case 'carouselSelect':
+                selector = '[data-carousel-name=' + config.ref.name + '] [data-selected]';
+                break;
+
+              case 'accordionSelect':
+                selector = '[data-accordion-name=' + config.ref.name + '] [data-accordion-body][data-selected]';
+                break;
+
+              default:
+                throw new Error('Invalid config ref type is used for the button! Type: ' + config.ref.type);
+            }
+
+            var selectedNodes = Array.from(document.querySelectorAll(selector));
+
+            if (selectedNodes.length === 0) {
+              throw new Error('No items has selected!');
+            }
+
+            newMetadata.push({ type: 'selectedCards', cards: selectedNodes.map(function (node) {
+                return JSON.parse(node.getAttribute('data-metadata') || 'null');
+              }) });
+          }
+
+          return _this.wrapAction(_extends({}, clickData, { metadata: newMetadata }))(event, formEl);
+        };
       }
 
       if (config.class !== 'button') {
@@ -6971,6 +7079,7 @@ var ElementRendererProvider = function () {
     });
 
     this.set(TYPES.MAP, function (config) {
+      var accessibilityWeb = config.accessibility && config.accessibility.web;
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-element-map';
 
@@ -6983,9 +7092,18 @@ var ElementRendererProvider = function () {
         divEl.style.cssText = _Utils2.default.styleToCss(config.style);
       }
 
-      if (config.accessibility && config.accessibility.web) {
+      if (accessibilityWeb) {
         _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
       }
+      if (!accessibilityWeb || !accessibilityWeb.tabindex) {
+        divEl.setAttribute('tabindex', '0');
+      }
+      divEl.onkeydown = function (event) {
+        if (event.keyCode === 13 || event.keyCode === 32) {
+          event.preventDefault();
+          window.open('https://www.google.com/maps/search/?api=1&query=' + config.la + ',' + config.lo, '_blank');
+        }
+      };
 
       if (config.click && config.click.actions) {
         divEl.onclick = _this.wrapAction(config.click);
@@ -7006,8 +7124,31 @@ var ElementRendererProvider = function () {
       } else if (config.border === 'dropShadow') {
         _Utils2.default.addClass(divEl, 'lp-json-pollock-layout-dropShadow');
       }
+      if (config.scroll === 'enable') {
+        _Utils2.default.addClass(divEl, 'lp-json-pollock-layout-vertical-scroll');
+
+        if (config.style && config.style.size) {
+          var size = config.style.size;
+
+          var height = 100;
+
+          if (size === 'medium') {
+            height = 300;
+          } else if (size === 'large') {
+            height = 500;
+          }
+
+          divEl.setAttribute('style', 'height: ' + height + 'px');
+        } else {
+          divEl.setAttribute('style', 'height: ' + 100 + 'px');
+        }
+      }
+
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
+      if (config.metadata) {
+        divEl.setAttribute('data-metadata', JSON.stringify(config.metadata));
       }
       return divEl;
     });
@@ -7162,23 +7303,57 @@ var ElementRendererProvider = function () {
       var defaultPadding = 0;
       var padding = config.padding || defaultPadding;
       var nextLeft = 0;
-      var arrowRight = document.createElement('button');
       var arrowLeft = document.createElement('button');
+      var arrowRight = document.createElement('button');
       var divCarouselWrapper = document.createElement('div');
+      var a11yDiv = document.createElement('div');
       var carousel = document.createElement('div');
       var carouselOffsetChangedEventName = 'carouselOffsetChange';
       var carouselItemIndex = 0;
       var isRTLDirection = false;
       var cards = void 0;
 
-      arrowRight.setAttribute('type', 'button');
-      arrowRight.setAttribute('aria-label', 'Next');
       arrowLeft.setAttribute('type', 'button');
       arrowLeft.setAttribute('aria-label', 'Previous');
-      arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      arrowRight.setAttribute('type', 'button');
+      arrowRight.setAttribute('aria-label', 'Next');
+      a11yDiv.setAttribute('aria-live', 'polite');
+      a11yDiv.setAttribute('aria-atomic', 'true');
       arrowLeft.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
+      arrowRight.innerHTML = '<svg aria-hidden="true" class="lp-json-pollock-layout-carousel-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>';
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(divCarouselWrapper, config.accessibility.web);
+      }
+
+      if (config.style) {
+        var style = _Utils2.default.styleToCss(config.style);
+        var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
+        var arrowBtnStyle = '' + splitedStyle.extractedStyle;
+        // Change color to border:
+        var borderStyle = _Utils2.default.styleToBorder(config.style);
+        if (borderStyle !== '') {
+          arrowBtnStyle += ' ' + borderStyle;
+        }
+        // Change size to button:
+        var buttonSize = _Utils2.default.styleToButton(config.style);
+        if (buttonSize !== '') {
+          arrowBtnStyle += ' ' + buttonSize;
+        }
+        // Set all defined style attributes on the button itself
+        // Set extractedStyle (in this case background-color) specifically on the button itself
+        arrowRight.setAttribute('style', '' + arrowBtnStyle);
+        arrowLeft.setAttribute('style', '' + arrowBtnStyle);
+        // Add style to image directly:
+        var svgChildArrowRight = arrowRight.querySelector('.lp-json-pollock-layout-carousel-arrow-icon');
+        var svgChildArrowLeft = arrowLeft.querySelector('.lp-json-pollock-layout-carousel-arrow-icon');
+        if (svgChildArrowRight) {
+          // right arrow image
+          svgChildArrowRight.setAttribute('style', splitedStyle.style);
+        }
+        if (svgChildArrowLeft) {
+          // left arrow image
+          svgChildArrowLeft.setAttribute('style', splitedStyle.style);
+        }
       }
 
       function setShowingCard(event) {
@@ -7204,15 +7379,29 @@ var ElementRendererProvider = function () {
         }
 
         carousel.style.left = nextLeft;
-        arrowRight.style.visibility = carouselItemIndex >= cards.length - 1 ? 'hidden' : 'visible';
-        arrowLeft.style.visibility = carouselItemIndex <= 0 ? 'hidden' : 'visible';
       }
+
+      function addA11yLabel() {
+        var arrowLabel = 'Item ' + (carouselItemIndex + 1) + ' of ' + cards.length;
+        a11yDiv.setAttribute('aria-label', arrowLabel);
+      }
+
       function rightArrowClicked(event) {
-        carouselItemIndex += 1;
+        if (carouselItemIndex === cards.length - 1) {
+          carouselItemIndex = 0;
+        } else {
+          carouselItemIndex += 1;
+        }
+        addA11yLabel();
         setShowingCard.call(this, event);
       }
       function leftArrowClicked(event) {
-        carouselItemIndex -= 1;
+        if (carouselItemIndex === 0) {
+          carouselItemIndex = cards.length - 1;
+        } else {
+          carouselItemIndex -= 1;
+        }
+        addA11yLabel();
         setShowingCard.call(this, event);
       }
       function findCardIndex(element) {
@@ -7259,12 +7448,13 @@ var ElementRendererProvider = function () {
 
           divCarouselWrapper.appendChild(carousel);
           carousel.className = 'lp-json-pollock-layout-carousel';
-          carousel.setAttribute('aria-label', 'Carousel with buttons');
+          divCarouselWrapper.setAttribute('aria-label', 'Carousel with buttons');
           divCarouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
           carousel.setAttribute('role', 'list');
-          divCarouselWrapper.appendChild(carousel);
-          divCarouselWrapper.appendChild(arrowRight);
           divCarouselWrapper.appendChild(arrowLeft);
+          divCarouselWrapper.appendChild(arrowRight);
+          divCarouselWrapper.appendChild(carousel);
+          divCarouselWrapper.appendChild(a11yDiv);
           /* TODO: find other trigger. */
           setTimeout(function () {
             /* check if the viewport width is bigger then the carousel div
@@ -7279,7 +7469,7 @@ var ElementRendererProvider = function () {
 
             if (isRTLDirection) {
               arrowLeft.style.visibility = 'visible';
-              arrowRight.style.visibility = 'hidden';
+              arrowRight.style.visibility = 'visible';
               carouselItemIndex = cards.length - 1;
               cards = [].slice.call(cards, 0).reverse();
               nextLeft = -1 * (cards[carouselItemIndex].offsetLeft - (divCarouselWrapper.offsetWidth - cards[carouselItemIndex].offsetWidth)) + 'px';
@@ -7297,6 +7487,285 @@ var ElementRendererProvider = function () {
       return divCarouselWrapper;
     });
 
+    this.set(TYPES.CAROUSELSELECT, function (config) {
+      var defaultPadding = 0;
+      var padding = config.padding || defaultPadding;
+
+      var carouselWrapper = document.createElement('div');
+      var carousel = document.createElement('div');
+
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(carouselWrapper, config.accessibility.web);
+      }
+
+      function findCardParent(element) {
+        if (!element || element.tagName === 'BUTTON') {
+          return undefined;
+        }
+
+        var index = element.getAttribute('data-carousel-index');
+        if (index !== null) {
+          return element;
+        }
+
+        return findCardParent(element.parentNode);
+      }
+
+      function toggleCardSelect(element, selected) {
+        if (selected) {
+          element.setAttribute('data-selected', 'true');
+          element.classList.add('lp-json-pollock-layout-selected');
+
+          if (config.style && config.style['border-color-selected']) {
+            // eslint-disable-next-line no-param-reassign
+            element.style.borderColor = config.style['border-color-selected'];
+          }
+        } else {
+          element.removeAttribute('data-selected');
+          element.classList.remove('lp-json-pollock-layout-selected');
+          // eslint-disable-next-line no-param-reassign
+          element.style.borderColor = '';
+        }
+      }
+
+      /**
+       * @param {MouseEvent} event
+       * */
+      function cardClick(event) {
+        var element = event.target;
+        var cardParent = findCardParent(element);
+
+        if (cardParent) {
+          if (config.selectMode.type === 'single' && cardParent.parentNode) {
+            Array.from(cardParent.parentNode.querySelectorAll('[data-carousel-index][data-selected]')).filter(function (carouselElement) {
+              return carouselElement !== cardParent;
+            }).forEach(function (carouselElement) {
+              toggleCardSelect(carouselElement, false);
+            });
+          }
+
+          toggleCardSelect(cardParent, cardParent.dataset.selected !== 'true');
+        }
+      }
+
+      if (config.style) {
+        var style = _Utils2.default.styleToCss(config.style);
+        var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
+
+        carousel.style.cssText = splitedStyle.style;
+        carousel.setAttribute('style', splitedStyle.extractedStyle);
+      }
+
+      /**
+       * Render logic
+       * */
+      carouselWrapper.afterRender = function () {
+        var carouselItemsCount = carouselWrapper.children.length;
+
+        if (carouselItemsCount) {
+          for (var itemCounter = 0; itemCounter < carouselItemsCount; itemCounter += 1) {
+            var carouselElement = carouselWrapper.children[itemCounter];
+
+            carouselElement.addEventListener('click', cardClick.bind(_this), true);
+            carouselElement.style.margin = '0 ' + padding / 2 + 'px'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            carouselElement.setAttribute('data-carousel-index', itemCounter.toString()); // Add an index reference for faster lookup on focus changes
+            carouselElement.setAttribute('role', 'listitem');
+          }
+
+          /* create carousel wrapper */
+          while (carouselWrapper.hasChildNodes() && carouselWrapper.lastChild) {
+            carousel.insertBefore(carouselWrapper.lastChild, carousel.firstChild);
+          }
+
+          carousel.className = 'lp-json-pollock-layout-carousel lp-json-pollock-layout-carousel-select';
+
+          carouselWrapper.className = 'lp-json-pollock-layout-carousel-wrapper';
+          carouselWrapper.appendChild(carousel);
+          carouselWrapper.setAttribute('data-carousel-name', config.selectMode.name);
+        }
+      };
+
+      return carouselWrapper;
+    });
+
+    this.set(TYPES.ACCORDIONSELECT, function (config) {
+      var defaultPadding = 0;
+      var padding = config.padding || defaultPadding;
+
+      var accordionWrapper = document.createElement('div');
+      var accordion = document.createElement('div');
+
+      var arrowElement = _Utils2.default.htmlToElement('<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 14"><path d="M0 0 L2 0 L9 7 L2 14 L0 14 L0 13 L6 7 L0 1"/></svg>');
+
+      if (config.accessibility && config.accessibility.web) {
+        _Utils2.default.appendAttributesFromObject(accordionWrapper, config.accessibility.web);
+      }
+
+      function findTabParent(element) {
+        var index = element.getAttribute('data-accordion-index');
+        if (index !== null) {
+          return element;
+        }
+
+        return findTabParent(element.parentNode);
+      }
+
+      function toggleTabSelect(element, selected) {
+        if (selected) {
+          element.removeAttribute('data-selected');
+          // eslint-disable-next-line no-param-reassign
+          element.checked = false;
+        } else {
+          element.setAttribute('data-selected', 'true');
+          // eslint-disable-next-line no-param-reassign
+          element.checked = true;
+        }
+      }
+
+      function toggleBodySelect(element, selected) {
+        if (selected) {
+          element.removeAttribute('data-selected');
+        } else {
+          element.setAttribute('data-selected', 'true');
+        }
+      }
+
+      function toggleBodyOpen(element, selected) {
+        if (selected) {
+          element.setAttribute('data-open', 'true');
+          element.classList.remove('lp-json-pollock-layout-accordion-folded');
+        } else {
+          element.setAttribute('data-open', 'false');
+          element.classList.add('lp-json-pollock-layout-accordion-folded');
+        }
+      }
+
+      function toggleArrowOpen(element, selected) {
+        if (selected) {
+          element.classList.add('open');
+          element.classList.remove('close');
+        } else {
+          element.classList.add('close');
+          element.classList.remove('open');
+        }
+      }
+
+      /**
+       * @param {MouseEvent} event
+       * */
+      function accordionClick(event) {
+        var element = event.target;
+        var isCheckboxClicked = element.tagName === 'INPUT';
+        var tabParent = findTabParent(element);
+
+        if (!tabParent) {
+          return;
+        }
+
+        var checkboxElement = tabParent.querySelector('.lp-json-pollock-layout-accordion-checkbox');
+        var headerElement = tabParent.querySelector('.lp-json-pollock-layout-accordion-header');
+        var bodyElement = tabParent.querySelector('.lp-json-pollock-layout-accordion');
+        var headerArrowElement = tabParent.querySelector('.lp-json-pollock-layout-accordion-arrow');
+
+        if (isCheckboxClicked) {
+          if (!checkboxElement || !bodyElement) {
+            return;
+          }
+
+          var selected = checkboxElement.dataset.selected === 'true';
+
+          toggleTabSelect(checkboxElement, selected);
+          toggleBodySelect(bodyElement, selected);
+          return;
+        }
+
+        if (!headerElement || !bodyElement) {
+          return;
+        }
+
+        var isOpen = bodyElement.dataset.open === 'true';
+
+        toggleBodyOpen(bodyElement, !isOpen);
+        toggleArrowOpen(headerArrowElement, !isOpen);
+      }
+
+      if (config.style) {
+        var style = _Utils2.default.styleToCss(config.style);
+        var splitedStyle = _Utils2.default.extractFromStyles(style, 'background-color');
+
+        accordion.style.cssText = splitedStyle.style;
+        accordion.setAttribute('style', splitedStyle.extractedStyle);
+      }
+
+      /**
+       * Render logic
+       * */
+      accordionWrapper.afterRender = function () {
+        var accordionItemsCount = accordionWrapper.children.length;
+
+        if (accordionItemsCount) {
+          for (var itemCounter = 0; itemCounter < accordionItemsCount; itemCounter += 1) {
+            var accordionElement = accordionWrapper.children[0];
+            var accordionTitleConfig = config.titles[itemCounter];
+
+            var accordionTabElement = document.createElement('section');
+            var accordionHeaderElement = document.createElement('div');
+            var accordionCheckboxElement = document.createElement('input');
+            var accordionTitleElement = document.createElement('h3');
+            var accordionAdditionalElement = document.createElement('span');
+            var accordionArrowElement = arrowElement.cloneNode(true);
+
+            accordionTabElement.classList.add('lp-json-pollock-layout-accordion-tab');
+            accordionHeaderElement.classList.add('lp-json-pollock-layout-accordion-header');
+            accordionCheckboxElement.classList.add('lp-json-pollock-layout-accordion-checkbox');
+            accordionTitleElement.classList.add('lp-json-pollock-layout-accordion-title');
+            accordionAdditionalElement.classList.add('lp-json-pollock-layout-accordion-additional');
+            accordionArrowElement.classList.add('lp-json-pollock-layout-accordion-arrow', 'close');
+
+            accordionElement.classList.add('lp-json-pollock-layout-accordion-folded');
+            accordionElement.classList.add('lp-json-pollock-layout-accordion');
+            accordionElement.setAttribute('data-open', 'false');
+            accordionElement.setAttribute('data-accordion-body', '');
+
+            accordionCheckboxElement.type = 'checkbox';
+            accordionTitleElement.innerText = accordionTitleConfig.name;
+
+            if (accordionTitleConfig.additional) {
+              accordionAdditionalElement.innerText = accordionTitleConfig.additional;
+            }
+
+            accordionHeaderElement.addEventListener('click', accordionClick.bind(_this), true);
+
+            accordionTabElement.style.margin = '0 ' + padding / 2 + 'px'; // this comment is due to a bug in VSCode js editor :( otherwise ut shows the code below as a comment `
+            accordionTabElement.setAttribute('data-accordion-index', itemCounter.toString()); // Add an index reference for faster lookup on focus changes
+            accordionTabElement.setAttribute('role', 'listitem');
+
+            accordionHeaderElement.appendChild(accordionCheckboxElement);
+            accordionHeaderElement.appendChild(accordionTitleElement);
+            accordionHeaderElement.appendChild(accordionAdditionalElement);
+            accordionHeaderElement.appendChild(accordionArrowElement);
+
+            accordionTabElement.appendChild(accordionHeaderElement);
+            accordionTabElement.appendChild(accordionElement);
+            accordionWrapper.appendChild(accordionTabElement);
+          }
+
+          /* create accordion wrapper */
+          while (accordionWrapper.hasChildNodes() && accordionWrapper.lastChild) {
+            accordion.insertBefore(accordionWrapper.lastChild, accordion.firstChild);
+          }
+
+          accordion.className = 'lp-json-pollock-layout-accordion lp-json-pollock-layout-accordion-select';
+
+          accordionWrapper.className = 'lp-json-pollock-layout-accordion-wrapper';
+          accordionWrapper.appendChild(accordion);
+          accordionWrapper.setAttribute('data-accordion-name', config.selectMode.name);
+        }
+      };
+
+      return accordionWrapper;
+    });
+
     this.set(TYPES.HORIZONTAL, function (config) {
       var divEl = document.createElement('div');
       divEl.className = 'lp-json-pollock-layout lp-json-pollock-layout-horizontal';
@@ -7309,6 +7778,9 @@ var ElementRendererProvider = function () {
       }
       if (config.accessibility && config.accessibility.web) {
         _Utils2.default.appendAttributesFromObject(divEl, config.accessibility.web);
+      }
+      if (config.metadata) {
+        divEl.setAttribute('data-metadata', JSON.stringify(config.metadata));
       }
       divEl.afterRender = function () {
         if (divEl.childNodes.length) {
@@ -7382,7 +7854,7 @@ ElementRendererProvider.TYPES = TYPES;
 exports.default = ElementRendererProvider;
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7470,7 +7942,7 @@ function escapeJsonPtr(str) {
 
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -8006,10 +8478,10 @@ function escapeJsonPtr(str) {
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(84)(module), __webpack_require__(83)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(86)(module), __webpack_require__(85)))
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8100,7 +8572,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8192,18 +8664,18 @@ var objectKeys = Object.keys || function (obj) {
 
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(77);
-exports.encode = exports.stringify = __webpack_require__(78);
+exports.decode = exports.parse = __webpack_require__(79);
+exports.encode = exports.stringify = __webpack_require__(80);
 
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8240,7 +8712,7 @@ var registerAction = instance.registerAction.bind(instance);
 var unregisterAction = instance.unregisterAction.bind(instance);
 var unregisterAllActions = instance.unregisterAllActions.bind(instance);
 var validate = instance.validate.bind(instance);
-var version = '1.6.8';
+var version = '1.7.2';
 var TEMPLATE_TYPES = _JsonPollock2.default.TEMPLATE_TYPES;
 
 exports.init = init;
@@ -8253,7 +8725,7 @@ exports.version = version;
 exports.TEMPLATE_TYPES = TEMPLATE_TYPES;
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8280,8 +8752,8 @@ exports.TEMPLATE_TYPES = TEMPLATE_TYPES;
 
 
 
-var punycode = __webpack_require__(76);
-var util = __webpack_require__(82);
+var punycode = __webpack_require__(78);
+var util = __webpack_require__(84);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -8356,7 +8828,7 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
       'gopher:': true,
       'file:': true
     },
-    querystring = __webpack_require__(79);
+    querystring = __webpack_require__(81);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
   if (url && util.isObject(url) && url instanceof Url) return url;
@@ -8992,7 +9464,7 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9015,7 +9487,7 @@ module.exports = {
 
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports) {
 
 var g;
@@ -9042,7 +9514,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
