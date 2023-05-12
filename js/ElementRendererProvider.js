@@ -125,7 +125,7 @@ export default class ElementRendererProvider {
 
             const selectedCardsMetadata = selectedNodes
               .map(node => JSON.parse(node.getAttribute('data-metadata') || '[]'))
-              .reduce((accumulator, currentMeta) => [...accumulator, currentMeta], []);
+              .reduce((accumulator, currentMeta) => [...accumulator, ...currentMeta], []);
 
             newMetadata.push(...selectedCardsMetadata);
           }
