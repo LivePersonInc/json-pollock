@@ -95,6 +95,19 @@ export default class ElementRendererProvider {
         Utils.appendAttributesFromObject(btnEl, config.accessibility.web);
       }
 
+      function findJsonPollockParent(element: any): HTMLDivElement | typeof undefined {
+        if (!element) {
+          return undefined;
+        }
+
+        const matches = element.matches('[class="lp-json-pollock"]');
+        if (matches) {
+          return element;
+        }
+
+        return findJsonPollockParent(element.parentNode);
+      }
+
       const clickData = config.click;
 
       if (clickData && clickData.actions) {
@@ -104,6 +117,12 @@ export default class ElementRendererProvider {
           const newMetadata = [...(metadata || [])];
 
           if (config.ref) {
+            const jsonPollockElement = findJsonPollockParent(btnEl);
+
+            if (!jsonPollockElement) {
+              throw new Error('Cannot find root element selected!');
+            }
+
             let selector;
 
             switch (config.ref.type) {
@@ -119,7 +138,7 @@ export default class ElementRendererProvider {
                 throw new Error(`Invalid config ref type is used for the button! Type: ${config.ref.type}`);
             }
 
-            const selectedNodes = Array.from(document.querySelectorAll(selector));
+            const selectedNodes = Array.from(jsonPollockElement.querySelectorAll(selector));
 
             if (selectedNodes.length === 0) {
               throw new Error('No items has selected!');
