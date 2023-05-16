@@ -100,7 +100,7 @@ export default class ElementRendererProvider {
           return undefined;
         }
 
-        const matches = element.matches('[class="lp-json-pollock"]');
+        const matches = element.classList.contains('lp-json-pollock');
         if (matches) {
           return element;
         }
