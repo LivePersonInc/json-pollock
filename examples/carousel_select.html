@@ -249,8 +249,10 @@
          * Rendering logic
          * */
         const elMultiple = JsonPollock.render(JSON.stringify(multiCard));
+        const elMultiple2 = JsonPollock.render(JSON.stringify(multiCard));
 
         document.getElementById("content-multi").appendChild(elMultiple);
+        document.getElementById("content-multi-2").appendChild(elMultiple2);
 
         const elSingle = JsonPollock.render(JSON.stringify(singleCard));
 
@@ -262,6 +264,15 @@
   <body>
     <h1>Multi select example</h1>
     <div id="content-multi" style="max-width: 300px"></div>
+
+    <h1>Second Multi select example</h1>
+    <p>
+      Here's an example where the second multi-select shares the same name as
+      the first. Consequently, the code will no longer search for the first
+      multi-select and instead focus solely on this particular node.
+    </p>
+    <div id="content-multi-2" style="max-width: 300px"></div>
+
     <h1>Single select example</h1>
     <div id="content-single" style="max-width: 300px"></div>
   </body>
