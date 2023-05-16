@@ -98,10 +98,8 @@ export default class ElementRendererProvider {
       const clickData = config.click;
 
       if (clickData && clickData.actions) {
-        const { metadata } = clickData;
-
         btnEl.onclick = (event, formEl) => {
-          const newMetadata = [...(metadata || [])];
+          const newMetadata = [];
 
           if (config.ref) {
             let selector;
@@ -125,7 +123,11 @@ export default class ElementRendererProvider {
               throw new Error('No items has selected!');
             }
 
-            newMetadata.push({ type: 'selectedCards', cards: selectedNodes.map(node => JSON.parse(node.getAttribute('data-metadata') || 'null')) });
+            const selectedCardsMetadata = selectedNodes
+              .map(node => JSON.parse(node.getAttribute('data-metadata') || '[]'))
+              .reduce((accumulator, currentMeta) => [...accumulator, ...currentMeta], []);
+
+            newMetadata.push(...selectedCardsMetadata);
           }
 
           return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
