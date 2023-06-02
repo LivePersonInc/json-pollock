@@ -770,6 +770,7 @@ export default class ElementRendererProvider {
 
           arrowRight.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow';
           arrowLeft.className = 'lp-json-pollock-component-action lp-json-pollock-layout-carousel-arrow left';
+          arrowLeft.style.visibility = 'visible';
 
           /* create carousel wrapper */
           while ((divCarouselWrapper: any).hasChildNodes()) {
