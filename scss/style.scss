@@ -238,7 +238,6 @@
             padding: 0;
             fill: $color-dark-blue;
             &.left {
-                visibility: hidden;
                 left: 0px;
                 .lp-json-pollock-layout-carousel-arrow-icon {
                     transform: rotate(180deg);
