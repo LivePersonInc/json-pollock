@@ -111,7 +111,7 @@ export default class ElementRendererProvider {
       const clickData = config.click;
 
       if (clickData && clickData.actions) {
-        if (config.ref){
+        if (config.ref) {
           btnEl.onclick = (event, formEl) => {
             const newMetadata = [];
             const jsonPollockElement = findJsonPollockParent(btnEl);
