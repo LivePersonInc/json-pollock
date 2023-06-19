@@ -111,10 +111,9 @@ export default class ElementRendererProvider {
       const clickData = config.click;
 
       if (clickData && clickData.actions) {
-        btnEl.onclick = (event, formEl) => {
-          const newMetadata = [];
-
-          if (config.ref) {
+        if (config.ref) {
+          btnEl.onclick = (event, formEl) => {
+            const newMetadata = [];
             const jsonPollockElement = findJsonPollockParent(btnEl);
 
             if (!jsonPollockElement) {
@@ -147,10 +146,12 @@ export default class ElementRendererProvider {
               .reduce((accumulator, currentMeta) => [...accumulator, ...currentMeta], []);
 
             newMetadata.push(...selectedCardsMetadata);
-          }
 
-          return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
-        };
+            return this.wrapAction({ ...clickData, metadata: newMetadata })(event, formEl);
+          };
+        } else {
+          btnEl.onclick = this.wrapAction(config.click);
+        }
       }
 
       if (config.class !== 'button') {
