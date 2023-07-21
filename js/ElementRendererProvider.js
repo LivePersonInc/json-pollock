@@ -646,7 +646,6 @@ export default class ElementRendererProvider {
 
       arrowLeft.setAttribute('type', 'button');
       arrowLeft.setAttribute('aria-label', 'Previous');
-      arrowLeft.style.visibility = 'visible'; // CAO-22400 forcing visibility through js for older versions
       arrowRight.setAttribute('type', 'button');
       arrowRight.setAttribute('aria-label', 'Next');
       a11yDiv.setAttribute('aria-live', 'polite');
@@ -685,6 +684,8 @@ export default class ElementRendererProvider {
           svgChildArrowLeft.setAttribute('style', splitedStyle.style);
         }
       }
+
+      arrowLeft.style.visibility = 'visible'; // CAO-22400 forcing visibility through js for older versions
 
       function setShowingCard(event) {
         if (!cards || !cards[carouselItemIndex]) {
