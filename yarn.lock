@@ -4073,10 +4073,10 @@ json-parse-better-errors@^1.0.1:
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
   integrity sha1-u4Z8+zRQ5pEHwTHRxRS6s9yLyqk=
 
-json-pollock@^1.7.7:
-  version "1.7.7"
-  resolved "http://tlvmvnrepository.tlv.lpnet.com:80/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.7.7.tgz#18ff2ad851024c9041deac5a7ea95bef1d8c5f60"
-  integrity sha1-GP8q2FECTJBB3qxafqlb7x2MX2A=
+json-pollock@^1.0.22:
+  version "1.6.3"
+  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/json-pollock/-/json-pollock-1.6.3.tgz#e19b47895a58f688243379c6b15c1285b8bd56aa"
+  integrity sha1-4ZtHiVpY9ogkM3nGsVwShbi9Vqo=
   dependencies:
     ajv "^5.4.0"
     chronosjs "^0.0.23"
