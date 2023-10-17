@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header class="header_container" @templateSelected="onTemplateSelected"></Header>
-    <split-pane class="custom-resizer" split="vertical" min-percent=30>
+    <split-pane class="custom-resizer" split="vertical" :min-percent="30">
       <template slot="paneL">
         <JSONEditor class="jsoneditor_container" ref="editor"></JSONEditor>
       </template>
