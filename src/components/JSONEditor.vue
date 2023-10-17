@@ -37,6 +37,9 @@ import keyValuePairList from 'json-pollock/js/schema/keyValuePairList.json';
 import displaySettingsSchema from 'json-pollock/js/schema/displaySettings.json';
 import accessibilityWebSchema from 'json-pollock/js/schema/accessibilityWeb.json';
 import scheduleSlot from 'json-pollock/js/schema/scheduleSlot.json';
+import accordionSelectSchema from 'json-pollock/js/schema/accordionSelect.json';
+import carouselSelectSchema from 'json-pollock/js/schema/carouselSelect.json';
+import tabsSchema from 'json-pollock/js/schema/tabs.json';
 
 let editor;
 
@@ -89,6 +92,10 @@ export default {
         'accessibilityWeb.json': accessibilityWebSchema,
         'scheduleSlot.json': scheduleSlot,
         'keyValuePairList.json': keyValuePairList,
+        'accordionSelect.json': accordionSelectSchema,
+        'carouselSelect.json': carouselSelectSchema,
+        'tabs.json': tabsSchema,
+
       },
       onChange: () => {
         try {
