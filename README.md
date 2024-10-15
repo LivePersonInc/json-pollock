@@ -1,3 +1,7 @@
+
+> [!WARNING]  
+> Note: This repository has been migrated to LivePerson's GitLab. We will update this README with more information about the source code availability in the future.
+
 <img src="https://livepersoninc.github.io/json-pollock/src/assets/logo.png" width="120px"/>
 
 Json-Pollock
