@@ -1,15 +1,13 @@
 
 > [!WARNING]  
 > Note: This repository has been migrated to LivePerson's GitLab. We will update this README with more information about the source code availability in the future.
+>
+> Updated link to **Playground** (demo) website - https://json-pollock-a9d546.gitlab.io
 
 <img src="https://livepersoninc.github.io/json-pollock/src/assets/logo.png" width="120px"/>
 
 Json-Pollock
 ============
-[![Build Status](https://travis-ci.com/LivePersonInc/json-pollock.svg?branch=master)](https://app.travis-ci.com/github/LivePersonInc/json-pollock)
-[![GitHub license](https://img.shields.io/github/license/LivePersonInc/json-pollock.svg)](https://github.com/LivePersonInc/json-pollock/blob/master/LICENSE)
-[![Downloads](https://img.shields.io/npm/dt/json-pollock.svg)](https://www.npmjs.com/package/json-pollock)
-[![Version](https://img.shields.io/github/package-json/v/LivePersonInc/json-pollock.svg)](https://github.com/LivePersonInc/json-pollock/blob/master/package.json)
 
 The **Json-Pollock** package renders live DOM elements out of JSON according to the [Structured Messaging Templates specification](https://developers.liveperson.com/structured-content-templates.html)
 
@@ -196,4 +194,4 @@ try {
 ```
 Playground
 -------
-[Here](https://livepersoninc.github.io/json-pollock/editor/)
+[Here](https://json-pollock-a9d546.gitlab.io)
