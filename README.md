@@ -1,4 +1,4 @@
-<img src="https://gitlab.com/l1905/conversational-cloud-engineering/communication-channels/web/json-pollock/docs/public/logo.png" width="120px"/>
+<img src="./docs/public/logo.png" width="120px"/>
 
 # Json-Pollock
 
@@ -34,9 +34,9 @@ Then open generated report from `dist/.rsdoctor/rsdoctor-report.html`
 
 ## Docs
 
-Browse [internal docs](./docs//guide/introduction.md) or navigate to hosted documentation website [Guide](https://json-pollock-a9d546.gitlab.io/guide/index.html)
+Browse [internal docs](./docs/guide/introduction.md) or navigate to hosted documentation website [Guide](https://livepersoninc.github.io/json-pollock/guide/)
 
 
 ## Playground
 
-Run in dev mode or navigate to hosted documentation website [Playground](https://json-pollock-a9d546.gitlab.io/playground/index.html)
+Run in dev mode or navigate to hosted documentation website [Playground](https://livepersoninc.github.io/json-pollock/playground/)
