@@ -25,8 +25,7 @@ export default defineConfig({
   globalStyles: path.join(__dirname, 'docs/styles.css'),
   plugins: [
     pluginPlayground({
-      render: './Playground.jsx',
-      // include: ['fs', 'path'],
+      render: './docs/playground/Playground.jsx',
     }),
   ],
   builderConfig: {

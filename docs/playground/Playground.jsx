@@ -79,7 +79,7 @@ export default function Playground(props) {
       // Construct the URL path relative to the public root
       // Rspress usually serves content from the root or a specific base path.
       // Assuming 'examples' is served at the root. Adjust if needed.
-      const response = await fetch(`/examples/${fileName}`);
+      const response = await fetch(`${import.meta.env.BASE_URL}examples/${fileName}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
