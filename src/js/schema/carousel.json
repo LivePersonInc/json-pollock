@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "carousel",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "carousel"
+      ],
+      "default": "carousel",
+      "readonly": true
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "padding": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 10,
+      "items": {
+        "$ref": "card.json"
+      }
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "display": {
+      "$ref": "displaySettings.json"
+    },
+    "style": {
+      "$ref": "style.json"
+    },
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "web": {
+          "$ref": "accessibilityWeb.json"
+        }
+      }
+    },
+    "customSettings": {
+      "$ref": "customSettings.json"
+    },
+    "customContainerSettings": {
+      "$ref": "customContainerSettings.json"
+    }
+  },
+  "required": [
+    "type",
+    "elements"
+  ]
+}

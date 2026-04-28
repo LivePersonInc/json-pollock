@@ -1,3 +1,10 @@
 .vscode/
 node_modules/
 .idea/
+coverage/
+dist/
+doc_build/
+public/
+!docs/public
+junit*.xml
+*.tgz

@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "title": "Key Value Pair",
+  "additionalProperties" : false,
+  "properties": {
+    "key": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "value": {
+      "type": "string",
+      "maxLength": 2048
+    }
+  },
+  "required": ["key"]
+}

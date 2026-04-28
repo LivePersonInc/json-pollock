@@ -1,0 +1,244 @@
+{
+  "oneOf": [{
+    "title": "Publish Text",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["publishText"],
+        "default": "publishText",
+        "readonly": true
+      },
+      "text": {
+        "type": "string",
+        "maxLength": 256
+      },
+      "customSettings": {
+        "$ref": "customSettings.json"
+      }
+    },
+    "required": ["type", "text"]
+  }, {
+    "title": "Add to Cart",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["addToCart"],
+        "default": "addToCart",
+        "readonly": true
+      },
+      "items": {
+        "type": "array",
+        "maxItems": 10,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "productId": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "quantity": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "required": ["type", "items"]
+  }, {
+    "title": "navigate",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["navigate"],
+        "default": "navigate",
+        "readonly": true
+      },
+      "la": {
+        "type": "number"
+      },
+      "lo": {
+        "type": "number"
+      },
+      "name": {
+        "type": "string",
+        "maxLength": 256
+      },
+      "customSettings": {
+        "$ref": "customSettings.json"
+      }
+    },
+    "required": ["type", "la", "lo"]
+  }, {
+    "title": "link",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["link"],
+        "default": "link",
+        "readonly": true
+      },
+      "uri": {
+        "type": "string",
+        "format": "uri",
+        "maxLength": 1024
+      },
+      "name": {
+        "type": "string",
+        "maxLength": 256
+      },
+      "ios": {
+        "type": "object",
+        "additionalProperties" : false,
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 1024
+          }
+        }
+      },
+      "android": {
+        "type": "object",
+        "additionalProperties" : false,
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 1024
+          }
+        }
+      },
+      "web": {
+        "type": "object",
+        "additionalProperties" : false,
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 1024
+          }
+        }
+      },
+      "target": {
+        "type": "string",
+        "enum": ["self", "blank", "slideout"],
+        "default": "self"
+      },
+      "accessibility": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "web": {
+            "$ref": "accessibilityWeb.json"
+          }
+        }
+      },
+      "customSettings": {
+        "$ref": "customSettings.json"
+      }
+    },
+    "required": ["type", "uri"]
+  }, {
+    "title": "Custom Action",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["custom"],
+        "default": "custom",
+        "readonly": true
+      },
+      "data": {
+        "type": "array",
+        "maxItems": 10,
+        "items": {
+          "$ref": "keyValuePair.json"
+        }
+      },
+      "customSettings": {
+        "$ref": "customSettings.json"
+      }
+    },
+    "required": ["type"]
+  }, {
+    "title": "Date Picker",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["datePicker"],
+        "default": "datePicker",
+        "readonly": true
+      },
+      "class": {
+        "type": "string",
+        "enum": ["single", "range"],
+        "default": "single",
+        "readonly": true
+      },
+      "title": {
+        "type": "string",
+        "maxLength": 40
+      },
+      "minDate": {
+        "type": "integer"
+      },
+      "maxDate": {
+        "type": "integer"
+      },
+      "dateFormat": {
+        "type": "string",
+        "maxLength": 100
+      },
+      "customSettings": {
+        "$ref": "customSettings.json"
+      }
+    },
+    "required": ["type", "class"]
+  },{
+  "title": "Schedule Slot List",
+    "type": "object",
+    "additionalProperties" : false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["scheduleSlotList"],
+        "default": "scheduleSlotList",
+        "readonly": true
+      },
+      "title": {
+        "type": "string",
+        "maxLength": 40
+      },
+      "slots": {
+        "type": "array",
+        "maxItems": 256,
+        "items": {
+          "$ref": "scheduleSlot.json"
+        }
+      },
+      "firstDayOfTheWeek":{
+        "type": "string",
+        "enum": ["sun", "mon"],
+        "default": "mon",
+        "readonly": true
+      },
+      "customSettings": {
+        "$ref": "customSettings.json"
+      }
+    },
+    "required": ["type"]
+  }
+  ]
+}

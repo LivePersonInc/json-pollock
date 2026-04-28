@@ -1,0 +1,20 @@
+.h-full {
+  height: 100% !important;
+}
+
+.h-dvh {
+  height: 100dvh !important;
+}
+
+.h-80p {
+  height: 80% !important;
+}
+
+.rspress-home-hero-image > img {
+  width: unset;
+  margin: 0 auto;
+}
+
+.lp-json-pollock > .lp-json-pollock-layout {
+  margin: 0 auto;
+}

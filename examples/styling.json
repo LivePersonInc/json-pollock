@@ -1,0 +1,56 @@
+{
+  "type": "vertical",
+  "elements": [
+    {
+      "type": "text",
+      "text": "This text demonstrates new styling options.",
+      "style": {
+        "text-alignment": "center",
+        "padding": {
+          "top": 10,
+          "leading": 15,
+          "bottom": 10,
+          "trailing": 15
+        },
+        "size": "large",
+        "color": "#333333"
+      }
+    },
+    {
+      "type": "button",
+      "title": "Styled Button",
+      "click": {
+        "actions": [
+          {
+            "type": "publishText",
+            "text": "Styled button clicked"
+          }
+        ]
+      },
+      "style": {
+        "padding": {
+          "top": 5,
+          "leading": 20,
+          "bottom": 5,
+          "trailing": 20
+        }
+      }
+    }
+  ],
+  "separator": {
+    "thickness": 2,
+    "style": { "background-color": "#E0E0E0" }
+  },
+  "groupAsSingleAccessibleElement": true,
+  "click": {
+    "actions": [
+      {
+        "type": "publishText",
+        "text": "Vertical card clicked!"
+      }
+    ],
+    "metadata": [
+      { "type": "ExternalId", "id": "cardClickTest123" }
+    ]
+  }
+}

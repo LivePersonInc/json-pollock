@@ -1,0 +1,118 @@
+{
+  "type": "vertical",
+  "elements": [
+    {
+      "type": "button",
+      "tooltip": "button tooltip",
+      "title": "Add to cart",
+      "click": {
+        "actions": [
+          {
+            "type": "link",
+            "name": "Add to cart",
+            "uri": "https://example.com"
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "class": "button",
+      "tooltip": "button tooltip",
+      "title": "Add to cart",
+      "subtitle": "Buy this item",
+      "click": {
+        "actions": [
+          {
+            "type": "link",
+            "name": "Add to cart",
+            "uri": "https://example.com"
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "class": "button",
+      "tooltip": "button tooltip",
+      "title": "Add to cart",
+      "style": {
+        "border-color": "#3736A6"
+      },
+      "click": {
+        "actions": [
+          {
+            "type": "link",
+            "name": "Add to cart",
+            "uri": "https://example.com"
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "class": "button",
+      "title": "Add to cart",
+      "tooltip": "Add to cart",
+      "style": {
+        "background-color": "#0363AD",
+        "color": "#fff",
+        "size": "medium",
+        "bold": true
+      },
+      "click": {
+        "actions": [
+          {
+            "type": "link",
+            "name": "Buy",
+            "uri": "https://example.com"
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "class": "button",
+      "title": "Add to cart",
+      "tooltip": "Add to cart",
+      "style": {
+        "background-color": "red",
+        "color": "#fff",
+        "border-radius": 10,
+        "size": "medium",
+        "bold": true
+      },
+      "click": {
+        "actions": [
+          {
+            "type": "link",
+            "name": "Buy",
+            "uri": "https://example.com"
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "class": "button",
+      "title": "Add to cart",
+      "tooltip": "Add to cart",
+      "style": {
+        "background-color": "green",
+        "color": "#fff",
+        "border-radius": 1,
+        "size": "medium",
+        "bold": true
+      },
+      "click": {
+        "actions": [
+          {
+            "type": "link",
+            "name": "Buy",
+            "uri": "https://example.com"
+          }
+        ]
+      }
+    }
+  ]
+}

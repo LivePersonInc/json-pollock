@@ -1,0 +1,204 @@
+{
+  "oneOf": [
+    {
+      "title": "basic",
+      "$ref": "basic.json"
+    },
+    {
+      "type": "object",
+      "additionalProperties" : false,
+      "title": "horizontal",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["horizontal"],
+          "default": "horizontal",
+          "readonly": true
+        },
+        "tag": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "tagVersion": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "borderLine": {
+          "type": "boolean",
+          "default": true
+        },
+        "border": {
+          "type": "string",
+          "enum": ["border", "borderLess", "dropShadow"],
+          "default": "border",
+          "readonly": true
+        },
+        "percentages": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "number"
+          }
+        },
+        "elements": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "rich_content.json"
+          }
+        },
+        "alt": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "web": {
+              "$ref": "accessibilityWeb.json"
+            }
+          }
+        },
+        "customSettings": {
+          "$ref": "customSettings.json"
+        },
+        "customContainerSettings": {
+          "$ref": "customContainerSettings.json"
+        },
+        "tooltip": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "groupAsSingleAccessibleElement": {
+          "type": "boolean",
+          "description": "Indicates whether child elements should be grouped for accessibility purposes.",
+          "default": false
+        },
+        "style": {
+          "$ref": "style.json"
+        },
+        "click": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "actions": {
+              "type": "array",
+              "maxItems": 4,
+              "items": {
+                "$ref": "action.json"
+              }
+            },
+            "metadata": {
+              "type": "array"
+            }
+          }
+        },
+        "separator": {
+          "$ref": "separator.json"
+        },
+        "metadata": {
+          "type": "array"
+        }
+      },
+      "required": ["type", "elements"]
+    },
+    {
+      "type": "object",
+      "additionalProperties" : false,
+      "title": "vertical",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["vertical"],
+          "default": "vertical",
+          "readonly": true
+        },
+        "tag": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "tagVersion": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "border": {
+          "type": "string",
+          "enum": ["border", "borderLess", "dropShadow"],
+          "default": "border",
+          "readonly": true
+        },
+        "scroll": {
+          "type": "string",
+          "enum": ["disable", "enable"],
+          "default": "disable",
+          "readonly": true
+        },
+        "tooltip": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "groupAsSingleAccessibleElement": {
+          "type": "boolean",
+          "description": "Indicates whether child elements should be grouped for accessibility purposes.",
+          "default": false
+        },
+        "style": {
+          "$ref": "style.json"
+        },
+        "elements": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "rich_content.json"
+          }
+        },
+        "alt": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "display": {
+          "$ref": "displaySettings.json"
+        },
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "web": {
+              "$ref": "accessibilityWeb.json"
+            }
+          }
+        },
+        "customSettings": {
+          "$ref": "customSettings.json"
+        },
+        "customContainerSettings": {
+          "$ref": "customContainerSettings.json"
+        },
+        "click": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "actions": {
+              "type": "array",
+              "maxItems": 4,
+              "items": {
+                "$ref": "action.json"
+              }
+            },
+            "metadata": {
+              "type": "array"
+            }
+          }
+        },
+        "separator": {
+          "$ref": "separator.json"
+        },
+        "metadata": {
+          "type": "array"
+        }
+      },
+      "required": ["type", "elements"]
+    }
+  ]
+}

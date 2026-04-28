@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "title": "separator",
+  "description": "Defines a visual separator line, typically used between elements in a layout.",
+  "additionalProperties": false,
+  "properties": {
+    "thickness": {
+      "type": "number",
+      "description": "The thickness of the separator line in logical units.",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 10
+    },
+    "style": {
+      "$ref": "style.json",
+      "description": "Styling for the separator line, such as color. Refer to style.json for available properties."
+    }
+  },
+  "required": ["thickness"]
+}

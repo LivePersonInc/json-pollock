@@ -1,0 +1,7 @@
+{
+  "type": "vertical",
+  "elements": [{
+    "type": "text",
+    "text": "foo"
+  }]
+}

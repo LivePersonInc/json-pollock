@@ -1,0 +1,36 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>SC Test</title>
+  <script src="../dist/json-pollock.bundle.min.js"></script>
+  <script>
+    window.onload = async function () {
+      // Load JSON data from the external file
+      const response = await fetch('./styling.json');
+      const json = await response.json();
+
+      JsonPollock.registerAction('publishText', (data) => {
+        alert(JSON.stringify(data));
+      });
+
+      try {
+        const el = JsonPollock.render(JSON.stringify(json));
+        document.getElementById('content').appendChild(el);
+      } catch (e) {
+        console.log(e.message);    // error message
+	      console.log(e.errors);     // validation errors
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id='content'>
+  </div>
+</body>
+
+</html>

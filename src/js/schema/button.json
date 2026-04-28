@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "additionalProperties" : false,
+
+  "title": "button",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["button"],
+      "default": "button",
+      "readonly": true
+    },
+    "class": {
+      "type": "string",
+      "enum": ["text", "button"],
+      "default": "text",
+      "readonly": true
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "subtitle": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "rtl": {
+      "type": "boolean"
+    },
+    "tooltip": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "tag": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "tagVersion": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "style": {
+      "$ref": "style.json"
+    },
+    "alt": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "type": {
+          "type": "string",
+          "enum": ["carouselSelect", "accordionSelect"]
+        }
+      }
+    },
+    "click": {
+      "type": "object",
+      "additionalProperties" : false,
+      "properties": {
+        "actions": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "$ref": "action.json"
+          }
+        },
+        "metadata": {
+          "type": "array"
+        }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "web": {
+          "$ref": "accessibilityWeb.json"
+        }
+      }
+    },
+    "customSettings": {
+      "$ref": "customSettings.json"
+    }
+  },
+  "required": ["title"]
+}

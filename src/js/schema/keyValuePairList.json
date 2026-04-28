@@ -1,0 +1,28 @@
+
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "keyValuePairList",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "keyValuePairList"
+      ],
+      "default": "keyValuePairList",
+      "readonly": true
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "items": {
+        "$ref": "keyValuePair.json"
+      }
+    }
+  },
+  "required": [
+    "type",
+    "elements"
+  ]
+}

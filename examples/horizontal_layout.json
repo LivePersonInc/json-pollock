@@ -1,0 +1,46 @@
+{
+  "type": "horizontal",
+  "elements": [
+    {
+      "type": "text",
+      "text": "product name (Title)",
+      "tooltip": "text tooltip",
+      "style": {
+        "bold": true,
+        "size": "large"
+      }
+    },
+    {
+      "type": "image",
+      "url": "http://cdn.bgr.com/2016/08/iphone-8-concept.jpg",
+      "tooltip": "image tooltip",
+      "click": {
+        "metadata": [
+          {
+            "bla1": 1,
+            "bla2": 2
+          }
+        ],
+        "actions": [
+          {
+            "type": "navigate",
+            "name": "Navigate to store via image",
+            "lo": 23423423,
+            "la": 2423423423
+          }
+        ]
+      }
+    },
+    {
+      "type": "map",
+      "lo": 64.128597,
+      "la": -21.89611,
+      "tooltip": "map tooltip"
+    },
+    {
+      "type": "text",
+      "text": "product category (type)",
+      "tooltip": "text tooltip"
+    }
+  ]
+}

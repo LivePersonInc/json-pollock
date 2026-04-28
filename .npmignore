@@ -1,0 +1,17 @@
+.vscode/
+build/
+config/
+docs/
+doc_build/
+playground/
+public/
+coverage/
+test/
+.gitlab-ci.yml
+*.xml
+*config.mjs
+*config.js
+.babelrc
+*ignore
+**/.rsdoctor
+.*rc

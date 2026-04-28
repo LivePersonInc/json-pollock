@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "./index",
+    "label": "Guide"
+  },
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "Structured content"
+  }
+]

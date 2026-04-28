@@ -1,0 +1,291 @@
+{
+  "type": "vertical",
+  "elements": [
+    {
+      "type": "vertical",
+      "scroll": "enable",
+      "style": {
+        "size": "medium"
+      },
+      "elements": [
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Text content",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          },
+          "accessibility": {
+            "web": {
+              "aria-label": "text label product"
+            }
+          }
+        },
+        {
+          "type": "button",
+          "class": "button",
+          "tooltip": "button tooltip",
+          "title": "Add to cart",
+          "style": {
+            "border-color": "#3736A6"
+          },
+          "click": {
+            "actions": [
+              {
+                "type": "link",
+                "name": "Add to cart",
+                "uri": "https://example.com"
+              }
+            ]
+          }
+        },
+        {
+          "type": "button",
+          "class": "button",
+          "title": "Add to cart",
+          "tooltip": "Add to cart",
+          "style": {
+            "background-color": "#0363AD",
+            "color": "#fff",
+            "size": "medium",
+            "bold": true
+          },
+          "click": {
+            "actions": [
+              {
+                "type": "link",
+                "name": "Buy",
+                "uri": "https://example.com"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

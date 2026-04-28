@@ -1,0 +1,18 @@
+[
+  {
+    "type": "file",
+    "text": "Guide",
+    "link": "/guide/",
+    "activeMatch": "^/guide"
+  },
+  {
+    "type": "file",
+    "text": "Playground",
+    "link": "/playground/",
+    "activeMatch": "^/playground"
+  },
+  {
+    "text": "KnowledgeBase",
+    "link": "https://developers.liveperson.com/getting-started-with-rich-messaging-introduction.html"
+  }
+]

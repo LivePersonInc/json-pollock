@@ -1,197 +1,42 @@
+<img src="https://gitlab.com/l1905/conversational-cloud-engineering/communication-channels/web/json-pollock/docs/public/logo.png" width="120px"/>
 
-> [!WARNING]  
-> Note: This repository has been migrated to LivePerson's GitLab. We will update this README with more information about the source code availability in the future.
->
-> Updated link to **Playground** (demo) website - https://json-pollock-a9d546.gitlab.io
-
-<img src="https://livepersoninc.github.io/json-pollock/src/assets/logo.png" width="120px"/>
-
-Json-Pollock
-============
+# Json-Pollock
 
 The **Json-Pollock** package renders live DOM elements out of JSON according to the [Structured Messaging Templates specification](https://developers.liveperson.com/structured-content-templates.html)
 
-Installation
--------
-```
-npm i json-pollock --save
-```
-In the `dist` folder you'll find a list of file that allows you to consume json-pollock in a different ways:
+## Development
 
+Install dependencies with `yarn`
 
-**As a Bundle**
+To run the dev server with playground:
 
-`json-pollock.bundle.min.js`  - this script bundle both package and styles, once you import it into your code it will inject the needed styles into your page header - no additional actions are needed from your side. it is also supports umd - meaning you can consume it using AMD, CommonJS and as simple script (see [examples](#examples))
-
-**Separate files for code and style**
-
-`json-pollock.min.js` - use this script if you want to handle the import of the styles by youself, if you use it you should also take care to link `json-pollock.min.css` to your web page. also supports umd.
-
-**No UMD**
-
-`json-pollock.global.min.js` - this script is the same as `json-pollock.min.js`, however is does not support umd - it only puts JsonPollock on the current `this` (usually the `window` object). use this in case you inject the package into sites that are not managed by you and you dont know if it uses AMD or not.
-
-**No validation**
-
-`json-pollock.global.no_validation.min.js` - a version of `json-pollock.global.min.js` which the validation phase is excluded. this bundle is lighter as it does not bundles the validation package ([Ajv](https://github.com/epoberezkin/ajv)), however it should be used with more care in regard to the json input.
-
-#### **examples**
-
-A `script` tag:
-
-```html
-<!-- for bundle this import if enough -->
-<script src="path-to-node-modules/dist/json-pollock.bundle.min.js"></script>
-
-<!-- for others you should also link the styles -->
-<script src="path-to-node-modules/dist/json-pollock.[global.]min.js"></script>
-<link rel="stylesheet" href="path-to-node-modules/dist/json-pollock.min.css">
-``` 
-
-Following examples are relevant only for `json-pollock.bundle.min.js` and `json-pollock.min.js`:
-
-Using [RequireJS](http://requirejs.org/):
-
-Map the JsonPollock path in the RequireJs config, and then:	
-```js
-require(["JsonPollock"],(jsonPollock) => {
-    ...
-})
-```
-Using [CommonJS](http://requirejs.org/docs/commonjs.html):
-```js
-const JsonPollock = require("JsonPollock");
+```sh
+yarn dev
 ```
 
-Usage
--------
+To run unit & integrated tests:
 
-**init**
-
-You can call the *init* function if you want to configure JsonPollock - it is not mandatory, if you won't call it JsonPollock will be initialized with defaults.
-```js
-JsonPollock.init({
-	maxAllowedElements: 100,
-	onAfterElementRendered: onAfterElementRenderedHandler
-});
+```sh
+yarn test
 ```
 
-Supported options:
+To create a production bundle:
 
-|name | type | description | default |
-|---|---|---|---|
-| `maxAllowedElements` | Number |  max DOM elements that will be renderes, other elements will be ignored. | 50 |
-| `onAfterElementRendered` | Function | A callback function that will be invoked after each render on an element, it allows to customize the result DOM element. see the following for exact signature and usage example of the callback function. |  |
-
-Example callback function for `onAfterElementRendered`:
-```js
-/**
-* @param {HTMLElement} element html element that was rendered by json-pollock
-* @param {Object} template SC template of this element  
-* @returns {HTMLElement} manipulated html element
-*/
-const onAfterElementRendered = (element, template) => {
-	// maniplate elements:
-	switch (template.type) {
-		case JsonPollock.TEMPLATE_TYPES.TEXT:
-			// add custom css class
-			element.classList.add('my-ns-text');
-			break;
-		case JsonPollock.TEMPLATE_TYPES.LINK:
-			// edit inline style
-			element.style.color = 'red';
-			break;
-		case JsonPollock.TEMPLATE_TYPES.MAP:
-			// prevent 'map' element to be rendered
-			return null;
-      ...
-    }
-    return element;
-}
+```sh
+yarn build
 ```
 
-**render**
-
-The *render* function renders json into a DOM element.
-```js
-const content = {
-	"type": "vertical",
-	"elements": [{
-		"type": "image",
-		"url": "http://assets/phone.jpg",
-		"tooltip": "Great Phone!",
-		"click": {
-			"actions": [{
-				"type": "navigate",
-				"name": "Navigate to store via image",
-				"lo": 23423423,
-				"la": 2423423423
-			}]
-		}
-	}]
-}
-const rooEl = JsonPollock.render(content);
-document.getElementById('container').appendChild(rooEl);
+To see stats & bundle analysis by build analyzer:
+```sh
+RSDOCTOR=1 yarn build
 ```
-**registerAction**
+Then open generated report from `dist/.rsdoctor/rsdoctor-report.html`
 
-The *registerAction* function allow to register a callback to a certain action type, as defined in the [spec](https://developers.liveperson.com/structured-content-templates.html).
-```js
-/**
- * @param {Object} data	callback payload
- * @param {Object} data.actionData action configuration as defined in the json
- * @param {Object=} data.metadata metadata configuration as defined in the json, optional
- * @param {Event=} data.uiEvent UI DOM Event object of the clicked element, optional
- * @param {String=} data.groupID reference to section id - curently relevant to checkbox element, optional. 
- * @param {DOMElement=} data.formEl reference to the associated form element, optional
- **/
-const linkCallback = (data) => {	
-  window.open(data.actionData.uri,"_blank");
-};
-JsonPollock.registerAction('link', linkCallback);
-```
+## Docs
 
-**unregisterAction**
+Browse [internal docs](./docs//guide/introduction.md) or navigate to hosted documentation website [Guide](https://json-pollock-a9d546.gitlab.io/guide/index.html)
 
-The *unregisterAction* function allow to unregister a callback to a certain action type, as defined in the [spec](https://developers.liveperson.com/structured-content-templates.html).
-```js
-JsonPollock.unregisterAction('link');
-```
 
-**unregisterAllActions**
+## Playground
 
-The *unregisterAllActions* function allow to unregister all callbacks to all action types.
-```js
-JsonPollock.unregisterAllActions();
-```
-
-**validate**
-
-The *validate* function allow check if a given JSON is a valid for rendering, if validation fails it will thorw an Error (see [Error Handling](#error-handling))
-
-Note that this function is not availble on the **No validation** build
-```js
-/**
- * @parame {Object} json JSON object
- * */
-JsonPollock.validate(json);
-```
-
-Error Handling
--------
-*JsonPollock.render()* will throw an Error if it fails from any reason, the error object will have a *message* property that will give the error description.
-
-Perior to the rendering the JSON object is validated against the JSON [schema](js/schema), if it fails to validate the error object will also include an *errors* property that will hold the validation errors.
-```js
-...
-try {
-  const rooEl = JsonPollock.render(json);
-  ...
-} catch(e) {
-	console.log(e.message);    // error message
-	console.log(e.errors);     // validation errors
-}
-```
-Playground
--------
-[Here](https://json-pollock-a9d546.gitlab.io)
+Run in dev mode or navigate to hosted documentation website [Playground](https://json-pollock-a9d546.gitlab.io/playground/index.html)

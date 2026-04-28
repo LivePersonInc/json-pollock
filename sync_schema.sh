@@ -38,6 +38,8 @@ SCHEMA_URL=(
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/keyValuePair.json"
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/keyValuePairList.json"
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/displaySettings.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/customSettings.json"
+	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/customContainerSettings.json"
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/accessibilityWeb.json"
 	"https://lpgithub.dev.lprnd.net/raw/Architecture/json-schema/master/json-schema-files/src/main/resources/json_schemas/rich/scheduleSlot.json"
 )

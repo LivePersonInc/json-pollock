@@ -1,0 +1,118 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "background-color": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "background-color-active": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "background-color-hover": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "border-color": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "border-color-selected": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "border-color-hover": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "border-radius": {
+      "type": "number"
+    },
+    "font-family": {
+      "type": "string",
+      "format": "text",
+      "maxLength": 256
+    },
+    "bold": {
+      "type": "boolean"
+    },
+    "italic": {
+      "type": "boolean"
+    },
+    "color": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "color-hover": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "color-active": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "size": {
+      "type": "string",
+      "enum": ["small", "medium", "large"]
+    },
+    "fill": {
+      "type": "string",
+      "format": "color",
+      "maxLength": 256
+    },
+    "text-alignment": {
+      "type": "string",
+      "description": "Horizontal alignment of the text.",
+      "enum": [
+        "leading",
+        "center",
+        "trailing"
+      ]
+    },
+    "padding": {
+      "type": "object",
+      "description": "Padding around the element in logical units.",
+      "additionalProperties": false,
+      "properties": {
+        "top": {
+          "type": "number",
+          "description": "Top padding.",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 50
+        },
+        "trailing": {
+          "type": "number",
+          "description": "Trailing edge padding (right in LTR, left in RTL).",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 50
+        },
+        "bottom": {
+          "type": "number",
+          "description": "Bottom padding.",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 50
+        },
+        "leading": {
+          "type": "number",
+          "description": "Leading edge padding (left in LTR, right in RTL).",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 50
+        }
+      }
+    }
+  }
+}

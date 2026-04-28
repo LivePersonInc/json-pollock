@@ -1,0 +1,28 @@
+{
+  "oneOf": [
+    {
+      "title": "card",
+      "$ref": "card.json"
+    },
+    {
+      "title": "carousel",
+      "$ref": "carousel.json"
+    },
+    {
+      "title": "carouselSelect",
+      "$ref": "carouselSelect.json"
+    },
+    {
+      "title": "accordionSelect",
+      "$ref": "accordionSelect.json"
+    },
+    {
+      "title": "list",
+      "$ref": "list.json"
+    },
+    {
+      "title": "tabs",
+      "$ref": "tabs.json"
+    }
+  ]
+}
