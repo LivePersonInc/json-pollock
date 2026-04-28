@@ -3,6 +3,9 @@ import { rspack } from '@rspack/core';
 import { pluginPlayground } from '@rspress/plugin-playground';
 import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   root: 'docs',
