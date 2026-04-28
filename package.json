@@ -32,8 +32,7 @@
   "dependencies": {
     "ajv": "=7",
     "dompurify": "3.2.6",
-    "eventemitter3": "^5.0.1",
-    "lp-rich-content-validator": "^1.1.0"
+    "eventemitter3": "^5.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.9",
