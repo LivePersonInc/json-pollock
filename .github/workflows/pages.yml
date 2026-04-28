@@ -24,9 +24,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
 
-      - run: yarn install --frozen-lockfile
+      - run: echo "registry=https://registry.npmjs.org/" > .npmrc
+
+      - run: yarn install --no-lockfile
 
       - run: yarn build
 
