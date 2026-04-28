@@ -5,9 +5,9 @@ import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 import path from 'path';
 
 export default defineConfig({
-  ssg: false,
   root: 'docs',
   outDir: 'public',
+  base: '/json-pollock/',
   title: 'JsonPollock',
   description: 'Structured Content Rendering Tool',
   icon: '/logo.png',
@@ -16,10 +16,9 @@ export default defineConfig({
   themeConfig: {
     socialLinks: [
       {
-        icon: 'gitlab',
+        icon: 'github',
         mode: 'link',
-        content:
-          'https://gitlab.com/l1905/conversational-cloud-engineering/communication-channels/web/json-pollock.git',
+        content: 'https://github.com/LivePersonInc/json-pollock',
       },
     ],
   },
