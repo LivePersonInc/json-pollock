@@ -7,10 +7,12 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const base = '/json-pollock/';
+
 export default defineConfig({
   root: 'docs',
   outDir: 'public',
-  base: '/json-pollock/',
+  base,
   title: 'JsonPollock',
   description: 'Structured Content Rendering Tool',
   icon: '/logo.png',
@@ -32,6 +34,9 @@ export default defineConfig({
     }),
   ],
   builderConfig: {
+    output: {
+      assetPrefix: base,
+    },
     tools: {
       rspack: async (config) => {
         const copyPlugin = new rspack.CopyRspackPlugin({
