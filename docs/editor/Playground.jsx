@@ -7,22 +7,37 @@ import { SnackbarProvider } from 'notistack';
 import _defaultJsonData from '../../assets/json-templates/defaultContent.json'; // Renamed import
 import { JsonPollockDemo } from './JsonPollockDemo';
 
-// Static list of example JSON files we know exist in the /examples/ directory
-const exampleFiles = [
-  'accordion_select.json',
-  'buttons.json',
-  'card.json',
-  'card_no_validation.json',
-  'card_scroll.json',
-  'carousel.json',
-  'carousel_maps.json',
-  'carousel_no_validation.json',
-  'checklist.json',
-  'horizontal_layout.json',
-  'single_element.json',
-  'styling.json',
-  'tabs.json',
-];
+import _accordion_select from '../../examples/accordion_select.json';
+import _buttons from '../../examples/buttons.json';
+import _card from '../../examples/card.json';
+import _card_no_validation from '../../examples/card_no_validation.json';
+import _card_scroll from '../../examples/card_scroll.json';
+import _carousel from '../../examples/carousel.json';
+import _carousel_maps from '../../examples/carousel_maps.json';
+import _carousel_no_validation from '../../examples/carousel_no_validation.json';
+import _checklist from '../../examples/checklist.json';
+import _horizontal_layout from '../../examples/horizontal_layout.json';
+import _single_element from '../../examples/single_element.json';
+import _styling from '../../examples/styling.json';
+import _tabs from '../../examples/tabs.json';
+
+const exampleData = {
+  'accordion_select.json': _accordion_select,
+  'buttons.json': _buttons,
+  'card.json': _card,
+  'card_no_validation.json': _card_no_validation,
+  'card_scroll.json': _card_scroll,
+  'carousel.json': _carousel,
+  'carousel_maps.json': _carousel_maps,
+  'carousel_no_validation.json': _carousel_no_validation,
+  'checklist.json': _checklist,
+  'horizontal_layout.json': _horizontal_layout,
+  'single_element.json': _single_element,
+  'styling.json': _styling,
+  'tabs.json': _tabs,
+};
+
+const exampleFiles = Object.keys(exampleData);
 
 function useDirection(props) {
   const { page } = usePageData();
@@ -74,20 +89,10 @@ export default function Playground(props) {
     setCode(newCode); // Update the string state directly
   }, []);
 
-  const loadExample = useCallback(async (fileName) => {
-    try {
-      // Construct the URL path relative to the public root
-      // Rspress usually serves content from the root or a specific base path.
-      // Assuming 'examples' is served at the root. Adjust if needed.
-      const response = await fetch(`${import.meta.env.BASE_URL}examples/${fileName}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const jsonData = await response.json();
-      setCode(JSON.stringify(jsonData, null, 4)); // Update editor with fetched JSON
-    } catch (error) {
-      console.error(`Error loading example ${fileName}:`, error);
-      // Optionally show an error to the user
+  const loadExample = useCallback((fileName) => {
+    const jsonData = exampleData[fileName];
+    if (jsonData) {
+      setCode(JSON.stringify(jsonData, null, 4));
     }
   }, []);
 
