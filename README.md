@@ -39,4 +39,4 @@ Browse [internal docs](./docs/guide/introduction.md) or navigate to hosted docum
 
 ## Playground
 
-Run in dev mode or navigate to hosted documentation website [Playground](https://livepersoninc.github.io/json-pollock/playground/)
+Run in dev mode or navigate to hosted documentation website [Playground](https://livepersoninc.github.io/json-pollock/editor/)

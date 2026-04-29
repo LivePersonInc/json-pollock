@@ -11,7 +11,7 @@ hero:
       link: /guide
     - theme: brand
       text: Playground
-      link: /playground
+      link: /editor
   image:
     src: /carousel.gif
     alt: carousel.gif

@@ -8,8 +8,8 @@
   {
     "type": "file",
     "text": "Playground",
-    "link": "/playground/",
-    "activeMatch": "^/playground"
+    "link": "/editor/",
+    "activeMatch": "^/editor"
   },
   {
     "text": "KnowledgeBase",

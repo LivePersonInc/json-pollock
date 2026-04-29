@@ -3,7 +3,7 @@ build/
 config/
 docs/
 doc_build/
-playground/
+editor/
 public/
 coverage/
 test/
