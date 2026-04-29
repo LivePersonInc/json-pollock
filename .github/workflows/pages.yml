@@ -29,6 +29,8 @@ jobs:
 
       - run: yarn install --no-lockfile
 
+      - run: yarn build
+
       - run: yarn build:docs
 
       - uses: actions/upload-pages-artifact@v3
